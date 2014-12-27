@@ -1,0 +1,3 @@
+index.html => llama a la pagina principal, mas pequeño de los twig que se va a cargar.
+layout.html => importa css y js, y carga la barra superior estática.
+layout.twig.html => pagina principal, con el fondo y demas.

@@ -1,0 +1,39 @@
+{% extends "layout.twig.html" %}
+
+{% block Ingreso %}
+	<h2>Ingrese </h2>
+    <form role="form" action="{{ path('login_check') }}" method="post">
+        <div class="form-group">
+			<label><h2>Correo Electrónico</h2></label>
+			<input class="form-control" id="username" type="email" name="email" value="{{ last_username }}" placeholder="Introduzca correo electronico" required>
+		</div>
+        <div class="form-group">
+			<label><h2>Contraseña</h2></label>
+			<input class="form-control" id="password" type="password" name="password"  placeholder="Introduzca contraseña">
+		</div>
+		<div class="form-group">
+			<input type="submit" class="btn btn-primary" value="Iniciar sesión">
+		</div>
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+    </form>
+{% endblock %}
+
+{% block Registro %}
+	<h2>Registrate <h2>
+	<form role="form" action="{{ path('register') }}" method="post">
+		<div class="form-group">
+			<label><h2>Correo Electrónico</h2></label>
+			<input class="form-control" id="username" type="email" name="email" value="{{ last_username }}" placeholder="Introduzca correo electronico" required>
+			<!--<input type="email" name="email" class="form-control" id="inputEmail" placeholder="Enter email" required>-->
+		</div>
+		<div class="form-group">
+			<label><h2>Contraseña</h2></label>
+			<input class="form-control" id="password" type="password" name="password"  placeholder="Introduzca contraseña">
+		</div>
+		<div class="form-group">
+			<input type="submit" class="btn btn-primary" value="Abir una cuenta">
+		</div>
+	</form>
+{% endblock %}
