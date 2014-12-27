@@ -4,13 +4,21 @@ $(document).ready(function(){
 
 function todo(){
 	$("#bprimario").click(function(){
-	if($("#Ingreso").css("display")=="none"){
+		if($("#Ingreso").attr('class')!='hola'){
+			$("#Ingreso").show('slow','linear');
+			$("#Ingreso").addClass('hola');
+		}
+		else{
+			$("#Ingreso").hide('hide');
+			$("#Ingreso").removeClass('hola');
+		}
+	/*if($("#Ingreso").css("display")=="none"){
 		estado="inline";
 	}
 	else{
 		estado="none";
 	}
-	$("#Ingreso").css("display",estado)
+	$("#Ingreso").css("display",estado)*/
 	
 });
 
