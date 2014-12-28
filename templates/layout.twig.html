@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block inicio %}		
 	<div class="fondo_img">
-		<br/> <br/> <br/> <br/> <br/> <br/>
+		<br/> <br/> <br/> <br/> <br/> <br/> 
 		<div class="container" data-scrollreveal="enter donw after 0s over 1s">
 			<div class="jumbotron">
 				{% if is_granted('ROLE_USER') %}
@@ -10,15 +10,16 @@
 				{% else %}
 				<div class="row">
 					<div class="col-lg-6 col-sm-6">
-					<button type="button" class="btn btn-primary" id="bprimario"><h1>Iniciar sesión</h1></button>    
+					<!--<button type="button" class="btn btn-primary" id="bprimario"><h1>Iniciar sesión</h1></button>    
 						<div id="Ingreso" style="display: none;">
 							{% block Ingreso %}{% endblock %}
-						</div>
+						</div>-->
+						<img src="{{ app.request.basepath }}/images/figura.png" class="img-responsive" alt="Responsive image">
 					</div>
 					
 					<div class="col-lg-6 col-sm-6">				
-					<button type="button" class="btn btn-primary" id="bsecundario"><h1>Abir una cuenta</h1></button>    
-						<div id="Registro" style="display: none;">
+					<!--<button type="button" class="btn btn-primary" id="bsecundario"><h2>Abir una cuenta</h2></button> -->   
+						<div id="Registro">
 							{% block Registro %}{% endblock %}
 						</div>
 					</div>
@@ -26,6 +27,7 @@
 				{% endif %}
 			</div>
 		</div>
+		<br/> <br/> 
 	</div>	
     <div class="container">
       <div class="row">
