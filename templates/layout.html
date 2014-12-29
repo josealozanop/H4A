@@ -24,40 +24,46 @@
 		<script src='js/scrollReveal.js'></script> 
     </head>
     <body>
-	<nav class=" navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-	  <div class="col-xs-1"></div>
-        <div class="navbar-header col-xs-5">
-          <a class="navbar-brand" href="#"><h1><img src="{{ app.request.basepath }}/images/logo.png" width="50" height="50" alt="Responsive image"> Home4ll</h1>  </a>
-        </div>
-		<br/>
-		
-        <div class="col-xs-6">	 
-    <form class="form-horizontal row" role="form" action="{{ path('login_check') }}" method="post">
-        <div class="form-group col-xs-4">
-			<label class= "Lblanca">Correo Electrónico</label>
-			<input class="form-control" id="username" type="email" name="email" value="{{ last_username }}" placeholder="Introduzca correo electronico" required>
-		</div>
-		<div class="col-xs-1"></div>
-        <div class="form-group col-xs-4">
-			<label class= "Lblanca">Contraseña</label>
-			<input class="form-control" id="password" type="password" name="password"  placeholder="Introduzca contraseña">
-		</div>
-		<div class="col-xs-1"></div>
-		<div class="form-group col-xs-2">
-		<br/>
-			<input type="submit" class="btn btn-primary" value="Iniciar sesión">
-		</div>
-        {% if error %}
-            <div class="error">{{ error }}</div>
-        {% endif %}
-    </form>
-          
-        </div>
-      </div>
-    </nav>
-	{% block inicio%}{% endblock %}
-  </body>
+		<nav class=" navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container-fluid">
+				<div class="col-xs-1"></div>
+				<div class="navbar-header col-xs-5">
+					<a class="navbar-brand" href="#"><h1><img src="{{ app.request.basepath }}/images/logo.png" width="50" height="50" alt="Responsive image"> Home4ll</h1>  </a>
+				</div>
+				<br/>
+				<div class="col-xs-6">	 
+					<form class="form-horizontal row Lblanca"  role="form" action="{{ path('login_check') }}" method="post">
+						{% if is_granted('ROLE_USER') %}
+							<div class="form-group col-xs-8"></div>
+							<div class="form-group col-xs-4" align = "right">
+								<p>Bienvenido {{ app.security.token.user.username }}</p>
+								<p><a class="btn btn-default btn-xs" href="{{ path('logout') }}"><strong>Cerrar Sesión</strong></a></p>
+							</div>
+						{% else %}	   
+							<div class="form-group col-xs-4">
+								<label>Correo Electrónico</label>
+								<input class="form-control" id="username" type="email" name="email" value="{{ last_username }}" placeholder="Introduzca correo electronico" required>
+							</div>
+							<div class="col-xs-1"></div>
+							<div class="form-group col-xs-4">
+								<label class= "Lblanca">Contraseña</label>
+								<input class="form-control" id="password" type="password" name="password"  placeholder="Introduzca contraseña">
+							</div>
+							<div class="col-xs-1"></div>
+							<div class="form-group col-xs-2">
+								<br/>
+								<input type="submit" class="btn btn-primary" value="Iniciar sesión">
+							</div>
+							{% if error %}
+								<div class="error Lblanca">{{ error }}</div>
+							{% endif %}
+						{% endif %}
+					</form>      
+				</div>
+			</div>
+		</nav>
+		{% block inicio%}{% endblock %}
+	</body>
 </html>
 
 
