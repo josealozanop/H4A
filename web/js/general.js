@@ -1,6 +1,13 @@
 $(document).ready(function(){
 	todo();
+	smart();
 });
+
+function smart(){
+	$('#bu-buscar').click(function(){
+		alert();
+	})
+}
 
 function todo(){
 	$("#bprimario").click(function(){
