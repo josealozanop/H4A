@@ -25,37 +25,54 @@
     </head>
     <body>
 		<nav class=" navbar-inverse navbar-fixed-top" role="navigation">
-			<div class='row'>
+			<div class='row' style='display: flex;align-items: center;'>
 				
-				<div class='col-lg-1'>
+				<div class='col-md-1'>
 					<img src="{{ app.request.basepath }}/images/logo.svg" alt="Responsive image" style='float:right'></img>
 				</div>
-				<div class='col-lg-2'>
+				<div class='col-md-2 '>
 					<h1 class='Lblanca titulo'>Home4ll</h1>
 				</div>
 				{% if is_granted('ROLE_USER') %}
-					<div class='col-lg-4'></div>
-					<div class="form-group col-lg-3 bienvenido">
+					<div class='col-lg-3 col-xs-12'></div>
+					<div class="form-group col-lg-2 bienvenido">
 						<span style='float:right'>Bienvenido {{ app.security.token.user.username }} </span>
 					</div>
-					<div class="form-group col-lg-2" style='padding-top:2em;padding-right:2em'>
-								<a class="btn btn-default btn-mg center-block" href="{{ path('logout') }}" ><strong>Cerrar Sesión</strong></a>
+					
+					<div class='no-margin-bot form-group col-lg-2 '>
+						<!--<input type="text" class="search-query center-block"><button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>-->
+						<!--<div class='col-lg-10' style='padding-right:0px'>
+							<input class="form-control" id="username" type="email" name="email" value="{{ last_username }}" placeholder="Introduzca correo electronico">
+						</div>
+						<div class='col-lg-2' style='padding-left:0px'>
+							<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+						</div>-->
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Buscar..."/ >
+							<span class="input-group-addon" >
+								<i class="glyphicon glyphicon-search"></i>
+							</span>
+						</div>
+					</div>
+					
+					<div class="form-group col-lg-2 " style='padding-right:2em'>
+						<a class="btn btn-default btn-mg center-block" href="{{ path('logout') }}" ><strong><i class='glyphicon glyphicon-log-out' style='color:blue;'></i> Cerrar Sesión</strong></a>
 					</div>
 				
 				{% else %}
-					<div class="col-lg-3"></div>
-					<form class="row Lblanca col-lg-6"  role="form" action="{{ path('login_check') }}" method="post">
-						<div class="form-group col-lg-5" style='padding-top:1em'>
+					<div class="col-md-3"></div>
+					<form class="row Lblanca col-md-6"  role="form" action="{{ path('login_check') }}" method="post"  style='display: flex;align-items: center;'>
+						<div class="form-group col-md-5">
 							<label class='Lblanca'>Correo Electrónico</label>
 							<input class="form-control" id="username" type="email" name="email" value="{{ last_username }}" placeholder="Introduzca correo electronico" required>
 						</div>
 						
-						<div class="form-group col-lg-5" style='padding-top:1em;padding-left:1em'>
+						<div class="form-group col-md-5" style='padding-left:1em'>
 							<label class= "Lblanca">Contraseña</label>
 							<input class="form-control" id="password" type="password" name="password"  placeholder="Introduzca contraseña">
 						</div>
 											
-						<div class="form-group col-lg-2" style='padding-top:2.7em;padding-left:1em'>
+						<div class="col-md-2" style='padding-left:1em;'>
 							<input type="submit" class="btn btn-primary" value="Iniciar sesión">
 						</div>
 						

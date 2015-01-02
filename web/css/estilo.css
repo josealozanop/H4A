@@ -12,11 +12,15 @@
 }
 
 .titulo{
-	padding-top : 3%;
+	padding-top : 0px;
+	margin : 0px;
 }
 
 .bienvenido{
 	color : #FFF;
 	font-size : large;
-	padding-top : 1.8em;
+}
+
+.form-group{
+	margin-bottom : 0px !important;
 }
