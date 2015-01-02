@@ -25,6 +25,49 @@
     </head>
     <body>
 		<nav class=" navbar-inverse navbar-fixed-top" role="navigation">
+			<div class='row'>
+				
+				<div class='col-lg-1'>
+					<img src="{{ app.request.basepath }}/images/logo.svg" alt="Responsive image" style='float:right'></img>
+				</div>
+				<div class='col-lg-2'>
+					<h1 class='Lblanca titulo'>Home4ll</h1>
+				</div>
+				{% if is_granted('ROLE_USER') %}
+					<div class='col-lg-4'></div>
+					<div class="form-group col-lg-3 bienvenido">
+						<span style='float:right'>Bienvenido {{ app.security.token.user.username }} </span>
+					</div>
+					<div class="form-group col-lg-2" style='padding-top:2em;padding-right:2em'>
+								<a class="btn btn-default btn-mg center-block" href="{{ path('logout') }}" ><strong>Cerrar Sesión</strong></a>
+					</div>
+				
+				{% else %}
+					<div class="col-lg-3"></div>
+					<form class="row Lblanca col-lg-6"  role="form" action="{{ path('login_check') }}" method="post">
+						<div class="form-group col-lg-5" style='padding-top:1em'>
+							<label class='Lblanca'>Correo Electrónico</label>
+							<input class="form-control" id="username" type="email" name="email" value="{{ last_username }}" placeholder="Introduzca correo electronico" required>
+						</div>
+						
+						<div class="form-group col-lg-5" style='padding-top:1em;padding-left:1em'>
+							<label class= "Lblanca">Contraseña</label>
+							<input class="form-control" id="password" type="password" name="password"  placeholder="Introduzca contraseña">
+						</div>
+											
+						<div class="form-group col-lg-2" style='padding-top:2.7em;padding-left:1em'>
+							<input type="submit" class="btn btn-primary" value="Iniciar sesión">
+						</div>
+						
+						{% if error %}
+							<div class="error Lblanca">{{ error }}</div>
+						{% endif %}
+					</form>
+				{% endif %}
+				</form>
+			</div>
+			
+			<!--
 			<div class="container-fluid">
 				<div class="col-xs-1"></div>
 				<div class="navbar-header col-xs-5">
@@ -34,10 +77,12 @@
 				<div class="col-xs-6">	 
 					<form class="form-horizontal row Lblanca"  role="form" action="{{ path('login_check') }}" method="post">
 						{% if is_granted('ROLE_USER') %}
-							<div class="form-group col-xs-8"></div>
-							<div class="form-group col-xs-4" align = "right">
-								<p>Bienvenido {{ app.security.token.user.username }}</p>
-								<p><a class="btn btn-default btn-xs" href="{{ path('logout') }}"><strong>Cerrar Sesión</strong></a></p>
+							<div class="form-group col-xs-1 col-lg-1"></div>
+							<div class="form-group col-xs-3 col-lg-3" align = "right">
+								Bienvenido {{ app.security.token.user.username }}
+							</div>
+							<div class="form-group col-xs-3 col-lg-3" align = "right">
+								<a class="btn btn-default btn-xs" href="{{ path('logout') }}"><strong>Cierrar Sesión</strong></a>
 							</div>
 						{% else %}	   
 							<div class="form-group col-xs-4">
@@ -60,7 +105,7 @@
 						{% endif %}
 					</form>      
 				</div>
-			</div>
+			</div>-->
 		</nav>
 		{% block inicio%}{% endblock %}
 	</body>

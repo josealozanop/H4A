@@ -10,3 +10,13 @@
 .Lblanca{
 	color: #FFF;
 }
+
+.titulo{
+	padding-top : 3%;
+}
+
+.bienvenido{
+	color : #FFF;
+	font-size : large;
+	padding-top : 1.8em;
+}
