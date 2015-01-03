@@ -39,9 +39,7 @@ $app->get('/login_check', function(Request $request) use ($app) {
 
 $app->get('/_profiler/wdt/{id}', function(Request $request) use ($app) {
 
-
-	return $app->redirect($app["url_generator"]->generate("homepage"));
-	//return $app['twig']->render('index.html', array());
+	return $app->redirect($app["url_generator"]->generate("tutor"));
 })
 ->bind('wdt')
 ;
@@ -54,13 +52,13 @@ $app->get('/pepe', function () use ($app) {
 })
 ->bind('pepe')
 ;
-$app->get('/admin', function () use ($app) {
+$app->get('/tutor', function () use ($app) {
 	$variable="hola";
-    return $app['twig']->render('registro.html', array(
+    return $app['twig']->render('tutor.html', array(
 	'variable' => $variable
 	));
 })
-->bind('admin')
+->bind('tutor')
 ;
 
 $app->post('/register', function(Request $request) use ($app){
