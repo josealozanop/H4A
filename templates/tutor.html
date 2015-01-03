@@ -1,6 +1,7 @@
 {% extends "layout.twig.html" %}
 
 	{% block contenido %}
+	<p>Usuario {{ app.security.token.user.username }}!</p>
 	<div class="alert alert-info row" role="alert">
 		<span class="fa-stack fa-2x col-sm-1">
 			<i class="fa fa-square-o fa-stack-2x"></i>
@@ -17,12 +18,11 @@
 			<i class="fa fa-square-o fa-stack-2x"></i>
 			<i class="fa fa-wheelchair fa-stack-1x"></i>
 		</span>
-		<div class="col-sm-11 row">
-			
-		<ul type="none">
-			<li><a href="#"><i class="fa fa-circle fa-fw"></i>&nbsp; <font size="6">Ver Usuarios</font></a></li>
-			<li><a href="#"><i class="fa fa-circle fa-fw"></i>&nbsp; <font size="6">Crear Usuario</font></a></li>
-		</ul>	
+		<div class="col-sm-11 row">			
+			<ul class="tamxl" type="disc">
+				<li><a href="#">Ver Usuarios</a></li>
+				<li><a href="{{ path('newuser') }}">Crear Usuarios</a></li>
+			</ul>	
 		</div>
 	</div>
 	<div class="alert alert-info row" role="alert">

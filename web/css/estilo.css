@@ -26,3 +26,10 @@ a:visited {text-decoration:none;}
 .form-group{
 	margin-bottom : 0px !important;
 }
+
+.tamxl {
+    font-size:xx-large;
+}
+.taml {
+    font-size:x-large;
+}

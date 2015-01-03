@@ -11,10 +11,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 
 $app->get('/', function(Request $request) use ($app) {
-
-   
-
-
     return $app['twig']->render('index.html', array(
         'error' => $app['security.last_error']($request),
         'last_username' => $app['session']->get('_security.last_username'),
@@ -25,10 +21,6 @@ $app->get('/', function(Request $request) use ($app) {
 ;
 
 $app->get('/login_check', function(Request $request) use ($app) {
-
-	
-
-
     return $app['twig']->render('index.html', array(
         'error' => $app['security.last_error']($request),
         'last_username' => $app['session']->get('_security.last_username'),
@@ -43,7 +35,6 @@ $app->get('/_profiler/wdt/{id}', function(Request $request) use ($app) {
 })
 ->bind('wdt')
 ;
-
 $app->get('/pepe', function () use ($app) {
 	$variable="hola";
     return $app['twig']->render('registro.html', array(
@@ -52,18 +43,83 @@ $app->get('/pepe', function () use ($app) {
 })
 ->bind('pepe')
 ;
+$app->get('/newuser', function () use ($app) {
+$ipAddress=$_SERVER['REMOTE_ADDR'];
+			$comando=false;
+			if(($ipAddress==$_SERVER['SERVER_ADDR'] || $ipAddress=='127.0.0.1' || $ipAddress=='::1') && (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')){
+				$comando = 'ipconfig /all';
+				ob_start();
+				system($comando);
+				$mycom=ob_get_contents();
+				ob_clean();
+				$findme = "sica";
+				$pmac = strpos($mycom, $findme);
+				$mac=substr($mycom,($pmac+32),17);
+			}
+			else{
+				$mac=false;
+				if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+					$comando = 'arp -a ';
+					ob_start();
+					$arp=system($comando.$ipAddress);
+					ob_clean();
+					$lines=explode("\n", $arp);
+					foreach($lines as $line)
+					{
+					   $cols=preg_split('/\s+/', trim($line));
+					   if ($cols[0]==$ipAddress)
+					   {
+						   $mac=$cols[1];
+					   }
+					}
+				} else {
+					$comando = 'arp -a | grep '.$ipAddress.' | awk \'{print $4}\'';
+					$mac=system($comando);
+				}
+			}
+    return $app['twig']->render('newuser.html', array('mac' => $mac));
+})
+->bind('newuser')
+;
 $app->get('/tutor', function () use ($app) {
-	$variable="hola";
-    return $app['twig']->render('tutor.html', array(
-	'variable' => $variable
-	));
+    return $app['twig']->render('tutor.html', array());
 })
 ->bind('tutor')
 ;
-
-$app->post('/register', function(Request $request) use ($app){
- 
+$app->post('/registerdisc', function(Request $request) use ($app){	
+	$username = $request->get('discuser');
+	$pass =$request->get('discpass');
+	$nombre =  $request->get('discnom');
+	$discvis =$request->get('discvis');
+	$mac =$request->get('discmac');
+	$encoder = new MessageDigestPasswordEncoder();
+	$encodePass = $encoder->encodePassword($pass, '');
+	if($discvis==null){
+		$discvis=0;
+	}
+	else{
+		$discvis=1;
+	}
+	if($discaudit==null){
+		$discaudit=0;
+	}
+	else{
+		$discaudit=1;
+	}
+	if($discmotriz==null){
+		$discmotriz=0;
+	}
+	else{
+		$discmotriz=1;
+	}
+	$app['db']->insert('discapacitados', array('discuser' => $username, 'discnombre' => $nombre, 'discpass' => $encodePass,'discmac'=>$mac,'discvis'=>$discvis,'discaudit'=>$discaudit,'discmotriz'=>$discmotriz));
 	
+	return $app->redirect($app["url_generator"]->generate("tutor"));
+})
+->bind('registerdisc')
+;	
+
+$app->post('/register', function(Request $request) use ($app){	
 	$username =  $request->get('email');
 	$pass =$request->get('password');
 	$encoder = new MessageDigestPasswordEncoder();

@@ -5,7 +5,7 @@
 		<div class="container" data-scrollreveal="enter donw after 0s over 1s">
 			<div class="jumbotron">
 				{% if is_granted('ROLE_USER') %}
-					<p>Bienvenido {{ app.security.token.user.username }}!</p>
+					
 					{% block contenido %}{% endblock %}
 					
 				{% else %}
