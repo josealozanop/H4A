@@ -7,20 +7,26 @@
 			<i class="fa fa-square-o fa-stack-2x"></i>
 			<i class="fa fa-user fa-stack-1x"></i>
 		</span>
+		<div class="col-sm-11 row" style='padding-left:45px;'>			
+			<ul class="tamxl" type="disc">
+				<li><a href="#">Modificar perfil</a></li>
+			</ul>	
+		</div>
+		<!--
 		<div class="col-sm-11 row">
 			<ul type="none">
 				<li><a href="#"><i class="fa fa-circle fa-fw"></i>&nbsp; <font size="6">Modificar Perfil</font></a></li>
 			</ul>	
-		</div>
+		</div>-->
 	</div>
 	<div class="alert alert-info row" role="alert">
 		<span class="fa-stack fa-2x col-sm-1">
 			<i class="fa fa-square-o fa-stack-2x"></i>
 			<i class="fa fa-wheelchair fa-stack-1x"></i>
 		</span>
-		<div class="col-sm-11 row">			
+		<div class="col-sm-11 row" style='padding-left:45px;'>			
 			<ul class="tamxl" type="disc">
-				<li><a href="#">Ver Usuarios</a></li>
+				<li><a href="{{ path('verdisc') }}">Ver Usuarios</a></li>
 				<li><a href="{{ path('newuser') }}">Crear Usuarios</a></li>
 			</ul>	
 		</div>
@@ -30,10 +36,10 @@
 			<i class="fa fa-square-o fa-stack-2x"></i>
 			<i class="fa fa-home fa-stack-1x"></i>
 		</span>
-		<div class="col-sm-11 row">
-			<ul type="none">
-				<li><a href="#"><i class="fa fa-circle fa-fw"></i>&nbsp; <font size="6">Ver Hogares</font></a></li>
-				<li><a href="#"><i class="fa fa-circle fa-fw"></i>&nbsp; <font size="6">Crear Hogar</font></a></li>
+		<div class="col-sm-11 row" style='padding-left:45px;'>			
+			<ul class="tamxl" type="disc">
+				<li><a href="#">Ver Hogares</a></li>
+				<li><a href="{{ path('newuser') }}">Crear Hogar</a></li>
 			</ul>	
 		</div>
 	</div>

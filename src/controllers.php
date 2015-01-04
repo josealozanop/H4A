@@ -43,6 +43,20 @@ $app->get('/pepe', function () use ($app) {
 })
 ->bind('pepe')
 ;
+$app->get('/verdisc', function (Request $request) use ($app) {
+	$user = $app['security']->getToken()->getUser();
+	//$variable="hola";
+	$username= $user->getUsername();
+	$sql = "SELECT * FROM discapacitados D INNER JOIN user_disc R ON D.id_disc = R.id_disc INNER JOIN users U ON R.id_user = U.id_user WHERE U.username = '$username'";
+    $discapacitados = $app['db']->fetchAll($sql);
+	
+    return $app['twig']->render('verdisc.html', array(
+	'discapacitados' => $discapacitados
+	));
+})
+->bind('verdisc')
+;
+
 $app->get('/newuser', function () use ($app) {
 $ipAddress=$_SERVER['REMOTE_ADDR'];
 			$comando=false;
@@ -91,6 +105,8 @@ $app->post('/registerdisc', function(Request $request) use ($app){
 	$pass =$request->get('discpass');
 	$nombre =  $request->get('discnom');
 	$discvis =$request->get('discvis');
+	$discmotriz =$request->get('discmotriz');
+	$discaudit =$request->get('discaudit');
 	$mac =$request->get('discmac');
 	$encoder = new MessageDigestPasswordEncoder();
 	$encodePass = $encoder->encodePassword($pass, '');
