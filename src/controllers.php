@@ -43,6 +43,22 @@ $app->get('/pepe', function () use ($app) {
 })
 ->bind('pepe')
 ;
+
+$app->get('/hola', function () use ($app) {
+	$variable="hola";
+	$usuarios = $app['db']->fetchAll('SELECT username FROM users');
+	$text = json_encode($usuarios); 
+	$tam = count ($usuarios);
+    return $app['twig']->render('vacia.html', array(
+	'variable' => $usuarios,
+	'tam' => $tam,
+	'text' => $text
+	));
+})
+->bind('hola')
+;
+
+
 $app->get('/verdisc', function (Request $request) use ($app) {
 	$user = $app['security']->getToken()->getUser();
 	//$variable="hola";
