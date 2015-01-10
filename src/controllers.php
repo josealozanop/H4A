@@ -58,6 +58,13 @@ $app->get('/hola', function () use ($app) {
 ->bind('hola')
 ;
 
+$app->get('/get/tutor', function () use ($app) {
+	$usuarios = $app['db']->fetchAll('SELECT username FROM users');
+	$text = json_encode($usuarios); 
+	return new Response($text);
+})
+;
+
 
 $app->get('/verdisc', function (Request $request) use ($app) {
 	$user = $app['security']->getToken()->getUser();

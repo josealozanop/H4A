@@ -4,8 +4,17 @@ $(document).ready(function(){
 });
 
 function smart(){
-	$('#bu-buscar').click(function(){
-		alert();
+	$('#abc').click(function(){
+		 $.ajax({
+
+                type: "GET",
+                url: "get/tutor",
+                data: '',
+                success: function(msg){
+                    alert(msg);
+                }
+
+            }); // Ajax Call
 	})
 }
 
