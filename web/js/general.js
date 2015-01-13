@@ -57,3 +57,8 @@ $("#bsecundario").click(function(){
 	
 });
 }
+function pregunta(){ 
+    if (confirm('Estas seguro de eliminar ese usuario?')){ 
+       document.tuformulario.submit() 
+    } 
+} 

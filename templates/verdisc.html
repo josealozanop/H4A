@@ -15,9 +15,22 @@
 					<tr>
 						<td>{{discapacitado.discuser}}</td>
 						<td>{{discapacitado.discnombre}}</td>
-						<td>{{discapacitado.discmac}}</td>	
-						<td>{{discapacitado.discmac}}</td>	
+						<td>{{discapacitado.discmac}}</td>
 						<td>
+							{% if discapacitado.discvis !=0 %} visual{%endif%}
+							{% if discapacitado.discmotriz !=0 %} motriz{%endif%}
+							{% if discapacitado.discaudit !=0 %} auditiva{%endif%}
+							{% if discapacitado.discaudit == 0 and discapacitado.discmotriz == 0 and discapacitado.discvis == 0 %}ninguna{%endif%}
+						</td>
+						<td>
+						<form name=tuformulario action="http://www.desarrolloweb.com"> 
+<input type="text" name="cualquiercampo"> 
+<input type=button onclick="preguntabutton>
+</form>
+<a data-href="delete.php?id=23" data-toggle="modal" data-target="#confirm-delete" href="#">Delete record #23</a><br>
+<a data-href="delete.php?id=54" data-toggle="modal" data-target="#confirm-delete" href="#">Delete record #54</a>
+<a class="ask" href="mipagina.html">Borrar registro</a>
+<a class="ask-custom" href="otrapagina.html()"><i class="fa fa-eye fa-lg" style='padding-left:10px;'></i></a>
 							<i class="fa fa-eye fa-lg" style='padding-left:10px;'></i>
 							<i class="fa fa-pencil-square-o" style='padding-left:10px;'></i>	
 							<i class="fa fa-trash" style='padding-left:10px;'></i>
