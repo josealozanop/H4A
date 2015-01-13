@@ -1,21 +1,29 @@
 $(document).ready(function(){
 	todo();
-	smart();
+	smart_search();
 });
 
-function smart(){
-	$('#abc').click(function(){
-		 $.ajax({
+function smart_search(){
+		
 
+		 $.ajax({
                 type: "GET",
                 url: "get/tutor",
                 data: '',
                 success: function(msg){
-                    alert(msg);
+                    var tutors = JSON.parse(msg);
+					var names = new Array();
+					for (i in tutors){
+						names.push(tutors[i].username);
+					}
+					
+					for (i in names){
+						$('#datalist-navbar-searchList').append("<option value='"+names[i]+"'></option>");
+						console.log(names[i]);
+					}
                 }
-
             }); // Ajax Call
-	})
+	
 }
 
 function todo(){

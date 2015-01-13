@@ -1,0 +1,55 @@
+<nav class=" navbar-inverse navbar-fixed-top" role="navigation">
+	<div class='row' style='display: flex;align-items: center;'>
+		
+		<div class='col-md-2'>
+			<img src="{{ app.request.basepath }}/images/logo.svg" alt="Responsive image" width="70" height="70" style='float:right'></img>
+		</div>
+		<div class='col-md-2 '>
+			<h1 class='Lblanca titulo'>Home4ll</h1>
+		</div>
+		{% if is_granted('ROLE_USER') %}
+			<div class='col-lg-1 col-xs-12'></div>
+			<div class="form-group col-lg-2 bienvenido">
+				<span style='float:right'>Bienvenido {{ app.security.token.user.username }} </span>
+			</div>
+			
+			<div class='no-margin-bot form-group col-lg-2'>
+				<div class = 'col-lg-10' style='padding-right:0px'>
+					<input type="text" class="form-control" placeholder="Buscar..." id='inText-navbar-search' list='datalist-navbar-searchList'></input>
+					<datalist id="datalist-navbar-searchList">
+					</datalist>
+				</div>
+				<div class = 'col-lg-2' style='padding-left:0px'>
+					<button style='inline' class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+				</div>
+				
+			</div>
+			
+			<div class="form-group col-lg-2 " style='padding-right:2em'>
+				<a class="btn btn-default btn-mg center-block" href="{{ path('logout') }}" ><strong><i class='glyphicon glyphicon-log-out' style='color:blue;'></i> Cerrar Sesión</strong></a>
+			</div>
+		
+		{% else %}
+			<div class="col-md-1"></div>
+			<form class="row Lblanca col-md-6"  role="form" action="{{ path('login_check') }}" method="post"  style='display: flex;align-items: center;'>
+				<div class="form-group col-md-5">
+					<label class='Lblanca'>Correo Electrónico</label>
+					<input class="form-control input-sm" id="username" type="email" name="email" value="{{ last_username }}" placeholder="Introduzca correo electronico" required>
+				</div>
+				
+				<div class="form-group col-md-5" style='padding-left:1em'>
+					<label class= "Lblanca">Contraseña</label>
+					<input class="form-control input-sm" id="password" type="password" name="password"  placeholder="Introduzca contraseña">
+				</div>
+									
+				<div class="col-md-2" style='padding-left:1em;'>
+					<input type="submit" class="btn btn-primary btn-sm" value="Iniciar sesión">
+				</div>
+				
+				{% if error %}
+					<div class="error Lblanca">{{ error }}</div>
+				{% endif %}
+			</form>
+		{% endif %}
+	</div>
+</nav>

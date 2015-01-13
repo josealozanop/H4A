@@ -5,9 +5,7 @@
 		<div class="container" data-scrollreveal="enter donw after 0s over 1s">
 			<div class="jumbotron">
 				{% if is_granted('ROLE_USER') %}
-					
 					{% block contenido %}{% endblock %}
-					
 				{% else %}
 				<div class="row">
 					<div class="col-lg-6 col-sm-6">
