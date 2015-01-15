@@ -1,0 +1,15 @@
+/*css de guía con los colores y degradados que vamos usando, pa darles nombre*/
+
+.grey{
+	color : #EEE;
+}
+
+.blue-gradient{
+	padding-left : 8%;
+	padding-top : 30px;
+	position : relative;
+	background: -webkit-linear-gradient(#ADD8E6, #4D8DC7);
+	background: -o-linear-gradient(red, blue); 
+	background: -moz-linear-gradient(red, blue); 
+	background: linear-gradient(#ADD8E6, #8BB5DA);
+}

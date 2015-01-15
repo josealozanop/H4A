@@ -1,0 +1,38 @@
+.tutor-panel{
+	padding-left : 8%;
+	padding-top : 15px;
+	position : relative;
+	background: -webkit-linear-gradient(#9acfea, #ADD8E6);
+	background: -o-linear-gradient(#9acfea, #ADD8E6); 
+	background: -moz-linear-gradient(#9acfea, #ADD8E6); 
+	background: linear-gradient(#ADD8E6, #9acfea);
+	border-width: normal !important;	
+}
+
+.tutor-panel > ul {
+	font-size : xx-large;
+	color : #236073;
+}
+
+.tutor-panel > ul  > li > a{
+	font-family: 'Ubuntu';
+	color : #236073;
+}
+
+.tutor-panel > i {
+	position : absolute;
+	top : 0;
+	left : 0;
+}
+
+.tutor-panel > span.icon{
+	background-color : #eee;
+	position : absolute;
+	top : -1em;
+	left : 2%;	
+	padding : 0px;
+	background: -webkit-linear-gradient(#eee, #A7D5E7);
+	background: -o-linear-gradient(#eee, #ADD8E6,#A7D5E7); 
+	background: -moz-linear-gradient(#A7D5E7,#ADD8E6, #eee); 
+	background: linear-gradient(#eee, #A7D5E7);
+}
