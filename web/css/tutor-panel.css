@@ -36,3 +36,17 @@
 	background: -moz-linear-gradient(#A7D5E7,#ADD8E6, #eee); 
 	background: linear-gradient(#eee, #A7D5E7);
 }
+
+/*segunda version*/
+
+div.tutor-panel2{
+-webkit-box-shadow: 7px 7px 8px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 7px 8px 0px rgba(0,0,0,0.75);
+box-shadow: 7px 7px 8px 0px rgba(0,0,0,0.75);
+}
+
+div.tutor-panel2>div.panel-heading>span.title{
+	font-size : xx-large;
+
+}
+
