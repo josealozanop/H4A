@@ -5,10 +5,10 @@ $(document).ready(function(){
 
 function smart_search(){
 		
-
+		$('#inText-navbar-search').click(function(){
 		 $.ajax({
                 type: "GET",
-                url: "get/tutor",
+                url: "get/tutors",
                 data: '',
                 success: function(msg){
                     var tutors = JSON.parse(msg);
@@ -23,7 +23,7 @@ function smart_search(){
 					}
                 }
             }); // Ajax Call
-	
+		});
 }
 
 function todo(){

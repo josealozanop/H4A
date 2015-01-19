@@ -35,6 +35,7 @@ $app->get('/_profiler/wdt/{id}', function(Request $request) use ($app) {
 })
 ->bind('wdt')
 ;
+
 $app->get('/pepe', function () use ($app) {
 	$variable="hola";
     return $app['twig']->render('registro.html', array(
@@ -58,7 +59,7 @@ $app->get('/hola', function () use ($app) {
 ->bind('hola')
 ;
 
-$app->get('/get/tutor', function () use ($app) {
+$app->get('/get/tutors', function () use ($app) {
 	$usuarios = $app['db']->fetchAll('SELECT username FROM users');
 	$text = json_encode($usuarios); 
 	return new Response($text);
@@ -118,11 +119,13 @@ $ipAddress=$_SERVER['REMOTE_ADDR'];
 })
 ->bind('newuser')
 ;
+
 $app->get('/tutor', function () use ($app) {
     return $app['twig']->render('tutor.html', array());
 })
 ->bind('tutor')
 ;
+
 $app->post('/registerdisc', function(Request $request) use ($app){	
 	$username = $request->get('discuser');
 	$pass =$request->get('discpass');
