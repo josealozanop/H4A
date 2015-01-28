@@ -47,7 +47,7 @@ $app->get('/pepe', function () use ($app) {
 
 $app->get('/hola', function () use ($app) {
 	$variable="hola";
-	$usuarios = $app['db']->fetchAll('SELECT username FROM users');
+	$usuarios = $app['db']->fetchAll('SELECT nUsuario_tutor FROM tutor');
 	$text = json_encode($usuarios); 
 	$tam = count ($usuarios);
     return $app['twig']->render('vacia.html', array(
@@ -60,7 +60,7 @@ $app->get('/hola', function () use ($app) {
 ;
 
 $app->get('/get/tutors', function () use ($app) {
-	$usuarios = $app['db']->fetchAll('SELECT username FROM users');
+	$usuarios = $app['db']->fetchAll('SELECT nUsuario_tutor FROM users');
 	$text = json_encode($usuarios); 
 	return new Response($text);
 })
@@ -167,7 +167,7 @@ $app->post('/register', function(Request $request) use ($app){
 	$encoder = new MessageDigestPasswordEncoder();
 	$encodePass = $encoder->encodePassword($pass, '');
 	
-	$app['db']->insert('users', array('username' => $username, 'password' => $encodePass,'roles'=>'ROLE_USER'));
+	$app['db']->insert('tutor', array('nUsuario_tutor' => $username, 'pass_tutor' => $encodePass,'roles'=>'ROLE_USER'));
 	
 	$params = array(
 		'email' => $username,
