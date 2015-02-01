@@ -1,77 +1,34 @@
-.tutor-panel{
-	padding-left : 8%;
-	padding-top : 15px;
-	position : relative;
-	background: -webkit-linear-gradient(#9acfea, #ADD8E6);
-	background: -o-linear-gradient(#9acfea, #ADD8E6); 
-	background: -moz-linear-gradient(#9acfea, #ADD8E6); 
-	background: linear-gradient(#ADD8E6, #9acfea);
-	border-width: normal !important;	
-}
-
-.tutor-panel > ul {
-	font-size : xx-large;
-	color : #236073;
-}
-
-.tutor-panel > ul  > li > a{
-	font-family: 'Ubuntu';
-	color : #236073;
-}
-
-.tutor-panel > i {
-	position : absolute;
-	top : 0;
-	left : 0;
-}
-
-.tutor-panel > span.icon{
-	background-color : #eee;
-	position : absolute;
-	top : -1em;
-	left : 2%;	
-	padding : 0px;
-	background: -webkit-linear-gradient(#eee, #A7D5E7);
-	background: -o-linear-gradient(#eee, #ADD8E6,#A7D5E7); 
-	background: -moz-linear-gradient(#A7D5E7,#ADD8E6, #eee); 
-	background: linear-gradient(#eee, #A7D5E7);
-}
-
-/*segunda version*/
-
-div.tutor-panel2{
+div.data-panel{
 -webkit-box-shadow: 7px 7px 8px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 7px 7px 8px 0px rgba(0,0,0,0.75);
 box-shadow: 7px 7px 8px 0px rgba(0,0,0,0.75);
 }
 
-div.tutor-panel2>div.panel-heading>span.title{
+div.data-panel>div.panel-heading>span.title{
 	font-size : xx-large;
 	font-family: 'Raleway', sans-serif;
 	font-weight : bold;
 	vertical-align : middle;
 }
 
-div.tutor-panel2>div.panel-body{
+div.data-panel>div.panel-body{
 	font-family: 'Open Sans', sans-serif;
 	font-size : x-large;
-
-
 	background: #a1dbff;
-background: -moz-linear-gradient(top, #a1dbff 0%, #cbebff 0%, #f0f9ff 100%);
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a1dbff), color-stop(0%,#cbebff), color-stop(100%,#f0f9ff));
-background: -webkit-linear-gradient(top, #a1dbff 0%,#cbebff 0%,#f0f9ff 100%);
-background: -o-linear-gradient(top, #a1dbff 0%,#cbebff 0%,#f0f9ff 100%);
-background: -ms-linear-gradient(top, #a1dbff 0%,#cbebff 0%,#f0f9ff 100%);
-background: linear-gradient(to bottom, #a1dbff 0%,#cbebff 0%,#f0f9ff 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a1dbff', endColorstr='#f0f9ff',GradientType=0 );
+	background: -moz-linear-gradient(top, #a1dbff 0%, #cbebff 0%, #f0f9ff 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a1dbff), color-stop(0%,#cbebff), color-stop(100%,#f0f9ff));
+	background: -webkit-linear-gradient(top, #a1dbff 0%,#cbebff 0%,#f0f9ff 100%);
+	background: -o-linear-gradient(top, #a1dbff 0%,#cbebff 0%,#f0f9ff 100%);
+	background: -ms-linear-gradient(top, #a1dbff 0%,#cbebff 0%,#f0f9ff 100%);
+	background: linear-gradient(to bottom, #a1dbff 0%,#cbebff 0%,#f0f9ff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a1dbff', endColorstr='#f0f9ff',GradientType=0 );
 }
 
-div.tutor-panel2>div.panel-body>ul>li{
+div.data-panel>div.panel-body>ul>li{
 	color : #001f3f;
 }
 
-div.tutor-panel2>div.panel-body>ul>li>a{
+div.data-panel>div.panel-body>ul>li>a{
 	color : #001f3f;
 }
 
