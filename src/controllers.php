@@ -60,8 +60,9 @@ $app->get('/hola', function () use ($app) {
 ;
 
 $app->get('/get/tutors', function () use ($app) {
-	$usuarios = $app['db']->fetchAll('SELECT nUsuario_tutor FROM users');
-	$text = json_encode($usuarios); 
+	$tutores = $app['db']->fetchAll('SELECT nUsuario_tutor FROM tutor');
+	$usuarios = $app['db']->fetchAll('SELECT nUsuario_usuario FROM usuario');
+	$text = '['.json_encode($usuarios).','.json_encode($tutores).']'; 
 	return new Response($text);
 })
 ;

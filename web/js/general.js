@@ -11,15 +11,22 @@ function smart_search(){
                 url: "get/tutors",
                 data: '',
                 success: function(msg){
-                    var tutors = JSON.parse(msg);
+                    var todos = JSON.parse(msg);
+					var usuarios = todos[0];
+					var tutores = todos[1];
 					var names = new Array();
-					for (i in tutors){
-						names.push(tutors[i].username);
+					
+					for (i in tutores){
+						names.push(tutores[i].nUsuario_tutor+' (tutor)');
+					}
+					
+					for (i in usuarios){
+						names.push(usuarios[i].nUsuario_usuario+' (usuario)');
 					}
 					
 					for (i in names){
 						$('#datalist-navbar-searchList').append("<option value='"+names[i]+"'></option>");
-						console.log(names[i]);
+						//console.log(names[i]);
 					}
                 }
             }); // Ajax Call

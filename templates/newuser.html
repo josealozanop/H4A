@@ -1,42 +1,38 @@
 {% extends "layout.twig.html" %}
-
-	{% block contenido %}
-	<font size="7" style="font-weight: bold;">Crear nuevo usuario</font>
-	<form action="{{ path('registerdisc') }}" method="post" role="form" style='padding-top:5px;'>
-	  <div class="form-group">
-		<label class="taml">Nombre de usuario</label>
-		<input type="text" class="form-control" name="discuser" id="discuser" 
-			   placeholder="Introduzca su nombre de usuario">
-	  </div>
-	  <div class="form-group">
-		<label class="taml"  for="ejemplo_password_1">Contraseña</label>
-		<input type="password" class="form-control" name="discpass" 
-			   placeholder="Contraseña">
-	  </div>
-	  <div class="taml"  class="form-group">
-		<label for="ejemplo_email_1">Nombre</label>
-		<input type="text" class="form-control" name="discnom"
-			   placeholder="Introduzca su nombre de usuario">
-	  </div>
-	  <div class="form-group">
-		<label class="taml"  for="ejemplo_mac">MAC (MAC de este equipo por defecto)</label>
-		<input type="text" class="form-control" name="discmac" value={{mac}}>
-	  </div>
-	  <div class="form-group">
-	  <label class="taml"  for="ejemplo_mac">Tipo de discapacnamead</label>
-	<ul type="none">
-	  <li><input type="checkbox" name="discvis" value="opcion_1"> Visual</li>
-	  <li><input type="checkbox" name="discaudit" value="opcion_1"> Auditiva</li>
-	  <li><input type="checkbox" name="discmotriz" value="opcion_1"> Motriz</li>
-	  </ul>
-	  </div>
-	  <div class="form-group">
-		<button type="submit" class="btn btn-default">Crear</button>
-	  </div>
-	</form>
-	
-
-			
-	{% endblock %}
+{% block contenido %}
+<font size="7" style="font-weight: bold;">Crear nuevo usuario</font>
+<form action="{{ path('registerdisc') }}" method="post" role="form" style='padding-top:5px;'>
+<div class="form-group">
+	<label class="taml">Nombre de usuario</label>
+	<input type="text" class="form-control" name="discuser" id="discuser" 
+		   placeholder="Introduzca su nombre de usuario">
+  </div>
+  <div class="form-group">
+	<label class="taml"  for="ejemplo_password_1">Contraseña</label>
+	<input type="password" class="form-control" name="discpass" 
+		   placeholder="Contraseña">
+  </div>
+  <div class="taml"  class="form-group">
+	<label for="ejemplo_email_1">Nombre</label>
+	<input type="text" class="form-control" name="discnom"
+		   placeholder="Introduzca su nombre de usuario">
+  </div>
+  <div class="form-group">
+	<label class="taml"  for="ejemplo_mac">MAC (MAC de este equipo por defecto)</label>
+	<input type="text" class="form-control" name="discmac" value={{mac}}>
+  </div>
+  <div class="form-group">
+  <label class="taml"  for="ejemplo_mac">Tipo de discapacnamead</label>
+<ul type="none">
+  <li><input type="checkbox" name="discvis" value="opcion_1"> Visual</li>
+  <li><input type="checkbox" name="discaudit" value="opcion_1"> Auditiva</li>
+  <li><input type="checkbox" name="discmotriz" value="opcion_1"> Motriz</li>
+  </ul>
+  </div>
+  <div class="form-group">
+	<button type="submit" class="btn btn-default">Crear</button>
+  </div>
+</form>
+{% endblock %}
 
 

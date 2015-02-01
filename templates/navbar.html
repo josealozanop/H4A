@@ -1,11 +1,10 @@
 <nav class=" navbar-inverse navbar-fixed-top" role="navigation">
 	<div class='row' style='display: flex;align-items: center;'>
-		
 		<div class='col-md-2'>
-			<img src="{{ app.request.basepath }}/images/logo.svg" alt="Responsive image" width="70" height="70" style='float:right'></img>
+			<a href='#'><img src="{{ app.request.basepath }}/images/logo.svg" alt="Responsive image" width="70" height="70" style='float:right'></img></a>
 		</div>
 		<div class='col-md-2 '>
-			<h2 class='Lblanca titulo'>Home4All</h2>
+			<h2 class='Lblanca titulo'><a href='#'>Home4All</a></h2>
 		</div>
 		{% if is_granted('ROLE_USER') %}
 			<div class='col-lg-1 col-xs-12'></div>
