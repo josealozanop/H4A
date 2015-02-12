@@ -25,10 +25,11 @@ div.data-panel>div.panel-body{
 }
 
 div.data-panel>div.panel-body>ul>li{
-	color : #001f3f;
+	color : #black;
 }
 
 div.data-panel>div.panel-body>ul>li>a{
-	color : #001f3f;
+	color : black;
 }
+
 
