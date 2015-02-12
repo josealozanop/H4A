@@ -18,11 +18,18 @@
 				</div>
 			</div>
 			
-			<div class='row form-group'>
+			<div class='row form-group' ng-init='ischecked=false'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='MAC'>MAC</label><br>
-					<input type='text' class="form-control" name='MAC' value='{{mac}}'/>
-					<input type="checkbox" name="MAC_dispostivo" value="">Usar la MAC de este equipo 
+					<ng-switch on="ischecked">
+						<input ng-switch-when="true" type='text' class="form-control" name='MAC' value='{{mac}}'/>
+						<input ng-switch-default type='text' class="form-control" name='MAC' value=''/>
+					</ng-switch>
+					<div class="aditional-info">
+						<input type="checkbox" name="MAC_dispostivo" value="" ng-model="ischecked">
+						<span>Usar la MAC de este equipo </span>
+					</div>
+					
 				</div>
 			</div>
 			

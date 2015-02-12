@@ -85,10 +85,9 @@ $app->get('/verdisc', function (Request $request) use ($app) {
 
 
 $app->get('/newDevice', function (Request $request) use ($app) {
-
-    return $app['twig']->render('new_device.html', array(
+	$mac = getMAC();
+    return $app['twig']->render('new_device.html', array( 'mac' => $mac));
 	
-	));
 })
 ->bind('newDevice')
 ;

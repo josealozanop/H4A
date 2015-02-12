@@ -1,3 +1,9 @@
 .standar_h4a_form > .form-group{
 	padding-top : 15px;
 }
+
+.standar_h4a_form  .aditional-info{
+	font-size : smaller;
+	font-weight : normal;
+	padding-left : 15px;
+}
