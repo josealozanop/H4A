@@ -21,21 +21,21 @@ class UserProvider implements UserProviderInterface
     public function loadUserByUsername($username)
     {
 		//inicio del control de usuarios
-        $stmt = $this->conn->executeQuery('SELECT * FROM tutor WHERE nUsuario_tutor = ?', array(strtolower($username)));
+        $stmt = $this->conn->executeQuery('SELECT * FROM tutor WHERE mail_tutor = ?', array(strtolower($username)));
         if($stmt->fetch()==null){
-			$stmt = $this->conn->executeQuery('SELECT * FROM usuario WHERE nUsuario_usuario = ?', array(strtolower($username)));
+			$stmt = $this->conn->executeQuery('SELECT * FROM usuario WHERE mail_usuario = ?', array(strtolower($username)));
 			if (!$user = $stmt->fetch()) {
 				throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
 			}
-			return new User($user['nUsuario_usuario'], $user['pass_usuario'], explode(',', $user['roles']), true, true, true, true);
+			return new User($user['mail_usuario'], $user['pass_usuario'], explode(',', $user['roles']), true, true, true, true);
 		}
 		//inico control de tutores
-		$stmt = $this->conn->executeQuery('SELECT * FROM tutor WHERE nUsuario_tutor = ?', array(strtolower($username)));
+		$stmt = $this->conn->executeQuery('SELECT * FROM tutor WHERE mail_tutor = ?', array(strtolower($username)));
 		if (!$user = $stmt->fetch()) {
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
         }
  
-        return new User($user['nUsuario_tutor'], $user['pass_tutor'], explode(',', $user['roles']), true, true, true, true);
+        return new User($user['id_tutor'], $user['mail_tutor'], $user['pass_tutor'], explode(',', $user['roles']), true, true, true, true);
     }
  
     public function refreshUser(UserInterface $user)

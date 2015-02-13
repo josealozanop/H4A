@@ -27,12 +27,12 @@ $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 	'db.options' 	=> array(
 	'driver' 		=> 'pdo_mysql',
-	'host'			=> 'asistic.ugr.es',
+	'host'			=> 'localhost',//'asistic.ugr.es',
 	'dbname'		=> 'home4all',
-	'user'			=> 'HOME4ALL',
-	'password'		=> 'TODOS4',
+	'user'			=> 'root',//'HOME4ALL',
+	'password'		=> '',
 	'charset'		=> 'utf8',
-	'port'			=> '3306'
+	//'port'			=> '3306'
 	),
 	));
 $app['debug'] = false;

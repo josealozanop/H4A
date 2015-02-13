@@ -13,15 +13,10 @@
 					</tr>
 			{% for discapacitado in discapacitados %}				
 					<tr>
-						<td>{{discapacitado.discuser}}</td>
-						<td>{{discapacitado.discnombre}}</td>
-						<td>{{discapacitado.discmac}}</td>
-						<td>
-							{% if discapacitado.discvis !=0 %} visual{%endif%}
-							{% if discapacitado.discmotriz !=0 %} motriz{%endif%}
-							{% if discapacitado.discaudit !=0 %} auditiva{%endif%}
-							{% if discapacitado.discaudit == 0 and discapacitado.discmotriz == 0 and discapacitado.discvis == 0 %}ninguna{%endif%}
-						</td>
+						<td>{{discapacitado.mail_usuario}}</td>
+						<td>{{discapacitado.nombre_usuario}}</td>
+						<td>{{discapacitado.apellidos_usuario}}</td>
+					
 						<td>
 						<form name=tuformulario action="http://www.desarrolloweb.com"> 
 <input type="text" name="cualquiercampo"> 

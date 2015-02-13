@@ -48,7 +48,7 @@ $app->get('/pepe', function () use ($app) {
 
 $app->get('/hola', function () use ($app) {
 	$variable="hola";
-	$usuarios = $app['db']->fetchAll('SELECT nUsuario_tutor FROM tutor');
+	$usuarios = $app['db']->fetchAll('SELECT mail_tutor FROM tutor');
 	$text = json_encode($usuarios); 
 	$tam = count ($usuarios);
     return $app['twig']->render('vacia.html', array(
@@ -61,8 +61,8 @@ $app->get('/hola', function () use ($app) {
 ;
 
 $app->get('/get/tutors', function () use ($app) {
-	$tutores = $app['db']->fetchAll('SELECT nUsuario_tutor FROM tutor');
-	$usuarios = $app['db']->fetchAll('SELECT nUsuario_usuario FROM usuario');
+	$tutores = $app['db']->fetchAll('SELECT mail_tutor FROM tutor');
+	$usuarios = $app['db']->fetchAll('SELECT mail_usuario FROM usuario');
 	$text = '['.json_encode($usuarios).','.json_encode($tutores).']'; 
 	return new Response($text);
 })
@@ -73,7 +73,7 @@ $app->get('/verdisc', function (Request $request) use ($app) {
 	$user = $app['security']->getToken()->getUser();
 	//$variable="hola";
 	$username= $user->getUsername();
-	$sql = "SELECT * FROM discapacitados D INNER JOIN user_disc R ON D.id_disc = R.id_disc INNER JOIN users U ON R.id_user = U.id_user WHERE U.username = '$username'";
+	$sql = "SELECT * FROM usuario U INNER JOIN tutor_usuario R ON U.id_usuario = R.id_usuario INNER JOIN tutor T ON R.id_tutor = T.id_tutor WHERE T.mail_tutor = '$username'";
     $discapacitados = $app['db']->fetchAll($sql);
 	
     return $app['twig']->render('verdisc.html', array(
@@ -95,7 +95,9 @@ $app->get('/newDevice', function (Request $request) use ($app) {
 
 $app->get('/newuser', function () use ($app) {
 	$mac = getMAC();
-    return $app['twig']->render('newuser.html', array('mac' => $mac));
+	$user = $app['security']->getToken()->getUser();
+	$id_tutor= $user->getId();
+    return $app['twig']->render('newuser.html', array('mac' => $mac, 'id_tutor'=>$id_tutor));
 })
 ->bind('newuser')
 ;
@@ -106,7 +108,9 @@ $app->get('/tutor', function () use ($app) {
 ->bind('tutor')
 ;
 
-$app->post('/registerdisc', function(Request $request) use ($app){	
+$app->post('/registerdisc',  function (Request $request) use ($app) {
+
+	$id_tutor = $request->get('idTutor');
 	$username = $request->get('discuser');
 	$pass =$request->get('discpass');
 	$nombre =  $request->get('discnom');
@@ -134,7 +138,20 @@ $app->post('/registerdisc', function(Request $request) use ($app){
 	else{
 		$discmotriz=1;
 	}
-	$app['db']->insert('discapacitados', array('discuser' => $username, 'discnombre' => $nombre, 'discpass' => $encodePass,'discmac'=>$mac,'discvis'=>$discvis,'discaudit'=>$discaudit,'discmotriz'=>$discmotriz));
+	$app['db']->insert('usuario', array('mail_usuario' => $username, 'nombre_usuario' => $nombre, 'pass_usuario' => $encodePass,'roles'=>'ROLE_USER'));
+	$sql = "select id_usuario FROM usuario WHERE mail_usuario = '$username'";
+	$id_usuario = $app['db']->fetchColumn($sql, array(), 0);
+	$sql = "select id_dispositivo FROM dispositivo WHERE mac_dispositivo = '$mac'";
+	$id_dispositivo = $app['db']->fetchColumn($sql, array(), 0);
+	if($id_dispositivo==null){
+		$app['db']->insert('dispositivo', array('mac_dispositivo' => $mac));
+		$sql = "select id_dispositivo FROM dispositivo WHERE mac_dispositivo = '$mac'";
+		$id_dispositivo = $app['db']->fetchColumn($sql, array(), 0);
+	}
+	$app['db']->insert('dispositivo_usuario', array('id_dispositivo' => $id_dispositivo, 'id_usuario' => $id_usuario));
+	//$sql = "select id_tutor FROM tutor WHERE mail_tutor = '$tutor'";
+	//$id_tutor = $app['db']->fetchColumn($sql, array(), 0);
+	$app['db']->insert('tutor_usuario', array('id_tutor' => $id_tutor, 'id_usuario' => $id_usuario));
 	
 	return $app->redirect($app["url_generator"]->generate("tutor"));
 })
@@ -147,7 +164,7 @@ $app->post('/register', function(Request $request) use ($app){
 	$encoder = new MessageDigestPasswordEncoder();
 	$encodePass = $encoder->encodePassword($pass, '');
 	
-	$app['db']->insert('tutor', array('nUsuario_tutor' => $username, 'pass_tutor' => $encodePass,'roles'=>'ROLE_USER'));
+	$app['db']->insert('tutor', array('mail_tutor' => $username, 'pass_tutor' => $encodePass,'roles'=>'ROLE_USER'));
 	
 	$params = array(
 		'email' => $username,

@@ -12,7 +12,9 @@ a:visited {text-decoration:none;}
 .Lblanca{
 	color: #FFF;
 }
-
+.oculto{
+	display: none;
+}
 .titulo{
 	padding-top : 0px;
 	margin : 0px;
