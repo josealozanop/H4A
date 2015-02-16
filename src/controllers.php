@@ -181,15 +181,19 @@ $app->post('/register', function(Request $request) use ($app){
 	$username =  $request->get('newTutor_name');
 	$usermail = $request->get('newTutor_mail');
 	$pass = $request->get('newTutor_pass');
+	$usersurname = $request->get('newTutor_surname');
+	$userphone = $request->get('newTutor_phone');
 	$encoder = new MessageDigestPasswordEncoder();
 	$encodePass = $encoder->encodePassword($pass, '');
 	
-	$app['db']->insert('tutor', array('mail_tutor' => $usermail, 'nombre_tutor' => $usermail, 'pass_tutor' => $encodePass,'roles'=>'ROLE_USER'));
+	$app['db']->insert('tutor', array('mail_tutor' => $usermail, 'nombre_tutor' => $username, 'tlfn_tutor' => $userphone, 'apellidos_tutor' => $usersurname,'pass_tutor' => $encodePass,'roles'=>'ROLE_USER'));
 	
 	$params = array(
 		'name' => $username,
 		'password' => $pass,
-		'email' => $usermail
+		'email' => $usermail,
+		'surname' => $usersurname,
+		'phone' => $userphone
 		);
 		
 	$subRequest = Request::create('/login_check', 'POST', $params);
