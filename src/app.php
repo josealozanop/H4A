@@ -38,7 +38,8 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 $app['debug'] = false;
 $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     'security.firewalls' => array(
-		'register' => array('pattern' => '^/register'), // Example of an url available as anonymous user		
+		'register' => array('pattern' => '^/register'), // Example of an url available as anonymous user
+		'newTutor' => array('pattern' => '^/newTutor'),
         'default' => array(
             'pattern' => '^.*$',
             'anonymous' => true, // Needed as the login path is under the secured area
@@ -58,7 +59,8 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     'security.access_rules' => array(
         // You can rename ROLE_USER as you wish
         array('^/.+$', 'ROLE_USER'),
-        array('^/register$', ''), // This url is available as anonymous user
+        array('^/register$', ''),
+		array('^/newTutor', 'IS_AUTHENTICATED_ANONYMOUSLY')	// This url is available as anonymous user
     )
 ));
 

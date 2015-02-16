@@ -11,6 +11,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 require 'utils.php';
 
+
 $app->get('/', function(Request $request) use ($app) {
     return $app['twig']->render('index.html', array(
         'error' => $app['security.last_error']($request),
@@ -21,7 +22,24 @@ $app->get('/', function(Request $request) use ($app) {
 ->bind('homepage')
 ;
 
+$app->get('/newTutor', function(Request $request) use ($app) {
+	//$mac = 'hola';
+	$currentRoute = 'hola';
+
+    return $app['twig']->render('new_tutor.html', array(
+		'error' => $app['security.last_error']($request),
+		'last_username' => $app['session']->get('_security.last_username'),
+		'data' => $currentRoute
+	));
+	
+})
+->bind('newTutor')
+;
+
+
+
 $app->get('/login_check', function(Request $request) use ($app) {
+
     return $app['twig']->render('index.html', array(
         'error' => $app['security.last_error']($request),
         'last_username' => $app['session']->get('_security.last_username'),
@@ -93,6 +111,7 @@ $app->get('/newDevice', function (Request $request) use ($app) {
 ;
 
 
+
 $app->get('/newuser', function () use ($app) {
 	$mac = getMAC();
 	$user = $app['security']->getToken()->getUser();
@@ -159,16 +178,18 @@ $app->post('/registerdisc',  function (Request $request) use ($app) {
 ;	
 
 $app->post('/register', function(Request $request) use ($app){	
-	$username =  $request->get('email');
-	$pass =$request->get('password');
+	$username =  $request->get('newTutor_name');
+	$usermail = $request->get('newTutor_mail');
+	$pass = $request->get('newTutor_pass');
 	$encoder = new MessageDigestPasswordEncoder();
 	$encodePass = $encoder->encodePassword($pass, '');
 	
-	$app['db']->insert('tutor', array('mail_tutor' => $username, 'pass_tutor' => $encodePass,'roles'=>'ROLE_USER'));
+	$app['db']->insert('tutor', array('mail_tutor' => $usermail, 'nombre_tutor' => $usermail, 'pass_tutor' => $encodePass,'roles'=>'ROLE_USER'));
 	
 	$params = array(
-		'email' => $username,
-		'password' => $pass
+		'name' => $username,
+		'password' => $pass,
+		'email' => $usermail
 		);
 		
 	$subRequest = Request::create('/login_check', 'POST', $params);

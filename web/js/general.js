@@ -1,7 +1,19 @@
 $(document).ready(function(){
+	/*declaracion de la variables de sesion, variables javascript que se pueden usar en toda la web*/
+	sessionStorage.setItem("newTutor_name", "");
+	sessionStorage.setItem("newTutor_mail", "");
 	todo();
 	smart_search();
+	$('#inicio_newTutor').click({name:'test'},newTutor);
+	
 });
+
+function newTutor(event){
+	inicio_newTutor_mail
+	sessionStorage.newTutor_name = $('#inicio_newTutor_name').val();
+	sessionStorage.newTutor_mail = $('#inicio_newTutor_mail').val();
+	window.location.replace("newTutor");
+}
 
 function smart_search(){
 		
