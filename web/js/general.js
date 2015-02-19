@@ -81,3 +81,4 @@ function pregunta(){
        document.tuformulario.submit() 
     } 
 } 
+

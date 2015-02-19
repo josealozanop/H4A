@@ -1,49 +1,49 @@
 {% extends "layout.twig.html" %}
-{% block datos %}
-
+{% block contenido %}
 
 <div class="panel panel-primary data-panel">
 	<div class="panel-heading" >
 
 		<span class='title' >
-			Registro de Tutor
+			Mis datos
 		</span>
 		
 	</div>
 	<div class="panel-body">
+		{{user.mail_tutor}}
 		<form class='standar_h4a_form' role="form" action="{{ path('register') }}" method="post">
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='newTutor_mail'>Mail</label><br>
-					<input type='email' class="form-control" name='newTutor_mail'/>
+					<label for='Tutor_mail'>Mail</label><br>
+					<input type='email' class="form-control" name='Tutor_mail'/>
 				</div>
 			</div>
 			
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='newTutor_name'>Nombre</label><br>
-					<input type='text' class="form-control" name='newTutor_name'/>
+					<label for='Tutor_name'>Nombre</label><br>
+					<input type='text' class="form-control" name='Tutor_name'/>
 				</div>
 			</div>
 			
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='newTutor_surname'>Apellidos</label><br>
-					<input type='text' class="form-control" name='newTutor_surname'/>
+					<label for='Tutor_surname'>Apellidos</label><br>
+					<input type='text' class="form-control" name='Tutor_surname'/>
 				</div>
 			</div>
 			
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='newTutor_pass'>Password</label><br>
-					<input type='password' class="form-control" name='newTutor_pass'/>
+					<label for='Tutor_pass'>Password</label><br>
+					<input type='password' class="form-control" name='Tutor_pass'/>
 				</div>
 			</div>
 			
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='newTutor_phone'>Teléfono</label><br>
-					<input type='tel' class="form-control" name='newTutor_phone'/>
+					<label for='Tutor_phone'>Teléfono</label><br>
+					<input type='tel' class="form-control" name='Tutor_phone'/>
 				</div>
 			</div>
 			
@@ -57,11 +57,9 @@
 	</div>
 </div>
 
-
-<!-- rellenamos los campos de mail y nombre con los datos rellenados anteriormente -->
 <script>
-	$( "input[name='newTutor_mail']" ).val(sessionStorage.newTutor_mail);
-	$( "input[name='newTutor_name']" ).val(sessionStorage.newTutor_name);
+	var tutor_data = JSON.parse({{user}});
+	$( "input[name='tutor_mail']" ).val(tutor_data);
 </script>
-{% endblock %}
 
+{% endblock %}

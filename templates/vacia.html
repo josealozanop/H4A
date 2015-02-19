@@ -1,6 +1,21 @@
-	 <li>{{tam}}</li>
- {% for user in variable %}
-        <li>{{ user.nUsuario_tutor}}</li>
-    {% endfor %}
+{% extends "layout.twig.html" %}
+{% block contenido %}
+
+<div class='console'>
+
+</div>
+
+<script>
+	/*var mierda = 'mierda';
+	var res = getMyData();
+	$('.console').html(res);*/
 	
-{{text}}
+	
+getMyData().done(function(result) {
+    $('.console').html(result);
+}).fail(function() {
+    $('.console').html('not working');
+});
+</script>
+
+{% endblock %}
