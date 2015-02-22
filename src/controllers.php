@@ -49,6 +49,36 @@ $app->get('/pepe', function () use ($app) {
 ->bind('pepe')
 ;
 
+
+
+$app->post('/opUsuarios', function (Request $request) use ($app) {
+
+switch($_POST["enviar"]) { 
+    case 1:
+        //aca el caso de presionar el primero 
+        break; 
+    case 2: 
+        return $app['twig']->render('newuser.html', array('mac' => '1', 'id_tutor'=>'1'));
+        break; 
+    case 3: 
+        $id_usuario = $request->get('idUsuario');
+		$app['db']->delete('usuario', array('id_usuario' => $id_usuario));	
+		return $app->redirect($app["url_generator"]->generate("verdisc"));
+        break; 
+}  
+
+if ($_POST[ver]) {  }
+
+
+if ($_POST[ver]) {  }
+
+
+if ($_POST[editar]) {   }
+	
+})
+->bind('opUsuarios')
+;
+
 $app->get('/vacia', function () use ($app) {
 	$variable="vacia";
 	$usuarios = $app['db']->fetchAll('SELECT mail_tutor FROM tutor');

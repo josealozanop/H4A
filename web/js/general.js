@@ -77,8 +77,9 @@ $("#bsecundario").click(function(){
 });
 }
 function pregunta(){ 
-    if (confirm('Estas seguro de eliminar ese usuario?')){ 
-       document.tuformulario.submit() 
-    } 
+       var agree=confirm("¿Realmente desea eliminarlo? ");
+  if (agree) return true ;
+  return false;
+    
 } 
 

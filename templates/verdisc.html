@@ -5,34 +5,38 @@
 			<h2 class="text-center">Usuarios tutorados </h2>
 			<table id="t01">
 					<tr>
-						<th>Nombre de usuario</th>
-						<th>Nombre Complero</th>
-						<th>MAC</th>	
-						<th>tipo de minisvalia</th>	
+						<th>Nombre</th>
+						<th>Apellidos</th>
+						<th>Email</th>	
 						<th>Opciones</th>
 					</tr>
 			{% for discapacitado in discapacitados %}				
 					<tr>
-						<td>{{discapacitado.mail_usuario}}</td>
 						<td>{{discapacitado.nombre_usuario}}</td>
 						<td>{{discapacitado.apellidos_usuario}}</td>
-					
+						<td>{{discapacitado.mail_usuario}}</td>
 						<td>
-						<form name=tuformulario action="http://www.desarrolloweb.com"> 
-<input type="text" name="cualquiercampo"> 
-<input type=button onclick="preguntabutton>
-</form>
-<a data-href="delete.php?id=23" data-toggle="modal" data-target="#confirm-delete" href="#">Delete record #23</a><br>
-<a data-href="delete.php?id=54" data-toggle="modal" data-target="#confirm-delete" href="#">Delete record #54</a>
-<a class="ask" href="mipagina.html">Borrar registro</a>
-<a class="ask-custom" href="otrapagina.html()"><i class="fa fa-eye fa-lg" style='padding-left:10px;'></i></a>
-							<i class="fa fa-eye fa-lg" style='padding-left:10px;'></i>
-							<i class="fa fa-pencil-square-o" style='padding-left:10px;'></i>	
-							<i class="fa fa-trash" style='padding-left:10px;'></i>
+						<form role="form" action="{{ path('opUsuarios') }}" method="post">
+							<div class="oculto">
+								<input type="text" class="form-control" name="idUsuario" value={{discapacitado.id_usuario}}>
+							</div>
+
+							<button type="submit" name="enviar" value ="1" class="btn btn-link">
+								<i class="fa fa-eye fa-2x"></i>
+							</button>
+							<button type="submit" name="enviar" value ="2" class="btn btn-link">
+								<i class="fa fa-pencil-square-o fa-2x"></i>
+							</button>
+
+							<button onclick="pregunta()" type="submit" name="enviar" value ="3" class="btn btn-link">
+								<i class="fa fa-trash fa-2x"></i>
+							</button>
+
+						</form>
 						</td>	
 					</tr>				
 			{% else %}
-				<center><h3>Aún no ha publicado ningún sorteo</h3></center>
+				<center><h3>Aún no has registrado nungun usuario</h3></center>
 			{% endfor %}
 			</table>
 	</div>
