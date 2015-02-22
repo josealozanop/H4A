@@ -1,0 +1,51 @@
+{% extends "layout.twig.html" %}
+
+	{% block contenido %}
+	
+	<font size="7" style="font-weight: bold;">Datos de Usuario</font>
+	
+	<form action="{{ path('modUsuario') }}" method="post" role="form" style='padding-top:5px;'>
+	{% if editar=="true" %} <fieldset disabled>{% endif %}
+	{% for u in usuario %}
+	<div class="form-group">
+	<label class="taml">Email</label>
+	<input type="text" class="form-control" name="email"  value={{u.mail_usuario}}
+		   placeholder="Introduzca su nombre de usuario">
+  </div>
+  <div class="form-group">
+	<label class="taml">Nombre</label>
+	<input type="text" class="form-control" name="nombre" value={{u.nombre_usuario}} placeholder="Contraseña">
+  </div>
+  <div class="form-group">
+	<label class="taml">Apellidos</label>
+	<input type="text" class="form-control" name="apellidos" value={{u.apellidos_usuario}} placeholder="Introduzca su nombre de usuario">
+  </div>
+  <div class="form-group">
+	<label class="taml"  for="ejemplo_mac">Fecha de nacimiento</label>
+	<input type="text" class="form-control" value={{u.fnac_usuario}} name="fnac">
+  </div>
+  <div class="form-group">
+	<label class="taml"  for="ejemplo_mac">Telefono</label>
+	<input type="text" class="form-control" value={{u.tlfn_usuario}} name="tlfn">
+  </div>
+   <div class="oculto">
+	<input type="text" class="form-control" name="id_usuario" value={{u.id_usuario}}>
+  </div>
+  
+  <div class="form-group">
+  {% if editar=="true" %}</fieldset>
+  {% else %}
+ 
+  </div>
+  <div class="form-group">
+	<button type="submit" class="btn btn-default">Modificar</button>
+  </div>
+  {% endif %}
+  {% endfor %}  
+  
+</form>
+
+			
+	{% endblock %}
+
+

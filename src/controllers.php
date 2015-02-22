@@ -52,33 +52,53 @@ $app->get('/pepe', function () use ($app) {
 
 
 $app->post('/opUsuarios', function (Request $request) use ($app) {
-
+$id_usuario = $request->get('idUsuario');
 switch($_POST["enviar"]) { 
     case 1:
-        //aca el caso de presionar el primero 
+		$editar="true";
+        $sql = "select * FROM usuario WHERE id_Usuario = '$id_usuario'";
+		$usuario = $app['db']->fetchAll($sql);	
+		return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
+		'usuario' => $usuario
+		));
         break; 
     case 2: 
-        return $app['twig']->render('newuser.html', array('mac' => '1', 'id_tutor'=>'1'));
+		$editar="false";
+        $sql = "select * FROM usuario WHERE id_Usuario = '$id_usuario'";
+		$usuario = $app['db']->fetchAll($sql);	
+		return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
+		'usuario' => $usuario
+		));
         break; 
     case 3: 
-        $id_usuario = $request->get('idUsuario');
 		$app['db']->delete('usuario', array('id_usuario' => $id_usuario));	
 		return $app->redirect($app["url_generator"]->generate("verdisc"));
         break; 
 }  
-
-if ($_POST[ver]) {  }
-
-
-if ($_POST[ver]) {  }
-
-
-if ($_POST[editar]) {   }
 	
 })
 ->bind('opUsuarios')
 ;
-
+$app->post('/modUsuario', function (Request $request) use ($app) {
+	$id_usuario = $request->get('id_usuario');
+	$mail = $request->get('mail');
+	$nombre =  $request->get('nombre');
+	$apellidos =$request->get('apellidos');
+	$fnac =$request->get('fnac');	
+	$tlfn =$request->get('tlfn');	
+	
+	$app['db']->update('usuario', array(
+		'nombre_usuario'=>$nombre), array('id_usuario'=>$id_usuario
+	));
+	$sql = "select * FROM usuario WHERE id_Usuario = '$id_usuario'";
+	$usuario = $app['db']->fetchAll($sql);	
+	return $app['twig']->render('verUsuario.html', array('editar' =>"true",
+	'usuario' => $usuario
+	));
+	
+})
+->bind('modUsuario')
+;
 $app->get('/vacia', function () use ($app) {
 	$variable="vacia";
 	$usuarios = $app['db']->fetchAll('SELECT mail_tutor FROM tutor');
@@ -140,7 +160,12 @@ $app->get('/verdisc', function (Request $request) use ($app) {
 })
 ->bind('verdisc')
 ;
-
+$app->get('/verUsuario', function (Request $request) use ($app) {
+	$id_Usuario = $request->get('id_Usuario');
+	
+})
+->bind('verUsuario')
+;
 
 $app->get('/newDevice', function (Request $request) use ($app) {
 	$mac = getMAC();
