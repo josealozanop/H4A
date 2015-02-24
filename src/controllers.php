@@ -126,12 +126,39 @@ $app->get('/newTutor', function(Request $request) use ($app) {
 ->bind('newTutor')
 ;
 
-//modificar un tutor
-$app->get('/modTutor', function (Request $request) use ($app) {
-	$userMail = $app['security']->getToken()->getUser()->getUsername(); //cuidado, esta funcion devuelve el correo no el nombre
-	$query = 'SELECT * FROM tutor WHERE mail_tutor = "'.$userMail.'"';
+//editar un tutor
+$app->get('/editTutor', function (Request $request) use ($app) {
+	$modified = false;
+	$tutor_id = $app['security']->getToken()->getUser()->getId();
+	$query = 'SELECT * FROM tutor WHERE id_tutor = "'.$tutor_id.'"';
 	$data = $app['db']->fetchAll($query);
-    return $app['twig']->render('mod_tutor.html', array( 'user' => $data));
+    return $app['twig']->render('mod_tutor.html', array( 'user' => $data, 'modified' => $modified));
+	
+})
+->bind('editTutor')
+;
+
+//Modificar el tutor editado previamente
+$app->post('/modTutor', function (Request $request) use ($app) {
+	
+	$tutor_id = $app['security']->getToken()->getUser()->getId();
+	$mail = $request->get('Tutor_mail');
+	$nombre =  $request->get('Tutor_name');
+	$apellidos =$request->get('Tutor_surname');
+	$pass =$request->get('Tutor_pass');	
+	$encoder = new MessageDigestPasswordEncoder();
+	$pass = $encoder->encodePassword($pass, '');
+	$tlfn =$request->get('Tutor_phone');
+	$modified = true;
+
+
+	$app['db']->update('tutor', array(
+		'nombre_tutor'=>$nombre, 'apellidos_tutor'=>$apellidos,'tlfn_tutor'=>$tlfn,'mail_tutor'=>$mail,'pass_tutor'=>$pass), array('id_tutor'=>$tutor_id
+	));
+	
+	$query = 'SELECT * FROM tutor WHERE id_tutor = "'.$tutor_id.'"';
+	$data = $app['db']->fetchAll($query);
+    return $app['twig']->render('mod_tutor.html', array( 'user' => $data , 'modified' => $modified));
 	
 })
 ->bind('modTutor')

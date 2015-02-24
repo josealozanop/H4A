@@ -10,26 +10,34 @@
 		
 	</div>
 	<div class="panel-body">
-		{{user.mail_tutor}}
-		<form class='standar_h4a_form' role="form" action="{{ path('register') }}" method="post">
+		
+		{% if modified == true %}
+			<div class="panel  panel-success data-panel ">
+				<div class="panel-heading" >
+					Tus datos han sido modificados correctamente
+				</div>
+			</div>
+		{% endif %}
+		
+		<form class='standar_h4a_form' role="form" action="{{ path('modTutor') }}" method="post">
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='Tutor_mail'>Mail</label><br>
-					<input type='email' class="form-control" name='Tutor_mail'/>
+					<input type='email' class="form-control" name='Tutor_mail' value='{{user[0].mail_tutor}}'/>
 				</div>
 			</div>
 			
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='Tutor_name'>Nombre</label><br>
-					<input type='text' class="form-control" name='Tutor_name'/>
+					<input type='text' class="form-control" name='Tutor_name' value='{{user[0].nombre_tutor}}'/>
 				</div>
 			</div>
-			
-			<div class='row  form-group'>
+
+ 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='Tutor_surname'>Apellidos</label><br>
-					<input type='text' class="form-control" name='Tutor_surname'/>
+					<input type='text' class="form-control" name='Tutor_surname' value='{{user[0].apellidos_tutor}}'/>
 				</div>
 			</div>
 			
@@ -43,23 +51,18 @@
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='Tutor_phone'>Teléfono</label><br>
-					<input type='tel' class="form-control" name='Tutor_phone'/>
+					<input type='tel' class="form-control" name='Tutor_phone' value='{{user[0].tlfn_tutor}}'/>
 				</div>
 			</div>
 			
 					
 			<div class='row form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<button type="submit" class="btn btn-primary btn-lg">Crear</button>
+					<button type="submit" class="btn btn-primary btn-lg">Modificar</button>
 				</div>
 			</div>
 		</form>
 	</div>
 </div>
-
-<script>
-	var tutor_data = JSON.parse({{user}});
-	$( "input[name='tutor_mail']" ).val(tutor_data);
-</script>
 
 {% endblock %}
