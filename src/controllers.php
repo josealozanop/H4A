@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 //Request::setTrustedProxies(array('127.0.0.1'));
 
 require 'utils.php';
+require 'db_utils.php';
 
 
 $app->get('/', function(Request $request) use ($app) {
@@ -324,12 +325,13 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 		
 	switch ($type_service) {
 		case 'getMyData':
-			$user = $app['security']->getToken()->getUser();
-			$tutor_mail= $user->getUsername();
-			$query = "select mail_tutor, nombre_tutor FROM tutor WHERE mail_tutor = '$tutor_mail'";
-			$data = $app['db']->fetchAll($query);
-			$out = json_encode($data);
-			//$out = json_encode($data); 
+			$tutor_id = $app['security']->getToken()->getUser()->getId();
+			$out = getMyData($app['db'], $tutor_id);
+			break;
+			
+		case 'getAllTutorName':
+			$tutor_id = $app['security']->getToken()->getUser()->getId();
+			$out = get_all_tutors_name($app['db'], $tutor_id);
 			break;
 		default:
 			$out = "Service ".$type_service.' was not found';
@@ -340,32 +342,3 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 })
 ->bind('serviceController')
 ;
-
-/*
-$type_service = $_GET['service'];
-$out = 'Service '.$type_service.' does not exist';
-
-switch ($type_service) {
-    case 'getMyData':
-        $out = getMyData();
-        break;
-    case 'ping':
-        $out = ping('');
-        break;
-    case 2:
-        echo "i es igual a 2";
-        break;
-}
-
-
-echo $out;
-
-function ping($in){
-	if($in!='') return $in;
-	return 'pong';
-}
-
-function getMyData($app)  {
-	$conn->fetchAll('SELECT mail_tutor FROM tutor');
-	return 'amosss';
-}	*/
