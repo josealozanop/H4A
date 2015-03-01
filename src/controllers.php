@@ -322,18 +322,38 @@ $app->error(function (\Exception $e, $code) use ($app) {
 $app->get('/serviceController', function (Request $request) use ($app) {
 	$type_service = $request->get('service');
 	$out = "Service ".$type_service.' was not found';
+	$tutor_id = $app['security']->getToken()->getUser()->getId();
 		
 	switch ($type_service) {
+		
 		case 'getMyData':
-			$tutor_id = $app['security']->getToken()->getUser()->getId();
-			$out = getMyData($app['db'], $tutor_id);
+			$out = json_encode(getMyData($app['db'], $tutor_id));
 			break;
-			
+		
+		//Obtiene todos los datos de todos los usuario de un tutor
+		case 'getMyUsers':
+			$users_id = get_my_users($app['db'], $tutor_id);
+			$users_data =  Array();
+			foreach($users_id as $i) { 
+				$user_data = get_user_data($app['db'], $i['id_usuario']);
+				array_push($users_data,$user_data); 
+			}
+			$out = json_encode($users_data);
+			break;
+		
 		case 'getAllTutorName':
-			$tutor_id = $app['security']->getToken()->getUser()->getId();
-			$out = get_all_tutors_name($app['db'], $tutor_id);
+			$out = json_encode(get_all_tutors_name($app['db'], $tutor_id));
 			break;
 		default:
+			$users_id = get_my_users($app['db'], $tutor_id);
+			$users_data =  Array();
+			foreach($users_id as $i) { 
+				$user_data = get_user_data($app['db'], $i['id_usuario']);
+				array_push($users_data,$user_data); 
+			}
+			$out = json_encode($users_data);
+			break;
+		
 			$out = "Service ".$type_service.' was not found';
 			break;
 	}

@@ -16,24 +16,29 @@ function newTutor(event){
 }
 
 function smart_search(){
-		
+		var touched = false;
+
 		$('#inText-navbar-search').click(function(){
-			connect_DB('getAllTutorName').success(
-				function(out){
-					var tutors_name = JSON.parse(out);
-					var names = new Array();
-					for (i in tutors_name){
-						names.push(tutors_name[i].nombre_tutor);
+			if(!touched){
+				touched = true;
+				connect_DB('getMyUsers').success(
+					function(out){
+						var myUsers = JSON.parse(out);
+
+						var names = new Array();
+						for (i in myUsers){
+							names.push(myUsers[i].nombre_usuario);
+						}
+						
+						for (i in names){
+							$('#datalist-navbar-searchList').append("<option value='"+names[i]+"'></option>");
+						}
+						
 					}
 					
-					for (i in names){
-						$('#datalist-navbar-searchList').append("<option value='"+names[i]+"'></option>");
-					}
-					
-				}
-				
-			);
-			
+				);
+			}
+		});
 			
 		
 		/*$.ajax({
@@ -65,7 +70,6 @@ function smart_search(){
 				}
             }); */// Ajax Call
 
-		});
 }
 
 function todo(){
