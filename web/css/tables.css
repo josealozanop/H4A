@@ -1,0 +1,15 @@
+.standar_table { 
+	font-family: 'Ubuntu', sans-serif;
+	font-size : 16px;
+}
+	
+.standar_table  td{ 
+	vertical-align : middle !important	;
+}
+
+.standar_table th { 
+	border-top : 1px solid black !important;
+	background-color : #428BCA  !important;
+	color : white;
+	font-size : larger;
+}

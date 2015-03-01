@@ -1,7 +1,5 @@
 div.data-panel{
--webkit-box-shadow: 7px 7px 8px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 7px 7px 8px 0px rgba(0,0,0,0.75);
-box-shadow: 7px 7px 8px 0px rgba(0,0,0,0.75);
+
 }
 
 div.data-panel>div.panel-heading>span.title{

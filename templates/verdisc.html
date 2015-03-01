@@ -1,7 +1,7 @@
 {% extends "layout.twig.html" %}
 
 	{% block contenido %}
-	<div class="row" style="margin-top:2%">
+	 <div class="row" style="margin-top:2%">
 			<h2 class="text-center">Usuarios tutorados </h2>
 			<table id="t01">
 					<tr>
@@ -20,18 +20,18 @@
 							<div class="oculto">
 								<input type="text" class="form-control" name="idUsuario" value={{discapacitado.id_usuario}}>
 							</div>
-
+	
 							<button type="submit" name="enviar" value ="1" class="btn btn-link">
 								<i class="fa fa-eye fa-2x"></i>
 							</button>
 							<button type="submit" name="enviar" value ="2" class="btn btn-link">
 								<i class="fa fa-pencil-square-o fa-2x"></i>
 							</button>
-
+	
 							<button onclick="pregunta()" type="submit" name="enviar" value ="3" class="btn btn-link">
 								<i class="fa fa-trash fa-2x"></i>
 							</button>
-
+	
 						</form>
 						</td>	
 					</tr>				
@@ -39,8 +39,54 @@
 				<center><h3>Aún no has registrado nungun usuario</h3></center>
 			{% endfor %}
 			</table>
-	</div>
+	</div> 
 	
+	
+	<!-- version borja -->
+	
+ <div style = 'height:30px;margin-bottom:25px'>
+	
+</div> 
+
+<table class="table table-striped standar_table shadow">
+	<tr>
+		<th >Nombre</th>
+		<th>Apellidos</th>
+		<th>Email</th>	
+		<th>Acciones</th>
+	</tr>
+	{% for discapacitado in discapacitados %}				
+		<tr>
+			<td>{{discapacitado.nombre_usuario}}</td>
+			<td>{{discapacitado.apellidos_usuario}}</td>
+			<td>{{discapacitado.mail_usuario}}</td>
+			<td>
+			 <form role="form" action="{{ path('opUsuarios') }}" method="post" style='padding:0px'>
+				<div class="oculto">
+					<input type="text" class="form-control" name="idUsuario" value={{discapacitado.id_usuario}}>
+				</div>
+			
+				<button type="submit" name="enviar" value ="1" class="btn btn-link">
+					<i class="fa fa-eye fa-2x	"></i>
+				</button>
+				<button type="submit" name="enviar" value ="2" class="btn btn-link">
+					<i class="fa fa-pencil-square-o fa-2x"></i>
+				</button>
+			
+				<button onclick="pregunta()" type="submit" name="enviar" value ="3" class="btn btn-link">
+					<i class="fa fa-trash fa-2x"></i>
+				</button>
+			
+			</form>
+			</td>	
+		</tr>				
+	{% else %}
+	<center><h3>Aún no has registrado nungun usuario</h3></center>
+	{% endfor %}
+			
+</table>
+
+
 
 			
 	{% endblock %}
