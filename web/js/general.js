@@ -117,7 +117,8 @@ $(document).ready(function () {
 		if(passw == ""){
 			$("#mensaje1").fadeIn("slow");
 			return false;
-		}else{
+		}
+		else{
 			if(passw != repass){
 				$("#mensaje2").fadeIn("slow");
 				return false;
