@@ -22,13 +22,13 @@
 
 {% block Registro %}
 	<h1 align = "right">Abrir una cuenta </h1>
-	<form role="form" action="" method="post" align = "right" >
+	<form role="form" action=""  align = "right" >
 		
 		<div class="form-group" >
 			<div class="col-sm-5" ></div>
 			<div class="col-sm-7" >
 				<label><h2>Correo electrónico</h2></label>
-				<input class="form-control" id="inicio_newTutor_mail" type="email" name="inicio_newTutor_mail"  placeholder="Introduzca su correo electrónico">
+				<input class="form-control" id="inicio_newTutor_mail" type="email" name="inicio_newTutor_mail"  placeholder="Introduzca su correo electrónico" required>
 			</div>
 		</div>
 	
@@ -36,12 +36,12 @@
 			<div class="col-sm-5" ></div>
 			<div class="col-sm-7" >
 				<label><h2>Nombre</h2></label>
-				<input class="form-control" id="inicio_newTutor_name" type="email" name="inicio_newTutor_name" value="{{ last_username }}" placeholder="Introduzca su nombre" required>
+				<input class="form-control" id="inicio_newTutor_name" type="email" name="inicio_newTutor_name" value="" placeholder="Introduzca su nombre" required>
 				<br>
 			</div>
 		</div>
 
-		<div class="form-group" ng-init='inicio_nombre="hola"'>
+		<div class="form-group" >
 			<div class="col-sm-5" ></div>
 			<div class="col-sm-7" >
 			<a href="" ><input type="submit" id='inicio_newTutor' class="btn btn-primary" value="Abir una cuenta"></a>

@@ -1,22 +1,23 @@
 <nav class=" navbar-inverse navbar-fixed-top" role="navigation">
 	<!-- para pantallas grandes y medianas lg, md y sm -->
 	<div class='row ' style='display: flex;align-items: center;'>
-		<div class='col-md-2 col-lg-2 col-sm-2'>
-			<a href='#'><img src="{{ app.request.basepath }}/images/logo.svg" alt="Responsive image" width="70" height="70" style='float:right'></img></a>
-		</div>
-		<div class='col-md-2 col-lg-2  col-sm-2'>
-			<h2 class='Lblanca titulo'><a href='#'>Home4All  </a></h2>
-		</div>
+		
 		
 		{% if (app.security.token is not null) and (is_granted('ROLE_USER')) %}
+			<div class='col-md-2 col-lg-2 col-sm-2'>
+				<a href='{{ app.request.basepath }}/tutor'><img src="{{ app.request.basepath }}/images/logo.svg" alt="Responsive image" width="70" height="70" style='float:right'></img></a>
+			</div>
+			<div class='col-md-2 col-lg-2  col-sm-2'>
+				<h2 class='Lblanca titulo'><a href='{{ app.request.basepath }}/tutor'>Home4All  </a></h2>
+			</div>
 
 			<div class="form-group col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 hidden-sm  bienvenido">
-				<span 	>Bienvenido {{ app.security.token.user.username }} </span>
+				<span>Bienvenido {{ app.security.token.user.username }} </span>
 			</div>
 			
 			<div class='no-margin-bot form-group col-lg-2 col-lg-offset-0 col-md-3 col-md-offset-0 col-sm-4 col-sm-offset-1'>
 				<div class = 'col-lg-10 col-md-10 col-sm-10' style='padding-right:0px'>
-					<input type="text" class="form-control" placeholder="Buscar..." id='inText-navbar-search' list='datalist-navbar-searchList'></input>
+					<input type="text" class="form-control" placeholder="Buscar..." id='inText-navbar-search'  list='datalist-navbar-searchList'></input>
 					<datalist id="datalist-navbar-searchList">
 					</datalist>
 				</div>
@@ -31,6 +32,12 @@
 			</div>
 		
 		{% else %}
+			<div class='col-md-2 col-lg-2 col-sm-2'>
+				<a href='{{ app.request.basepath }}'><img src="{{ app.request.basepath }}/images/logo.svg" alt="Responsive image" width="70" height="70" style='float:right'></img></a>
+			</div>
+			<div class='col-md-2 col-lg-2  col-sm-2'>
+				<h2 class='Lblanca titulo'><a href='{{ app.request.basepath }}'>Home4All  </a></h2>
+			</div>
 		
 			<form class="row Lblanca col-md-6 col-md-offset-1 col-lg-6 col-lg-offset-1"  role="form" action="{{ path('login_check') }}" method="post"  style='display: flex;align-items: center;'>
 				<div class="form-group col-md-5 col-lg-5 col-sm-5">
