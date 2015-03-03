@@ -48,7 +48,7 @@
 			</div>	
 			<div class="oculto row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<input type="password" class="form-control pass" id="pass" value={{u.pass_usuario}} name="pass">
+					<input type="password" class="form-control pass" value={{u.pass_usuario}} name="usuario_oldpass">
 				</div>
 		    </div>					
 			{% if editar=="true" %}
@@ -56,14 +56,14 @@
 			{% else %}
 				<div class="row form-group">
 					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-						<label for="usuario_pass">Contraseña</label>
+						<label for="pass">Contraseña</label>
 						<input type="password" class="form-control pass" id="pass" value="passpordefecto" name="pass" >
 					</div>
 				</div>
 				<div class="row form-group">
 					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-						<label for="usuario_repass">Repita Contraseña</label>
-						<input type="password" class="form-control repass" id="repass" value="passpordefecto" name="repass" 
+						<label for="repass">Repita Contraseña</label>
+						<input type="password" class="form-control repass" id="repass" value="passpordefecto" name="repass"> 
 						<div id="mensaje2" class="errores"> La contraseña y la validacion debe ser iguales</div>
 						<div id="mensaje1" class="errores"> La contraseña no puede estar vacia</div>
 					</div>
