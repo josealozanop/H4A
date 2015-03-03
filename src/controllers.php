@@ -214,7 +214,7 @@ $app->get('/tutor', function () use ($app) {
 })
 ->bind('tutor')
 ;
-$app->post('/new_usermac', function (Request $request) use ($app){
+$app->get('/new_usermac', function () use ($app) {
 	$id_usuario = $request->get('idUsuario');
 	$mac = $request->get('mac');
 	$sql = "select id_dispositivo FROM dispositivo WHERE mac_dispositivo = '$mac'";
