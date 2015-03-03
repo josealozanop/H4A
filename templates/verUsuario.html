@@ -1,51 +1,83 @@
 {% extends "layout.twig.html" %}
 
-	{% block contenido %}
-	
-	<font size="7" style="font-weight: bold;">Datos de Usuario</font>
-	
-	<form action="{{ path('modUsuario') }}" method="post" role="form" style='padding-top:5px;'>
-	{% if editar=="true" %} <fieldset disabled>{% endif %}
-	{% for u in usuario %}
-	<div class="form-group">
-	<label class="taml">Email</label>
-	<input type="text" class="form-control" name="email"  value={{u.mail_usuario}}
-		   placeholder="Introduzca su nombre de usuario">
-  </div>
-  <div class="form-group">
-	<label class="taml">Nombre</label>
-	<input type="text" class="form-control" name="nombre" value={{u.nombre_usuario}} placeholder="Contraseña">
-  </div>
-  <div class="form-group">
-	<label class="taml">Apellidos</label>
-	<input type="text" class="form-control" name="apellidos" value={{u.apellidos_usuario}} placeholder="Introduzca su nombre de usuario">
-  </div>
-  <div class="form-group">
-	<label class="taml"  for="ejemplo_mac">Fecha de nacimiento</label>
-	<input type="text" class="form-control" value={{u.fnac_usuario}} name="fnac">
-  </div>
-  <div class="form-group">
-	<label class="taml"  for="ejemplo_mac">Telefono</label>
-	<input type="text" class="form-control" value={{u.tlfn_usuario}} name="tlfn">
-  </div>
-   <div class="oculto">
-	<input type="text" class="form-control" name="id_usuario" value={{u.id_usuario}}>
-  </div>
-  
-  <div class="form-group">
-  {% if editar=="true" %}</fieldset>
-  {% else %}
- 
-  </div>
-  <div class="form-group">
-	<button type="submit" class="btn btn-default">Modificar</button>
-  </div>
-  {% endif %}
-  {% endfor %}  
-  
-</form>
-
-			
-	{% endblock %}
+{% block contenido %}
+<div class="panel panel-primary data-panel shadow">
+	<div class="panel-heading" >	
+		<span class='title' >
+				Datos de Usuario
+		</span>
+	</div>
+	<div class="panel-body">
+		<form id="form-login" class='standar_h4a_form' action="{{ path('modUsuario') }}" method="post" role="form">
+		{% if editar=="true" %} <fieldset disabled>{% endif %}
+		{% for u in usuario %}
+			<div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for="usuario_mail">Mail</label>
+					<input type="email" class="form-control" name="usuario_mail"  value={{u.mail_usuario}}>
+				</div>
+			</div>
+			<div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for="usuario_nombre">Nombre</label>
+					<input type="text" class="form-control" name="usuario_nombre" value={{u.nombre_usuario}}>
+				</div>
+			</div>
+		    <div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for="usuario_apellidos">Apellidos</label>
+					<input type="text" class="form-control" name="usuario_apellidos" value={{u.apellidos_usuario}}>
+				</div>
+		    </div>
+		    <div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for="usuario_fnac">Fecha de nacimiento</label>
+					<input type="date" class="form-control" value={{u.fnac_usuario}} name="usuario_fnac">
+				</div>
+		    </div>
+		    <div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for="usuario_tlfn">Telefono</label>
+					<input type="tel" class="form-control" value={{u.tlfn_usuario}} name="usuario_tlfn">
+				</div>
+		    </div>
+		    <div class="oculto row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<input type="text" class="form-control" name="id_usuario" value={{u.id_usuario}}>
+				 </div>
+			</div>	
+			<div class="oculto row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<input type="password" class="form-control pass" id="pass" value={{u.pass_usuario}} name="pass">
+				</div>
+		    </div>					
+			{% if editar=="true" %}
+				</fieldset>
+			{% else %}
+				<div class="row form-group">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+						<label for="usuario_pass">Contraseña</label>
+						<input type="password" class="form-control pass" id="pass" value="passpordefecto" name="pass" >
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+						<label for="usuario_repass">Repita Contraseña</label>
+						<input type="password" class="form-control repass" id="repass" value="passpordefecto" name="repass" 
+						<div id="mensaje2" class="errores"> La contraseña y la validacion debe ser iguales</div>
+						<div id="mensaje1" class="errores"> La contraseña no puede estar vacia</div>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+						<button id="boton" type="submit" class="btn btn-primary btn-lg">Modificar</button>
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}  
+		</form>
+	</div>
+</div>
+{% endblock %}
 
 

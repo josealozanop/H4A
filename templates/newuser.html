@@ -1,29 +1,66 @@
 {% extends "layout.twig.html" %}
 {% block contenido %}
-<font size="7" style="font-weight: bold;">Crear nuevo usuario</font>
-<form action="{{ path('registerdisc') }}" method="post" role="form" style='padding-top:5px;'>
-<div class="form-group">
-	<label class="taml">Nombre de usuario</label>
-	<input type="text" class="form-control" name="discuser" id="discuser" 
-		   placeholder="Introduzca su nombre de usuario">
-  </div>
-  <div class="form-group">
-	<label class="taml"  for="ejemplo_password_1">Contraseña</label>
-	<input type="password" class="form-control" name="discpass" 
-		   placeholder="Contraseña">
-  </div>
-  <div class="taml"  class="form-group">
-	<label for="ejemplo_email_1">Nombre</label>
-	<input type="text" class="form-control" name="discnom"
-		   placeholder="Introduzca su nombre de usuario">
-  </div>
-  <div class="form-group">
-	<label class="taml"  for="ejemplo_mac">MAC (MAC de este equipo por defecto)</label>
-	<input type="text" class="form-control" name="discmac" value={{mac}}>
-  </div>
-  <div class="oculto">
-	<input type="text" class="form-control" name="idTutor" value={{id_tutor}}>
-  </div>
+<div class="panel panel-primary data-panel shadow">
+	<div class="panel-heading" >	
+		<span class='title' >
+				Nuevo usuario
+		</span>
+	</div>
+	<div class="panel-body">
+		<form action="{{ path('new_user') }}" method="post" role="form"  class='standar_h4a_form'>
+			<div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for="usuario_mail">Mail</label>
+					<input type="email" class="form-control" name="usuario_mail" placeholder="Introduzca el correo del usuario">
+				</div>
+			</div>
+			<div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for="usuario_nombre">Nombre</label>
+					<input type="text" class="form-control" name="usuario_nombre" placeholder="Introduzca el nombre del usuario">
+				</div>
+			</div>
+		    <div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for="usuario_apellidos">Apellidos</label>
+					<input type="text" class="form-control" name="usuario_apellidos" placeholder="Introduzca los apellidos del usuario">
+				</div>
+		    </div>
+		    <div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for="usuario_fnac">Fecha de nacimiento</label>
+					<input type="date" class="form-control" name="usuario_fnac" placeholder="Introduzca la fecha de nacimiento del usuario">
+				</div>
+		    </div>
+		    <div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for="usuario_tlfn">Telefono</label>
+					<input type="tel" class="form-control" name="usuario_tlfn" placeholder="Introduzca el teléfono del usuario">
+				</div>
+		    </div>	
+			<div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for="usuario_pass">Contraseña</label>
+					<input type="password" class="form-control pass" id="pass" name="pass" placeholder="Introduzca la contraseña del usuario">
+				</div>
+			</div>
+			<div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for="usuario_repass">Repita Contraseña</label>
+					<input type="password" class="form-control repass" id="repass" name="repass" placeholder="Repira la contraseña del usuario">
+					<div id="mensaje2" class="errores"> La contraseña y la validacion debe ser iguales</div>
+					<div id="mensaje1" class="errores"> La contraseña no puede estar vacia</div>
+				</div>
+			</div>
+			<div class="oculto">
+				<input type="text" class="form-control" name="idTutor" value={{id_tutor}}>
+			</div>
+			<div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<button type="submit" class="btn btn-primary btn-lg">Siguiente</button>
+				</div>
+			</div>
+  <!--
   <div class="form-group">
   <label class="taml"  for="ejemplo_mac">Tipo de discapacnamead</label>
 <ul type="none">
@@ -31,11 +68,10 @@
   <li><input type="checkbox" name="discaudit" value="opcion_1"> Auditiva</li>
   <li><input type="checkbox" name="discmotriz" value="opcion_1"> Motriz</li>
   </ul>
-  </div>
-  <div class="form-group">
-	<button type="submit" class="btn btn-default">Crear</button>
-  </div>
-</form>
+  </div> -->
+		</form>
+	</div>
+</div>
 {% endblock %}
 
 

@@ -56,6 +56,14 @@ table#t01 th	{
     color: white;
 }
 
+.errores{
+    display: none;
+}
+.errores:before{ /* Este es un truco para crear una flechita */
+}
+
+
+
 /** borja **/
 .shadow { 
 	box-shadow: 7px 7px 8px 0px rgba(0, 0, 0, 0.75) !important;

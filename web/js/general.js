@@ -107,6 +107,38 @@ function pregunta(){
        var agree=confirm("¿Realmente desea eliminarlo? ");
   if (agree) return true ;
   return false;
-    
 } 
-
+$(document).ready(function () {
+     $("#boton").click(function (){ //función para el boton de enviar
+        //recolectamos en variables, lo que tenga cada input.
+        //Para mejor manipulación en los if's
+        var passw = $("#pass").val();
+        var repass = $("#repass").val();   
+		if(passw == ""){
+			$("#mensaje1").fadeIn("slow");
+			return false;
+		}else{
+			if(passw != repass){
+				$("#mensaje2").fadeIn("slow");
+				return false;
+			}
+		}
+    });//fin click
+	var valido=false;
+	$("#repass").keyup(function(e) {
+        var pass = $("#pass").val();
+        var re_pass=$("#repass").val();
+ 
+        if(pass != re_pass)
+        {
+            $("#repass").css({"background":"#F22" }); //El input se pone rojo
+            valido=true;
+        }
+        else if(pass == re_pass)
+        {
+            $("#repass").css({"background":"#8F8"}); //El input se ponen verde
+            $("#mensaje4").fadeOut();
+            valido=true;
+        }
+    });//fin keyup repass
+});//fin ready

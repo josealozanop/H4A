@@ -17,15 +17,13 @@ $app->get('/', function(Request $request) use ($app) {
     return $app['twig']->render('index.html', array(
         'error' => $app['security.last_error']($request),
         'last_username' => $app['session']->get('_security.last_username'),
-    ));
-	
+    ));	
 })
 ->bind('homepage')
 ;
 
 
 $app->get('/login_check', function(Request $request) use ($app) {
-
     return $app['twig']->render('index.html', array(
         'error' => $app['security.last_error']($request),
         'last_username' => $app['session']->get('_security.last_username'),
@@ -50,8 +48,6 @@ $app->get('/pepe', function () use ($app) {
 ->bind('pepe')
 ;
 
-
-
 $app->post('/opUsuarios', function (Request $request) use ($app) {
 $id_usuario = $request->get('idUsuario');
 switch($_POST["enviar"]) { 
@@ -75,21 +71,25 @@ switch($_POST["enviar"]) {
 		$app['db']->delete('usuario', array('id_usuario' => $id_usuario));	
 		return $app->redirect($app["url_generator"]->generate("verdisc"));
         break; 
-}  
-	
+	} 	
 })
 ->bind('opUsuarios')
 ;
+
 $app->post('/modUsuario', function (Request $request) use ($app) {
 	$id_usuario = $request->get('id_usuario');
-	$mail = $request->get('mail');
-	$nombre =  $request->get('nombre');
-	$apellidos =$request->get('apellidos');
-	$fnac =$request->get('fnac');	
-	$tlfn =$request->get('tlfn');	
-	
+	$mail = $request->get('usuario_mail');
+	$nombre =  $request->get('usuario_nombre');
+	$apellidos =$request->get('usuario_apellidos');
+	$fnac =$request->get('usuario_fnac');	
+	$tlfn =$request->get('usuario_tlfn');	
+	$oldpass =$request->get('usuario_oldpass');	
+	$pass =$request->get('pass');	
+	if($pass=="passpordefecto"){
+		$pass=$oldpass;
+	}
 	$app['db']->update('usuario', array(
-		'nombre_usuario'=>$nombre), array('id_usuario'=>$id_usuario
+		'nombre_usuario'=>$nombre,'mail_usuario'=>$mail,'apellidos_usuario'=>$apellidos,'pass_usuario'=>$pass,'fnac_usuario'=>$fnac,'tlfn_usuario'=>$tlfn), array('id_usuario'=>$id_usuario
 	));
 	$sql = "select * FROM usuario WHERE id_Usuario = '$id_usuario'";
 	$usuario = $app['db']->fetchAll($sql);	
@@ -100,6 +100,7 @@ $app->post('/modUsuario', function (Request $request) use ($app) {
 })
 ->bind('modUsuario')
 ;
+
 $app->get('/vacia', function () use ($app) {
 	$variable="vacia";
 	$usuarios = $app['db']->fetchAll('SELECT mail_tutor FROM tutor');
@@ -113,7 +114,6 @@ $app->get('/vacia', function () use ($app) {
 })
 ->bind('vacia')
 ;
-
 
 //crear nuevo tutor
 $app->get('/newTutor', function(Request $request) use ($app) {
@@ -165,7 +165,6 @@ $app->post('/modTutor', function (Request $request) use ($app) {
 ->bind('modTutor')
 ;
 
-
 $app->get('/get/tutors', function () use ($app) {
 	$tutores = $app['db']->fetchAll('SELECT mail_tutor FROM tutor');
 	$usuarios = $app['db']->fetchAll('SELECT mail_usuario FROM usuario');
@@ -173,7 +172,6 @@ $app->get('/get/tutors', function () use ($app) {
 	return new Response($text);
 })
 ;
-
 
 $app->get('/verdisc', function (Request $request) use ($app) {
 	$user = $app['security']->getToken()->getUser();
@@ -189,8 +187,7 @@ $app->get('/verdisc', function (Request $request) use ($app) {
 ->bind('verdisc')
 ;
 $app->get('/verUsuario', function (Request $request) use ($app) {
-	$id_Usuario = $request->get('id_Usuario');
-	
+	$id_Usuario = $request->get('id_Usuario');	
 })
 ->bind('verUsuario')
 ;
@@ -202,8 +199,6 @@ $app->get('/newDevice', function (Request $request) use ($app) {
 })
 ->bind('newDevice')
 ;
-
-
 
 $app->get('/newuser', function () use ($app) {
 	$mac = getMAC();
@@ -219,20 +214,34 @@ $app->get('/tutor', function () use ($app) {
 })
 ->bind('tutor')
 ;
+$app->get('/new_usermac', function () use ($app) {
+	$id_usuario = $request->get('idUsuario');
+	$mac = $request->get('mac');
+	$sql = "select id_dispositivo FROM dispositivo WHERE mac_dispositivo = '$mac'";
+	$id_dispositivo = $app['db']->fetchColumn($sql, array(), 0);
+	if($id_dispositivo==null){
+		$app['db']->insert('dispositivo', array('mac_dispositivo' => $mac,'nombre_dispositivo' => $nombre));
+		$sql = "select id_dispositivo FROM dispositivo WHERE mac_dispositivo = '$mac'";
+		$id_dispositivo = $app['db']->fetchColumn($sql, array(), 0);
+	}
+	$app['db']->insert('dispositivo_usuario', array('id_dispositivo' => $id_dispositivo, 'id_usuario' => $id_usuario));
+    return $app['twig']->render('tutor.html', array());
+})
+->bind('new_usermac')
+;
 
-$app->post('/registerdisc',  function (Request $request) use ($app) {
-
+$app->post('/new_user',  function (Request $request) use ($app) {
+	$mac = getMAC();
 	$id_tutor = $request->get('idTutor');
-	$username = $request->get('discuser');
-	$pass =$request->get('discpass');
-	$nombre =  $request->get('discnom');
-	$discvis =$request->get('discvis');
-	$discmotriz =$request->get('discmotriz');
-	$discaudit =$request->get('discaudit');
-	$mac =$request->get('discmac');
+	$mail = $request->get('usuario_mail');
+	$pass =$request->get('pass');
+	$nombre =  $request->get('usuario_nombre');
+	$apellidos =$request->get('usuario_apellidos');
+	$fnac =$request->get('usuario_fnac');
+	$tlfn =$request->get('usuario_tlfn');
 	$encoder = new MessageDigestPasswordEncoder();
 	$encodePass = $encoder->encodePassword($pass, '');
-	if($discvis==null){
+	/*if($discvis==null){
 		$discvis=0;
 	}
 	else{
@@ -249,10 +258,12 @@ $app->post('/registerdisc',  function (Request $request) use ($app) {
 	}
 	else{
 		$discmotriz=1;
-	}
-	$app['db']->insert('usuario', array('mail_usuario' => $username, 'nombre_usuario' => $nombre, 'pass_usuario' => $encodePass,'roles'=>'ROLE_USER'));
-	$sql = "select id_usuario FROM usuario WHERE mail_usuario = '$username'";
+	}*/
+	$app['db']->insert('usuario', array('mail_usuario' => $mail, 'nombre_usuario' => $nombre,'apellidos_usuario' => $apellidos,'fnac_usuario' => $fnac,'tlfn_usuario' => $tlfn, 'pass_usuario' => $encodePass,'roles'=>'ROLE_USER'));
+	$sql = "select id_usuario FROM usuario WHERE mail_usuario = '$mail'";
 	$id_usuario = $app['db']->fetchColumn($sql, array(), 0);
+	$app['db']->insert('tutor_usuario', array('id_tutor' => $id_tutor, 'id_usuario' => $id_usuario));
+	/*
 	$sql = "select id_dispositivo FROM dispositivo WHERE mac_dispositivo = '$mac'";
 	$id_dispositivo = $app['db']->fetchColumn($sql, array(), 0);
 	if($id_dispositivo==null){
@@ -263,11 +274,11 @@ $app->post('/registerdisc',  function (Request $request) use ($app) {
 	$app['db']->insert('dispositivo_usuario', array('id_dispositivo' => $id_dispositivo, 'id_usuario' => $id_usuario));
 	//$sql = "select id_tutor FROM tutor WHERE mail_tutor = '$tutor'";
 	//$id_tutor = $app['db']->fetchColumn($sql, array(), 0);
-	$app['db']->insert('tutor_usuario', array('id_tutor' => $id_tutor, 'id_usuario' => $id_usuario));
 	
-	return $app->redirect($app["url_generator"]->generate("tutor"));
+	*/
+	return $app['twig']->render('new_usermac.html', array('mac' => $mac, 'id_usuario' => $id_usuario));
 })
-->bind('registerdisc')
+->bind('new_user')
 ;	
 
 $app->post('/register', function(Request $request) use ($app){	
