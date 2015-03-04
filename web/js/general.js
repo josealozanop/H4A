@@ -109,7 +109,7 @@ function pregunta(){
   return false;
 } 
 $(document).ready(function () {
-     $("#boton").click(function (){ //función para el boton de enviar
+     $("#boton_usuario").click(function (){ //función para el boton de enviar
         //recolectamos en variables, lo que tenga cada input.
         //Para mejor manipulación en los if's
         var passw = $("#pass").val();
