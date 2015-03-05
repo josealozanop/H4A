@@ -1,0 +1,53 @@
+{% extends "layout.twig.html" %}
+
+	{% block contenido %}
+
+ <div style = 'height:30px;margin-bottom:25px'>
+ <center><h2>Dispositivos Registrados</h2></center>	
+</div> 
+{% for dispositivo in dispositivos %}	
+	<table class="table table-striped standar_table shadow">
+	<tr>
+		<th>Nombre</th>	
+		<th>MAC</th>
+		<th>Usuario por defecto</th>
+		<th>Acciones</th>
+	</tr>
+				
+		<tr>
+			<td>{{dispositivo.nombre_dispositivo}}</td>
+			<td>{{dispositivo.mac_dispositivo}}</td>
+			<td>de momento nada</td>
+			<td>
+			 <form role="form" action="{{ path('opDisp') }}" method="post" style='padding:0px'>
+				<div class="oculto">
+					<input type="text" class="form-control" name="idUsuario" value={{dispositivo.id_dispositivo}}>
+				</div>
+			
+				<button type="submit" name="enviar" value ="1" class="btn btn-link">
+					<i class="fa fa-eye fa-2x	"></i>
+				</button>
+				<button type="submit" name="enviar" value ="2" class="btn btn-link">
+					<i class="fa fa-pencil-square-o fa-2x"></i>
+				</button>
+			
+				<button onclick="pregunta()" type="submit" name="enviar" value ="3" class="btn btn-link">
+					<i class="fa fa-trash fa-2x"></i>
+				</button>
+			
+			</form>
+			</td>	
+		</tr>
+	</table>
+{% else %}
+	<center><h3>Aún no has registrado nungun dispositivo</h3></center>
+{% endfor %}
+			
+
+
+
+
+			
+	{% endblock %}
+
+

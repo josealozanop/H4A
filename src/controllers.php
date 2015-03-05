@@ -48,6 +48,37 @@ $app->get('/pepe', function () use ($app) {
 ->bind('pepe')
 ;
 
+
+
+$app->post('/opDisp', function (Request $request) use ($app) {
+$id_usuario = $request->get('idUsuario');
+switch($_POST["enviar"]) { 
+    case 1:
+		$editar="true";
+        $sql = "select * FROM usuario WHERE id_Usuario = '$id_usuario'";
+		$usuario = $app['db']->fetchAll($sql);	
+		return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
+		'usuario' => $usuario
+		));
+        break; 
+    case 2: 
+		$editar="false";
+        $sql = "select * FROM usuario WHERE id_Usuario = '$id_usuario'";
+		$usuario = $app['db']->fetchAll($sql);	
+		return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
+		'usuario' => $usuario
+		));
+        break; 
+    case 3: 
+		$app['db']->delete('usuario', array('id_usuario' => $id_usuario));	
+		return $app->redirect($app["url_generator"]->generate("verdisc"));
+        break; 
+	} 	
+})
+->bind('opDisp')
+;
+
+
 $app->post('/opUsuarios', function (Request $request) use ($app) {
 $id_usuario = $request->get('idUsuario');
 switch($_POST["enviar"]) { 
@@ -184,7 +215,19 @@ $app->get('/get/tutors', function () use ($app) {
 	return new Response($text);
 })
 ;
-
+$app->get('/verDisp', function (Request $request) use ($app) {
+	$user = $app['security']->getToken()->getUser();
+	//$variable="hola";
+	$username= $user->getUsername();
+	$sql = "SELECT * FROM dispositivo D INNER JOIN tutor_dispositivo R ON D.id_dispositivo = R.id_dispositivo INNER JOIN tutor T ON R.id_tutor = T.id_tutor WHERE T.mail_tutor = '$username'";
+    $dispositivos = $app['db']->fetchAll($sql);
+	
+    return $app['twig']->render('ver_disp.html', array(
+	'dispositivos' => $dispositivos
+	));
+})
+->bind('verDisp')
+;
 $app->get('/verdisc', function (Request $request) use ($app) {
 	$user = $app['security']->getToken()->getUser();
 	//$variable="hola";

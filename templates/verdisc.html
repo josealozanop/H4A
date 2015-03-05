@@ -47,15 +47,14 @@
  <div style = 'height:30px;margin-bottom:25px'>
  <center><h2>Usuarios Registrados</h2></center>	
 </div> 
-
-<table class="table table-striped standar_table shadow">
-	<tr>
-		<th>Email</th>	
-		<th>Nombre</th>
-		<th>Apellidos</th>
-		<th>Acciones</th>
-	</tr>
-	{% for discapacitado in discapacitados %}				
+{% for discapacitado in discapacitados %}				
+	<table class="table table-striped standar_table shadow">
+		<tr>
+			<th>Email</th>	
+			<th>Nombre</th>
+			<th>Apellidos</th>
+			<th>Acciones</th>
+		</tr>
 		<tr>
 			<td>{{discapacitado.mail_usuario}}</td>
 			<td>{{discapacitado.nombre_usuario}}</td>
@@ -79,12 +78,13 @@
 			
 			</form>
 			</td>	
-		</tr>				
-	{% else %}
-	<center><h3>Aún no has registrado nungun usuario</h3></center>
-	{% endfor %}
+		</tr>	
+	</table>			
+{% else %}
+<center><h3>Aún no has registrado nungun usuario</h3></center>
+{% endfor %}
 			
-</table>
+
 
 
 
