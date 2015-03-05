@@ -133,11 +133,23 @@ $app->get('/editTutor', function (Request $request) use ($app) {
 	$tutor_id = $app['security']->getToken()->getUser()->getId();
 	$query = 'SELECT * FROM tutor WHERE id_tutor = "'.$tutor_id.'"';
 	$data = $app['db']->fetchAll($query);
-    return $app['twig']->render('mod_tutor.html', array( 'user' => $data, 'modified' => $modified));
+    return $app['twig']->render('mod_tutor.html', array( 'user' => $data, 'editar'=>false, 'modified' => $modified));
 	
 })
 ->bind('editTutor')
 ;
+
+$app->get('/verTutor', function (Request $request) use ($app) {
+	$modified = false;
+	$tutor_id = $app['security']->getToken()->getUser()->getId();
+	$query = 'SELECT * FROM tutor WHERE id_tutor = "'.$tutor_id.'"';
+	$data = $app['db']->fetchAll($query);
+    return $app['twig']->render('mod_tutor.html', array( 'user' => $data, 'editar'=>true ,'modified' => $modified));
+	
+})
+->bind('verTutor')
+;
+
 
 //Modificar el tutor editado previamente
 $app->post('/modTutor', function (Request $request) use ($app) {

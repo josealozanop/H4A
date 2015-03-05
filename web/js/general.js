@@ -126,7 +126,14 @@ $(document).ready(function () {
 		}
     });//fin click
 	var valido=false;
-	$("#repass").keyup(function(e) {
+	$("#pass").change(function() {
+		$("#divValidacion").fadeIn("slow");
+		var passw = $("#pass").val();
+		$("#divValidacion").fadeIn("slow");
+		document.getElementById("repass").value="";
+	})
+	var valido=false;
+	$("#repass").keyup(function() {
         var pass = $("#pass").val();
         var re_pass=$("#repass").val();
  

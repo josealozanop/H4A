@@ -18,49 +18,55 @@
 				</div>
 			</div>
 		{% endif %}
-		
+		{% if editar=="true" %} <fieldset disabled>{% endif %}
 		<form class='standar_h4a_form' role="form" action="{{ path('modTutor') }}" method="post">
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='Tutor_mail'>Mail</label><br>
 					<input type='email' class="form-control" name='Tutor_mail' value='{{user[0].mail_tutor}}'/>
 				</div>
-			</div>
-			
+			</div>			
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='Tutor_name'>Nombre</label><br>
 					<input type='text' class="form-control" name='Tutor_name' value='{{user[0].nombre_tutor}}'/>
 				</div>
 			</div>
-
  			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='Tutor_surname'>Apellidos</label><br>
 					<input type='text' class="form-control" name='Tutor_surname' value='{{user[0].apellidos_tutor}}'/>
 				</div>
-			</div>
-			
-			<div class='row  form-group'>
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='Tutor_pass'>Password</label><br>
-					<input type='password' class="form-control" name='Tutor_pass' required/>
-				</div>
-			</div>
-			
+			</div>			
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='Tutor_phone'>Teléfono</label><br>
 					<input type='tel' class="form-control" name='Tutor_phone' value='{{user[0].tlfn_tutor}}'/>
 				</div>
-			</div>
-			
-					
-			<div class='row form-group'>
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<button type="submit" class="btn btn-primary btn-lg">Modificar</button>
+			</div>				
+			{% if editar=="true" %}
+				</fieldset>
+			{% else %}
+				<div class="row form-group">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+						<label for="pass">Contraseña</label>
+						<input type="password" class="form-control pass" id="pass" value="passpordefecto" name="pass" >
+					</div>
 				</div>
-			</div>
+				<div id="divValidacion" class="errores row form-group">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+						<label for="repass">Repita Contraseña</label>
+						<input type="password" class="form-control repass" id="repass" value="passpordefecto" name="repass"> 
+						<div id="mensaje2" class="errores"> La contraseña y la validacion debe ser iguales</div>
+						<div id="mensaje1" class="errores"> La contraseña no puede estar vacia</div>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+						<button id="boton_usuario" type="submit" class="btn btn-primary btn-lg">Modificar</button>
+					</div>
+				</div>
+			{% endif %}
 		</form>
 	</div>
 </div>
