@@ -4,12 +4,11 @@ $(document).ready(function(){
 	sessionStorage.setItem("newTutor_mail", "");
 	todo();
 	smart_search();
-	$('#inicio_newTutor').click({name:'test'},newTutor);
-	
+	$('#inicio_newTutor').click({name:'test'},newTutor2);
+	PONLE_UN_NOMBRE();
 });
 
-function newTutor(event){
-	inicio_newTutor_mail
+function newTutor2(){
 	sessionStorage.newTutor_name = $('#inicio_newTutor_name').val();
 	sessionStorage.newTutor_mail = $('#inicio_newTutor_mail').val();
 	window.location.replace("newTutor");
@@ -108,8 +107,11 @@ function pregunta(){
   if (agree) return true ;
   return false;
 } 
-$(document).ready(function () {
-     $("#boton_usuario").click(function (){ //función para el boton de enviar
+
+//ME CAGO EN TI, a ver si vamos con mas cuidado
+
+function PONLE_UN_NOMBRE() {
+	$("#boton_usuario").click(function (){ //función para el boton de enviar
         //recolectamos en variables, lo que tenga cada input.
         //Para mejor manipulación en los if's
         var passw = $("#pass").val();
@@ -149,4 +151,6 @@ $(document).ready(function () {
             valido=true;
         }
     });//fin keyup repass
-});//fin ready
+}
+
+
