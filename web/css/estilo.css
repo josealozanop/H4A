@@ -68,3 +68,8 @@ table#t01 th	{
 .shadow { 
 	box-shadow: 7px 7px 8px 0px rgba(0, 0, 0, 0.75) !important;
 }
+
+.vertical_align_row {
+	display: flex;
+	align-items: center;
+}

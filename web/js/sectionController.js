@@ -1,9 +1,13 @@
 var app = angular.module('home', []);
 
 app.controller('sectionController', ['$scope', function($scope) {
-	newTutor = {
-		pass : '',
-		repeatedPass : '',
-		validated : false
+	navBarMobile = {
+		expand_login : false,
+		error : false,
+		click : function () {
+			if(!this.expand_login) {
+				this.expand_login = true
+			}
+		}
 	}
 }]);
