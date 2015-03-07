@@ -10,7 +10,7 @@
 		
 	</div>
 	<div class="panel-body">
-		<form class='standar_h4a_form'>
+		<form class='standar_h4a_form' action="{{ path('newDispositivo') }}" method="post" role="form">
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='nombreDispositivo'>Dispositivo</label><br>
@@ -26,7 +26,7 @@
 						<input ng-switch-default type='text' class="form-control" name='MAC' value=''/>
 					</ng-switch>
 					<div class="aditional-info">
-						<input type="checkbox" name="MAC_dispostivo" value="" ng-model="ischecked">
+						<input type="checkbox" name="mac" value="" ng-model="ischecked">
 						<span>Usar la MAC de este equipo </span>
 					</div>
 					
@@ -35,14 +35,18 @@
 			
 			<div class='row form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='nombreDispositivo'>Usuario por defecto</label><br>
-					<input type='text' class="form-control" name='nombreDispositivo'/>
+					<label for='usuarioDefecto'>Usuario por defecto</label><br>
+					<select class="form-control" name="usuarioDefecto">
+						<option></option>
+						{% for u in usuarios %}
+							<option  value="{{u.id_usuario}}">{{u.mail_usuario}}</option>
+						{% endfor %} 
+					</select>			
 				</div>
 			</div>
-			
 			<div class='row form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<button type="button" class="btn btn-primary btn-lg">Añadir</button>
+					<button type="submit" class="btn btn-primary btn-lg">Añadir</button>
 				</div>
 			</div>
 		</form>

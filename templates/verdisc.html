@@ -47,7 +47,7 @@
  <div style = 'height:30px;margin-bottom:25px'>
  <center><h2>Usuarios Registrados</h2></center>	
 </div> 
-{% for discapacitado in discapacitados %}				
+	{% if discapacitados %}	
 	<table class="table table-striped standar_table shadow">
 		<tr>
 			<th>Email</th>	
@@ -55,6 +55,7 @@
 			<th>Apellidos</th>
 			<th>Acciones</th>
 		</tr>
+		{% for discapacitado in discapacitados %}	
 		<tr>
 			<td>{{discapacitado.mail_usuario}}</td>
 			<td>{{discapacitado.nombre_usuario}}</td>
@@ -77,18 +78,13 @@
 				</button>
 			
 			</form>
-			</td>	
-		</tr>	
+			</td>
+		</tr>
+		{% endfor %}		
 	</table>			
-{% else %}
-<center><h3>Aún no has registrado nungun usuario</h3></center>
-{% endfor %}
-			
-
-
-
-
-			
-	{% endblock %}
+	{% else %}
+		<center><h3>Aún no has registrado nungun usuario</h3></center>
+	{% endif %}
+{% endblock %}
 
 
