@@ -5,7 +5,7 @@
 		
 		{% if (app.security.token is not null) and (is_granted('ROLE_USER')) %}
 			<div class="visible-xs col-xs-3 navIcon" >
-				<i class="fa fa-bars fa-3x"></i>
+				<i class="fa fa-bars fa-3x" ng-click="navBarMobile.click_menu()" style="cursor:pointer"></i>
 			</div>
 			
 			<div class='col-md-2 col-lg-2 col-sm-2 col-xs-2 hidden-xs'>
@@ -73,7 +73,9 @@
 				{% endif %}
 			</form>
 			<div class='col-xs-5 col-xs-offset-1 visible-xs mobile_login'>
-				<input type="submit" class="col-xs-10 btn btn-primary btn-sm mobile_login_btn" value="Login" ng-click="navBarMobile.expand_login=true">
+				<button type="submit" class="col-xs-10 btn btn-primary btn-sm mobile_login_btn" value="Login" ng-click="navBarMobile.click_login()">
+					Login <span ng-show="!navBarMobile.expand_login">&#9660;</span><span ng-show="navBarMobile.expand_login">&#9650;</span>
+				</button>
 			</div>
 			
 		{% endif %}
@@ -84,12 +86,38 @@
 	<div ng-show="navBarMobile.expand_login || navBarMobile.error" class="visible-xs login_bar ">
 		<form class="row"  role="form" action="{{ path('login_check') }}" method="post" >
 			<input class="input-sm col-xs-10 col-xs-offset-1" id="username" type="email" name="email" style="" value="{{ last_username }}" placeholder="Introduzca email" required>
-			<input class=" input-sm col-xs-10 col-xs-offset-1  " id="password" type="password" name="password"  placeholder="Introduzca contraseña" style="margin-top:5px">
+			<input class=" input-sm col-xs-10 col-xs-offset-1  " id="password" type="password" name="password"  placeholder="Introduzca contraseña" style="margin-top:5px" required>
 			<input type="submit" class="btn btn-primary btn-sm col-xs-6 col-xs-offset-3" style='margin-top:5px'value="Iniciar sesión">	
 			{% if error %}
 				<div ng-init="navBarMobile.error=true" class="error col-xs-12" style="color:white;text-align:center">{{ error }}</div>
 			{% endif %}
 		</form>
 	</div> 
+	
+	<!-- menu desplegable para dispositivos moviles -->
+	{% else %}
+	<div ng-show="navBarMobile.expand_menu" class="visible-xs navMenu">
+		<div class="item">
+			<a href="{{ path('verdisc') }}">Ver Usuarios</a>
+		</div>
+		<div class="item">
+			<a href="{{ path('newuser') }}">Crear Usuarios</a>
+		</div>
+		<div class="item">
+			<a href="">Administrar casa</a>
+		</div>
+		<div class="item">
+			<a href="{{ path('verDisp') }}">Ver dispositivos</a>
+		</div>
+		<div class="item">
+			<a href="{{ path('newDevice') }}">Añadir dispositivos</a>
+		</div>
+		<div class="item">
+			<a href="{{ path('verTutor') }}">Ver Perfil</a>
+		</div>
+		<div class="item">
+			<a href="{{ path('editTutor') }}">Modificar Perfil</a>
+		</div>
+	</div>
 	{% endif %}
 </nav>
