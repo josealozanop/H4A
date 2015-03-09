@@ -448,15 +448,19 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 		case 'getAllTutorName':
 			$out = json_encode(get_all_tutors_name($app['db'], $tutor_id));
 			break;
-		default:
-			$users_id = get_my_users($app['db'], $tutor_id);
-			$users_data =  Array();
-			foreach($users_id as $i) { 
-				$user_data = get_user_data($app['db'], $i['id_usuario']);
-				array_push($users_data,$user_data); 
-			}
-			$out = json_encode($users_data);
+			
+		case "getMAC":
+			$out = getMAC();
 			break;
+			
+		case "addDevice":
+			$device_name = $request->get('name');
+			$device_mac = $request->get('MAC');
+			$out = $device_name.$device_mac;
+			break;
+		default:
+			
+
 		
 			$out = "Service ".$type_service.' was not found';
 			break;

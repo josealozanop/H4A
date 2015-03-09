@@ -1,8 +1,18 @@
 {% extends "layout.twig.html" %}
 {% block contenido %}
 
-<div class='console'>
+<!-- este fichero es para hacer tests -->
 
+<div class='console'>
+	<div style="background-color:gray">
+		<a href="serviceController?service=getMAC"><button>getMac()</button></a>
+	</div>	
+	
+	<div style="background-color:gray">
+		<a ng-click="serviceSwitcher()" href="serviceController?service=addDevice&name=hola&MAC=4A-DD"><button>addDevice()</button></a>
+	</div>	
+	
+	
 </div>
 
 <script>

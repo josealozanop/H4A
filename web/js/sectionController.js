@@ -17,7 +17,6 @@ app.controller('sectionController', ['$scope', function($scope) {
 		},
 		
 		click_menu : function () {
-			console.log("hola");
 			if(!this.expand_menu) {
 				this.expand_menu = true
 			}
@@ -25,5 +24,18 @@ app.controller('sectionController', ['$scope', function($scope) {
 				this.expand_menu = false
 			}
 		}
+	}
+	
+	$scope.newTutor = {
+		name : "",
+		mail : "",
+	}
+	
+	$scope.ping = function(){
+		console.log($scope.newTutor);
+	}
+	
+	$scope.serviceSwitcher = function (service, data) {
+		return "serviceController?service=addDevice&name=hola&MAC=4A-DD";
 	}
 }]);

@@ -3,7 +3,6 @@ $(document).ready(function(){
 	sessionStorage.setItem("newTutor_name", "");
 	sessionStorage.setItem("newTutor_mail", "");
 	todo();
-	smart_search();
 	$('#inicio_newTutor').click({name:'test'},newTutor2);
 	PONLE_UN_NOMBRE();
 });
@@ -12,63 +11,6 @@ function newTutor2(){
 	sessionStorage.newTutor_name = $('#inicio_newTutor_name').val();
 	sessionStorage.newTutor_mail = $('#inicio_newTutor_mail').val();
 	window.location.replace("newTutor");
-}
-
-function smart_search(){
-		var touched = false;
-
-		$('#inText-navbar-search').click(function(){
-			if(!touched){
-				touched = true;
-				connect_DB('getMyUsers').success(
-					function(out){
-						var myUsers = JSON.parse(out);
-
-						var names = new Array();
-						for (i in myUsers){
-							names.push(myUsers[i].nombre_usuario);
-						}
-						
-						for (i in names){
-							$('#datalist-navbar-searchList').append("<option value='"+names[i]+"'></option>");
-						}
-						
-					}
-					
-				);
-			}
-		});
-			
-		
-		/*$.ajax({
-                type: "GET",
-                url: "./serviceController",
-                data: {service : 'getMyData'},
-                success: function(msg){
-					console.log(msg);
-                    /*var todos = JSON.parse(msg);
-					var usuarios = todos[0];
-					var tutores = todos[1];
-					var names = new Array();
-					
-					for (i in tutores){
-						names.push(tutores[i].nUsuario_tutor+' (tutor)');
-					}
-					
-					for (i in usuarios){
-						names.push(usuarios[i].nUsuario_usuario+' (usuario)');
-					}
-					
-					for (i in names){
-						$('#datalist-navbar-searchList').append("<option value='"+names[i]+"'></option>");
-						//console.log(names[i]);
-					}
-                },
-				error : function(){
-					console.log('ha habido un error');
-				}
-            }); */// Ajax Call
-
 }
 
 function todo(){
