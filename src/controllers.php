@@ -276,25 +276,33 @@ $app->post('/newDispositivo', function (Request $request) use ($app) {
 	$id_usuario =$request->get('usuarioDefecto');	
 	$numero=$request->get('numero');
     $count = count($numero);	
-	$sql = "select id_dispositivo FROM dispositivo WHERE mac_dispositivo = '$mac' OR nombre_dispositivo = '$nombre'";
+	//compruebo si el tutor ya tiene ese nombre para un sipositivo
+	$sql = "select id_dispositivo FROM tutor_dispositivo WHERE nombre_dispositivo = '$nombre' AND id_tutor = '$id_tutor'";
+	$nombreRep = $app['db']->fetchColumn($sql, array(), 0);
+	if($nombreRep!=null){
+		return $app->redirect($app["url_generator"]->generate("newDevice"));
+	}
+	//compruebo si el dispositivo ya existe
+	$sql = "select id_dispositivo FROM dispositivo WHERE mac_dispositivo = '$mac'";
 	$id_dispositivo = $app['db']->fetchColumn($sql, array(), 0);
-	if($id_dispositivo==null){
-		$app['db']->insert('dispositivo', array('nombre_dispositivo' => $nombre, 'mac_dispositivo' => $mac,'uDefecto_dispositivo' => $id_usuario));
+	if($id_dispositivo==null){//si el duspositivo no existe lo creo
+		$app['db']->insert('dispositivo', array('mac_dispositivo' => $mac,'uDefecto_dispositivo' => $id_usuario));
 		$sql = "select id_dispositivo FROM dispositivo WHERE mac_dispositivo = '$mac'";
 		$id_dispositivo = $app['db']->fetchColumn($sql, array(), 0);
 		
 	}
-	else{
-		$sql = "select id_dispositivo FROM dispositivo_usuario WHERE id_usuario = '$id_usuario' AND id_dispositivo= '$id_dispositivo'";
+	else{//si el dispositivo existe compruebo si el dispositivo ya existe para ese tutor concreto y si es asi me salgo
+		$sql = "select id_dispositivo FROM tutor_dispositivo WHERE id_tutor = '$id_tutor' AND id_dispositivo= '$id_dispositivo'";
 		$comp = $app['db']->fetchColumn($sql, array(), 0);
 		if($comp!=null){
 			return $app->redirect($app["url_generator"]->generate("newDevice"));
 		}
 	}
-	for ($i = 0; $i < $count; $i++) {
+	for ($i = 0; $i < $count; $i++) {//introduzco las relaciones con los usuarios
 		$app['db']->insert('dispositivo_usuario', array('id_dispositivo' => $id_dispositivo, 'id_usuario' => $numero[$i]));	
 	}
-	$app['db']->insert('tutor_dispositivo', array('id_tutor' => $id_tutor, 'id_dispositivo' => $id_dispositivo));
+	//introduzo la relacion con el tutor
+	$app['db']->insert('tutor_dispositivo', array('id_tutor' => $id_tutor, 'id_dispositivo' => $id_dispositivo,'nombre_dispositivo' => $nombre));
 	return $app['twig']->render('tutor.html', array('accion' => "El dispositivo ha sido insertado correctaente"));
 })
 ->bind('newDispositivo')
