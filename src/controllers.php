@@ -16,7 +16,7 @@ require 'db_utils.php';
 $app->get('/', function(Request $request) use ($app) {
     return $app['twig']->render('index.html', array(
         'error' => $app['security.last_error']($request),
-        'last_username' => $app['session']->get('_security.last_username'),
+        'last_username' => $app['session']->get('_security.last_username'),'accion'=>""
     ));	
 })
 ->bind('homepage')
@@ -50,32 +50,13 @@ $app->get('/pepe', function () use ($app) {
 
 
 
-$app->post('/opDisp', function (Request $request) use ($app) {
-$id_usuario = $request->get('idUsuario');
-switch($_POST["enviar"]) { 
-    case 1:
-		$editar="true";
-        $sql = "select * FROM usuario WHERE id_Usuario = '$id_usuario'";
-		$usuario = $app['db']->fetchAll($sql);	
-		return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
-		'usuario' => $usuario
-		));
-        break; 
-    case 2: 
-		$editar="false";
-        $sql = "select * FROM usuario WHERE id_Usuario = '$id_usuario'";
-		$usuario = $app['db']->fetchAll($sql);	
-		return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
-		'usuario' => $usuario
-		));
-        break; 
-    case 3: 
-		$app['db']->delete('usuario', array('id_usuario' => $id_usuario));	
-		return $app->redirect($app["url_generator"]->generate("verdisc"));
-        break; 
-	} 	
+$app->post('/BorrarDisp', function (Request $request) use ($app) {
+	$id_dispositivo = $request->get('idDisp');
+	$app['db']->delete('dispositivo', array('id_dispositivo' => $id_dispositivo));	
+	return $app['twig']->render('tutor.html', array('accion' => "El dispositivo ha sido borrado correctamente"));
+    break; 
 })
-->bind('opDisp')
+->bind('BorrarDisp')
 ;
 
 
@@ -133,6 +114,30 @@ $app->post('/modUsuario', function (Request $request) use ($app) {
 })
 ->bind('modUsuario')
 ;
+
+
+$app->post('/modDispositivo', function (Request $request) use ($app) {
+	$nombre =  $request->get('nombre');
+	$defecto =$request->get('usuarioDefec');
+	$mac = $request->get('mac');
+	$id_dispositivo = $request->get('id_disp');
+	$id_dispositivo = str_replace("\t", '', $id_dispositivo);
+	$app['db']->update('dispositivo', array(
+		'nombre_dispositivo'=>$nombre,'mac_dispositivo'=>$mac,'uDefecto_dispositivo'=>$defecto), array('id_dispositivo'=>$id_dispositivo
+	));
+	return $app['twig']->render('tutor.html', array('accion' =>"Usuario modificado correctamente"
+	));
+	/*return $app['twig']->render('verUsuario.html', array('editar' =>"true",
+	'usuario' => $usuario
+	));*/
+	
+})
+->bind('modDispositivo')
+;
+
+
+
+
 
 $app->get('/vacia', function () use ($app) {
 	$variable="vacia";
@@ -204,7 +209,7 @@ $app->post('/modTutor', function (Request $request) use ($app) {
 	
 	$query = 'SELECT * FROM tutor WHERE id_tutor = "'.$tutor_id.'"';
 	$data = $app['db']->fetchAll($query);
-    return $app['twig']->render('mod_tutor.html', array( 'user' => $data , 'modified' => $modified));
+	return $app['twig']->render('tutor.html', array('accion' =>"El tutor ha sido modificado correctamente"));
 	
 })
 ->bind('modTutor')
@@ -264,29 +269,31 @@ $app->get('/newDevice', function (Request $request) use ($app) {
 
 
 $app->post('/newDispositivo', function (Request $request) use ($app) {
-$user = $app['security']->getToken()->getUser();
+	$user = $app['security']->getToken()->getUser();
 	$id_tutor= $user->getId();
 	$mac = $request->get('MAC');
 	$nombre = $request->get('nombreDispositivo');
-	$id_usuario =$request->get('usuarioDefecto');
-	
-	
-	
-	$sql = "select id_dispositivo FROM dispositivo WHERE mac_dispositivo = '$mac'";
+	$id_usuario =$request->get('usuarioDefecto');	
+	$numero=$request->get('numero');
+    $count = count($numero);	
+	$sql = "select id_dispositivo FROM dispositivo WHERE mac_dispositivo = '$mac' OR nombre_dispositivo = '$nombre'";
 	$id_dispositivo = $app['db']->fetchColumn($sql, array(), 0);
 	if($id_dispositivo==null){
 		$app['db']->insert('dispositivo', array('nombre_dispositivo' => $nombre, 'mac_dispositivo' => $mac,'uDefecto_dispositivo' => $id_usuario));
 		$sql = "select id_dispositivo FROM dispositivo WHERE mac_dispositivo = '$mac'";
 		$id_dispositivo = $app['db']->fetchColumn($sql, array(), 0);
+		
 	}
 	else{
-		$sql = "select id_dispositivo FROM tutor_dispositivo WHERE id_tutor = '$id_tutor' AND id_dispositivo= '$id_dispositivo'";
-		$id_dispositivo = $app['db']->fetchColumn($sql, array(), 0);
-		if($id_dispositivo!=null){
+		$sql = "select id_dispositivo FROM dispositivo_usuario WHERE id_usuario = '$id_usuario' AND id_dispositivo= '$id_dispositivo'";
+		$comp = $app['db']->fetchColumn($sql, array(), 0);
+		if($comp!=null){
 			return $app->redirect($app["url_generator"]->generate("newDevice"));
 		}
 	}
-	$app['db']->insert('dispositivo_usuario', array('id_dispositivo' => $id_dispositivo, 'id_usuario' => $id_usuario));	
+	for ($i = 0; $i < $count; $i++) {
+		$app['db']->insert('dispositivo_usuario', array('id_dispositivo' => $id_dispositivo, 'id_usuario' => $numero[$i]));	
+	}
 	$app['db']->insert('tutor_dispositivo', array('id_tutor' => $id_tutor, 'id_dispositivo' => $id_dispositivo));
 	return $app['twig']->render('tutor.html', array('accion' => "El dispositivo ha sido insertado correctaente"));
 })
@@ -400,6 +407,7 @@ $app->post('/register', function(Request $request) use ($app){
 	//response = $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
 	//return $app->redirect('homepage');
 	return $app->redirect($app["url_generator"]->generate("homepage"));
+	//return $app['twig']->render('tutor.html', array('accion' =>"El tutor ha sido registrado correctamente"));
 	//return $app->redirect('/');
 	//return $app['twig']->render('homepage', array());	
 })

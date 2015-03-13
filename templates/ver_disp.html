@@ -5,43 +5,44 @@
  <div style = 'height:30px;margin-bottom:25px'>
  <center><h2>Dispositivos Registrados</h2></center>	
 </div> 
-{% for dispositivo in dispositivos %}	
+{% if dispositivos %}	
+	
 	<table class="table table-striped standar_table shadow">
 	<tr>
+		<th class="oculto">Id</th>	
 		<th>Nombre</th>	
 		<th>MAC</th>
 		<th>Usuario por defecto</th>
 		<th>Acciones</th>
 	</tr>
-				
-		<tr>
+		{% for dispositivo in dispositivos %}		
+		<tr>	
+			<td class="oculto">{{dispositivo.id_dispositivo}}</th>	
 			<td>{{dispositivo.nombre_dispositivo}}</td>
 			<td>{{dispositivo.mac_dispositivo}}</td>
 			<td>de momento nada</td>
+
 			<td>
-			 <form role="form" action="{{ path('opDisp') }}" method="post" style='padding:0px'>
-				<div class="oculto">
-					<input type="text" class="form-control" name="idUsuario" value={{dispositivo.id_dispositivo}}>
-				</div>
-			
-				<button type="submit" name="enviar" value ="1" class="btn btn-link">
-					<i class="fa fa-eye fa-2x	"></i>
-				</button>
-				<button type="submit" name="enviar" value ="2" class="btn btn-link">
-					<i class="fa fa-pencil-square-o fa-2x"></i>
-				</button>
-			
-				<button onclick="pregunta()" type="submit" name="enviar" value ="3" class="btn btn-link">
-					<i class="fa fa-trash fa-2x"></i>
-				</button>
-			
-			</form>
-			</td>	
+				<span class="btn btn-link editar" onclick="transformarEnEditable(this)"><i class="fa fa-pencil-square-o fa-2x"></i></span>
+				<form role="form" action="{{ path('BorrarDisp') }}" method="post" style='padding:0px'>
+					<div class="oculto">
+						<input type="text" class="form-control" name="idDisp" value={{dispositivo.id_dispositivo}}>
+					</div>
+					<button onclick="pregunta()" type="submit" name="borrar" class="btn btn-link">
+						<i class="fa fa-trash fa-2x"></i>
+					</button>			
+				</form>
+			</td>
 		</tr>
+		{% endfor %}
 	</table>
+	<form name = "formulario" class='standar_h4a_form' role="form" action="{{ path('modDispositivo') }}" method="post" onsubmit="capturarEnvio()" onreset="anular()">
+		<div id="contenedorForm"></div>
+	</form>
+	
 {% else %}
 	<center><h3>Aún no has registrado nungun dispositivo</h3></center>
-{% endfor %}
+{% endif %}
 			
 
 

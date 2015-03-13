@@ -1,4 +1,4 @@
-$(document).ready(function(){
+﻿$(document).ready(function(){
 	/*declaracion de la variables de sesion, variables javascript que se pueden usar en toda la web*/
 	sessionStorage.setItem("newTutor_name", "");
 	sessionStorage.setItem("newTutor_mail", "");
@@ -96,3 +96,48 @@ function PONLE_UN_NOMBRE() {
 }
 
 
+
+
+var editando=false;
+ 
+function transformarEnEditable(nodo){
+//El nodo recibido es SPAN
+if (editando == false) {
+	var nodoTd = nodo.parentNode; //Nodo TD
+	var nodoTr = nodoTd.parentNode; //Nodo TR
+	var nodoContenedorForm = document.getElementById('contenedorForm'); //Nodo DIV
+	var nodosEnTr = nodoTr.getElementsByTagName('td');
+	var id_disp = nodosEnTr[0].textContent; var nombre = nodosEnTr[1].textContent; var mac = nodosEnTr[2].textContent;
+	var usuarioDefec = nodosEnTr[3].textContent; var opciones = nodosEnTr[4].textContent;
+	var nuevoCodigoHtml = '<td class="oculto"><input type="text" name="id_disp" id="id_disp" value="'+id_disp+'" size="9"></td>'+
+	'<td><input type="text" name="nombre" id="nombre" value="'+nombre+'" size="9"></td>'+
+	'<td><input type="text" name="mac" id="mac" value="'+mac+'" size="20"</td>'+
+	'<td><input type="text" name="usuarioDefec" id="usuarioDefec" value="'+usuarioDefec+'" size="20"</td>';
+	 
+	nodoTr.innerHTML = nuevoCodigoHtml;
+
+	nodoContenedorForm.innerHTML = 
+	'<form name = "formulario" action="" method="get" onsubmit="capturarEnvio()" onreset="anular()">'+
+	'<input class="btn btn-primary btn-lg" type = "submit" value="Aceptar"> <input class="btn btn-primary btn-lg" type="reset" value="Cancelar">';
+	editando = "true";
+}
+else {
+	alert ('Solo se puede editar una línea. Recargue la página para poder editar otra');
+}
+}
+ 
+function capturarEnvio(){
+
+var nodoContenedorForm = document.getElementById('contenedorForm'); //Nodo DIV
+nodoContenedorForm.innerHTML = 
+'<input type="hidden" name="id_disp" value="'+document.querySelector('#id_disp').value+'">'+
+'<input type="hidden" name="nombre" value="'+document.querySelector('#nombre').value+'">'+
+'<input type="hidden" name="mac" value="'+document.querySelector('#mac').value+'">'+
+'<input type="hidden" name="usuarioDefec" value="'+document.querySelector('#usuarioDefec').value+'">'+
+'<input class="btn btn-primary btn-lg" type = "submit" value="Aceptar"> <input class="btn btn-primary btn-lg" type="reset" value="Cancelar">';
+document.formulario.submit();
+}
+ 
+function anular(){
+window.location.reload();
+}

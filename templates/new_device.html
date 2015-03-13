@@ -32,7 +32,21 @@
 					
 				</div>
 			</div>
-			
+			<div class='row form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='MAC'>Usuarios vinculados</label><br>
+					<div class="fondoblanco">
+					{% for u in usuarios %}
+						<div class="checkbox">
+						<label>
+							<input type="checkbox" value="{{u.id_usuario}}" name="numero[]"/>
+								<span>{{u.mail_usuario}}</span>
+						</label>
+						</div>
+					{% endfor %} 
+					</div>
+				</div>	
+			</div>
 			<div class='row form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='usuarioDefecto'>Usuario por defecto</label><br>

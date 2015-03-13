@@ -10,14 +10,6 @@
 		
 	</div>
 	<div class="panel-body">
-		
-		{% if modified == true %}
-			<div class="panel  panel-success data-panel shadow">
-				<div class="panel-heading" >
-					Tus datos han sido modificados correctamente
-				</div>
-			</div>
-		{% endif %}
 		{% if editar=="true" %} <fieldset disabled>{% endif %}
 		<form class='standar_h4a_form' role="form" action="{{ path('modTutor') }}" method="post">
 			<div class='row  form-group'>

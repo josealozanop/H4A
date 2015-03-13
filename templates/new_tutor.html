@@ -32,34 +32,31 @@
 					<input type='text' class="form-control" name='newTutor_surname'/>
 				</div>
 			</div>
-			
-			<div class='row  form-group'>
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='newTutor_pass'>Password</label><br>
-					<input type='password' class="form-control" name='newTutor_pass'  required/>
-				</div>
-			</div>
-			
-			<div class='row  form-group'>
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='newTutor_pass2'>Repita su Password</label><br>
-					<input type='password' class="form-control" name='newTutor_pass2' required/>
-				</div>
-			</div>
-			
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='newTutor_phone'>Teléfono</label><br>
 					<input type='tel' class="form-control" name='newTutor_phone'/>
 				</div>
-			</div>
-			
-					
-			<div class='row form-group'>
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<button type="submit" class="btn btn-primary btn-lg">Crear</button>
+			</div>					
+			<div class="row form-group">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+						<label for="pass">Contraseña</label>
+						<input type="password" class="form-control pass" id="pass" name="pass" >
+					</div>
 				</div>
-			</div>
+				<div id="divValidacion" class="row form-group">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+						<label for="repass">Repita Contraseña</label>
+						<input type="password" class="form-control repass" id="repass" name="repass"> 
+						<div id="mensaje2" class="errores"> La contraseña y la validacion debe ser iguales</div>
+						<div id="mensaje1" class="errores"> La contraseña no puede estar vacia</div>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+						<button id="boton_usuario" type="submit" class="btn btn-primary btn-lg">Modificar</button>
+					</div>
+				</div>
 		</form>
 	</div>
 </div>

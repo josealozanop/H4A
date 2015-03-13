@@ -61,6 +61,11 @@ table#t01 th	{
 }
 .errores:before{ /* Este es un truco para crear una flechita */
 }
+.editar {color: blue; cursor:pointer;}
+
+.fondoblanco{
+background-color : #FFFFFF;
+}
 
 
 
