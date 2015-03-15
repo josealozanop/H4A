@@ -5,7 +5,7 @@
 	<div class="panel-heading" >
 
 		<span class='title' >
-			Añadir nuevo dispositivo
+			Daros del dispositivo
 		</span>
 		
 	</div>
@@ -28,19 +28,12 @@
 					<input type='text' class="form-control" name='nombreDispositivo' required/>
 				</div>
 			</div>
-			
+			{% if editar=="true" %} <fieldset disabled>{% endif %}
+			{% for d in dispositivo %}
 			<div class='row form-group' ng-init='ischecked=false'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='MAC'>MAC</label><br>
-					<ng-switch on="ischecked">
-						<input ng-switch-when="true" type='text' class="form-control" name='MAC' value='{{mac}}' required/>
-						<input ng-switch-default type='text' class="form-control" name='MAC' value='' required/>
-					</ng-switch>
-					<div class="aditional-info">
-						<input type="checkbox" name="mac" value="" ng-model="ischecked">
-						<span>Usar la MAC de este equipo </span>
-					</div>
-					
+						<input type='text' class="form-control" name='MAC' value='{{mac}}' required/>					
 				</div>
 			</div>
 			<div class='row form-group'>
@@ -58,6 +51,7 @@
 					</div>
 				</div>	
 			</div>
+			
 			<div class='row form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='usuarioDefecto'>Usuario por defecto</label><br>

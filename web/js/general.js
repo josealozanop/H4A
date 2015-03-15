@@ -96,8 +96,8 @@ function PONLE_UN_NOMBRE() {
 }
 
 
-
-
+//funcion para la tabla editable de dispositivos que no sirvió
+/*
 var editando=false;
  
 function transformarEnEditable(nodo){
@@ -140,4 +140,5 @@ document.formulario.submit();
  
 function anular(){
 window.location.reload();
-}
+}*/ 
+//termina la funcion de tabla editable

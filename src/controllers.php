@@ -50,18 +50,8 @@ $app->get('/pepe', function () use ($app) {
 
 
 
-$app->post('/BorrarDisp', function (Request $request) use ($app) {
-	$id_dispositivo = $request->get('idDisp');
-	$app['db']->delete('dispositivo', array('id_dispositivo' => $id_dispositivo));	
-	return $app['twig']->render('tutor.html', array('accion' => "El dispositivo ha sido borrado correctamente"));
-    break; 
-})
-->bind('BorrarDisp')
-;
-
-
-$app->post('/opUsuarios', function (Request $request) use ($app) {
-$id_usuario = $request->get('idUsuario');
+$app->post('/OpDisp', function (Request $request) use ($app) {
+$id_disp = $request->get('idDisp');
 switch($_POST["enviar"]) { 
     case 1:
 		$editar="true";
@@ -77,6 +67,35 @@ switch($_POST["enviar"]) {
 		$usuario = $app['db']->fetchAll($sql);	
 		return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
 		'usuario' => $usuario
+		));
+        break; 
+    case 3: 
+		$app['db']->delete('dispositivo', array('id_dispositivo' => $id_disp));	
+		return $app->redirect($app["url_generator"]->generate("verdisc"));
+        break; 
+	} 	
+})
+->bind('OpDisp')
+;
+
+
+$app->post('/opUsuarios', function (Request $request) use ($app) {
+$id_usuario = $request->get('idUsuario');
+switch($_POST["enviar"]) { 
+    case 1:
+		$editar="true";
+        $sql = "select * FROM usuario WHERE id_Usuario = '$id_usuario'";
+		$usuario = $app['db']->fetchAll($sql);	
+		return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
+		'usuario' => $usuario,'error' =>""
+		));
+        break; 
+    case 2: 
+		$editar="false";
+        $sql = "select * FROM usuario WHERE id_Usuario = '$id_usuario'";
+		$usuario = $app['db']->fetchAll($sql);	
+		return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
+		'usuario' => $usuario,'error' =>""
 		));
         break; 
     case 3: 
@@ -96,7 +115,21 @@ $app->post('/modUsuario', function (Request $request) use ($app) {
 	$fnac =$request->get('usuario_fnac');	
 	$tlfn =$request->get('usuario_tlfn');	
 	$oldpass =$request->get('usuario_oldpass');	
+	$oldmail =$request->get('usuario_oldmail');	
 	$pass =$request->get('pass');	
+	if($mail!=$oldmail){
+		$sql = "select id_usuario FROM usuario WHERE mail_usuario = '$mail'";
+		$mailRep = $app['db']->fetchColumn($sql, array(), 0);
+		if($mailRep!=null){
+			$editar="false";
+			$sql = "select * FROM usuario WHERE id_usuario = '$id_usuario'";
+			$usuario = $app['db']->fetchAll($sql);	
+			return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
+			'usuario' => $usuario,'error' => "Ya ese correo asociado a un usuario"
+			));
+			}
+		
+	}
 	if($pass=="passpordefecto"){
 		$pass=$oldpass;
 	}
@@ -261,7 +294,7 @@ $app->get('/newDevice', function (Request $request) use ($app) {
 	$username= $user->getUsername();
 	$sql = "SELECT * FROM usuario U INNER JOIN tutor_usuario R ON U.id_usuario = R.id_usuario INNER JOIN tutor T ON R.id_tutor = T.id_tutor WHERE T.mail_tutor = '$username'";
     $usuarios = $app['db']->fetchAll($sql);
-	return $app['twig']->render('new_device.html', array('usuarios' => $usuarios, 'mac' => $mac));
+	return $app['twig']->render('new_device.html', array('usuarios' => $usuarios, 'mac' => $mac, 'error'=>""));
 	
 })
 ->bind('newDevice')
@@ -280,7 +313,10 @@ $app->post('/newDispositivo', function (Request $request) use ($app) {
 	$sql = "select id_dispositivo FROM tutor_dispositivo WHERE nombre_dispositivo = '$nombre' AND id_tutor = '$id_tutor'";
 	$nombreRep = $app['db']->fetchColumn($sql, array(), 0);
 	if($nombreRep!=null){
-		return $app->redirect($app["url_generator"]->generate("newDevice"));
+		$username= $user->getUsername();
+		$sql = "SELECT * FROM usuario U INNER JOIN tutor_usuario R ON U.id_usuario = R.id_usuario INNER JOIN tutor T ON R.id_tutor = T.id_tutor WHERE T.mail_tutor = '$username'";
+		$usuarios = $app['db']->fetchAll($sql);
+		return $app['twig']->render('new_device.html', array('usuarios' => $usuarios, 'mac' => $mac,'error' => "Ya existe un dispositivo con ese nombre"));
 	}
 	//compruebo si el dispositivo ya existe
 	$sql = "select id_dispositivo FROM dispositivo WHERE mac_dispositivo = '$mac'";
@@ -295,7 +331,10 @@ $app->post('/newDispositivo', function (Request $request) use ($app) {
 		$sql = "select id_dispositivo FROM tutor_dispositivo WHERE id_tutor = '$id_tutor' AND id_dispositivo= '$id_dispositivo'";
 		$comp = $app['db']->fetchColumn($sql, array(), 0);
 		if($comp!=null){
-			return $app->redirect($app["url_generator"]->generate("newDevice"));
+			$username= $user->getUsername();
+			$sql = "SELECT * FROM usuario U INNER JOIN tutor_usuario R ON U.id_usuario = R.id_usuario INNER JOIN tutor T ON R.id_tutor = T.id_tutor WHERE T.mail_tutor = '$username'";
+			$usuarios = $app['db']->fetchAll($sql);
+			return $app['twig']->render('new_device.html', array('usuarios' => $usuarios, 'mac' => $mac,'error' => "El dispositivo ya existe"));
 		}
 	}
 	for ($i = 0; $i < $count; $i++) {//introduzco las relaciones con los usuarios
