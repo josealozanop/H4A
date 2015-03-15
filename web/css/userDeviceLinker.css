@@ -2,6 +2,10 @@
 	
 }
 
+.userDeviceLinker .bold_text{
+	font-weight : bold;
+}
+
 .userDeviceLinker .selectDevices {
 	font-size : 16px;
 	font-size : medium;
@@ -19,10 +23,41 @@
 
 .userDeviceLinker .selectDevices .data{
 	padding:10px;
+	position : relative;
+}
+
+.userDeviceLinker .selectDevices .data .device{
+	padding: 5px;
+	border : thin solid blue;
+	border-bottom : none;
+	cursor : pointer;
+}
+
+.userDeviceLinker .selectDevices .data .device:hover {
+	background-color : #B8B8B8;
+}
+
+.userDeviceLinker .selectDevices .data .device:last-child{
+	border-bottom : thin solid blue;
+}
+
+.userDeviceLinker .selectDevices .actions button {
+	margin-top : 5px;
+	width : 100%;
+	bottom : 0px;
+}
+
+.userDeviceLinker .selectDevices .actions {
+	height : 300px;
+	padding-top : 100px;
+}
+
+.userDeviceLinker .selectDevices .data .device.active {
+	background-color : #00FF66;
 }
 
 .userDeviceLinker .selectDevices .toAddDevice {
-	height : 250px;
+	height : 300px;
 	background-color : #eee;
 	padding-left : 0px;
 	padding-right : 0px;
@@ -31,7 +66,7 @@
 }
 
 .userDeviceLinker .selectDevices .allDevices {
-	height : 250px;
+	height : 300px;
 	background-color : #eee;
 	overflow:auto;
 	padding-left : 0px;

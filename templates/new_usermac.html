@@ -16,21 +16,39 @@
 					Dispositivos enlazados
 				</div>
 				<div class="data">
-					Lorem ipsum dolor sit amet, 
+					<div ng-class="{active : dev.selected}" class="device" ng-repeat="dev in selectedDevices" ng-click="dev.select()">
+						<span class="bold_text">Nombre:</span>
+						<span ng-bind="dev.name"></span><br>
+						<span class="bold_text">MAC:</span>
+						<span ng-bind="dev.MAC"></span>
+					</div>
 				</div>
 
 
 			</div>
-			<div class="col-lg-offset-2 col-lg-4 allDevices shadow">
-				<div class="title">
+			
+			<div class="col-lg-2 actions">
+				<div class="col-lg-12">
+					<button ng-click="linkDevices()"  type="submit" class="btn btn-success btn-lg col-lg-12">&#9664; Enlazar</button>
+				</div>
+				<div class="col-lg-12">
+					<button ng-click="unlinkDevices()" type="submit" class="btn btn-danger btn-lg col-lg-12">Quitar &#9654;</button>
+				</div>
+				<div></button>
+				</div>
+			</div>
+			
+			<div class="col-lg-4 allDevices shadow">
+				<div class="title col-lg-12">
 					Dispositivos existentes
 				</div>
-				<div class="data">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, debitis, voluptatibus dolores aspernatur nulla consequatur nesciunt adipisci ipsa distinctio deserunt error minus fugit est culpa praesentium dicta voluptatum nam sequi!
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, debitis, voluptatibus dolores aspernatur nulla consequatur nesciunt adipisci ipsa distinctio deserunt error minus fugit est culpa praesentium dicta voluptatum nam sequi!
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, debitis, voluptatibus dolores aspernatur nulla consequatur nesciunt adipisci ipsa distinctio deserunt error minus fugit est culpa praesentium dicta voluptatum nam sequi!
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, debitis, voluptatibus dolores aspernatur nulla consequatur nesciunt adipisci ipsa distinctio deserunt error minus fugit est culpa praesentium dicta voluptatum nam sequi!
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, debitis, voluptatibus dolores aspernatur nulla consequatur nesciunt adipisci ipsa distinctio deserunt error minus fugit est culpa praesentium dicta voluptatum nam sequi!
+				<div class="data col-lg-12">
+					<div ng-class="{active : dev.selected}" class="device" ng-repeat="dev in allDevices" ng-click="dev.select()">
+						<span class="bold_text">Nombre:</span>
+						<span ng-bind="dev.name"></span><br>
+						<span class="bold_text">MAC:</span>
+						<span ng-bind="dev.MAC"></span>
+					</div>
 				</div>
 			</div>
 		</div>

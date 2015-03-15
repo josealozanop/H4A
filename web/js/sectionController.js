@@ -1,8 +1,9 @@
 var app = angular.module('home', []);
 
 app.controller('sectionController', ['$scope', function($scope) {
+
 	$scope.navBarMobile = {
-		
+
 		expand_login : false,
 		error : false, //error a la hora de hacer login
 		expand_menu : false,
