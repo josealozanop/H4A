@@ -45,9 +45,9 @@ $("#bsecundario").click(function(){
 });
 }
 function pregunta(){ 
-       var agree=confirm("¿Realmente desea eliminarlo? ");
-  if (agree) return true ;
-  return false;
+    var agree=confirm("¿Realmente desea eliminarlo? ");
+	if (agree) return true ;
+	return false;
 } 
 
 //ME CAGO EN TI, a ver si vamos con mas cuidado

@@ -51,27 +51,40 @@ $app->get('/pepe', function () use ($app) {
 
 
 $app->post('/OpDisp', function (Request $request) use ($app) {
-$id_disp = $request->get('idDisp');
+$id_dispositivo = $request->get('idDisp');
+$nombre_dispositivo = $request->get('nomDisp');
+$mac_dispositivo = $request->get('macDisp');
+$uDefecto_Dispositivo = $request->get('uDefDisp');
+
 switch($_POST["enviar"]) { 
     case 1:
-		$editar="true";
-        $sql = "select * FROM usuario WHERE id_Usuario = '$id_usuario'";
-		$usuario = $app['db']->fetchAll($sql);	
-		return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
-		'usuario' => $usuario
-		));
+		$user = $app['security']->getToken()->getUser();
+		$mac=getMAC();
+		$editar="true";      
+		$username= $user->getUsername();
+		$sql = "SELECT mail_usuario FROM usuario where id_usuario='$uDefecto_Dispositivo'";
+		$uDef = $app['db']->fetchAll($sql);
+		$sql = "SELECT * FROM usuario U INNER JOIN dispositivo_usuario R ON U.id_usuario = R.id_usuario INNER JOIN dispositivo D ON R.id_dispositivo = D.id_dispositivo WHERE D.id_dispositivo = '$id_dispositivo'";
+		$usuarios = $app['db']->fetchAll($sql);
+		return $app['twig']->render('verDispositivo.html', array('uDef' => $uDef,'usuarios' => $usuarios,'editar' =>$editar,'mac' => $mac,
+		'id_dispositivo' => $id_dispositivo,'nombre_dispositivo' => $nombre_dispositivo,'mac_dispositivo' => $mac_dispositivo,'error'=>""));
         break; 
     case 2: 
+	$user = $app['security']->getToken()->getUser();
+	$mac=getMAC();
 		$editar="false";
-        $sql = "select * FROM usuario WHERE id_Usuario = '$id_usuario'";
-		$usuario = $app['db']->fetchAll($sql);	
-		return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
-		'usuario' => $usuario
-		));
+		$username= $user->getUsername();
+		$sql = "SELECT * FROM usuario U INNER JOIN tutor_usuario R ON U.id_usuario = R.id_usuario INNER JOIN tutor T ON R.id_tutor = T.id_tutor WHERE T.mail_tutor = '$username'";
+		$usuarios = $app['db']->fetchAll($sql);
+		
+        $sql = "SELECT * FROM usuario where id_usuario='$uDefecto_Dispositivo'";
+		$uDef = $app['db']->fetchAll($sql);
+		return $app['twig']->render('verDispositivo.html', array('uDef' => $uDef,'usuarios' => $usuarios,'editar' =>$editar,'mac' => $mac,
+		'id_dispositivo' => $id_dispositivo,'nombre_dispositivo' => $nombre_dispositivo,'mac_dispositivo' => $mac_dispositivo,'error'=>""));
         break; 
     case 3: 
-		$app['db']->delete('dispositivo', array('id_dispositivo' => $id_disp));	
-		return $app->redirect($app["url_generator"]->generate("verdisc"));
+		$app['db']->delete('dispositivo', array('id_dispositivo' => $id_dispositivo));	
+		return $app->redirect($app["url_generator"]->generate("verDisp"));
         break; 
 	} 	
 })
