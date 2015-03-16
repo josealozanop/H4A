@@ -9,7 +9,7 @@
 	</div>
 	<div class="panel-body">
 		{% if editar=="true" %} <fieldset disabled>{% endif %}
-		<form class='standar_h4a_form' role="form" action="{{ path('newDispositivo') }}" method="post">		
+		<form class='standar_h4a_form' role="form" action="{{ path('modDispositivo') }}" method="post">		
 			{% if error != "" %}
 				<div class="row form-group">
 					<div class='col-lg-12 col-md-14 col-sm-16 col-xs-18 '>
@@ -21,16 +21,19 @@
 					</div>
 				</div>
 			{% endif %}	
-			<div class="row form-group">
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='nombreDispositivo'>Dispositivo</label><br/>
-					<input type='text' class="form-control" name='nombreDispositivo' value={{nombre_dispositivo}} required/>
-				</div>
+			<div class="oculto row form-group">
+				<input type="text" class="form-control" value="{{id_dispositivo}}" name="id_dispositivo"/>
+			</div>
+			<div class="oculto row form-group">
+				<input type="text" class="form-control" value="{{nombre_dispositivo}}" name="nombre_dispOld"/>
+			</div>
+			<div class="oculto row form-group">
+				<input type="text" class="form-control" value="{{uDefecto_dispositivo}}" name="uDefecto_dispOld"/>
 			</div>
 			<div class="row form-group" ng-init='ischecked=false'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>					
 					<label for='MAC'>MAC</label><br>
-					{% if editar=="false" %}
+					<!--{% if editar=="false" %}
 						<ng-switch on="ischecked">
 							<input ng-switch-when="true" type='text' class="form-control" name='MAC' value='{{mac}}' required/>
 							<input ng-switch-default type='text' class="form-control" name='MAC' value={{mac_dispositivo}} required/>
@@ -39,9 +42,15 @@
 							<input type="checkbox" name="mac" value="" ng-model="ischecked">
 							<span>Usar la MAC de este equipo </span>
 						</div>
-					{% else %}
+					{% else %}	{% endif %}	-->
 						<input type='text' class="form-control" name='MAC' value={{mac_dispositivo}} required/>
-					{% endif %}					
+								
+				</div>
+			</div>
+			<div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='nombreDispositivo'>Dispositivo</label><br/>
+					<input type='text' class="form-control" name='nombreDispositivo' value={{nombre_dispositivo}} required/>
 				</div>
 			</div>
 			<div class="row form-group">
@@ -49,12 +58,16 @@
 					<label for='MAC'>Usuarios vinculados</label><br/>
 					{% if editar=="false" %}
 						<div class="fondoblanco">
-						{% for u in usuarios %}
+						{% for u in dispAsociados %}
 							<div class="checkbox">
-								<label>
-									<input type="checkbox" value="{{u.id_usuario}}" name="numero[]"/>
-										<span>{{u.mail_usuario}}</span>
-								</label>
+							<input type="checkbox" value="{{u.id_usuario}}" name="numero[]" checked/>
+								<span>{{u.mail_usuario}}</span>							
+							</div>
+						{% endfor %} 
+						{% for u in dispNoAsociados %}
+							<div class="checkbox">
+							<input type="checkbox" value="{{u.id_usuario}}" name="numero[]"/>
+								<span>{{u.mail_usuario}}</span>							
 							</div>
 						{% endfor %} 
 						</div>
@@ -72,9 +85,14 @@
 					<label for='usuarioDefecto'>Usuario por defecto</label><br/>
 					{% if editar=="false" %}
 						<select class="form-control" name="usuarioDefecto">
-							<option></option>
-							{% for u in uDef %}
-								<option  value="{{u.id_usuario}}">{{u.mail_usuario}}</option>
+							{% for d in uDef %}
+								<option value="{{d.id_usuario}}">{{d.mail_usuario}}</</option>							
+								<option value=""></option>								
+								{% for u in usuarios %}
+									{%if d.id_usuario!=u.id_usuario %}
+										<option  value="{{u.id_usuario}}">{{u.mail_usuario}}</option>
+									{% endif %}
+								{% endfor %} 
 							{% endfor %} 
 						</select>	
 					{% else %}
