@@ -1,12 +1,13 @@
 app.controller('userDeviceLinker', ['$scope', function($scope) {
 	
+	$scope.currentMAC = "";
+	
 	function Device(name, MAC, UDefault) {
 		this.name = name,
 		this.MAC = MAC,
 		this.UDefault = UDefault,
 		this.selected = false,
 		this.select = function() {
-			console.log("hola");
 			if(this.selected) {
 				this.selected = false;
 			}
@@ -29,8 +30,26 @@ app.controller('userDeviceLinker', ['$scope', function($scope) {
 	
 	$scope.newDevice = {
 		wantNewDevice : false,
-		useThisMAC : false
+		useThisMAC : false,
+		data : {
+			name : "",
+			MAC : "",
+			UDefault : ""
+		}
 	};
+	
+	$scope.addDevice = function() {
+		var nDevice = $scope.newDevice;
+		var toAdd = new Device(nDevice.data.name,nDevice.data.MAC,nDevice.data.UDefault);
+		$scope.selectedDevices.push(toAdd);
+		//Limpiamos los datos
+		$scope.newDevice.data = {
+			name : "",
+			MAC : "",
+			UDefault : ""
+		};
+		
+	}
 	
 	$scope.linkDevices = function() {
 		var toPass = new Array();
