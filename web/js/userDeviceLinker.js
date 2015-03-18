@@ -1,6 +1,17 @@
-app.controller('userDeviceLinker', ['$scope', function($scope) {
+app.controller('userDeviceLinker', ['$scope', '$http', function($scope,$http) {
 	
-	$scope.currentMAC = "";
+	$http.get('./serviceController',{params : {service : 'getMyDevices'}}).
+		success(function(data, status, headers, config) {
+			$scope.raw_data = data;
+			for(i in $scope.raw_data) {
+				var currentDevice = $scope.raw_data[i];
+				console.log($scope.raw_data[i]);
+				$scope.allDevices.push(new Device(currentDevice.nombre_dispositivo,currentDevice.mac_dispositivo,currentDevice.uDefecto_dispositivo));
+			}
+		}).
+		error(function(data, status, headers, config) {
+			console.log("ERROR el servicio ");
+		});
 	
 	function Device(name, MAC, UDefault) {
 		this.name = name,
@@ -20,13 +31,15 @@ app.controller('userDeviceLinker', ['$scope', function($scope) {
 	$scope.allDevices = new Array();
 	$scope.selectedDevices = new Array();
 	
-	$scope.allDevices.push(new Device("mi tablet","4a-db-6a-cd",""));
+	
+	
+	/*$scope.allDevices.push(new Device("mi tablet","4a-db-6a-cd",""));
 	$scope.allDevices.push(new Device("mi movil","4a-db-8a-cd",""));
 	$scope.allDevices.push(new Device("sony xperia","4a-dg-6a-cd",""));
 	$scope.allDevices.push(new Device("s5","4a-db-7a-cd",""));
 	$scope.allDevices.push(new Device("iphone","4a-db-6a-cg",""));
 	$scope.allDevices.push(new Device("lg g3","5a-db-6a-cd",""));
-	$scope.allDevices.push(new Device("nada","4a-hb-6a-cd",""));
+	$scope.allDevices.push(new Device("nada","4a-hb-6a-cd",""));*/
 	
 	$scope.newDevice = {
 		wantNewDevice : false,

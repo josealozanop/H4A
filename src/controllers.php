@@ -582,10 +582,12 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 			$device_mac = $request->get('MAC');
 			$out = $device_name.$device_mac;
 			break;
-		default:
 			
-
-		
+		case "getMyDevices":
+			$out = json_encode(get_my_devices($app['db'], $tutor_id));
+			break;
+			
+		default:
 			$out = "Service ".$type_service.' was not found';
 			break;
 	}

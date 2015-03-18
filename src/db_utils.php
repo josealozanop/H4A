@@ -31,3 +31,9 @@ function get_user_data($con, $user_id) {
 	$data = $con -> fetchAll($query);
 	return $data[0];
 }
+
+function get_my_devices($con, $user_id) {
+	$query = "select q1.nombre_dispositivo, q1.mac_dispositivo, q1.uDefecto_dispositivo from (select nombre_dispositivo,id_tutor,mac_dispositivo,uDefecto_dispositivo from tutor_dispositivo inner join dispositivo on tutor_dispositivo.id_dispositivo = dispositivo.id_dispositivo) q1 where id_tutor = '$user_id'";
+	$data = $con -> fetchAll($query);
+	return $data;
+}
