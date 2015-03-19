@@ -12,6 +12,17 @@
 	<div class="panel-body">
 		{% if editar=="true" %} <fieldset disabled>{% endif %}
 		<form class='standar_h4a_form' role="form" action="{{ path('modTutor') }}" method="post">
+			{% if error != "" %}
+				<div class='row form-group'>
+					<div class='col-lg-12 col-md-14 col-sm-16 col-xs-18 '>
+						<div class="bg-danger data-panel shadow">
+							<div class="panel-heading" >
+								{{error}}
+							</div>
+						</div>
+					</div>
+				</div>	
+			{% endif %}	
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='Tutor_mail'>Mail</label><br>

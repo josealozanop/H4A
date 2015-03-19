@@ -6,14 +6,11 @@
 			{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 			<div class="jumbotron">
 				{% if (app.security.token is not null) and (is_granted('ROLE_USER')) %}
-					{% block contenido %}{% endblock %}
-					
-				{%elseif  currentPath  == '/H4A/web/index_dev.php/newTutor' %}
-				
+					{% block contenido %}{% endblock %}					
+				{%elseif  currentPath  == '/H4A/web/index_dev.php/newTutor' %}				
 					{% block datos %}
 					{% endblock %}
 				{% else %}
-
 				<div class="row">
 					<div class="col-lg-6 col-sm-6">
 					<!--<button type="button" class="btn btn-primary" id="bprimario"><h1>Iniciar sesión</h1></button>    
@@ -66,26 +63,24 @@
         </div>
         <div class="clearfix visible-lg"></div>
       </div>
-
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	</div> 	
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
 	<section class="jumbotron">
 			<div class="container">
 				<div data-scrollreveal="enter right after 0s over 1s">
 					<h1 class="text-center" data-scrollreveal="enter left after 0s over 1s"	>sugerencias y aportaciones</h1>
 					<h6 class="text-center">Desde el equipo agradecemos las sugerencias que puedan proporcionarnos los usuarios. Vuestras aportaciones y críticas constructivas forman parte del proceso de mejora de este proyecto.</h6>				
-					</div>
+				</div>
 				<div class="row">						
 
-				<form role="form" method="POST" action="" onSubmit="this.scrollPosition.value=document.getElementById('contact').value;" class="contact-form">
+					<form role="form" method="POST" action="" onSubmit="this.scrollPosition.value=document.getElementById('contact').value;" class="contact-form">
 
-				<input type="hidden" name="scrollPosition">
+						<input type="hidden" name="scrollPosition">
 
-				<input type="hidden" name="submitted" id="submitted" value="true" />
+						<input type="hidden" name="submitted" id="submitted" value="true" />
 
-				<div class="col-lg-4 col-sm-4">
+						<div class="col-lg-4 col-sm-4">
 
 							<input type="text" name="myname" placeholder="Nombre" class="form-control input-box" value="">
 
@@ -114,5 +109,5 @@
 
 			</div> 
 
-		</section>
-		{% endblock %}
+	</section>
+{% endblock %}

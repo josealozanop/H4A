@@ -208,24 +208,56 @@ $app->get('/newTutor', function(Request $request) use ($app) {
 ->bind('newTutor')
 ;
 
+$app->get('/adminCasa', function(Request $request) use ($app) {
+	$casa = $app['db']->fetchAll('SELECT * FROM vivienda');
+    return $app['twig']->render('admin_casa.html', array(
+	'casa' => $casa
+	));
+	
+})
+->bind('adminCasa')
+;
+
+
+
+
+$app->post('/modCasa', function (Request $request) use ($app) {
+	$localidad = $request->get('id_usuario');
+	$provincia = $request->get('usuario_mail');
+	$cp =  $request->get('usuario_nombre');
+	$direccion =$request->get('usuario_apellidos');
+	$app['db']->update('usuario', array(
+		'nombre_usuario'=>$nombre,'mail_usuario'=>$mail,'apellidos_usuario'=>$apellidos,'pass_usuario'=>$pass,'fnac_usuario'=>$fnac,'tlfn_usuario'=>$tlfn), array('id_usuario'=>$id_usuario
+	));
+	return $app['twig']->render('tutor.html', array('accion' =>"Usuario modificado correctamente"
+	));
+	/*return $app['twig']->render('verUsuario.html', array('editar' =>"true",
+	'usuario' => $usuario
+	));*/
+	
+})
+->bind('modUsuario')
+;
+
+
+
+
 //editar un tutor
 $app->get('/editTutor', function (Request $request) use ($app) {
-	$modified = false;
 	$tutor_id = $app['security']->getToken()->getUser()->getId();
 	$query = 'SELECT * FROM tutor WHERE id_tutor = "'.$tutor_id.'"';
 	$data = $app['db']->fetchAll($query);
-    return $app['twig']->render('mod_tutor.html', array( 'user' => $data, 'editar'=>false, 'modified' => $modified));
+    return $app['twig']->render('mod_tutor.html', array( 'error'=>"",'user' => $data, 'editar'=>false));
 	
 })
 ->bind('editTutor')
 ;
 
 $app->get('/verTutor', function (Request $request) use ($app) {
-	$modified = false;
 	$tutor_id = $app['security']->getToken()->getUser()->getId();
 	$query = 'SELECT * FROM tutor WHERE id_tutor = "'.$tutor_id.'"';
 	$data = $app['db']->fetchAll($query);
-    return $app['twig']->render('mod_tutor.html', array( 'user' => $data, 'editar'=>true ,'modified' => $modified));
+    return $app['twig']->render('mod_tutor.html', array( 'error'=>"",'user' => $data, 'editar'=>true));
 	
 })
 ->bind('verTutor')
@@ -242,15 +274,23 @@ $app->post('/modTutor', function (Request $request) use ($app) {
 	$encoder = new MessageDigestPasswordEncoder();
 	$pass = $encoder->encodePassword($pass, '');
 	$tlfn =$request->get('Tutor_phone');
-	$modified = true;
 
-
+	$query = "SELECT * FROM tutor WHERE mail_tutor = '$mail'";
+	$data = $app['db']->fetchAll($query);
+	if($data != null){	
+		$query = 'SELECT * FROM tutor WHERE id_tutor = "'.$tutor_id.'"';
+		$data = $app['db']->fetchAll($query);
+		return $app['twig']->render('mod_tutor.html', array( 'error'=>"El correo ya existe pra otro usuario",'user' => $data, 'editar'=>false));
+	}	
+	
+	
+	
 	$app['db']->update('tutor', array(
 		'nombre_tutor'=>$nombre, 'apellidos_tutor'=>$apellidos,'tlfn_tutor'=>$tlfn,'mail_tutor'=>$mail,'pass_tutor'=>$pass), array('id_tutor'=>$tutor_id
 	));
 	
-	$query = 'SELECT * FROM tutor WHERE id_tutor = "'.$tutor_id.'"';
-	$data = $app['db']->fetchAll($query);
+	//$query = 'SELECT * FROM tutor WHERE id_tutor = "'.$tutor_id.'"';
+	//$data = $app['db']->fetchAll($query);
 	return $app['twig']->render('tutor.html', array('accion' =>"El tutor ha sido modificado correctamente"));
 	
 })
