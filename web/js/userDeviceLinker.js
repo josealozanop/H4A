@@ -1,6 +1,10 @@
 app.controller('userDeviceLinker', ['$scope', '$http', function($scope,$http) {
 	
-	$http.get('./serviceController',{params : {service : 'getMyDevices'}}).
+	var requestParams = {
+		params : {service : 'getMyDevices'}
+	};
+
+	$http.get('./serviceController',requestParams).
 		success(function(data, status, headers, config) {
 			$scope.raw_data = data;
 			for(i in $scope.raw_data) {
