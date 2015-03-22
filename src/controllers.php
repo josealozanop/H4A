@@ -318,6 +318,21 @@ $app->get('/verDisp', function (Request $request) use ($app) {
 ->bind('verDisp')
 ;
 
+
+
+$app->get('/nuevaHabitacion', function (Request $request) use ($app) {
+
+	
+    return $app['twig']->render('new_habitacion.html', array(
+	));
+})
+->bind('nuevaHabitacion')
+;
+
+
+
+
+
 $app->get('/verdisc', function (Request $request) use ($app) {
 	$user = $app['security']->getToken()->getUser();
 	//$variable="hola";
@@ -626,6 +641,10 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 			$out = json_encode(get_my_devices($app['db'], $tutor_id));
 			break;
 			
+		case "getMySensor":
+			$out = json_encode(get_my_sensor($app['db']));
+			break;
+		
 		default:
 			$out = "Service ".$type_service.' was not found';
 			break;
