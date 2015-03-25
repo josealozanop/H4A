@@ -1,0 +1,8 @@
+.testingServices .service{
+	background-color : gray;	
+}
+
+.testingServices .service .serviceName{
+	font-size : larger;
+	font-weight : bold;
+}

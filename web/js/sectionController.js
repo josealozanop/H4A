@@ -1,5 +1,3 @@
-var app = angular.module('home', []);
-
 app.controller('sectionController', ['$scope', function($scope) {
 
 	$scope.navBarMobile = {

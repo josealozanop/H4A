@@ -591,9 +591,17 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 	$type_service = $request->get('service');
 	$out = "Service ".$type_service.' was not found';
 	$tutor_id = $app['security']->getToken()->getUser()->getId();
+	$input = json_decode($request->get('input'));
 		
-	switch ($type_service) {
-		
+	switch ($type_service) {	
+	
+		case "echo" :
+			$out = $input -> {'MAC'};
+			//$out = $input;
+			break;
+		/***
+		SERVICIOS CONSULTA DE DATOS
+		****/
 		case 'getMyData':
 			$out = json_encode(getMyData($app['db'], $tutor_id));
 			break;
@@ -611,21 +619,35 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 		
 		case 'getAllTutorName':
 			$out = json_encode(get_all_tutors_name($app['db'], $tutor_id));
-			break;
+		break;
 			
 		case "getMAC":
 			$out = getMAC();
-			break;
-			
-		case "addDevice":
-			$device_name = $request->get('name');
-			$device_mac = $request->get('MAC');
-			$out = $device_name.$device_mac;
-			break;
+		break;
 			
 		case "getMyDevices":
 			$out = json_encode(get_my_devices($app['db'], $tutor_id));
-			break;
+		break;
+			
+		/***
+		SERVICIOS MODIFICACIÓN DE DATOS
+		****/	
+		case "insertDevice":  
+			$device_mac =  $input -> {'MAC'};
+			$device_uDefault = $input -> {'uDefault'};
+			//$out = $device_mac.$device_uDefault;
+			$out = insert_device($app['db'], $device_mac, $device_uDefault);
+			
+		break;
+		
+		case "linkDeviceTutor":
+			$id_dispositivo = $input -> {'idDispositivo'};
+			$nombre_dispositivo = $input -> {'nombreDispositivo'};
+			//$out = "hola";
+			//$out = $id_dispositivo.$nombre_dispositivo.$tutor_id;
+			$out = link_device_Tutor($app['db'], $tutor_id, $id_dispositivo, $nombre_dispositivo);
+		break;
+		
 			
 		default:
 			$out = "Service ".$type_service.' was not found';

@@ -1,22 +1,19 @@
-app.controller('userDeviceLinker', ['$scope', '$http', function($scope,$http) {
-	
-	var requestParams = {
-		params : {service : 'getMyDevices'}
-	};
+app.controller('userDeviceLinker', ['$scope', 'asyncServices', function($scope,asyncServices) {
 
-	$http.get('./serviceController',requestParams).
-		success(function(data, status, headers, config) {
+	var services = asyncServices;
+	
+	services.getMyDevices.init()
+		.success(function(data, status, headers, config) {
 			$scope.raw_data = data;
 			for(i in $scope.raw_data) {
 				var currentDevice = $scope.raw_data[i];
-				console.log($scope.raw_data[i]);
 				$scope.allDevices.push(new Device(currentDevice.nombre_dispositivo,currentDevice.mac_dispositivo,currentDevice.uDefecto_dispositivo));
 			}
-		}).
-		error(function(data, status, headers, config) {
+		})
+		.error(function(data, status, headers, config) {
 			console.log("ERROR el servicio ");
 		});
-	
+		
 	function Device(name, MAC, UDefault) {
 		this.name = name,
 		this.MAC = MAC,
@@ -35,6 +32,10 @@ app.controller('userDeviceLinker', ['$scope', '$http', function($scope,$http) {
 	$scope.allDevices = new Array();
 	$scope.selectedDevices = new Array();
 	
+	$scope.queryInsert = {
+		status : "noInit",
+		msg : ""
+	}
 	
 	
 	/*$scope.allDevices.push(new Device("mi tablet","4a-db-6a-cd",""));
@@ -59,13 +60,65 @@ app.controller('userDeviceLinker', ['$scope', '$http', function($scope,$http) {
 		var nDevice = $scope.newDevice;
 		var toAdd = new Device(nDevice.data.name,nDevice.data.MAC,nDevice.data.UDefault);
 		$scope.selectedDevices.push(toAdd);
-		//Limpiamos los datos
-		$scope.newDevice.data = {
-			name : "",
-			MAC : "",
-			UDefault : ""
-		};
 		
+		var devideData = {
+			MAC : nDevice.data.MAC,
+			uDefault : ""
+		}
+		
+		var linkDeviceTutorData = {
+			idDispositivo : "",
+			nombreDispositivo : nDevice.data.name,
+			
+		}
+		
+		services.insertDevice.init(JSON.stringify(devideData))
+			.success(function(data, status, headers, config) {
+				$scope.output = data;
+				if(typeof data == "object"){
+					console.log("dispositivo insertado");
+					console.log(data);
+					linkDeviceTutorData.idDispositivo = data[0].id_dispositivo;
+					
+					services.linkDeviceTutor.init(JSON.stringify(linkDeviceTutorData))
+					.success(function(data, status, headers, config) {
+						if(typeof data == "object"){
+							$scope.queryInsert = {
+								status : "success",
+								msg : data
+							}
+							console.log("linkando dispositivo");
+							console.log(data);
+							
+							//Limpiamos los datos
+							$scope.newDevice.data = {
+								name : "",
+								MAC : "",
+								UDefault : ""
+							}
+						}
+						else{
+							console.log("error en el linkado del dispositivo");
+							$scope.queryInsert = {
+								status : "error",
+								msg : data
+							}
+						}
+						
+					})
+				}
+				else{
+					console.log("error en el servicio insertDevice");
+					$scope.queryInsert = {
+						status : "error",
+						msg : data
+					}
+				}
+				
+			})
+			.error(function(data, status, headers, config) {
+				console.log("ERROR en el servicio insertDevice");
+			});
 	}
 	
 	$scope.linkDevices = function() {

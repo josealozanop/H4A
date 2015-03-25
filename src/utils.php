@@ -1,5 +1,18 @@
 <?php
 
+assert_options(ASSERT_ACTIVE, 1);
+assert_options(ASSERT_WARNING, 0);
+assert_options(ASSERT_QUIET_EVAL, 1);
+
+// Create a handler function
+function assertFail($file, $line, $code)
+{
+    echo "<hr>Assertion Failed:
+        File '$file'<br />
+        Line '$line'<br />
+        Code '$code'<br /><hr />";
+}
+
 function getMAC(){
 	$ipAddress=$_SERVER['REMOTE_ADDR'];
 	$comando=false;
