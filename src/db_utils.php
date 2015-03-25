@@ -38,7 +38,6 @@ function get_my_devices($con, $user_id) {
 	return $data;
 }
 
-<<<<<<< HEAD
 function insert_device($con, $device_mac, $device_uDefault){
 	$out = "unknow error";
 	
@@ -129,6 +128,7 @@ function link_device_Tutor($con,$tutor_id,$id_dispositivo,$nombre_dispositivo){
 	}
 	
 	return $out;
+}
 
 function get_my_sensor($con) {
 	//$query = "select q1.codigo_sensor, q1.nombre_sensor, q1.senact_sensor, q1.tipo_sensor, q1.modelo_sensor, q1.descripcion_sensor from (select codigo_sensor, nombre_sensor, senact_sensor, tipo_sensor, modelo_sensor, descripcion_sensor from sensor)";
@@ -136,5 +136,4 @@ function get_my_sensor($con) {
 	$query = "select * from sensor";
 	$data = $con -> fetchAll($query);
 	return $data;
-
 }
