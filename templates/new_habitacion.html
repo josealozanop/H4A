@@ -1,0 +1,78 @@
+{% extends "layout.twig.html" %}
+{% block contenido %}
+
+
+<div class="panel panel-primary data-panel" ng-controller="bedroomSensorLinker" >
+	<div class="panel-heading" >
+		<span class='title' >
+			Añadir Habitacion 
+		</span>		
+	</div>
+	<div class="panel-body userDeviceLinker">
+		<div class="row selectDevices">
+			<div class="col-lg-4 col-lg-offset-1 toAddDevice shadow">
+				<div class="title">
+					Sensores/Actiadores enlazados
+				</div>
+				<div class="data">
+					<div ng-class="{active : dev.selected}" class="device" ng-repeat="dev in selectedSensors" ng-click="dev.select()">
+						<span class="bold_text">Nombre:</span>
+						<span ng-bind="dev.name"></span><br>
+						<span class="bold_text">MAC:</span>
+						<span ng-bind="dev.tipe"></span>
+					</div>
+				</div>
+			</div>			
+			<div class="col-lg-2 actions">
+				<div class="col-lg-12">
+					<button ng-click="linkSensors()"  type="submit" class="btn btn-success btn-lg col-lg-12">&#9664; Enlazar</button>
+				</div>
+				<div class="col-lg-12">
+					<button ng-click="unlinkSensors()" type="submit" class="btn btn-danger btn-lg col-lg-12">Quitar &#9654;</button>
+				</div>
+				<div></button>
+				</div>
+			</div>
+			
+			<div class="col-lg-4 allDevices shadow">
+				<div class="title col-lg-12">
+					Sensores/Actiadores existentes
+				</div>
+				<div class="data col-lg-12">
+					<div ng-class="{active : dev.selected}" class="device" ng-repeat="dev in allSensors" ng-click="dev.select()">
+						<span class="bold_text">Nombre:</span>
+						<span ng-bind="dev.name"></span><br>
+						<span class="bold_text">MAC:</span>
+						<span ng-bind="dev.tipe"></span>
+					</div>
+				</div>
+			</div>
+			<div class="row addDevice">
+
+			<div class="col-lg-10 col-lg-offset-1 newDeviceData standar_h4a_form">
+				<div class="col-lg-12">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='newTutor_mail'>Nombre de la habitación</label><br>
+					<input type='email' class="form-control" name='nombre' required/>
+				</div>
+			</div>
+			</div>
+			
+			<div class="col-lg-10 col-lg-offset-1 newDeviceData standar_h4a_form">
+				<div class="col-lg-12">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='newTutor_mail'>Tipo de habitación</label><br>
+					<input type='email' class="form-control" name='nombre' required/>
+				</div>
+			</div>
+			</div>
+			<div class="col-lg-10 col-lg-offset-1" style="margin-top:15px">
+				<button type="submit" class="btn btn-primary btn-lg">Añadir</button>
+			</div>
+			</div>
+		</div>
+	</div>
+</div> 
+
+
+{% endblock %}

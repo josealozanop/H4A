@@ -222,21 +222,20 @@ $app->get('/adminCasa', function(Request $request) use ($app) {
 
 
 $app->post('/modCasa', function (Request $request) use ($app) {
-	$localidad = $request->get('id_usuario');
-	$provincia = $request->get('usuario_mail');
-	$cp =  $request->get('usuario_nombre');
-	$direccion =$request->get('usuario_apellidos');
-	$app['db']->update('usuario', array(
-		'nombre_usuario'=>$nombre,'mail_usuario'=>$mail,'apellidos_usuario'=>$apellidos,'pass_usuario'=>$pass,'fnac_usuario'=>$fnac,'tlfn_usuario'=>$tlfn), array('id_usuario'=>$id_usuario
+	$localidad = $request->get('localidad_vivienda');
+	$provincia = $request->get('provincia_vivienda');
+	$cp =  $request->get('cp_vivienda');
+	$direccion =$request->get('direccion_vivienda');
+$id =$request->get('id_vivienda');
+	$app['db']->update('vivienda', array(
+		'direccion_vivienda'=>$direccion,'localidad_vivienda'=>$localidad,'provincia_vivienda'=>$provincia,'cp_vivienda'=>$cp), array('id_vivienda'=>$id
 	));
-	return $app['twig']->render('tutor.html', array('accion' =>"Usuario modificado correctamente"
+	return $app['twig']->render('tutor.html', array('accion' =>"la vivienda se ha modificado correctamente"
 	));
-	/*return $app['twig']->render('verUsuario.html', array('editar' =>"true",
-	'usuario' => $usuario
-	));*/
+	
 	
 })
-->bind('modUsuario')
+->bind('modCasa')
 ;
 
 
@@ -318,6 +317,21 @@ $app->get('/verDisp', function (Request $request) use ($app) {
 })
 ->bind('verDisp')
 ;
+
+
+
+$app->get('/nuevaHabitacion', function (Request $request) use ($app) {
+
+	
+    return $app['twig']->render('new_habitacion.html', array(
+	));
+})
+->bind('nuevaHabitacion')
+;
+
+
+
+
 
 $app->get('/verdisc', function (Request $request) use ($app) {
 	$user = $app['security']->getToken()->getUser();
@@ -649,6 +663,10 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 		break;
 		
 			
+		case "getMySensor":
+			$out = json_encode(get_my_sensor($app['db']));
+			break;
+		
 		default:
 			$out = "Service ".$type_service.' was not found';
 			break;

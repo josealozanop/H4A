@@ -12,29 +12,31 @@
 	</div>
 	<div class="panel-body">
 		{% for c in casa %}
-		<form class='standar_h4a_form' role="form" action="{{ path('register') }}" method="post">
+		<form class='standar_h4a_form' role="form" action="{{ path('modCasa') }}" method="post">
+			
+				<input type='text' class="oculto" name='id_vivienda' value={{c.id_vivienda}}>
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='newTutor_mail'>Direccion</label><br>
-					<input type='text' class="form-control" name='newTutor_mail' value={{c.direccion_vivienda}}>
+					<label for='direccion_vivienda'>Direccion</label><br>
+					<input type='text' class="form-control" name='direccion_vivienda' value={{c.direccion_vivienda}}>
 				</div>
 			</div>			
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='newTutor_name'>Lozalidad</label><br>
-					<input type='text' class="form-control" name='newTutor_name' value={{c.localidad_vivienda}}>
+					<label for='localidad_vivienda'>Localidad</label><br>
+					<input type='text' class="form-control" name='localidad_vivienda' value={{c.localidad_vivienda}}>
 				</div>
 			</div>			
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='newTutor_surname'>Provincia</label><br>
-					<input type='text' class="form-control" name='newTutor_surname' value={{c.provincia_vivienda}}>
+					<label for='provincia_vivienda'>Provincia</label><br>
+					<input type='text' class="form-control" name='provincia_vivienda' value={{c.provincia_vivienda}}>
 				</div>
 			</div>
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='newTutor_phone'>CP</label><br>
-					<input type='number' class="form-control" name='newTutor_phone' value={{c.cp_vivienda}}>
+					<label for='cp_vivienda'>CP</label><br>
+					<input type='number' class="form-control" name='cp_vivienda' value={{c.cp_vivienda}}>
 				</div>
 			</div>			
 			<div class="row form-group">
@@ -45,7 +47,7 @@
 		</form>
 		{% endfor %}<br/>
 		<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-			<a href="#" class="btn btn-primary btn-lg" role="button">Administrar habitaciones</a>
+			<a href="{{ path('nuevaHabitacion') }}" class="btn btn-primary btn-lg" role="button">Administrar habitaciones</a>
 			<a href="#" class="btn btn-primary btn-lg" role="button">Administrar Patrones</a>				
 		</div>
 	</div>

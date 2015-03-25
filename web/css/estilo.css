@@ -67,6 +67,39 @@ table#t01 th	{
 background-color : #FFFFFF;
 }
 
+a.tooltips {
+  position: relative;
+  display: inline;
+}
+a.tooltips span {
+  position: absolute;
+  width:auto;
+  height: auto;
+  color: #000000;
+  padding: .5em;
+  background: #FFE1AD;
+  text-align: center;
+  visibility: hidden;
+  border-radius: 12px;
+  box-shadow: 2px 2px 5px #FFB366;
+}
+a.tooltips span:after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -8px;
+  width: 0; height: 0;
+  border-bottom: 8px solid #FFE1AD;
+}
+a:hover.tooltips span {
+  visibility: visible;
+  opacity: 1;
+  top: 30px;
+  left: 50%;
+  margin-left: -76px;
+  z-index: 999;
+}
 
 
 /** borja **/
