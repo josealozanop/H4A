@@ -1,6 +1,10 @@
-app.controller('userDeviceLinker', ['$scope', 'asyncServices', function($scope,asyncServices) {
+app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', function($scope,asyncServices,$attrs) {
 
 	var services = asyncServices;
+	var current_idUsuario = $attrs.idUsuario;
+	
+	console.log("id del usuario creado:");
+	console.log(current_idUsuario);
 	
 	services.getMyDevices.init()
 		.success(function(data, status, headers, config) {
@@ -72,6 +76,11 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', function($scope,a
 			
 		}
 		
+		var linkDeviceUserData = {
+			idDispositivo : "",
+			idUsuario : ""
+		}
+		
 		services.insertDevice.init(JSON.stringify(devideData))
 			.success(function(data, status, headers, config) {
 				$scope.output = data;
@@ -120,6 +129,22 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', function($scope,a
 				console.log("ERROR en el servicio insertDevice");
 			});
 	}
+	
+	var dataToSend = {
+		idUsuario: current_idUsuario,
+		macs : new Array()
+	}
+	$scope.formatedData = JSON.stringify(dataToSend);
+	
+	$scope.prepareData = function () {
+		var ld = $scope.selectedDevices;
+		for(i in ld) {
+			dev = ld[i];
+			dataToSend.macs.push(dev.MAC);
+		}
+		$scope.formatedData = JSON.stringify(dataToSend);
+	}
+	
 	
 	$scope.linkDevices = function() {
 		var toPass = new Array();

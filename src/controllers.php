@@ -39,13 +39,32 @@ $app->get('/_profiler/wdt/{id}', function(Request $request) use ($app) {
 ->bind('wdt')
 ;
 
-$app->get('/pepe', function () use ($app) {
-	$variable="hola";
-    return $app['twig']->render('registro.html', array(
-	'variable' => $variable
-	));
+$app->post('/linkDevicesUser', function (Request $request) use ($app) { //¡¡
+	$dataText = $request->get('send');
+	$data = json_decode($dataText);
+	$idUsuario = $data -> {'idUsuario'};
+	$MACS = $data -> {'macs'};
+	$ids = array();	
+	$out="";
+	
+	foreach($MACS as $mac){
+		$query = "select id_dispositivo from dispositivo where mac_dispositivo='$mac'";
+		$queryData = $app['db'] -> fetchAll($query);
+		$id_arr = $queryData[0];
+		$id = $id_arr['id_dispositivo'];
+		array_push($ids, $id);
+		$out = $out.link_device_user($app['db'],$id,$idUsuario);
+	}
+	
+	if(count($ids)!=count($MACS)) {
+		trigger_error("Error en linkDeviceUser no se están cogiendo todos los ids");
+	}
+	
+	//$out="Se pasa a la siguiente pagina con los usuarios ya linkados y con los datos idUsuario = $idUsuario primera MAC $MACS[0] primer id_dispositivo : $ids[0] y json: $dataText";
+	
+	return new Response($out);
 })
-->bind('pepe')
+->bind('linkDevicesUser')
 ;
 
 $app->post('/OpDisp', function (Request $request) use ($app) {
@@ -182,15 +201,16 @@ $app->post('/modDispositivo', function (Request $request) use ($app) {
 
 */
 
-$app->get('/vacia', function () use ($app) {
+$app->get('/vacia', function (Request $request) use ($app) {
+	$data = $request->get('data');
+	
 	$variable="vacia";
 	$usuarios = $app['db']->fetchAll('SELECT mail_tutor FROM tutor');
 	$text = json_encode($usuarios); 
 	$tam = count ($usuarios);
     return $app['twig']->render('vacia.html', array(
 	'variable' => $usuarios,
-	'tam' => $tam,
-	'text' => $text
+	'data' => $data
 	));
 })
 ->bind('vacia')
@@ -329,10 +349,6 @@ $app->get('/nuevaHabitacion', function (Request $request) use ($app) {
 ->bind('nuevaHabitacion')
 ;
 
-
-
-
-
 $app->get('/verdisc', function (Request $request) use ($app) {
 	$user = $app['security']->getToken()->getUser();
 	//$variable="hola";
@@ -414,17 +430,6 @@ $app->post('/modDispositivo', function (Request $request) use ($app) {
 ->bind('modDispositivo')
 ;
 
-
-
-
-
-
-
-
-
-
-
-
 $app->post('/newDispositivo', function (Request $request) use ($app) {
 	$user = $app['security']->getToken()->getUser();
 	$id_tutor= $user->getId();
@@ -484,6 +489,7 @@ $app->get('/tutor', function () use ($app) {
 })
 ->bind('tutor')
 ;
+
 $app->post('/new_usermac', function (Request $request) use ($app){
 	$id_usuario = $request->get('idUsuario');
 	$mac = $request->get('mac');
@@ -495,7 +501,7 @@ $app->post('/new_usermac', function (Request $request) use ($app){
 		$id_dispositivo = $app['db']->fetchColumn($sql, array(), 0);
 	}
 	$app['db']->insert('dispositivo_usuario', array('id_dispositivo' => $id_dispositivo, 'id_usuario' => $id_usuario));
-    return $app['twig']->render('tutor.html', array('accion' => ""));
+    return $app['twig']->render('tutor.html', array('accion' => "", "id_usuario" =>$id_usuario));
 })
 ->bind('new_usermac')
 ;
@@ -612,7 +618,12 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 		case "echo" :
 			$out = $input -> {'MAC'};
 			//$out = $input;
-			break;
+		break;
+		
+		case "error":
+			trigger_error("Para provocar errores.");
+		break;
+			
 		/***
 		SERVICIOS CONSULTA DE DATOS
 		****/
@@ -642,6 +653,10 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 		case "getMyDevices":
 			$out = json_encode(get_my_devices($app['db'], $tutor_id));
 		break;
+		
+		case "getMySensor":
+			$out = json_encode(get_my_sensor($app['db']));
+		break;
 			
 		/***
 		SERVICIOS MODIFICACIÓN DE DATOS
@@ -659,13 +674,14 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 			$nombre_dispositivo = $input -> {'nombreDispositivo'};
 			//$out = "hola";
 			//$out = $id_dispositivo.$nombre_dispositivo.$tutor_id;
-			$out = link_device_Tutor($app['db'], $tutor_id, $id_dispositivo, $nombre_dispositivo);
+			$out = link_device_tutor($app['db'], $tutor_id, $id_dispositivo, $nombre_dispositivo);
 		break;
 		
-			
-		case "getMySensor":
-			$out = json_encode(get_my_sensor($app['db']));
-			break;
+		case "linkDeviceUser":
+			$id_dispositivo = $input -> {'idDispositivo'};
+			$id_usuario = $input -> {'idUsuario'};
+			$out = link_device_user($app['db'],$id_dispositivo,$id_usuario);
+		break;
 		
 		default:
 			$out = "Service ".$type_service.' was not found';

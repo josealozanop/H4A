@@ -51,6 +51,12 @@ app.service('asyncServices', ['$http', function($http) {
 		return $http.get('./serviceController',this.requestParams);
 	}
 	
+	this.linkDeviceUser = new Service('linkDeviceUser');
+	this.linkDeviceUser.callback = function(inputData) {
+		this.requestParams.params.input = inputData;
+		return $http.get('./serviceController',this.requestParams);
+	}
+	
 	
 	
 	/*this.getMyDevices = new Service(

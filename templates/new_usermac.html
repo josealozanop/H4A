@@ -2,7 +2,7 @@
 {% block contenido %}
 
 
-<div class="panel panel-primary data-panel" ng-controller="userDeviceLinker" >
+<div class="panel panel-primary data-panel" ng-controller="userDeviceLinker" id-usuario = {{id_usuario}}>
 	<div class="panel-heading" >
 		<span class='title' >
 			Añadir dispositivos 
@@ -11,7 +11,33 @@
 	</div>
 	<div class="panel-body userDeviceLinker">
 		<div class="row selectDevices">
-			<div class="col-lg-4 col-lg-offset-1 toAddDevice shadow">
+			
+			<div class="col-lg-4 allDevices shadow col-lg-offset-1 ">
+				<div class="title col-lg-12">
+					Dispositivos existentes
+				</div>
+				<div class="data col-lg-12">
+					<div ng-class="{active : dev.selected}" class="device" ng-repeat="dev in allDevices" ng-click="dev.select()">
+						<span class="bold_text">Nombre:</span>
+						<span ng-bind="dev.name"></span><br>
+						<span class="bold_text">MAC:</span>
+						<span ng-bind="dev.MAC"></span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-lg-2 actions">
+				<div class="col-lg-12">
+					<button ng-click="linkDevices()"  type="submit" class="btn btn-success btn-lg col-lg-12">Enlazar &#9654; </button>
+				</div>
+				<div class="col-lg-12">
+					<button ng-click="unlinkDevices()" type="submit" class="btn btn-danger btn-lg col-lg-12">&#9664; Quitar</button>
+				</div>
+				<div></button>
+				</div>
+			</div>
+			
+			<div class="col-lg-4 toAddDevice shadow">
 				<div class="title">
 					Dispositivos enlazados
 				</div>
@@ -27,30 +53,9 @@
 
 			</div>
 			
-			<div class="col-lg-2 actions">
-				<div class="col-lg-12">
-					<button ng-click="linkDevices()"  type="submit" class="btn btn-success btn-lg col-lg-12">&#9664; Enlazar</button>
-				</div>
-				<div class="col-lg-12">
-					<button ng-click="unlinkDevices()" type="submit" class="btn btn-danger btn-lg col-lg-12">Quitar &#9654;</button>
-				</div>
-				<div></button>
-				</div>
-			</div>
 			
-			<div class="col-lg-4 allDevices shadow">
-				<div class="title col-lg-12">
-					Dispositivos existentes
-				</div>
-				<div class="data col-lg-12">
-					<div ng-class="{active : dev.selected}" class="device" ng-repeat="dev in allDevices" ng-click="dev.select()">
-						<span class="bold_text">Nombre:</span>
-						<span ng-bind="dev.name"></span><br>
-						<span class="bold_text">MAC:</span>
-						<span ng-bind="dev.MAC"></span>
-					</div>
-				</div>
-			</div>
+			
+			
 		</div>
 		
 		<div class="row addDevice">
@@ -99,11 +104,9 @@
 			</div>
 			
 			<div class="col-lg-10 col-lg-offset-1" style="margin-top:15px">
-				<button type="submit" class="btn btn-primary btn-lg">Siguiente</button>
-			</div>
-			
-			<div ng-bind="dataa">
-				<button type="submit" class="btn btn-primary btn-lg">nana</button>
+				<form method="post"  role="form" action="{{ path('linkDevicesUser') }}">
+					<button type="submit" name="send" ng-value="formatedData" ng-click="prepareData()" class="btn btn-primary btn-lg">Siguiente</button>
+				</form>
 			</div>
 		</div>
 	</div>

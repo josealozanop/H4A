@@ -78,7 +78,7 @@ function insert_device($con, $device_mac, $device_uDefault){
 	return $out;
 }
 
-function link_device_Tutor($con,$tutor_id,$id_dispositivo,$nombre_dispositivo){
+function link_device_tutor($con,$tutor_id,$id_dispositivo,$nombre_dispositivo){
 	$out = "UNKNOW ERROR";
 	
 	//$tutor_id must be not null and must exist in db
@@ -126,6 +126,35 @@ function link_device_Tutor($con,$tutor_id,$id_dispositivo,$nombre_dispositivo){
 		$data = $con -> fetchAll($query);
 		$out = json_encode($data);
 	}
+	
+	return $out;
+}
+
+function link_device_user($con,$id_dispositivo,$id_usuario){
+	$out="";
+	
+	//$id_dispositivo must be defined in table dispostivo ¡TODO
+
+	//$id_usuario must be defined in table dispostivo ¡TODO
+	
+	//pair ($id_dispositivo,$id_usuario) is unique
+	$query = "select * from dispositivo_usuario where id_usuario='$id_usuario' and id_dispositivo='$id_dispositivo'";
+	$data = $con -> fetchAll($query);
+	if(count($data)) {
+		return "The device $id_dispositivo is already linked with the user $id_usuario";
+	}	
+	
+	$out = $con ->insert('dispositivo_usuario', array('id_usuario' => $id_usuario,'id_dispositivo' => $id_dispositivo));
+	if($out == 1) {
+		//$out = "Device $id_dispositivo was linked to tutor $tutor_id and was named: $nombre_dispositivo";
+		$query = "select * from dispositivo_usuario where id_dispositivo='$id_dispositivo' and id_usuario='$id_usuario'";
+		$data = $con -> fetchAll($query);
+		$out = json_encode($data);
+	}	
+	else {
+		trigger_error("error at link_device_user");
+	}
+	
 	
 	return $out;
 }
