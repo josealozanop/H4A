@@ -31,6 +31,11 @@ app.service('asyncServices', ['$http', function($http) {
 	}
 	
 
+	this.getMySensor = new Service('getMySensor');
+	this.getMySensor.callback = function() {
+		return $http.get('./serviceController',this.requestParams);
+	}
+	
 	this.echo = new Service('echo');
 	this.echo.callback = function(inputData) {
 		this.requestParams.params.input = inputData;

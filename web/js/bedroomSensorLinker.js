@@ -1,23 +1,23 @@
-app.controller('bedroomSensorLinker', ['$scope', '$http', function($scope,$http) {
+app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scope,asyncServices) {
 	
-	var requestParams = {
-		params : {service : 'getMySensor'}
-	};
+	var services = asyncServices;
 
-	$http.get('./serviceController',requestParams).
-		success(function(data, status, headers, config) {
+	
+	services.getMySensor.init()
+		.success(function(data, status, headers, config) {
 			$scope.raw_data = data;
 			for(i in $scope.raw_data) {
 				var currentSensor = $scope.raw_data[i];
-				console.log($scope.raw_data[i]);
-				$scope.allSensors.push(new Sensor(currentSensor.codigo_sensor,currentSensor.nombre_sensor,currentSensor.senact_sensor,currentSensor.tipo_sensor, currentSensor.modelo_sensor,currentSensor.descripcion_sensor));
+				$scope.allSensors.push(new Sensor(currentSensor.id_sensor,currentSensor.codigo_sensor,currentSensor.nombre_sensor,currentSensor.senact_sensor,currentSensor.tipo_sensor, currentSensor.modelo_sensor,currentSensor.descripcion_sensor));
 			}
-		}).
-		error(function(data, status, headers, config) {
+		})
+		.error(function(data, status, headers, config) {
 			console.log("ERROR el servicio ");
 		});
 	
-	function Sensor(code, name, senact, tipe, model, description) {
+
+	function Sensor(id, code, name, senact, tipe, model, description) {
+		this.id = id,
 		this.code = code,
 		this.name = name,
 		this.senact = senact,
@@ -38,6 +38,22 @@ app.controller('bedroomSensorLinker', ['$scope', '$http', function($scope,$http)
 	$scope.allSensors = new Array();
 	$scope.selectedSensors = new Array();
 	
+	
+	
+	var dataToSend = {
+		idSensor : new Array()
+	}
+	$scope.formatedData = JSON.stringify(dataToSend);
+	
+	$scope.prepareData = function () {
+		var ld = $scope.selectedSensors;
+		for(i in ld) {
+			dev = ld[i];
+			dataToSend.idSensor.push(dev.id);
+		}
+		$scope.formatedData = JSON.stringify(dataToSend);
+	}
+	
 	$scope.linkSensors = function() {
 		var toPass = new Array();
 		var rightSensors = JSON.parse(JSON.stringify($scope.allSensors));
@@ -52,7 +68,7 @@ app.controller('bedroomSensorLinker', ['$scope', '$http', function($scope,$http)
 		}
 
 		for(d in toPass) {
-			$scope.selectedSensors.push(new Sensor(toPass[d].code,toPass[d].name,toPass[d].senact,toPass[d].tipe,toPass[d].model,toPass[d].description));
+			$scope.selectedSensors.push(new Sensor(toPass[d].id,toPass[d].code,toPass[d].name,toPass[d].senact,toPass[d].tipe,toPass[d].model,toPass[d].description));
 		}
 	
 	}
@@ -70,8 +86,32 @@ app.controller('bedroomSensorLinker', ['$scope', '$http', function($scope,$http)
 			}
 		}
 			for(d in toPass) {
-			$scope.allSensors.push(new Sensor(toPass[d].code,toPass[d].name,toPass[d].senact,toPass[d].tipe,toPass[d].model,toPass[d].description));
+			$scope.allSensors.push(new Sensor(toPass[d].id,toPass[d].code,toPass[d].name,toPass[d].senact,toPass[d].tipe,toPass[d].model,toPass[d].description));
 		}
 	}
 
+	
+	
+	
+	
+	
+	
+	
+		/*var requestParams = {
+		params : {service : 'getMySensor'}
+	};
+
+	$http.get('./serviceController',requestParams).
+		success(function(data, status, headers, config) {
+			$scope.raw_data = data;
+			for(i in $scope.raw_data) {
+				var currentSensor = $scope.raw_data[i];
+				console.log($scope.raw_data[i]);
+				$scope.allSensors.push(new Sensor(currentSensor.codigo_sensor,currentSensor.nombre_sensor,currentSensor.senact_sensor,currentSensor.tipo_sensor, currentSensor.modelo_sensor,currentSensor.descripcion_sensor));
+			}
+		}).
+		error(function(data, status, headers, config) {
+			console.log("ERROR el servicio ");
+		});
+	*/
 }]);

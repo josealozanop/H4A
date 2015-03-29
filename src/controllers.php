@@ -67,6 +67,47 @@ $app->post('/linkDevicesUser', function (Request $request) use ($app) { //¡¡
 ->bind('linkDevicesUser')
 ;
 
+$app->post('/newHabitacion', function (Request $request) use ($app) { //¡¡
+	$nombre_hab = $request->get('nombre_hab');
+	$propietario_hab = $request->get('propietario_hab');
+	$tipo_hab = $request->get('tipo_hab');
+	
+	$sql = "select id_habitacion FROM habitacion WHERE nombre_habitacion = '$nombre_hab'";
+	$nombreRep = $app['db']->fetchColumn($sql, array(), 0);
+	if($nombreRep!=null){
+		$user = $app['security']->getToken()->getUser();
+		$username= $user->getUsername();
+		$sql = "SELECT * FROM usuario U INNER JOIN tutor_usuario R ON U.id_usuario = R.id_usuario INNER JOIN tutor T ON R.id_tutor = T.id_tutor WHERE T.mail_tutor = '$username'";
+		$usuarios = $app['db']->fetchAll($sql);	
+		return $app['twig']->render('new_habitacion.html', array('usuarios' => $usuarios, 'error' => "El nombre la la habitacion ya existe"
+		));
+	}
+	
+	$dataText = $request->get('send');
+	$data = json_decode($dataText);
+	$idSensor = $data -> {'idSensor'};
+	$ids = array();	
+	$out="";
+	
+	$app['db']->insert('habitacion', array('nombre_habitacion' => $nombre_hab,'tipo_habitacion' => $tipo_hab, 'id_propietario' =>$propietario_hab));
+		$sql = "select id_habitacion FROM habitacion WHERE nombre_habitacion = '$nombre_hab'";
+		$id_habitacion = $app['db']->fetchColumn($sql, array(), 0);
+	foreach($idSensor as $id){
+		$app['db']->update('sensor', array(
+		'id_habitacion'=>$id_habitacion), array('id_sensor'=>$id
+	));
+	}
+	return $app['twig']->render('tutor.html', array('accion' =>"habitacion creada correctamente"
+	));
+})
+->bind('newHabitacion')
+;
+
+
+
+
+
+
 $app->post('/OpDisp', function (Request $request) use ($app) {
 $id_dispositivo = $request->get('idDisp');
 $nombre_dispositivo = $request->get('nomDisp');
@@ -341,9 +382,11 @@ $app->get('/verDisp', function (Request $request) use ($app) {
 
 
 $app->get('/nuevaHabitacion', function (Request $request) use ($app) {
-
-	
-    return $app['twig']->render('new_habitacion.html', array(
+	$user = $app['security']->getToken()->getUser();
+	$username= $user->getUsername();
+	$sql = "SELECT * FROM usuario U INNER JOIN tutor_usuario R ON U.id_usuario = R.id_usuario INNER JOIN tutor T ON R.id_tutor = T.id_tutor WHERE T.mail_tutor = '$username'";
+    $usuarios = $app['db']->fetchAll($sql);	
+    return $app['twig']->render('new_habitacion.html', array('usuarios' => $usuarios, 'error' => ""
 	));
 })
 ->bind('nuevaHabitacion')
