@@ -44,6 +44,7 @@ $app->post('/linkDevicesUser', function (Request $request) use ($app) { //¡¡
 	$data = json_decode($dataText);
 	$idUsuario = $data -> {'idUsuario'};
 	$MACS = $data -> {'macs'};
+	$indexDefault = $data -> {'indexDefault'};
 	$ids = array();	
 	$out="";
 	
@@ -60,7 +61,12 @@ $app->post('/linkDevicesUser', function (Request $request) use ($app) { //¡¡
 		trigger_error("Error en linkDeviceUser no se están cogiendo todos los ids");
 	}
 	
-	//$out="Se pasa a la siguiente pagina con los usuarios ya linkados y con los datos idUsuario = $idUsuario primera MAC $MACS[0] primer id_dispositivo : $ids[0] y json: $dataText";
+	$out="Se pasa a la siguiente pagina con los usuarios ya linkados y con los datos idUsuario = $idUsuario primera MAC $MACS[0] primer id_dispositivo : $ids[0] y json: $dataText";
+	
+	if($indexDefault>-1) {
+		link_defualtUser_device($app['db'],$ids[$indexDefault],$idUsuario);
+		$out = $out."<br> el dispositivo con id $ids[$indexDefault] tendrá como user por defecto el que tiene como id $idUsuario";
+	}
 	
 	return new Response($out);
 })

@@ -159,10 +159,38 @@ function link_device_user($con,$id_dispositivo,$id_usuario){
 	return $out;
 }
 
+function link_defualtUser_device($con,$id_dispositivo,$uDefault){
+	//device with $id_dispositivo should exists
+	if(!exists($con,"dispositivo","id_dispositivo",$id_dispositivo)) {
+		trigger_error("El dispostivo con id $id_dispositivo no existe");
+	}
+	
+	//user with id $uDefault should exists
+	if(!exists($con,"usuario","id_usuario",$uDefault)) {
+		trigger_error("El usuario con id $uDefault no existe");
+	}
+	
+	$con->update('dispositivo', array(
+		'uDefecto_dispositivo'=>$uDefault), array('id_dispositivo'=>$id_dispositivo
+	));
+}
+
 function get_my_sensor($con) {
 	//$query = "select q1.codigo_sensor, q1.nombre_sensor, q1.senact_sensor, q1.tipo_sensor, q1.modelo_sensor, q1.descripcion_sensor from (select codigo_sensor, nombre_sensor, senact_sensor, tipo_sensor, modelo_sensor, descripcion_sensor from sensor)";
 	//$query = "select codigo_sensor, nombre_sensor, senact_sensor, tipo_sensor, modelo_sensor, descripcion_sensor from sensor";
 	$query = "select * from sensor";
 	$data = $con -> fetchAll($query);
 	return $data;
+}
+
+
+function exists($con, $tableName, $colName, $colVal) {
+	$query = "select * from $tableName where $colName = $colVal";
+	$data = $con -> fetchAll($query);
+	if(count($data)) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }

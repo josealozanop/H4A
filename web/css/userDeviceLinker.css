@@ -30,7 +30,21 @@
 	padding: 5px;
 	border : thin solid blue;
 	border-bottom : none;
+	
+}
+
+.userDeviceLinker .selectDevices .data .device .deviceSelect {
 	cursor : pointer;
+}
+
+.userDeviceLinker .selectDevices .data .device .defaultSelect > input {
+	padding-left : 5px;
+	cursor : pointer;
+}
+
+.userDeviceLinker .selectDevices .data .device .defaultSelect.default {
+	background-color : #CCFF99;
+	font-weight : bold;
 }
 
 .userDeviceLinker .selectDevices .data .device:hover {

@@ -53,6 +53,7 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 	$scope.newDevice = {
 		wantNewDevice : false,
 		useThisMAC : false,
+		defaultWanted : false,
 		data : {
 			name : "",
 			MAC : "",
@@ -64,6 +65,9 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 		var nDevice = $scope.newDevice;
 		var toAdd = new Device(nDevice.data.name,nDevice.data.MAC,nDevice.data.UDefault);
 		$scope.selectedDevices.push(toAdd);
+		if($scope.newDevice.defaultWanted) {
+			$scope.indexOfDefault = $scope.selectedDevices.length-1;
+		}
 		
 		var devideData = {
 			MAC : nDevice.data.MAC,
@@ -99,12 +103,19 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 							console.log("linkando dispositivo");
 							console.log(data);
 							
+							
+							
 							//Limpiamos los datos
-							$scope.newDevice.data = {
-								name : "",
-								MAC : "",
-								UDefault : ""
-							}
+							$scope.newDevice = {
+								wantNewDevice : false,
+								useThisMAC : false,
+								defaultWanted : false,
+								data : {
+									name : "",
+									MAC : "",
+									UDefault : ""
+								}
+							};
 						}
 						else{
 							console.log("error en el linkado del dispositivo");
@@ -132,11 +143,13 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 	
 	var dataToSend = {
 		idUsuario: current_idUsuario,
+		indexDefault : -1,
 		macs : new Array()
 	}
 	$scope.formatedData = JSON.stringify(dataToSend);
 	
 	$scope.prepareData = function () {
+		dataToSend.indexDefault = $scope.indexOfDefault;
 		var ld = $scope.selectedDevices;
 		for(i in ld) {
 			dev = ld[i];
@@ -173,6 +186,9 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 			if(leftDevices[d].selected){
 				leftDevices[d].selected = false;
 				toPass.push(leftDevices[d]);
+				if(d==$scope.indexOfDefault) {
+					$scope.indexOfDefault = -1;
+				}
 				$scope.selectedDevices.splice(d-newIndex,1);
 				newIndex++;
 			}
@@ -180,6 +196,19 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 			for(d in toPass) {
 			$scope.allDevices.push(new Device(toPass[d].name,toPass[d].MAC,toPass[d].UDefault));
 		}
+	}
+	
+	$scope.sinfo = function() {
+		console.log($scope.allDevices);
+		console.log($scope.selectedDevices);
+		console.log($scope.indexOfDefault);
+		console.log($scope);
+	}
+	
+	$scope.indexOfDefault = -1;
+	$scope.doDefault = function(i) {
+		$scope.indexOfDefault = i;
+		console.log("dispostivio por defecto es el "+i);
 	}
 
 }]);

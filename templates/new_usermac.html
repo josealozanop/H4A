@@ -33,8 +33,11 @@
 				<div class="col-lg-12">
 					<button ng-click="unlinkDevices()" type="submit" class="btn btn-danger btn-lg col-lg-12">&#9664; Quitar</button>
 				</div>
-				<div></button>
-				</div>
+				<!-- <div>
+				<button ng-click="sinfo()">
+					showInfo
+				</button>
+				</div> -->
 			</div>
 			
 			<div class="col-lg-4 toAddDevice shadow">
@@ -42,12 +45,19 @@
 					Dispositivos enlazados
 				</div>
 				<div class="data">
-					<div ng-class="{active : dev.selected}" class="device" ng-repeat="dev in selectedDevices" ng-click="dev.select()">
-						<span class="bold_text">Nombre:</span>
-						<span ng-bind="dev.name"></span><br>
-						<span class="bold_text">MAC:</span>
-						<span ng-bind="dev.MAC"></span>
-					</div>
+					<form>
+						<div ng-class="{active : dev.selected  }" class="device" ng-repeat="dev in selectedDevices" >
+							<div ng-click="dev.select()" class="deviceSelect">
+								<span class="bold_text">Nombre:</span>
+								<span ng-bind="dev.name"></span><br>
+								<span class="bold_text">MAC:</span>
+								<span ng-bind="dev.MAC"></span>
+							</div>
+							<div ng-if="dev.UDefault==0"  ng-class = "{default : $index == indexOfDefault}" class="defaultSelect" >
+								<input type="radio" name="udefault" value="" ng-click="doDefault($index)">Usuario por defecto
+							</div>
+						</div>
+					</form>
 				</div>
 
 
@@ -97,7 +107,7 @@
 				</div>
 				
 				<!-- <div class="col-lg-12" style="margin-top:15px">
-					<input type="checkbox" name="MAC_dispostivo" value="" >
+					<input type="checkbox" name="MAC_dispostivo" value="" ng-model="newDevice.defaultWanted">
 					<span>Hacer que X sea el usuario por defecto del dispositivo</span>
 				</div> -->
 				<button type="submit" ng-click="addDevice()" class="btn btn-primary btn">Añadir dispositivo</button>
