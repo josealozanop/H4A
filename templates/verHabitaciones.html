@@ -1,0 +1,70 @@
+{% extends "layout.twig.html" %}
+
+{% block contenido %}
+ <div style = 'height:30px;margin-bottom:25px'>
+ <center><h2>Habitaciones de la Vivienda</h2></center>	
+</div> 
+	{% if habitaciones or habitacionesSinU %}	
+	<table class="table table-striped standar_table shadow">
+		<tr>
+			<th>Nombre</th>	
+			<th>Tipo</th>
+			<th>Dueño</th>
+			<th>Opciones</th>
+		</tr>
+		{% for habitacion in habitaciones %}	
+		<tr>
+			<td>{{habitacion.nombre_habitacion}}</td>
+			<td>{{habitacion.tipo_habitacion}}</td>
+			<td>{{habitacion.tipo_habitacion}}</td>
+			<td>
+			 <form role="form" action="{{ path('opUsuarios') }}" method="post" style='padding:0px'>
+				<div class="oculto">
+					<input type="text" class="form-control" name="idUsuario" value={{habitacion.id_habitacion}}>
+				</div>
+				<button type="submit" name="enviar" value ="1" class="btn btn-link" data-toggle="tooltip" title="Ver datos del usuario">
+					<i class="fa fa-eye fa-2x	"></i>
+				</button>
+				<button type="submit" name="enviar" value ="2" class="btn btn-link" data-toggle="tooltip" title="Modificar datos del usuario">
+					<i class="fa fa-pencil-square-o fa-2x"></i>
+				</button>
+				<button onclick="pregunta()" type="submit" name="enviar" value ="3" class="btn btn-link" data-toggle="tooltip" title="Eliminar el usuario">
+					<i class="fa fa-trash fa-2x"></i>
+				</button>
+			</form>
+			</td>
+		</tr>
+		{% endfor %}
+			{% for habitacion in habitacionesSinU %}	
+		<tr>
+			<td>{{habitacion.nombre_habitacion}}</td>
+			<td>{{habitacion.tipo_habitacion}}</td>
+			<td></td>
+			<td>
+			 <form role="form" action="{{ path('opUsuarios') }}" method="post" style='padding:0px'>
+				<div class="oculto">
+					<input type="text" class="form-control" name="idUsuario" value={{habitacion.id_habitacion}}>
+				</div>
+				<button type="submit" name="enviar" value ="1" class="btn btn-link" data-toggle="tooltip" title="Ver datos del usuario">
+					<i class="fa fa-eye fa-2x	"></i>
+				</button>
+				<button type="submit" name="enviar" value ="2" class="btn btn-link" data-toggle="tooltip" title="Modificar datos del usuario">
+					<i class="fa fa-pencil-square-o fa-2x"></i>
+				</button>
+				<button onclick="pregunta()" type="submit" name="enviar" value ="3" class="btn btn-link" data-toggle="tooltip" title="Eliminar el usuario">
+					<i class="fa fa-trash fa-2x"></i>
+				</button>
+			</form>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+	<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+			<a href="{{ path('nuevaHabitacion') }}" class="btn btn-primary btn-lg" role="button">Administrar habitaciones</a>
+	</div><br/>
+	{% else %}
+		<center><h3>Aún no has registrado nungun usuario</h3></center>
+	{% endif %}
+{% endblock %}
+
+

@@ -387,6 +387,19 @@ $app->get('/verDisp', function (Request $request) use ($app) {
 
 
 
+$app->get('/verHabitaciones', function (Request $request) use ($app) {
+	$sql = "SELECT id_habitacion,nombre_habitacion,tipo_habitacion,nombre_usuario FROM habitacion H INNER JOIN usuario U ON U.id_usuario = H.id_propietario";
+    $habitaciones = $app['db']->fetchAll($sql);
+	$sql = "SELECT id_habitacion,nombre_habitacion,tipo_habitacion FROM habitacion H where H.id_propietario = 0";
+    $habitacionesSinU = $app['db']->fetchAll($sql);
+	
+    return $app['twig']->render('verHabitaciones.html', array(
+	'habitaciones' => $habitaciones,'habitacionesSinU' => $habitacionesSinU
+	));
+})
+->bind('verHabitaciones')
+;
+
 $app->get('/nuevaHabitacion', function (Request $request) use ($app) {
 	$user = $app['security']->getToken()->getUser();
 	$username= $user->getUsername();
