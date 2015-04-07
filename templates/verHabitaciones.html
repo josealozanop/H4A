@@ -18,9 +18,12 @@
 			<td>{{habitacion.tipo_habitacion}}</td>
 			<td>{{habitacion.tipo_habitacion}}</td>
 			<td>
-			 <form role="form" action="{{ path('opUsuarios') }}" method="post" style='padding:0px'>
+			 <form role="form" action="{{ path('opHabitaciones') }}" method="post" style='padding:0px'>
 				<div class="oculto">
-					<input type="text" class="form-control" name="idUsuario" value={{habitacion.id_habitacion}}>
+					<input type="text" class="form-control" name="idHabitacion" value={{habitacion.id_habitacion}}>
+				</div>
+				<div class="oculto">
+					<input type="text" class="form-control" name="propietario" value='conProp'>
 				</div>
 				<button type="submit" name="enviar" value ="1" class="btn btn-link" data-toggle="tooltip" title="Ver datos del usuario">
 					<i class="fa fa-eye fa-2x	"></i>
@@ -41,9 +44,12 @@
 			<td>{{habitacion.tipo_habitacion}}</td>
 			<td></td>
 			<td>
-			 <form role="form" action="{{ path('opUsuarios') }}" method="post" style='padding:0px'>
+			 <form role="form" action="{{ path('opHabitaciones') }}" method="post" style='padding:0px'>
 				<div class="oculto">
-					<input type="text" class="form-control" name="idUsuario" value={{habitacion.id_habitacion}}>
+					<input type="text" class="form-control" name="idHabitacion" value={{habitacion.id_habitacion}}>
+				</div>
+				<div class="oculto">
+					<input type="text" class="form-control" name="propietario" value='sinProp'>
 				</div>
 				<button type="submit" name="enviar" value ="1" class="btn btn-link" data-toggle="tooltip" title="Ver datos del usuario">
 					<i class="fa fa-eye fa-2x	"></i>

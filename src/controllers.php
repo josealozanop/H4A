@@ -157,6 +157,55 @@ switch($_POST["enviar"]) {
 ->bind('OpDisp')
 ;
 
+$app->post('/opHabitaciones', function (Request $request) use ($app) {
+$id_habitacion = $request->get('idHabitacion');
+$propietario = $request->get('propietario');
+$user = $app['security']->getToken()->getUser();
+$username= $user->getUsername();
+switch($_POST["enviar"]) { 
+    case 1:
+		$editar="true";
+		$sql = "SELECT * FROM usuario U INNER JOIN tutor_usuario R ON U.id_usuario = R.id_usuario INNER JOIN tutor T ON R.id_tutor = T.id_tutor WHERE T.mail_tutor = '$username'";
+		$usuarios = $app['db']->fetchAll($sql);	
+		if ($propietario == "conProp"){
+			$sql = "select id_habitacion,nombre_habitacion,tipo_habitacion,mail_usuario FROM habitacion H INNER JOIN usuario U ON U.id_usuario = H.id_propietario WHERE id_habitacion = '$id_habitacion'";
+			$habitacion = $app['db']->fetchAll($sql);
+			}
+		else{
+			$sql = "select * FROM habitacion WHERE id_habitacion = '$id_habitacion'";
+			$habitacion = $app['db']->fetchAll($sql);
+		}		
+		
+		return $app['twig']->render('verHabitacion.html', array('editar' =>$editar,
+		'habitacion' => $habitacion,'usuarios' => $usuarios,'error' =>"",'propietario' => $propietario
+		));
+        break; 
+    case 2: 
+		$editar="false";
+		$sql = "SELECT * FROM usuario U INNER JOIN tutor_usuario R ON U.id_usuario = R.id_usuario INNER JOIN tutor T ON R.id_tutor = T.id_tutor WHERE T.mail_tutor = '$username'";
+		$usuarios = $app['db']->fetchAll($sql);	
+       if ($propietario == "conProp"){
+			$sql = "select id_habitacion,nombre_habitacion,tipo_habitacion,mail_usuario FROM habitacion H INNER JOIN usuario U ON U.id_usuario = H.id_propietario WHERE id_habitacion = '$id_habitacion'";
+			$habitacion = $app['db']->fetchAll($sql);
+			}
+		else{
+			$sql = "select * FROM habitacion WHERE id_habitacion = '$id_habitacion'";
+			$habitacion = $app['db']->fetchAll($sql);
+		}		
+		
+		return $app['twig']->render('verHabitacion.html', array('editar' =>$editar,
+		'habitacion' => $habitacion,'usuarios' => $usuarios,'error' =>"",'propietario' => $propietario
+		));
+		break; 
+    case 3: 
+		$app['db']->delete('habitacion', array('id_habitacion' => $id_habitacion));	
+		return $app->redirect($app["url_generator"]->generate("verHabitaciones"));
+        break; 
+	} 	
+})
+->bind('opHabitaciones')
+;
+
 $app->post('/opUsuarios', function (Request $request) use ($app) {
 $id_usuario = $request->get('idUsuario');
 switch($_POST["enviar"]) { 

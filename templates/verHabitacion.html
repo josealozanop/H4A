@@ -24,7 +24,8 @@
 						<span ng-bind="dev.description"></span>
 					</div>
 				</div>
-			</div>			
+			</div>		
+			{% if editar=="false" %}			
 			<div class="col-lg-2 actions">
 				<div class="col-lg-12">
 					<button ng-click="linkSensors()"  type="submit" class="btn btn-success btn-lg col-lg-12">&#9664; Enlazar</button>
@@ -51,14 +52,17 @@
 					</div>
 				</div>
 			</div>
+			{% endif %}
 		</div><br/>
+		
 		<form  class='standar_h4a_form' method="post"  role="form" action="{{ path('newHabitacion') }}">
-
+		{% if editar=="true" %} <fieldset disabled>{% endif %}
+		{% for h in habitacion %}
 			<div class="col-lg-10 col-lg-offset-1 newDeviceData standar_h4a_form">
 				<div class='row form-group'>
 					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='newTutor_mail'>Nombre de la habitación</label><br>
-					<input type='text' class="form-control" name='nombre_hab' required/>
+					<input type='text' class="form-control" value='{{h.nombre_habitacion}}' name='nombre_hab' required/>
 				</div>
 			</div>
 			</div>
@@ -68,6 +72,7 @@
 					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 						<label for='newTutor_mail'>Tipo de habitación</label><br>
 						<select class="form-control" name='tipo_hab'>
+							<option>{{h.tipo_habitacion}}</option>
 							<option>Dormitorio</option>
 							<option>Salon</option>
 							<option>Cocina</option>
@@ -85,17 +90,27 @@
 					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 						<label for='propietario_hab'>Usuario por defecto</label><br>
 						<select class="form-control" name="propietario_hab">
+							{%if propietario == "conProp" %}
+							<option>{{h.mail_usuario}}</option>
+							{% endif %}
 							<option></option>
 							{% for u in usuarios %}
 								<option  value="{{u.id_usuario}}">{{u.mail_usuario}}</option>
 							{% endfor %} 
+							
 						</select>			
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-10 col-lg-offset-1" style="margin-top:15px">
+			
+					{% if editar=="true" %}
+				</fieldset>
+				{% else %}
+				<div class="col-lg-10 col-lg-offset-1" style="margin-top:15px">
 				<button type="submit" name="send" ng-value="formatedData" ng-click="prepareData()" class="btn btn-primary btn-lg">Añadir</button>
-			</div>			
+			</div>	
+				{% endif %}
+		{% endfor %}
 		</form>		
 	</div>
 </div> 
