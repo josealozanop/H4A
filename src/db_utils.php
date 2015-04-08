@@ -182,6 +182,12 @@ function get_my_sensor($con) {
 	$data = $con -> fetchAll($query);
 	return $data;
 }
+	//$query = "select q1.codigo_sensor, q1.nombre_sensor, q1.senact_sensor, q1.tipo_sensor, q1.modelo_sensor, q1.descripcion_sensor from (select codigo_sensor, nombre_sensor, senact_sensor, tipo_sensor, modelo_sensor, descripcion_sensor from sensor)";
+	//$query = "select codigo_sensor, nombre_sensor, senact_sensor, tipo_sensor, modelo_sensor, descripcion_sensor from sensor";
+	$query = "select * from sensor where id_habitacion = $id_habitacion";
+	$data = $con -> fetchAll($query);
+	return $data;
+}
 
 
 function exists($con, $tableName, $colName, $colVal) {

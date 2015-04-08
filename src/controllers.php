@@ -91,14 +91,14 @@ $app->post('/newHabitacion', function (Request $request) use ($app) { //¡¡
 	
 	$dataText = $request->get('send');
 	$data = json_decode($dataText);
-	$idSensor = $data -> {'idSensor'};
+	$idSensorVin = $data -> {'idSensorVin'};
 	$ids = array();	
 	$out="";
 	
 	$app['db']->insert('habitacion', array('nombre_habitacion' => $nombre_hab,'tipo_habitacion' => $tipo_hab, 'id_propietario' =>$propietario_hab));
 		$sql = "select id_habitacion FROM habitacion WHERE nombre_habitacion = '$nombre_hab'";
 		$id_habitacion = $app['db']->fetchColumn($sql, array(), 0);
-	foreach($idSensor as $id){
+	foreach($idSensorVin as $id){
 		$app['db']->update('sensor', array(
 		'id_habitacion'=>$id_habitacion), array('id_sensor'=>$id
 	));
@@ -110,6 +110,56 @@ $app->post('/newHabitacion', function (Request $request) use ($app) { //¡¡
 ;
 
 
+
+
+$app->post('/modHabitacion', function (Request $request) use ($app) { 
+	$nombre_hab = $request->get('nombre_hab');
+	$nombre_habAnt = $request->get('nombre_habAnt');
+	$propietario_hab = $request->get('propietario_hab');
+	$tipo_hab = $request->get('tipo_hab');
+	$id_habitacion = $request->get('id_hab');
+	if($nombre_hab!=$nombre_habAnt){
+		$sql = "select id_habitacion FROM habitacion WHERE nombre_habitacion = '$nombre_hab'";
+		$nombreRep = $app['db']->fetchColumn($sql, array(), 0);
+		if($nombreRep!=null){
+			$editar="false";
+			$user = $app['security']->getToken()->getUser();
+			$username= $user->getUsername();
+			$sql = "SELECT * FROM usuario U INNER JOIN tutor_usuario R ON U.id_usuario = R.id_usuario INNER JOIN tutor T ON R.id_tutor = T.id_tutor WHERE T.mail_tutor = '$username'";
+			$usuarios = $app['db']->fetchAll($sql);	
+			return $app['twig']->render('verHabitacion.html', array('usuarios' => $usuarios, 'error' => "El nombre la la habitacion ya existe", 'editar' => $editar
+			));
+		}
+	}
+	$dataText = $request->get('send');
+	$data = json_decode($dataText);
+	$idSensorVin = $data -> {'idSensorVin'};
+	$idSensorDes = $data -> {'idSensorDes'};
+	$ids = array();	
+	$out="";
+	
+	$app['db']->update('habitacion', array('nombre_habitacion' => $nombre_hab,'tipo_habitacion' => $tipo_hab, 'id_propietario' =>$propietario_hab),
+	array('id_habitacion'=>$id_habitacion
+	));
+	//$app['db']->insert('habitacion', array('nombre_habitacion' => $nombre_hab,'tipo_habitacion' => $tipo_hab, 'id_propietario' =>$propietario_hab));
+	//$sql = "select id_habitacion FROM habitacion WHERE nombre_habitacion = '$nombre_hab'";
+	//$id_habitacion = $app['db']->fetchColumn($sql, array(), 0);
+	
+	foreach($idSensorDes as $id){
+		$app['db']->update('sensor', array(
+		'id_habitacion'=>NULL), array('id_sensor'=>$id
+	));
+	}
+	foreach($idSensorVin as $id){
+		$app['db']->update('sensor', array(
+		'id_habitacion'=>$id_habitacion), array('id_sensor'=>$id
+	));
+	}
+	return $app['twig']->render('tutor.html', array('accion' =>"habitacion creada correctamente"
+	));
+})
+->bind('modHabitacion')
+;
 
 
 
@@ -124,12 +174,12 @@ switch($_POST["enviar"]) {
     case 1:
 		$mac=getMAC();
 		$editar="true";      
-		$sql = "SELECT mail_usuario FROM usuario where id_usuario='$uDefecto_Dispositivo'";
+		$sql = "SELECT mail_usuario FROM usuario where id_usuario='$uDefecto_dispositivo'";
 		$uDef = $app['db']->fetchAll($sql);
 		$sql = "SELECT * FROM usuario U INNER JOIN dispositivo_usuario R ON U.id_usuario = R.id_usuario INNER JOIN dispositivo D ON R.id_dispositivo = D.id_dispositivo WHERE D.id_dispositivo = '$id_dispositivo'";
 		$usuarios = $app['db']->fetchAll($sql);
 		return $app['twig']->render('verDispositivo.html', array('uDef' => $uDef,'usuarios' => $usuarios,'editar' =>$editar,'mac' => $mac,
-		'id_dispositivo' => $id_dispositivo,'uDefecto_Dispositivo'=>$uDefecto_Dispositivo,'nombre_dispositivo' => $nombre_dispositivo,'mac_dispositivo' => $mac_dispositivo,'error'=>""));
+		'id_dispositivo' => $id_dispositivo,'uDefecto_dispositivo'=>$uDefecto_dispositivo,'nombre_dispositivo' => $nombre_dispositivo,'mac_dispositivo' => $mac_dispositivo,'error'=>""));
         break; 
     case 2: 
 		$user = $app['security']->getToken()->getUser();
@@ -767,6 +817,10 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 		
 		case "getMySensor":
 			$out = json_encode(get_my_sensor($app['db']));
+		break;
+		case "getMySensorBedroom":
+			$id_habitacion = 15;
+			$out = json_encode(get_my_sensor_bedroom($app['db'],$id_habitacion));
 		break;
 			
 		/***

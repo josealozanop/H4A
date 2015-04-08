@@ -14,6 +14,18 @@ app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scop
 		.error(function(data, status, headers, config) {
 			console.log("ERROR el servicio ");
 		});
+		
+	services.getMySensorBedroom.init()
+		.success(function(data, status, headers, config) {
+			$scope.raw_data = data;
+			for(i in $scope.raw_data) {
+				var currentSensor = $scope.raw_data[i];
+				$scope.selectedSensors.push(new Sensor(currentSensor.id_sensor,currentSensor.codigo_sensor,currentSensor.nombre_sensor,currentSensor.senact_sensor,currentSensor.tipo_sensor, currentSensor.modelo_sensor,currentSensor.descripcion_sensor));
+			}
+		})
+		.error(function(data, status, headers, config) {
+			console.log("ERROR el servicio ");
+		});
 	
 
 	function Sensor(id, code, name, senact, tipe, model, description) {
@@ -41,7 +53,8 @@ app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scop
 	
 	
 	var dataToSend = {
-		idSensor : new Array()
+		idSensorVin : new Array(),
+		idSensorDes : new Array()
 	}
 	$scope.formatedData = JSON.stringify(dataToSend);
 	
@@ -49,10 +62,20 @@ app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scop
 		var ld = $scope.selectedSensors;
 		for(i in ld) {
 			dev = ld[i];
-			dataToSend.idSensor.push(dev.id);
+			dataToSend.idSensorVin.push(dev.id);
+		}
+		var ld = $scope.allSensors;
+		for(i in ld) {
+			dev = ld[i];
+			dataToSend.idSensorDes.push(dev.id);
 		}
 		$scope.formatedData = JSON.stringify(dataToSend);
 	}
+	
+	
+	
+	
+	
 	
 	$scope.linkSensors = function() {
 		var toPass = new Array();
