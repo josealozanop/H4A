@@ -58,7 +58,7 @@
 		<form  class='standar_h4a_form' method="post"  role="form" action="{{ path('modHabitacion') }}">
 		{% if editar=="true" %} <fieldset disabled>{% endif %}
 		{% for h in habitacion %}
-			<input type='number' class="oculto" value='{{h.id_habitacion}}' name='id_hab' required/>
+			<input type='number' class="oculto" value='{{h.id_habitacion}}' name='id_hab' id='id_hab' required/>
 			<div class="col-lg-10 col-lg-offset-1 newDeviceData standar_h4a_form">
 				<div class='row form-group'>
 					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>

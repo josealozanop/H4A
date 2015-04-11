@@ -836,8 +836,8 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 			$out = json_encode(get_my_sensor($app['db']));
 		break;
 		case "getMySensorBedroom":
-			$id_habitacion = 15;
-			$out = json_encode(get_my_sensor_bedroom($app['db'],$id_habitacion));
+			$id_hab = $input -> {'id_hab'};
+			$out = json_encode(get_my_sensor_bedroom($app['db'],$id_hab));
 		break;
 			
 		/***
