@@ -1,8 +1,11 @@
 app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scope,asyncServices) {
 	
 	var services = asyncServices;
-
-	
+	var id_habitacion= angular.element("#id_hab")[0].valueAsNumber;
+	console.log(id_habitacion);
+	$scope.queryInsert = {
+		id_hab : id_habitacion
+	}
 	services.getMySensor.init()
 		.success(function(data, status, headers, config) {
 			$scope.raw_data = data;
@@ -15,7 +18,7 @@ app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scop
 			console.log("ERROR el servicio ");
 		});
 		
-	services.getMySensorBedroom.init()
+	services.getMySensorBedroom.init(JSON.stringify($scope.queryInsert))
 		.success(function(data, status, headers, config) {
 			$scope.raw_data = data;
 			for(i in $scope.raw_data) {
