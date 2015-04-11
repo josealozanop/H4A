@@ -110,10 +110,6 @@ $app->post('/newHabitacion', function (Request $request) use ($app) { //¡¡
 ;
 
 
-
-
-
-
 $app->post('/OpDisp', function (Request $request) use ($app) {
 $id_dispositivo = $request->get('idDisp');
 $nombre_dispositivo = $request->get('nomDisp');
@@ -261,6 +257,28 @@ $app->get('/vacia', function (Request $request) use ($app) {
 	));
 })
 ->bind('vacia')
+;
+
+$app->get('/rawHelp', function (Request $request) use ($app) {
+
+    return $app['twig']->render('rawHelp.html', array(
+	));
+})
+->bind('rawHelp')
+;
+
+$app->get('/help', function (Request $request) use ($app) {
+	/*$filePath = "../templates/rawHelp.html";
+
+	$myfile = fopen($filePath , "r") or die("Unable to open file!");
+	$datos = fread($myfile,filesize($filePath ));
+	fclose($myfile);*/
+	$datos = "hoiola";
+    return $app['twig']->render('help.html', array(
+		"datos" => $datos
+	));
+})
+->bind('help')
 ;
 
 //crear nuevo tutor

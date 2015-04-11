@@ -1,1 +1,1 @@
-var app = angular.module('home', []);
+var app = angular.module('home', ['ngSanitize','ngAnimate']);

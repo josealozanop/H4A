@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html ng-app='home'>
+    <head>		
+		{% include 'includes.html' %}
+    </head>
+    <body  ng-controller="help" class="helpSection">
+	
+	<div class="topbar">
+		<span style = "float:left">
+			<i class="fa fa-bars fa-2x" ng-click="clickMenu()" style="cursor:pointer"></i>
+			<span style="margin-left: 15px;font-size:x-large">Bienvenido al sistema de ayuda de h4all</span>
+		</span>
+	</div>
+	
+	<div class="container helpData">
+	
+		<div ng-repeat="item in helpData | filter : {show : true} | orderBy : '-token'"    class="helpContainer smoothShow">
+			<div ng-if="item.type=='data'">
+				<div class="close">
+					<i class="fa fa-close" ng-if="isClosable(item.id)" ng-click="close(item)"></i>
+				</div>
+				
+				<div ng-bind="item.title" class="title">
+				</div>
+				<div class="body">
+					<p ng-repeat="pa in item.bodySafe" ng-bind-html="pa">				
+					</p> 
+				</div>
+				<div class="footer" ng-if="item.relations.length || item.tags.length">
+					<div ng-if="item.relations.length" class="relations">
+						<span class="head">Otros temas relacionados:</span>
+						<ul>
+							<li ng-repeat="rel in item.relations" >
+								<a ng-bind="idIndexer[rel].title" ng-click="setVisible(idIndexer[rel])"></a>
+							</li>
+						</ul>
+					</div>
+					
+					<div ng-if="item.tags.length" class="tags">
+						<span class="head">Tags:</span>
+						<ul>
+							<li ng-repeat="tag in item.tags" >
+								<a ng-bind="tag" ng-click="clickTag(tag)"></a>
+							</li>
+						</ul>
+					</div>
+						
+				</div>
+			</div>
+			<div class="" ng-if="item.type=='list'">
+				<div class="close">
+					<i class="fa fa-close" ng-if="isClosable(item.id)" ng-click="close(item)"></i>
+				</div>
+				
+				<div ng-bind="item.title" class="title">
+				</div>
+				
+				<div class="body">
+					<ol>
+						<li ng-repeat="link in item.links" ><a ng-bind="idIndexer[link].title" ng-click="setVisible(idIndexer[link])"></a></li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		
+		<div class="menu smoothMenu" ng-if="menuOpen" style="">
+			<ul>
+				<span ng-repeat="item in formatedMenu">
+				<li   style="margin-left:{{ '{{getMargin(item.level)}}' }}">
+					<a ng-bind="item.title"></a>
+				</li>
+				<span ng-repeat="item2 in item.items">
+					<li  class="secondLevel" style="margin-left:{{ '{{getMargin(item.level+1)}}' }}">
+						<a ng-bind="idIndexer[item2].title" ng-click="setVisible(idIndexer[item2])"></a>
+					</li>
+				</span>
+				</span>
+			</ul>
+		</div>
+		
+		
+		<!-- <button ng-click="sinfo()">a</button> -->
+		
+	</body>
+</html>
+
+
+

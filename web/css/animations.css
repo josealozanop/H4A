@@ -1,0 +1,108 @@
+.smoothShow {
+  opacity: 1;
+}
+
+.smoothShow.ng-enter {
+  opacity: 0;
+}
+
+.smoothShow.ng-enter{
+   -webkit-animation: fadeInLeft 0.5s;
+    animation: fadeInLeft 0.5s;
+}
+
+.smoothShow.ng-enter-active{
+	opacity: 1;
+}
+
+.smoothShow.ng-leave {
+  opacity: 1;
+}
+
+.smoothShow.ng-leave{
+   -webkit-animation: fadeOutRight 0.5s;
+    animation: fadeOutRight 0.5s;
+}
+
+.smoothShow.ng-leave-active{
+	opacity: 0;
+}
+
+.smoothShow.ng-move {
+  opacity: 0;
+}
+
+.smoothShow.ng-move{
+  -webkit-animation: fadeInBottom 0.5s;
+    animation: fadeInBottom 0.5s;
+}
+
+.smoothShow.ng-move-active{
+	opacity: 1;
+}
+
+
+.smoothMenu {
+  opacity: 1;
+}
+
+.smoothMenu.ng-enter {
+  opacity: 0;
+}
+
+.smoothMenu.ng-enter{
+   -webkit-animation: fadeInLeft 1s;
+    animation: fadeInLeft 1s;
+}
+
+.smoothMenu.ng-enter-active{
+	opacity: 1;
+}
+
+.smoothMenu.ng-leave {
+  opacity: 1;
+}
+
+.smoothMenu.ng-leave{
+   -webkit-animation: fadeOutLeft 1s;
+    animation: fadeOutLeft 1s;
+}
+
+.smoothMenu.ng-leave-active{
+	opacity: 0;
+}
+
+
+
+/****************************/
+
+
+/*.smoothShow.ng-hide-remove.ng-hide-remove-active{
+  -webkit-transition: opacity linear 0.5s;
+  transition: opacity linear 0.5s;
+}
+
+.smoothShow.ng-hide {
+  line-height: 0;
+  opacity: 0;
+ }
+
+ 
+.smoothHide{
+  opacity: 1;
+}
+
+.smoothHide.ng-hide-add.ng-hide-add-active {
+  -webkit-transition: opacity linear 0.5s;
+  transition: opacity linear 0.5s;
+}
+
+.smoothHide.ng-hide {
+  line-height: 0;
+  opacity: 0;
+ }*/
+ 
+ 
+
+ 
+ 

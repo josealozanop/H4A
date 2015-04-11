@@ -1,0 +1,136 @@
+.helpSection {
+	background-color : #eee;
+}
+
+.helpSection  .topbar {
+	position : fixed;
+	background-color : #313131;
+	width : 100%;
+	padding-top : 15px;
+	padding-bottom : 15px;
+	color : white;
+	padding-left : 10px;
+	padding-right : 10px;
+	top : 0px;
+	left : 0px;
+	height : 60px;
+}
+
+.helpSection .helpData {
+	margin-top : 80px;
+}
+
+.helpSection .helpData a{
+	cursor : pointer;
+}
+
+.helpSection .helpData  .helpContainer {
+	margin-top : 10px;
+	margin-bottom : 10px;
+	margin-left : 5px;
+	margin-right : 5px;
+	
+	padding-top : 10px;
+	padding-bottom : 10px;
+	padding-left : 10px;
+	padding-right : 10px;
+	
+	
+	border : thin solid #337ab7;
+	
+	background-color : white;
+	
+	-webkit-box-shadow: 3px 3px 2px 1px rgba(0,0,0,0.75);
+	-moz-box-shadow: 3px 3px 2px 1px rgba(0,0,0,0.75);
+	box-shadow: 3px 3px 2px 1px rgba(0,0,0,0.75);
+	
+	border-radius : 2px;
+}
+
+.helpSection .helpData  .helpContainer .title {
+	font-size : large;
+	font-weight : bold;
+	color : #337ab7;
+}
+
+.helpSection .helpData  .helpContainer .body {
+	margin-top : 10px;
+}
+
+.helpSection .helpData  .helpContainer .footer {
+	/*border-top : thin solid #C35817;
+	padding-top : 5px;*/
+}
+
+.helpSection .helpData  .helpContainer .relations .head{
+	font-weight:bold;
+}
+
+.helpSection .helpData  .helpContainer .relations ul >li{
+	display: inline;
+	margin-right : 5px;
+}
+
+.helpSection .helpData  .helpContainer .relations ul >li:after {
+	content : " | ";
+}
+
+.helpSection .helpData  .helpContainer .relations ul >li:last-child:after {
+	content : "";
+}
+
+.helpSection .helpData  .helpContainer .tags ul >li{
+	display: inline;
+	background-color : #337ab7;
+	padding : 4px;
+	border-radius : 2px;
+	margin-right : 5px;
+}
+
+.helpSection .helpData  .helpContainer .tags ul >li a{
+	color : white;
+}
+
+.helpSection .helpData  .helpContainer .tags .head{
+	font-weight:bold;
+}
+
+.helpSection .menu{
+	background-color : #313131;
+	position :fixed ;
+	top : 60px;
+	left : 0px;
+	padding-right : 40px;
+	
+	-webkit-box-shadow: 3px 3px 2px 1px rgba(0,0,0,2);
+	-moz-box-shadow: 3px 3px 2px 1px rgba(0,0,0,2);
+	box-shadow: 3px 3px 2px 1px rgba(0,0,0,2);
+	
+}
+
+.helpSection .menu li{
+	color : peru;
+	font-size : large;
+}
+
+.helpSection .menu li a{
+	color : peru;
+}
+
+.helpSection .menu li.secondLevel{
+	list-style-type: none;
+}
+
+.helpSection .menu li.secondLevel a{
+	color : white;
+	font-size : smaller;
+}
+
+
+.helpSection .menu a{
+	color : white;
+	cursor : pointer;
+}
+
+
+
