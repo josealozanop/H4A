@@ -110,10 +110,6 @@ $app->post('/newHabitacion', function (Request $request) use ($app) { //¡¡
 ;
 
 
-<<<<<<< HEAD
-=======
-
-
 $app->post('/modHabitacion', function (Request $request) use ($app) { 
 	$nombre_hab = $request->get('nombre_hab');
 	$nombre_habAnt = $request->get('nombre_habAnt');
@@ -163,10 +159,6 @@ $app->post('/modHabitacion', function (Request $request) use ($app) {
 ->bind('modHabitacion')
 ;
 
-
-
-
->>>>>>> origin/master
 $app->post('/OpDisp', function (Request $request) use ($app) {
 $id_dispositivo = $request->get('idDisp');
 $nombre_dispositivo = $request->get('nomDisp');
