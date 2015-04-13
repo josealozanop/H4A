@@ -11,7 +11,8 @@ app.directive('inlineHelp', ['helpProvider', function(helpProvider) {
 		
 		controller : function ($scope,$element,$timeout) {
 			$('[data-toggle="popover"]').popover({
-				placement : 'bottom'
+				placement : 'bottom',
+				html : "true"
 			});
 			
 		}	
