@@ -1,7 +1,7 @@
 app.directive('inlineHelp', ['helpProvider', function(helpProvider) {
 	return {
         restrict : 'EA',
-       	templateUrl: 'templates/inlineHelp.html',
+       	templateUrl: '/H4A/web/templates/inlineHelp.html',
 		replace : true,
 		scope: true,
 
