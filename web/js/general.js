@@ -2,6 +2,7 @@
 	/*declaracion de la variables de sesion, variables javascript que se pueden usar en toda la web*/
 	sessionStorage.setItem("newTutor_name", "");
 	sessionStorage.setItem("newTutor_mail", "");
+	
 	todo();
 	$('#inicio_newTutor').click({name:'test'},newTutor2);
 	PONLE_UN_NOMBRE();

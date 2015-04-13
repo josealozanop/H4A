@@ -1,4 +1,4 @@
-app.service('helpProvider',function(){
+app.service('helpProvider',['$filter',function($filter){
 	
 	var help = [
 	
@@ -58,7 +58,7 @@ app.service('helpProvider',function(){
 			id : "user",
 			title : "Usuario",
 			body : [ 
-				"Es es actor principal de nuestra aplicación. Es la persona que mediante el uso de la aplicación gestiona la vivienda/recinto dónde se haya instalado h4all, cada uno de los usuario tendrá definida una configuración de entorno que se adaptará a su diversidad funcional"
+				"Es es actor principal de nuestra aplicación. Es la persona que mediante el uso de la aplicación gestiona la vivienda/recinto dónde se haya instalado h4all, cada uno de los usuario tendrá definida una configuración de entorno que se adaptará a su diversidad funcional."
 			],
 			tags : [ 
 				"#usuario",
@@ -158,10 +158,21 @@ app.service('helpProvider',function(){
 		return help;
 	}
 	
+	this.getInlineHelp = function(i) {
+		var helpData = $filter('filter')(help, {id:i}, true);
+		console.log(helpData);
+		//Cogemos el primer parrafo del único match(los ids son únicos por lo tanto solo debe haber un match)
+		return deleteHtmlText(helpData[0].body[0]);
+	}
+	
+	var deleteHtmlText = function(text) {
+		return text.replace(/<.*>?/g,"");
+	}
+	
 	this.ping = function(data){
 		return "Has ejecutado helpProvider";
 	}
 	
 	return this;
 
-});
+}]);

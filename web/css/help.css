@@ -132,5 +132,15 @@
 	cursor : pointer;
 }
 
+.popover {
+	color : black;
+}
+
+
+.popover .popover-title {
+	font-size : larger;
+	background-color : #cbebff;
+}
+
 
 
