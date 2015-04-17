@@ -42,6 +42,18 @@ app.service('asyncServices', ['$http', function($http) {
 		return $http.get('./serviceController',this.requestParams);
 	}
 	
+	this.getAllRooms = new Service('getAllRooms');
+	this.getAllRooms.callback = function(inputData) {
+		this.requestParams.params.input = inputData;
+		return $http.get('./serviceController',this.requestParams);
+	}
+	
+	this.getAllSensors = new Service('getAllSensors');
+	this.getAllSensors.callback = function(inputData) {
+		this.requestParams.params.input = inputData;
+		return $http.get('./serviceController',this.requestParams);
+	}
+	
 	this.echo = new Service('echo');
 	this.echo.callback = function(inputData) {
 		this.requestParams.params.input = inputData;

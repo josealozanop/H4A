@@ -61,17 +61,44 @@ $app->post('/linkDevicesUser', function (Request $request) use ($app) { //¡¡
 		trigger_error("Error en linkDeviceUser no se están cogiendo todos los ids");
 	}
 	
-	$out="Se pasa a la siguiente pagina con los usuarios ya linkados y con los datos idUsuario = $idUsuario primera MAC $MACS[0] primer id_dispositivo : $ids[0] y json: $dataText";
+	/*$out="Se pasa a la siguiente pagina con los usuarios ya linkados y con los datos idUsuario = $idUsuario primera MAC $MACS[0] primer id_dispositivo : $ids[0] y json: $dataText";*/
 	
 	if($indexDefault>-1) {
 		link_defualtUser_device($app['db'],$ids[$indexDefault],$idUsuario);
 		$out = $out."<br> el dispositivo con id $ids[$indexDefault] tendrá como user por defecto el que tiene como id $idUsuario";
 	}
+	//$app['security']->getToken()->getUser()->setAttribute('idUser',$idUsuario);
 	
-	return new Response($out);
+	return $app['twig']->render('enableSensors.html', array('idUsuario' =>$idUsuario
+	));
 })
 ->bind('linkDevicesUser')
 ;
+
+
+$app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
+	$dataText = $request->get('send');
+	$data = json_decode($dataText);
+
+	$idUsuario = $data -> {'user_id'};
+	$enabledSensors = $data -> {'enabledSensors'};
+	$nEnabledSensors = count($enabledSensors);
+	
+	$out = "El id del usurio al que se le van a habilitar los sensores es: $idUsuario<br>";
+	$out .=  "y se le habilitarian  $nEnabledSensors sensores con los siguientes ids: <br>";
+	
+	
+	foreach($enabledSensors as $sensor){
+		$id = $sensor-> {'id_sensor'};
+		$out .= "$id<br>";
+	}
+	
+	return new Response($out);
+})
+->bind('enableSensors')
+;
+
+
 
 $app->post('/newHabitacion', function (Request $request) use ($app) { //¡¡
 	$nombre_hab = $request->get('nombre_hab');
@@ -835,9 +862,18 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 		case "getMySensor":
 			$out = json_encode(get_my_sensor($app['db']));
 		break;
+		
 		case "getMySensorBedroom":
 			$id_hab = $input -> {'id_hab'};
 			$out = json_encode(get_my_sensor_bedroom($app['db'],$id_hab));
+		break;
+		
+		case "getAllRooms":
+			$out = json_encode(get_all_rooms($app['db']));
+		break;
+		
+		case "getAllSensors":
+			$out = json_encode(get_all_sensors($app['db']));
 		break;
 			
 		/***

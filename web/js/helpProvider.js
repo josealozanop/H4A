@@ -162,7 +162,11 @@ app.service('helpProvider',['$filter',function($filter){
 		var helpData = $filter('filter')(help, {id:i}, true);
 		console.log(helpData);
 		//Cogemos el primer parrafo del único match(los ids son únicos por lo tanto solo debe haber un match)
-		return deleteHtmlText(helpData[0].body[0]);
+		
+		var inlineText =  deleteHtmlText(helpData[0].body[0]);
+		inlineText += "<br><a href='http://localhost/H4A/web/help' target='_blank'>Seguir Leyendo</a>";
+		
+		return inlineText;
 	}
 	
 	var deleteHtmlText = function(text) {

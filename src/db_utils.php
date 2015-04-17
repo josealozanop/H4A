@@ -20,6 +20,19 @@ function get_all_tutors_name($con){
 	return $data;
 }
 
+function get_all_sensors($con){
+	$query = "select * FROM sensor";
+	$data = $con -> fetchAll($query);
+	return $data;
+}
+
+
+function get_all_rooms($con){
+	$query = "select * FROM habitacion";
+	$data = $con -> fetchAll($query);
+	return $data;
+}
+
 function get_my_users($con, $id){ 
 	$query = "select id_usuario FROM tutor_usuario WHERE id_tutor = '$id'";
 	$data = $con -> fetchAll($query);

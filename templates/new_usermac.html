@@ -46,7 +46,7 @@
 				</div>
 				<div class="data">
 					<form>
-						<div ng-class="{active : dev.selected  }" class="device" ng-repeat="dev in selectedDevices" >
+						<div ng-class="{toQuit : dev.selected  }" class="device" ng-repeat="dev in selectedDevices" >
 							<div ng-click="dev.select()" class="deviceSelect">
 								<span class="bold_text">Nombre:</span>
 								<span ng-bind="dev.name"></span><br>

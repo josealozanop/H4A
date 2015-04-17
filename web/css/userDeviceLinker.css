@@ -70,6 +70,10 @@
 	background-color : #00FF66;
 }
 
+.userDeviceLinker .selectDevices .data .device.toQuit {
+	background-color : #e0706c;
+}
+
 .userDeviceLinker .selectDevices .toAddDevice {
 	height : 300px;
 	background-color : #eee;

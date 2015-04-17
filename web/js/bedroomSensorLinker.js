@@ -2,7 +2,8 @@ app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scop
 	
 	var services = asyncServices;
 	var id_habitacion= angular.element("#id_hab")[0].valueAsNumber;
-	console.log(id_habitacion);
+	
+	console.log(angular.element("#id_hab"));
 	$scope.queryInsert = {
 		id_hab : id_habitacion
 	}
