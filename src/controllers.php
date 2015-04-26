@@ -132,7 +132,7 @@ $app->post('/newHabitacion', function (Request $request) use ($app) { //¡¡
 		$sql = "select id_habitacion FROM habitacion WHERE nombre_habitacion = '$nombre_hab'";
 		$id_habitacion = $app['db']->fetchColumn($sql, array(), 0);
 	foreach($idSensorVin as $id){
-		$app['db']->update('sensor', array(
+		$app['db']->update('sensoractuador', array(
 		'id_habitacion'=>$id_habitacion), array('id_sensor'=>$id
 	));
 	}
@@ -177,12 +177,12 @@ $app->post('/modHabitacion', function (Request $request) use ($app) {
 	//$id_habitacion = $app['db']->fetchColumn($sql, array(), 0);
 	
 	foreach($idSensorDes as $id){
-		$app['db']->update('sensor', array(
+		$app['db']->update('sensoractuador', array(
 		'id_habitacion'=>NULL), array('id_sensor'=>$id
 	));
 	}
 	foreach($idSensorVin as $id){
-		$app['db']->update('sensor', array(
+		$app['db']->update('sensoractuador', array(
 		'id_habitacion'=>$id_habitacion), array('id_sensor'=>$id
 	));
 	}
