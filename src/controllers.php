@@ -14,10 +14,16 @@ require 'db_utils.php';
 
 
 $app->get('/', function(Request $request) use ($app) {
-    return $app['twig']->render('index.html', array(
-        'error' => $app['security.last_error']($request),
-        'last_username' => $app['session']->get('_security.last_username'),'accion'=>""
-    ));	
+	$mac=getMAC();
+	$query = "select id_dispositivo from dispositivo where mac_dispositivo='$mac'";
+	$data = $app['db']->fetchAll($query);
+	if($data == null){	
+		return $app['twig']->render('index.html', array(
+			'error' => $app['security.last_error']($request),
+			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));	
+	}
+	return $app['twig']->render('negro.html', array('error' => $app['security.last_error']($request),
+			'last_username' => $app['session']->get('_security.last_username')));	
 })
 ->bind('homepage')
 ;

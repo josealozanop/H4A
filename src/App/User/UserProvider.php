@@ -27,7 +27,7 @@ class UserProvider implements UserProviderInterface
 			if (!$user = $stmt->fetch()) {
 				throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
 			}
-			return new User($user['mail_usuario'], $user['pass_usuario'], explode(',', $user['roles']), true, true, true, true);
+			return new User($user['id_usuario'], $user['mail_usuario'], $user['pass_usuario'], explode(',', $user['roles']), true, true, true, true);
 		}
 		//inico control de tutores
 		$stmt = $this->conn->executeQuery('SELECT * FROM tutor WHERE mail_tutor = ?', array(strtolower($username)));
