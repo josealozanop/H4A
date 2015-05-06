@@ -5,7 +5,7 @@
 		<div class="container" data-scrollreveal="enter donw after 0s over 1s">
 			{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 			<div class="jumbotron">
-				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				{% if (app.security.token is not null) and (is_granted('IS_AUTHENTICATED_FULLY')) %}
 					{% block contenido %}{% endblock %}					
 				{%elseif  currentPath  == '/H4A/web/index_dev.php/newTutor' %}				
 					{% block datos %}

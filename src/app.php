@@ -61,15 +61,12 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     'security.access_rules' => array(
         // You can rename ROLE_USER as you wish
 		array('^/$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
-        
-		//array('^/.*$', 'ROLE_ADMIN'),
-		//array('^/.*$', 'ROLE_USER'),
+		array('^/index*', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/tutor', 'ROLE_USER'),
-		//array('^/login', ''),
-		//array('^/.+$', 'ROLE_FOO'),
-        array('^/register$', ''),
-		array('^/newTutor', 'IS_AUTHENTICATED_ANONYMOUSLY')	// This url is available as anonymous user
-		,array('^/.+$', 'IS_AUTHENTICATED_FULLY')
+		array('^/login$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
+		array('^/register', 'IS_AUTHENTICATED_ANONYMOUSLY'),
+		array('^/newTutor', 'IS_AUTHENTICATED_ANONYMOUSLY'),
+		array('^/.+$', 'IS_AUTHENTICATED_FULLY')
 	)
 ));
 
