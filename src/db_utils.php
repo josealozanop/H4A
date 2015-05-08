@@ -206,6 +206,24 @@ function get_my_sensor_bedroom($con, $id_habitacion) {
 	return $data;
 }
 
+function link_user_sensor($con, $idUser, $idSensor){
+	if(!exists($con,"sensoractuador","id_sensor",$idSensor)) {
+		trigger_error("El sensor con id $idSensor no existe");
+	}
+	if(!exists($con,"usuario","id_usuario",$idUser)) {
+		trigger_error("El usuario con id $idUser no existe");
+	}
+	
+	$out = $con ->insert('sensor_usuario', array('id_sensor' => $idSensor,'id_usuario' => $idUser));
+	return $out;
+}
+
+function link_user_sensors($con, $idUser, $arr_idSensor){
+
+	foreach($arr_idSensor as $idSensor){
+		link_user_sensor($con, $idUser, $idSensor);
+	}
+}
 
 function exists($con, $tableName, $colName, $colVal) {
 	$query = "select * from $tableName where $colName = $colVal";

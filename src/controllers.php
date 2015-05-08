@@ -84,22 +84,31 @@ $app->post('/linkDevicesUser', function (Request $request) use ($app) { //¡¡
 
 $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 	$dataText = $request->get('send');
-	$data = json_decode($dataText);
+	$data = json_decode($dataText, true);
 
-	$idUsuario = $data -> {'user_id'};
-	$enabledSensors = $data -> {'enabledSensors'};
+	$idUsuario = $data['user_id'];
+	$enabledSensors = $data['enabledSensors'];
+	$ids = array();
+	foreach($enabledSensors as $sensor){
+		array_push($ids, $sensor["id_sensor"]);
+	}
 	$nEnabledSensors = count($enabledSensors);
 	
-	$out = "El id del usurio al que se le van a habilitar los sensores es: $idUsuario<br>";
+	/*$out = "El id del usurio al que se le van a habilitar los sensores es: $idUsuario<br>";
 	$out .=  "y se le habilitarian  $nEnabledSensors sensores con los siguientes ids: <br>";
 	
 	
 	foreach($enabledSensors as $sensor){
-		$id = $sensor-> {'id_sensor'};
+		$id = $sensor['id_sensor'];
 		$out .= "$id<br>";
-	}
+	}*/
 	
-	return new Response($out);
+	$out = link_user_sensors($app['db'], $idUsuario, $ids);
+	$out = json_encode($out);
+	
+	return $app['twig']->render('configUser.html', array('idUsuario' =>$idUsuario
+	));
+	//return new Response($out);
 })
 ->bind('enableSensors')
 ;
