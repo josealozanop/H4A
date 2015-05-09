@@ -709,7 +709,11 @@ $app->get('/tutor', function () use ($app) {
 })
 ->bind('tutor')
 ;
-
+$app->get('/configUs', function () use ($app) {
+    return $app['twig']->render('config_user.html');
+})
+->bind('configUs')
+;
 $app->post('/new_usermac', function (Request $request) use ($app){
 	$id_usuario = $request->get('idUsuario');
 	$mac = $request->get('mac');

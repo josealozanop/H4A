@@ -62,7 +62,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
         // You can rename ROLE_USER as you wish
 		array('^/$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/index*', 'IS_AUTHENTICATED_ANONYMOUSLY'),
-		array('^/tutor', 'ROLE_USER'),
+		//array('^/tutor', !'ROLE_USUARIO'),
 		array('^/login$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/register', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/newTutor', 'IS_AUTHENTICATED_ANONYMOUSLY'),
