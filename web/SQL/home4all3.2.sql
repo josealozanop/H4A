@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-05-2015 a las 18:03:34
+-- Tiempo de generación: 10-05-2015 a las 19:29:45
 -- Versión del servidor: 5.6.17
 -- Versión de PHP: 5.5.12
 
@@ -135,6 +135,7 @@ CREATE TABLE IF NOT EXISTS `habitacion_usuario` (
 CREATE TABLE IF NOT EXISTS `sensoractuador` (
   `Id_Sensor` varchar(20) NOT NULL,
   `PIN` int(11) NOT NULL,
+  `Tipo` varchar(20) NOT NULL,
   `TipoValor` varchar(20) DEFAULT NULL,
   `Valor` int(11) DEFAULT NULL,
   `Localizacion` varchar(20) DEFAULT NULL,
@@ -156,14 +157,14 @@ CREATE TABLE IF NOT EXISTS `sensoractuador` (
 -- Volcado de datos para la tabla `sensoractuador`
 --
 
-INSERT INTO `sensoractuador` (`Id_Sensor`, `PIN`, `TipoValor`, `Valor`, `Localizacion`, `id_sen`, `id_usuario`, `id_habitacion`, `codigo_sensor`, `nombre_sensor`, `senact_sensor`, `tipo_sensor`, `modelo_sensor`, `descripcion_sensor`) VALUES
-('', 0, NULL, NULL, NULL, 3, NULL, 21, 'Jb5621', 'Actuador1', 0, 'motor', 'Motor DC v48', 'motor de persiana para arduino'),
-('', 0, NULL, NULL, NULL, 4, 0, NULL, '234', 'sensor voz', 1, 'voz', 'v65453', 'sensor de voz para escuchar'),
-('', 1, 'Sensor', 0, NULL, 5, 0, 11, 'ab12', 'sensor10', NULL, NULL, 'dsadsr455', 'sensor de luz'),
-('', 1, 'Sensor', 0, NULL, 7, 0, 11, 'dsa', 'sensor 4', NULL, NULL, 'fa', 'sensor cuatro'),
-('8', 1, 'Sensor', 0, NULL, 8, 0, 11, 'sda', 'sensor 3', NULL, NULL, 'nja', 'sensor tres'),
-('15', 1, 'Sensor', 0, NULL, 15, NULL, NULL, 'fs', 'ddsa', NULL, NULL, 'gfs', 'hu'),
-('16', 1, 'Sensor', 0, NULL, 16, NULL, NULL, 'ds', 'sen22', NULL, NULL, 'j', 'j');
+INSERT INTO `sensoractuador` (`Id_Sensor`, `PIN`, `Tipo`, `TipoValor`, `Valor`, `Localizacion`, `id_sen`, `id_usuario`, `id_habitacion`, `codigo_sensor`, `nombre_sensor`, `senact_sensor`, `tipo_sensor`, `modelo_sensor`, `descripcion_sensor`) VALUES
+('', 0, '', NULL, NULL, NULL, 3, NULL, 21, 'Jb5621', 'Actuador1', 0, 'motor', 'Motor DC v48', 'motor de persiana para arduino'),
+('', 0, '', NULL, NULL, NULL, 4, 0, NULL, '234', 'sensor voz', 1, 'voz', 'v65453', 'sensor de voz para escuchar'),
+('', 1, '', 'Sensor', 0, NULL, 5, 0, 11, 'ab12', 'sensor10', NULL, NULL, 'dsadsr455', 'sensor de luz'),
+('', 1, '', 'Sensor', 0, NULL, 7, 0, 11, 'dsa', 'sensor 4', NULL, NULL, 'fa', 'sensor cuatro'),
+('8', 1, '', 'Sensor', 0, NULL, 8, 0, 11, 'sda', 'sensor 3', NULL, NULL, 'nja', 'sensor tres'),
+('15', 1, '', 'Sensor', 0, NULL, 15, NULL, NULL, 'fs', 'ddsa', NULL, NULL, 'gfs', 'hu'),
+('16', 1, '', 'Sensor', 0, NULL, 16, NULL, NULL, 'ds', 'sen22', NULL, NULL, 'j', 'j');
 
 -- --------------------------------------------------------
 
