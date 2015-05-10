@@ -1,0 +1,94 @@
+{% extends "layout.twig.html" %}
+{% block contenido %}
+
+<div class="panel panel-primary data-panel">
+	<div class="panel-heading" >
+
+		<span class='title' >
+			Añadir nuevo dispositivo
+		</span>
+		
+	</div>
+	<div class="panel-body">
+		<form class='standar_h4a_form' action="{{ path('newSensor') }}" method="post" role="form">
+			{% if error != "" %}
+				<div class='row form-group'>
+					<div class='col-lg-12 col-md-14 col-sm-16 col-xs-18 '>
+						<div class="bg-danger data-panel shadow">
+							<div class="panel-heading" >
+								{{error}}
+							</div>
+						</div>
+					</div>
+				</div>	
+			{% endif %}	
+			<div class='row  form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='nombreSensor'>Nombre del Sensor/Actuador</label><br>
+					<input type='text' class="form-control" name='nombreSensor' required/>
+				</div>
+			</div>
+			<div class='row  form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='codigoSensor'>Codigo del Sensor/Actuador</label><br>
+					<input type='text' class="form-control" name='codigoSensor' required/>
+				</div>
+			</div>
+			<div class='row  form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='modeloSensor'>Modelo del Sensor/Actuador</label><br>
+					<input type='text' class="form-control" name='modeloSensor' required/>
+				</div>
+			</div>
+			<div class='row  form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='descripSensor'>Descripcion del Sensor/Actuador</label><br>
+					<textarea  type='text' class="form-control" name='descripSensor' rows="3"/></textarea> 
+				</div>
+			</div>
+			
+			<div class='row  form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='tipoSensor'>Tipo Sensor/Actuador</label><br>
+					<label>
+						<p class="lead"><input type="radio" name="tipoSensor" id="opciones_1" value="Sensor" checked> Sensor</input></p>
+						<p class="lead"><input type="radio" name="tipoSensor" id="opciones_2" value="Actuador"> Actuador</input></p>
+					</label>
+				</div>
+			</div>
+			<div class='row  form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='tipoValorSensor'>Tipo del valor decuelto por el Sensor/Actuador</label><br>
+					<label>
+						<p class="lead"><input type="radio" name="tipoValorSensor" id="opciones_1" value="Digital" checked> Digital</input></p>
+						<p class="lead"><input type="radio" name="tipoValorSensor" id="opciones_2" value="Analógico"> Analógico</input></p>
+					</label>
+				</div>
+			</div>			
+			<div class='row  form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='pinSensor'>Pin de conexion</label><br>
+					<input type='number' class="form-control" name='pinSensor' required/>
+				</div>
+			</div>
+			<div class='row form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='habitacionSensor'>Habitacion del Sensor/Actuador</label><br>
+					<select class="form-control" name="habitacionSensor">
+						<option></option>
+						{% for u in habitaciones %}
+							<option  value="{{u.id_habitacion}}">{{u.nombre_habitacion}}</option>
+						{% endfor %} 
+					</select>			
+				</div>
+			</div>
+			<div class='row form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<button type="submit" class="btn btn-primary btn-lg">Añadir</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+{% endblock %}

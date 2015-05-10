@@ -1,0 +1,84 @@
+{% extends "layout.twig.html" %}
+{% block contenido %}
+
+
+<style>
+	.sensorsTable {
+		font-family: 'Ubuntu', sans-serif;
+	}
+	
+	.sensorsTable th{
+		border-top : none !important;
+	}
+	
+	.sensorsTable tr:nth-child(even){
+		background: #EEE
+	}
+	.sensorsTable tr:nth-child(odd){
+		background: #FFF
+	}
+</style>
+
+<div class="panel panel-primary data-panel" ng-controller="enableSensors">
+	<div class="panel-heading" >
+		<span class='title' >
+			Creando usuario, paso 3 de 4: Habilitando acciones
+		</span>
+		
+	</div>
+	<div class="panel-body" style="font-size:small">
+		<div class="" style="background-color:#47a447 !important; border: thin solid black;color:white;margin-top:30px">
+			<div style="padding-bottom:30px;padding-top:10px">
+				<div style="float:left;padding-left:25px;display:inline-block;font-size:larger;font-weight:bolder">
+					Tabla de dispositivos
+				</div>
+				<div style="float:right;padding-right:25px;display:inline-block;">
+					<span>Buscar:</span>
+					<input type="text" ng-model="searcher" style="color:black;margin-right:30px">
+					<span>Habitación</span>
+					<select name="roomSelector" id="" style="color:black" ng-model="selectedRoom" ng-options="room for room in roomsNames"></select>
+					
+				</div>
+			</div>
+		</div>
+		<table class="table sensorsTable" style="border:none !important">
+			<tr style="background-color:#398439;color:white;border-top: none !important">
+				<th>Nombre del Sensor</th>
+				<th>Habitacion</th>
+				<th>Tipo</th>
+				<th>¿Habilitado?</th>
+			</tr>
+			<tr class="" ng-repeat="sensor in allSensors | filter:searcher | filter:{id_habitacion : indexedRoomsByName[selectedRoom].id_habitacion} : roomComparator | orderBy : sortPredicate">
+				<td ng-bind="sensor.nombre_sensor"></td>
+				<td ng-bind="indexedRooms[sensor.id_habitacion].nombre_habitacion"></td>
+				<td ng-bind="sensor.tipo_sensor"></td>
+				<td>
+					<form role="form" action="{{ path('opSensores') }}" method="post" style='padding:0px'>
+						<div class="oculto">
+							<input type="text" class="form-control" name="idSensor" ng-model="sensor.id_sen">
+						</div>
+						<button type="submit" name="enviar" value ="1" class="btn btn-link">
+							<i class="fa fa-eye fa-2x	"></i>
+						</button>
+						<button type="submit" name="enviar" value ="2" class="btn btn-link">
+							<i class="fa fa-pencil-square-o fa-2x"></i>
+						</button>	
+						<button onclick="return pregunta();"  type="submit" name="enviar" value ="3" class="btn btn-link">
+							<i class="fa fa-trash fa-2x"></i>
+						</button>	
+					</form>
+				</td>
+			</tr>
+		</table>
+		
+		<form method="post"  role="form" action="{{ path('enableSensors') }}">
+			<button type="submit" name="send" ng-value="dataToSend" ng-click="getDataToSend()" class="btn btn-primary btn-lg">Siguiente</button>
+		</form>
+		
+		<button ng-click="sinfo.s()">sinfo</div>
+		
+	</div>
+</div> 
+
+
+{% endblock %}

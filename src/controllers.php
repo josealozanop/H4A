@@ -90,7 +90,7 @@ $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 	$enabledSensors = $data['enabledSensors'];
 	$ids = array();
 	foreach($enabledSensors as $sensor){
-		array_push($ids, $sensor["id_sensor"]);
+		array_push($ids, $sensor["id_sen"]);
 	}
 	$nEnabledSensors = count($enabledSensors);
 	
@@ -142,7 +142,7 @@ $app->post('/newHabitacion', function (Request $request) use ($app) { //¡¡
 		$id_habitacion = $app['db']->fetchColumn($sql, array(), 0);
 	foreach($idSensorVin as $id){
 		$app['db']->update('sensoractuador', array(
-		'id_habitacion'=>$id_habitacion), array('id_sensor'=>$id
+		'id_habitacion'=>$id_habitacion), array('id_sen'=>$id
 	));
 	}
 	return $app['twig']->render('tutor.html', array('accion' =>"habitacion creada correctamente"
@@ -150,6 +150,46 @@ $app->post('/newHabitacion', function (Request $request) use ($app) { //¡¡
 })
 ->bind('newHabitacion')
 ;
+
+$app->post('/newSensor', function (Request $request) use ($app) { 
+	$nombreSensor = $request->get('nombreSensor');
+	$codigoSensor = $request->get('codigoSensor');
+	$modeloSensor = $request->get('modeloSensor');
+	$descripSensor = $request->get('descripSensor');
+	$tipoSensor = $request->get('tipoSensor');
+	$tipoValorSensor = $request->get('tipoValorSensor');
+	$pinSensor = $request->get('pinSensor');
+	$habitacionSensor = $request->get('habitacionSensor');
+	
+	$sql = "select id_sen FROM sensoractuador WHERE nombre_sensor = '$nombreSensor'";
+	$nombreRep = $app['db']->fetchColumn($sql, array(), 0);
+	if($nombreRep!=null){
+		$sql = "SELECT * FROM habitacion";
+		$habitacion = $app['db']->fetchAll($sql);	
+		return $app['twig']->render('new_sensor.html', array('habitaciones' => $habitacion, 'error' => "El nombre del $tipoSensor ya existe, introduzca un nombre diferente"));
+	}
+	$sql = "select id_sen FROM sensoractuador WHERE codigo_sensor = '$codigoSensor'";
+	$nombreRep = $app['db']->fetchColumn($sql, array(), 0);
+	if($nombreRep!=null){
+		$sql = "SELECT * FROM habitacion";
+		$habitacion = $app['db']->fetchAll($sql);	
+		return $app['twig']->render('new_sensor.html', array('habitaciones' => $habitacion, 'error' => "El codigo del $tipoSensor ya existe, introduzca un codigo diferente"));
+	}
+	if($habitacionSensor=="")$habitacionSensor=NULL;
+	$app['db']->insert('sensoractuador', array('PIN' => $pinSensor,'TipoValor' => $tipoSensor, 'Valor' =>'0',
+		'id_habitacion' =>$habitacionSensor,'codigo_sensor' =>$codigoSensor,'nombre_sensor' =>$nombreSensor,
+		'modelo_sensor' =>$modeloSensor,'descripcion_sensor' =>$descripSensor));
+	$sql = "select id_sen FROM sensoractuador WHERE nombre_sensor = '$nombreSensor'";
+	$id = $app['db']->fetchColumn($sql, array(), 0);
+	$app['db']->update('sensoractuador', array(
+		'Id_Sensor'=>$id), array('id_sen'=>$id
+	));
+	return $app['twig']->render('tutor.html', array('accion' =>"$tipoSensor añadido correctamente"
+	));
+})
+->bind('newSensor')
+;
+
 
 
 $app->post('/modHabitacion', function (Request $request) use ($app) { 
@@ -187,12 +227,12 @@ $app->post('/modHabitacion', function (Request $request) use ($app) {
 	
 	foreach($idSensorDes as $id){
 		$app['db']->update('sensoractuador', array(
-		'id_habitacion'=>NULL), array('id_sensor'=>$id
+		'id_habitacion'=>NULL), array('id_sen'=>$id
 	));
 	}
 	foreach($idSensorVin as $id){
 		$app['db']->update('sensoractuador', array(
-		'id_habitacion'=>$id_habitacion), array('id_sensor'=>$id
+		'id_habitacion'=>$id_habitacion), array('id_sen'=>$id
 	));
 	}
 	return $app['twig']->render('tutor.html', array('accion' =>"habitacion creada correctamente"
@@ -292,6 +332,41 @@ switch($_POST["enviar"]) {
 })
 ->bind('opHabitaciones')
 ;
+
+
+$app->post('/opSensores', function (Request $request) use ($app) {
+$id_sensor = $request->get('idSensor');
+switch($_POST["enviar"]) { 
+    case 1:
+		$editar="true";
+        $sql = "select * FROM sensoractuador WHERE id_sen = '$id_sensor'";
+		$sensor = $app['db']->fetchAll($sql);	
+		$sql = "SELECT * FROM habitacion";
+		$habitacion = $app['db']->fetchAll($sql);	
+		return $app['twig']->render('verSensor.html', array('editar' =>$editar,
+		'sensor' => $sensor,'habitacion' => $habitacion,'error' =>""
+		));
+        break; 
+    case 2: 
+		$editar="false";
+       $sql = "select * FROM sensoractuador WHERE id_sen = '$id_sensor'";
+		$sensor = $app['db']->fetchAll($sql);	
+		$sql = "SELECT * FROM habitacion";
+		$habitacion = $app['db']->fetchAll($sql);	
+		return $app['twig']->render('verSensor.html', array('editar' =>$editar,
+		'sensor' => $sensor,'habitacion' => $habitacion,'error' =>""
+		));
+        break; 
+    case 3: 
+		$app['db']->delete('sensoractuador', array('id_sen' => $id_sensor));			
+		return $app->redirect($app["url_generator"]->generate("verSensor"));
+        break; 
+	} 	
+})
+->bind('opSensores')
+;
+
+
 
 $app->post('/opUsuarios', function (Request $request) use ($app) {
 $id_usuario = $request->get('idUsuario');
@@ -569,6 +644,17 @@ $app->get('/nuevaHabitacion', function (Request $request) use ($app) {
 ->bind('nuevaHabitacion')
 ;
 
+$app->get('/nuevoSensor', function (Request $request) use ($app) {
+	$sql = "SELECT * FROM habitacion";
+    $habitacion = $app['db']->fetchAll($sql);	
+    return $app['twig']->render('new_sensor.html', array('habitaciones' => $habitacion, 'error' => ""
+	));
+})
+->bind('nuevoSensor')
+;
+
+
+
 $app->get('/verdisc', function (Request $request) use ($app) {
 	$user = $app['security']->getToken()->getUser();
 	//$variable="hola";
@@ -714,6 +800,13 @@ $app->get('/configUs', function () use ($app) {
 })
 ->bind('configUs')
 ;
+$app->get('/verSensor', function () use ($app) {
+    return $app['twig']->render('ver_sensor.html');
+})
+->bind('verSensor')
+;
+
+
 $app->post('/new_usermac', function (Request $request) use ($app){
 	$id_usuario = $request->get('idUsuario');
 	$mac = $request->get('mac');
