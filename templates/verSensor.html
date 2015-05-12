@@ -1,6 +1,5 @@
 {% extends "layout.twig.html" %}
 {% block contenido %}
-
 <div class="panel panel-primary data-panel">
 	<div class="panel-heading" >
 		<span class='title' >
@@ -9,7 +8,7 @@
 	</div>
 	<div class="panel-body">
 		{% if editar=="true" %} <fieldset disabled>{% endif %}
-		<form class='standar_h4a_form' role="form" action="{{ path('modDispositivo') }}" method="post">		
+		<form class='standar_h4a_form' role="form" action="{{ path('modSensor') }}" method="post">		
 			{% if error != "" %}
 				<div class="row form-group">
 					<div class='col-lg-12 col-md-14 col-sm-16 col-xs-18 '>
@@ -21,46 +20,93 @@
 					</div>
 				</div>
 			{% endif %}	
-			<div class="oculto row form-group">
-				<input type="text" class="form-control" value="{{id_dispositivo}}" name="id_dispositivo"/>
+			{% for s in sensor %}	
+			<div class="oculto" row form-group">
+				<input type="text" class="form-control" value="{{s.id_sen}}" name="id_sensor"/>
 			</div>
-			<div class="oculto row form-group">
-				<input type="text" class="form-control" value="{{nombre_dispositivo}}" name="nombre_dispOld"/>
+			<div class="oculto" row form-group">
+				<input type="text" class="form-control" value="{{s.nombre_sensor}}" name="nombreOld"/>
 			</div>
-			<div class="oculto row form-group">
-				<input type="text" class="form-control" value="{{uDefecto_dispositivo}}" name="uDefecto_dispOld"/>
+			<div class="oculto" row form-group">
+				<input type="text" class="form-control" value="{{s.codigo_sensor}}" name="codigoOld"/>
 			</div>
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='nombreSensor'>Nombre del Sensor/Actuador</label><br>
-					<input type='text' class="form-control" name='nombreSensor' required/>
+					<input type='text' class="form-control"  value="{{s.nombre_sensor}}"name='nombreSensor' required/>
 				</div>
 			</div>
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='codigoSensor'>Codigo del Sensor/Actuador</label><br>
-					<input type='text' class="form-control" name='codigoSensor' required/>
+					<input type='text' class="form-control"  value="{{s.codigo_sensor}}" name='codigoSensor' required/>
 				</div>
 			</div>
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='modeloSensor'>Modelo del Sensor/Actuador</label><br>
-					<input type='text' class="form-control" name='modeloSensor' required/>
+					<input type='text' class="form-control"  value="{{s.modelo_sensor}}" name='modeloSensor' required/>
+				</div>
+			</div>		
+			<div class='row  form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='tipoSensor'>Tipo Sensor/Actuador</label><br>
+					<input type='text' class="form-control" value="{{s.tipo_sensor}}" name='tipoSensor' required/>
+				</div>
+			</div>			
+			<div class='row  form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='pinSensor'>Pin de conexion</label><br>
+					<input type='number' class="form-control" value="{{s.PIN}}" name='pinSensor' required/>
 				</div>
 			</div>
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='descripSensor'>Descripcion del Sensor/Actuador</label><br>
-					<textarea  type='text' class="form-control" name='descripSensor' rows="3"/></textarea> 
+					<textarea  type='text' class="form-control" name='descripSensor' rows="3"/>{{s.descripcion_sensor}}</textarea> 
 				</div>
 			</div>
+			
+			{% if editar=="true" %}
+			<div class='row  form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='tipoSensor'>Sensor o Actuador</label><br>
+					<input type='text' class="form-control" value="{{s.Tipo}}" name='tipoSensor' required/>
+				</div>
+			</div>
+			<div class='row  form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='tipoValorSensor'>Tipo del valor decuelto por el Sensor/Actuador</label><br>
+					<input type='text' class="form-control" value="{{s.TipoValor}}" name='tipoValorSensor' required/>
+				</div>
+			</div>			
+			
+			<div class='row form-group'>
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for='habitacionSensor'>Habitacion del Sensor/Actuador</label><br>
+					{% if s.id_habitacion!=NULL %}
+						<input type='text' class="form-control" value="{{s.nombre_habitacion}}" name='pinSensor' required/>
+					{% else %}
+						<input type='text' class="form-control" name='pinSensor' required/>
+					{% endif %}		
+					
+				</div>
+			</div>		
+			
+			{%else%}
+			
 			
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='tipoSensor'>Tipo Sensor/Actuador</label><br>
 					<label>
+						{%if s.senact_sensor==0%}
 						<p class="lead"><input type="radio" name="tipoSensor" id="opciones_1" value="Sensor" checked> Sensor</input></p>
 						<p class="lead"><input type="radio" name="tipoSensor" id="opciones_2" value="Actuador"> Actuador</input></p>
+						{%else%}
+						<p class="lead"><input type="radio" name="tipoSensor" id="opciones_1" value="Sensor" > Sensor</input></p>
+						<p class="lead"><input type="radio" name="tipoSensor" id="opciones_2" value="Actuador" checked> Actuador</input></p>
+						{% endif %}
 					</label>
 				</div>
 			</div>
@@ -68,22 +114,27 @@
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='tipoValorSensor'>Tipo del valor decuelto por el Sensor/Actuador</label><br>
 					<label>
+						{%if s.TipoValor=="Digital"%}
 						<p class="lead"><input type="radio" name="tipoValorSensor" id="opciones_1" value="Digital" checked> Digital</input></p>
 						<p class="lead"><input type="radio" name="tipoValorSensor" id="opciones_2" value="Analógico"> Analógico</input></p>
+						{%else%}
+						<p class="lead"><input type="radio" name="tipoValorSensor" id="opciones_1" value="Digital" > Digital</input></p>
+						<p class="lead"><input type="radio" name="tipoValorSensor" id="opciones_2" value="Analógico" checked> Analógico</input></p>
+						{% endif %}
 					</label>
 				</div>
 			</div>			
-			<div class='row  form-group'>
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='pinSensor'>Pin de conexion</label><br>
-					<input type='number' class="form-control" name='pinSensor' required/>
-				</div>
-			</div>
+			
 			<div class='row form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					
 					<label for='habitacionSensor'>Habitacion del Sensor/Actuador</label><br>
 					<select class="form-control" name="habitacionSensor">
-						<option></option>
+						{% if s.id_habitacion!=NULL %}
+							<option value="{{s.id_habitacion}}">{{s.nombre_habitacion}}</option>
+						{% else %}
+							<option></option>
+						{% endif %}						
 						{% for u in habitaciones %}
 							<option  value="{{u.id_habitacion}}">{{u.nombre_habitacion}}</option>
 						{% endfor %} 
@@ -91,13 +142,12 @@
 				</div>
 			</div>
 			<div class="row form-group">
-				{% if editar=="false" %}
 					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 						<button type="submit" class="btn btn-primary btn-lg">Modificar</button>
 					</div>
 				{% endif %}
 			</div>
-			
+			{% endfor %}  
 		</form>
 		{% if editar=="true" %}	</fieldset>	{% endif %}
 	</div>

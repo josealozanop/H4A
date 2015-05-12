@@ -1,46 +1,42 @@
 {% extends "layout.twig.html" %}
 {% block contenido %}	
 {% if accion != "" %}
-		<div class="panel  panel-success data-panel shadow">
-			<div class="panel-heading" >
-				{{accion}}
-			</div>
+	<div class="panel  panel-success data-panel shadow">
+		<div class="panel-heading" >
+			{{accion}}
 		</div>
+	</div>
 {% endif %}	
 {% if (app.security.token is not null) and (is_granted('ROLE_ADMIN')) %}
-<div class="panel panel-primary data-panel shadow">
-	<div class="panel-heading" >
-		<span class="fa-stack fa-2x">
-			<i class="fa fa-square-o fa-stack-2x"></i>
-			<i class="fa fa-bullseye fa-stack-1x"></i>
-		</span> 
-		
-		<span class='title' >
-			Gestión de Sensores <span inline-help id-help="user"></span>
-		</span>		
-		
+	<div class="panel panel-primary data-panel shadow">
+		<div class="panel-heading" >
+			<span class="fa-stack fa-2x">
+				<i class="fa fa-square-o fa-stack-2x"></i>
+				<i class="fa fa-bullseye fa-stack-1x"></i>
+			</span> 			
+			<span class='title' >
+				Gestión de Sensores <span inline-help id-help="user"></span>
+			</span>				
+		</div>
+		<div class="panel-body">
+			<ul>
+				<li><a href="{{ path('verSensor') }}">Ver Sensores</a></li>
+				<li><a href="{{ path('nuevoSensor') }}">Añadir Sensores</a></li>
+			</ul>
+		</div>
 	</div>
-	<div class="panel-body">
-		<ul>
-			<li><a href="{{ path('verSensor') }}">Ver Sensores</a></li>
-			<li><a href="{{ path('nuevoSensor') }}">Añadir Sensores</a></li>
-		</ul>
-	</div>
-</div>
 {% endif %}
 <div class="panel panel-primary data-panel shadow">
 	<div class="panel-heading" >
 		<span class="fa-stack fa-2x">
 			<i class="fa fa-square-o fa-stack-2x"></i>
 			<i class="fa fa-wheelchair fa-stack-1x"></i>
-		</span> 
-		
+		</span> 		
 		<span class='title' >
 			Gestión de Usuarios <span inline-help id-help="user"></span>
 		</span>		
 		 <!-- <a class="tooltips"href="#"><i class="Lblanca fa fa-question-circle fa-3x"></i>
-		 			<span>A traves de este panel podras gestionar los usuarios</span></a> -->
-		
+		 			<span>A traves de este panel podras gestionar los usuarios</span></a> -->		
 	</div>
 	<div class="panel-body">
 		<ul>
@@ -51,16 +47,14 @@
 </div>
 
 <div class="panel panel-primary data-panel shadow">
-	<div class="panel-heading" >
+	<div class="panel-heading">
 		<span class="fa-stack fa-2x">
 			<i class="fa fa-square-o fa-stack-2x"></i>
 			<i class="fa fa-home fa-stack-1x"></i>
-		</span> 
-		
+		</span> 		
 		<span class='title' >
 			Gestión de la Casa  
-		</span>
-		
+		</span>		
 	</div>
 	<div class="panel-body">
 		<ul>
@@ -74,15 +68,11 @@
 		<span class="fa-stack fa-2x">
 			<i class="fa fa-square-o fa-stack-2x"></i>
 			<i class="fa  fa-tablet fa-stack-1x"></i>
-		</span> 
-		
+		</span> 		
 		<span class='title' >
 			Gestión de Dispositivos  <span inline-help id-help="device"></span> 
-		</span>
-		
+		</span>		
 	</div>
-		
-
 	<div class="panel-body">
 		<ul>
 			<li><a href="{{ path('verDisp') }}">Ver dispositivos</a></li>
@@ -96,15 +86,11 @@
 		<span class="fa-stack fa-2x">
 			<i class="fa fa-square-o fa-stack-2x"></i>
 			<i class="fa fa-user fa-stack-1x"></i>
-		</span> 
-		
+		</span> 		
 		<span class='title' >
 			Datos personales
-		</span>
-		
+		</span>		
 	</div>
-		
-
 	<div class="panel-body">
 		<ul>
 			<li><a href="{{ path('verTutor') }}">Ver Perfil</a></li>
@@ -112,5 +98,4 @@
 		</ul>
 	</div>
 </div>
-
 {% endblock %}
