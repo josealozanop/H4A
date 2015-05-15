@@ -207,7 +207,7 @@ function get_my_sensor_bedroom($con, $id_habitacion) {
 }
 
 function link_user_sensor($con, $idUser, $idSensor){
-	if(!exists($con,"sensoractuador","id_sensor",$idSensor)) {
+	if(!exists($con,"sensoractuador","id_sen",$idSensor)) {
 		trigger_error("El sensor con id $idSensor no existe");
 	}
 	if(!exists($con,"usuario","id_usuario",$idUser)) {

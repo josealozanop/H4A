@@ -27,6 +27,7 @@
 		
 	</div>
 	<div class="panel-body" style="font-size:small">
+		
 		<div class="" style="background-color:#47a447 !important; border: thin solid black;color:white;margin-top:30px">
 			<div style="padding-bottom:30px;padding-top:10px">
 				<div style="float:left;padding-left:25px;display:inline-block;font-size:larger;font-weight:bolder">
@@ -48,22 +49,23 @@
 				<th>Tipo</th>
 				<th>¿Habilitado?</th>
 			</tr>
-			<tr class="" ng-repeat="sensor in allSensors | filter:searcher | filter:{id_habitacion : indexedRoomsByName[selectedRoom].id_habitacion} : roomComparator | orderBy : sortPredicate">
+			<tr class="" ng-repeat="sensor in filteredSensors = (allSensors | filter:searcher | filter:{id_habitacion : indexedRoomsByName[selectedRoom].id_habitacion} : roomComparator | orderBy : sortPredicate) | filter : paginationFilter">
 				<td ng-bind="sensor.nombre_sensor"></td>
 				<td ng-bind="indexedRooms[sensor.id_habitacion].nombre_habitacion"></td>
 				<td ng-bind="sensor.tipo_sensor"></td>
 				<td>
-				<input type="checkbox" name="vehicle" value="Bike" ng-model="sensor.enabled"> Habilitar este sensor<br>
+				<input type="checkbox" name="vehicle" value="" ng-model="sensor.enabled"> Habilitar este sensor<br>
 				</td>
 			</tr>
 		</table>
+	
+		<pagination total-items="filteredSensors.length"  items-per-page="itemsPerPage" ng-model="currentPage" class="pagination" boundary-links="true" rotate="false"  ng-show="showPaginator()" ng-change="pageChange()"></pagination>
 		
 		<form method="post"  role="form" action="{{ path('enableSensors') }}">
 			<button type="submit" name="send" ng-value="dataToSend" ng-click="getDataToSend()" class="btn btn-primary btn-lg">Siguiente</button>
 		</form>
 		
-		<button ng-click="sinfo.s()">sinfo</div>
-		
+		<button ng-click="sinfo.s()">sinfo</button>
 	</div>
 </div> 
 
