@@ -94,6 +94,8 @@ $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 	}
 	$nEnabledSensors = count($enabledSensors);
 	
+	$devices = 5;
+	
 	/*$out = "El id del usurio al que se le van a habilitar los sensores es: $idUsuario<br>";
 	$out .=  "y se le habilitarian  $nEnabledSensors sensores con los siguientes ids: <br>";
 	
@@ -224,7 +226,7 @@ $app->post('/modSensor', function (Request $request) use ($app) {
 			$sql = "SELECT * FROM habitacion";
 			$habitacion = $app['db']->fetchAll($sql);	
 			return $app['twig']->render('verSensor.html', array('editar' =>$editar,
-			'sensor' => $sensor,'habitaciones' => $habitacion,'error' =>"El nombre del $senActSensor ya existe"
+			'sensor' => $sensor,'habitaciones' => $habitacion,'error' =>"El nombre del $senActSensor ya existe"));
 		}
 	}
 	if($codigoSensor!=$OldCodigo){
@@ -241,7 +243,7 @@ $app->post('/modSensor', function (Request $request) use ($app) {
 			$sql = "SELECT * FROM habitacion";
 			$habitacion = $app['db']->fetchAll($sql);	
 			return $app['twig']->render('verSensor.html', array('editar' =>$editar,
-			'sensor' => $sensor,'habitaciones' => $habitacion,'error' =>"El código del $senActSensor ya existe"
+			'sensor' => $sensor,'habitaciones' => $habitacion,'error' =>"El código del $senActSensor ya existe"));
 		}
 	}
 	if($habitacionSensor=="")$habitacionSensor=NULL;
