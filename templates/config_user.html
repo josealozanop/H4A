@@ -10,11 +10,15 @@
 		<form role="form"  class='standar_h4a_form'>
 			<div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for="usuario_mail">¿Cuantos botones desea que se muestren por pantalla?</label>
-					<label for="usuario_mail" class="lead">Botones por fila</label>
-					<input type="email" class="form-control" name="usuario_mail" placeholder="Introduzca botones por filas entre 1 y 10" required>
+				<label for="usuario_mail">¿Cuantos botones desea que se muestren por pantalla?</label>
+					<div>						
+						<label>Botones por fila</label>
+						<input type="number" class="form-control" name="usuario_mail" placeholder="Introduzca botones por filas entre 1 y 10" required>
+					</div>
+					<div>
 					<label for="usuario_mail" class="lead">Botones por Columna</label>
 					<input type="email" class="form-control" name="usuario_mail" placeholder="Introduzca botones por columnas entre 1 y 10" required>
+					</div>
 				</div>
 			</div><br/>
 			<div class="row form-group">
@@ -29,26 +33,28 @@
 		    <div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for="usuario_apellidos">Tamaño de letra</label>
-					<input type="text" class="form-control" name="usuario_apellidos" placeholder="Introduzca el tamaño de letra que desea" required>
+					<input type="number" class="form-control" name="usuario_apellidos" placeholder="Introduzca el tamaño de letra que desea" required>
 				</div>
-		    </div><br/>
+		    </div>
 		    <div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for="usuario_fnac">Contraste de colores</label>
-					<select class="form-control">
-						<option>Contraste alto</option>
-						<option>Contraste medio</option>
-						<option>Contraste suave</option>
-					</select>
+					<div><label><p class="lead"><input type="radio" name="contraste" id="cAlto" value="cBajo" > Contraste bajo</p></label></div>
+					<div><label><p class="lead"><input type="radio" name="contraste" id="cMedio" value="cMedio" checked> Contraste Medio</p></label></div>
+					<div><label><p class="lead"><input type="radio" name="contraste" id="cMedio" value="cAlto"> Contraste Alto</p></label></div>
 				</div>
-		    </div><br/>
+		    </div>
 		    <div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for="usuario_tlfn">Colores</label><br/>
-					<label class="checkbox-inline">	<input type="checkbox" id="checkboxEnLinea1" value="opcion_1"> Dificultad Cromatica</label><br/>
-						<label for="usuario_tlfn">Color principal<input name="color" type="color" /></label><br/>
-						<label for="usuario_tlfn">Color secundario<input name="color" type="color" /></label>
-					</label>					
+					<div><label for="usuario_tlfn">Colores</label></div>
+					<label class="checkbox-inline">	<input type="checkbox" id="checkboxEnLinea1" value="opcion_1"> Dificultad Cromatica</label>
+					
+				</div>
+		    </div>	
+			<div class="row form-group">
+				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+					<label for="usuario_tlfn">Color principal<input name="color" type="color" /></label>
+					<label for="usuario_tlfn">Color secundario<input name="color" type="color" /></label>									
 				</div>
 		    </div>	
 			<br/>
