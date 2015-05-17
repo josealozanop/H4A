@@ -76,11 +76,6 @@ app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scop
 		$scope.formatedData = JSON.stringify(dataToSend);
 	}
 	
-	
-	
-	
-	
-	
 	$scope.linkSensors = function() {
 		var toPass = new Array();
 		var rightSensors = JSON.parse(JSON.stringify($scope.allSensors));

@@ -107,8 +107,9 @@ $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 	
 	$out = link_user_sensors($app['db'], $idUsuario, $ids);
 	$out = json_encode($out);
-	
-	return $app['twig']->render('configUser.html', array('idUsuario' =>$idUsuario
+	$sql = "select * FROM dispositivo D JOIN dispositivo_usuario R ON D.id_dispositivo = R.id_dispositivo WHERE R.id_Usuario = '$idUsuario'";
+	$dispositivos = $app['db']->fetchAll($sql);
+	return $app['twig']->render('configUser.html', array('idUsuario' =>$idUsuario,'dispositivos' =>$dispositivos
 	));
 	//return new Response($out);
 })
@@ -1043,6 +1044,11 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 			
 		case "getMyDevices":
 			$out = json_encode(get_my_devices($app['db'], $tutor_id));
+		break;
+		
+		case "getMyDisp":
+			$id_us = $input -> {'id_us'};
+			$out = json_encode(get_my_disp($app['db'], $tutor_id, $id_us));
 		break;
 		
 		case "getMySensor":

@@ -42,6 +42,12 @@ app.service('asyncServices', ['$http', function($http) {
 		return $http.get('./serviceController',this.requestParams);
 	}
 	
+	this.getMyDisp = new Service('getMyDisp');
+	this.getMyDisp.callback = function(inputData) {
+		this.requestParams.params.input = inputData;
+		return $http.get('./serviceController',this.requestParams);
+	}
+	
 	this.getAllRooms = new Service('getAllRooms');
 	this.getAllRooms.callback = function(inputData) {
 		this.requestParams.params.input = inputData;

@@ -206,6 +206,14 @@ function get_my_sensor_bedroom($con, $id_habitacion) {
 	return $data;
 }
 
+function get_my_disp($con, $id_tutor, $id_usuario) {
+	//$query = "select q1.codigo_sensor, q1.nombre_sensor, q1.senact_sensor, q1.tipo_sensor, q1.modelo_sensor, q1.descripcion_sensor from (select codigo_sensor, nombre_sensor, senact_sensor, tipo_sensor, modelo_sensor, descripcion_sensor from sensor)";
+	//$query = "select codigo_sensor, nombre_sensor, senact_sensor, tipo_sensor, modelo_sensor, descripcion_sensor from sensor";
+	$query = "select * from dispositivo_usuario U INNER JOIN tutor_dispositivo T ON U.id_dispositivo=T.id_dispositivo where T.id_tutor = $id_tutor AND U.id_usuario=$id_usuario";
+	$data = $con -> fetchAll($query);
+	return $data;
+}
+
 function link_user_sensor($con, $idUser, $idSensor){
 	if(!exists($con,"sensoractuador","id_sen",$idSensor)) {
 		trigger_error("El sensor con id $idSensor no existe");
