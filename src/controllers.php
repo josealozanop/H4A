@@ -94,7 +94,7 @@ $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 	}
 	$nEnabledSensors = count($enabledSensors);
 	
-	$devices = 5;
+	
 	
 	/*$out = "El id del usurio al que se le van a habilitar los sensores es: $idUsuario<br>";
 	$out .=  "y se le habilitarian  $nEnabledSensors sensores con los siguientes ids: <br>";
@@ -105,11 +105,12 @@ $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 		$out .= "$id<br>";
 	}*/
 	
-	$out = link_user_sensors($app['db'], $idUsuario, $ids);
-	$out = json_encode($out);
-	$sql = "select * FROM dispositivo D JOIN dispositivo_usuario R ON D.id_dispositivo = R.id_dispositivo WHERE R.id_Usuario = '$idUsuario'";
-	$dispositivos = $app['db']->fetchAll($sql);
-	return $app['twig']->render('configUser.html', array('idUsuario' =>$idUsuario,'dispositivos' =>$dispositivos
+	link_user_sensors($app['db'], $idUsuario, $ids);
+
+	$ids_devices = get_user_devices($app['db'], $idUsuario);
+	$devicesData = get_devices_data($app['db'], $ids_devices);
+	
+	return $app['twig']->render('configUser.html', array('idUsuario' =>$idUsuario, "devicesData" => json_encode($devicesData)
 	));
 	//return new Response($out);
 })
@@ -1044,11 +1045,6 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 			
 		case "getMyDevices":
 			$out = json_encode(get_my_devices($app['db'], $tutor_id));
-		break;
-		
-		case "getMyDisp":
-			$id_us = $input -> {'id_us'};
-			$out = json_encode(get_my_disp($app['db'], $tutor_id, $id_us));
 		break;
 		
 		case "getMySensor":

@@ -51,6 +51,42 @@ function get_my_devices($con, $user_id) {
 	return $data;
 }
 
+/**
+	get all devices linked to the user with id $user_id
+	return array of integers with the ids of the devices	
+**/
+function get_user_devices($con, $user_id){
+	$query = "select id_dispositivo from dispositivo_usuario where id_usuario = $user_id";
+	$data = $con -> fetchAll($query);
+	//$data = array(1,2);
+	$ids = array();
+	foreach($data as  $device){
+		array_push($ids,intval($device["id_dispositivo"]));
+	}
+	
+	return  $ids ;
+}
+
+/**
+	get all data, in json, of the device specified by $devices_id 
+**/
+function get_device_data($con,$device_id){
+	$query = "select * from dispositivo where id_dispositivo=$device_id";
+	$data = $con -> fetchAll($query);
+	return json_encode($data);
+}
+
+/**
+	get all data, in json, of the devices setted by $devices_id 
+**/
+function get_devices_data($con, $devices_id){
+	$data = array();
+	foreach($devices_id as $id){ 
+		array_push($data,get_device_data($con, $id));
+	}
+	return $data;
+}
+
 function insert_device($con, $device_mac, $device_uDefault){
 	$out = "unknow error";
 	
@@ -202,14 +238,6 @@ function get_my_sensor_bedroom($con, $id_habitacion) {
 	//$query = "select q1.codigo_sensor, q1.nombre_sensor, q1.senact_sensor, q1.tipo_sensor, q1.modelo_sensor, q1.descripcion_sensor from (select codigo_sensor, nombre_sensor, senact_sensor, tipo_sensor, modelo_sensor, descripcion_sensor from sensor)";
 	//$query = "select codigo_sensor, nombre_sensor, senact_sensor, tipo_sensor, modelo_sensor, descripcion_sensor from sensor";
 	$query = "select * from sensoractuador where id_habitacion = $id_habitacion";
-	$data = $con -> fetchAll($query);
-	return $data;
-}
-
-function get_my_disp($con, $id_tutor, $id_usuario) {
-	//$query = "select q1.codigo_sensor, q1.nombre_sensor, q1.senact_sensor, q1.tipo_sensor, q1.modelo_sensor, q1.descripcion_sensor from (select codigo_sensor, nombre_sensor, senact_sensor, tipo_sensor, modelo_sensor, descripcion_sensor from sensor)";
-	//$query = "select codigo_sensor, nombre_sensor, senact_sensor, tipo_sensor, modelo_sensor, descripcion_sensor from sensor";
-	$query = "select * from dispositivo_usuario U INNER JOIN tutor_dispositivo T ON U.id_dispositivo=T.id_dispositivo where T.id_tutor = $id_tutor AND U.id_usuario=$id_usuario";
 	$data = $con -> fetchAll($query);
 	return $data;
 }
