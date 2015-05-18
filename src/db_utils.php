@@ -87,6 +87,12 @@ function get_devices_data($con, $devices_id){
 	return $data;
 }
 
+function get_device_name($con, $device_id, $tutor_id){
+	$query = "select nombre_dispositivo from tutor_dispositivo where id_dispositivo=$device_id and id_tutor=$tutor_id";
+	$data = $con -> fetchAll($query);
+	return $data[0]["nombre_dispositivo"];
+}
+
 function insert_device($con, $device_mac, $device_uDefault){
 	$out = "unknow error";
 	

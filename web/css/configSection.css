@@ -1,0 +1,16 @@
+.configSection {
+	padding : 25px;
+}
+
+.configSection .deviceButton{
+	margin-right : 10px;
+}
+
+
+.configSection .buttonsArea{
+	margin-top : 10px;
+}
+
+.configSection .deviceConfig{
+	margin-top: 15px;
+}

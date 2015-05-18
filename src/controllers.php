@@ -85,7 +85,7 @@ $app->post('/linkDevicesUser', function (Request $request) use ($app) { //¡¡
 $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 	$dataText = $request->get('send');
 	$data = json_decode($dataText, true);
-
+	$tutor_id = $app['security']->getToken()->getUser()->getId();
 	$idUsuario = $data['user_id'];
 	$enabledSensors = $data['enabledSensors'];
 	$ids = array();
@@ -109,8 +109,13 @@ $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 
 	$ids_devices = get_user_devices($app['db'], $idUsuario);
 	$devicesData = get_devices_data($app['db'], $ids_devices);
+	$names = array();
+	foreach($ids_devices as $id){
+		$newName = get_device_name($app['db'],$id, $tutor_id);
+		array_push($names, $newName);
+	}
 	
-	return $app['twig']->render('configUser.html', array('idUsuario' =>$idUsuario, "devicesData" => json_encode($devicesData)
+	return $app['twig']->render('configUser.html', array('idUsuario' =>$idUsuario, "devicesData" => json_encode($devicesData), "names" =>  base64_encode ( json_encode($names))
 	));
 	//return new Response($out);
 })

@@ -6,9 +6,21 @@
 				Creando usuario, paso 4 de 4: Configuración de la interfaz 
 		</span>
 	</div>
-	<div class="panel-body" ng-controller="configUser" id-usuario ={{idUsuario}} devices-data={{devicesData}}>
-		Aqui la config
-
+	<div class="panel-body" ng-controller="configUser" id-usuario ={{idUsuario}} devices-data={{devicesData}} names={{names}}>
+		<div class="configSection">
+			<div>
+				<div>Elija un dispositivo para configurar su interfaz </div>
+				<div class="buttonsArea row">
+					<button ng-class="{'btn-success' : isSelected($index)}" ng-repeat="device in devices" class="col-lg-2 btn deviceButton" ng-bind="device.name" ng-click="setSelectedDevice($index)"> </button>
+				</div>
+				<div class=" row deviceConfig">
+					<label for="filas">Filas</label>
+					<input type="number" name="filas">
+					<label for="columnas">Columnas</label>
+					<input type="number" name="columnas">
+				</div>
+			</div>
+		</div>
 	</div>
   <!--
   <div class="form-group">
