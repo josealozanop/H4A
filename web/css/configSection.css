@@ -14,3 +14,16 @@
 .configSection .deviceConfig{
 	margin-top: 15px;
 }
+
+.configSection .horizontalDevice{
+	height : 200px;
+	background-color : #dadada;
+	padding : 20px;
+}
+
+.configSection .verticalDevice{
+	height : 500px;
+	background-color : #dadada;
+	padding : 10px;
+}
+

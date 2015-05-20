@@ -45,3 +45,11 @@ var be_addAttr = function (arr,attrName,attrVal){
 	}
 	return arr;
 }
+
+var be_range = function (a,b){
+	var range = [];
+	for(i=a;i<b;i++){
+		range.push(i);
+	}
+	return range;
+}

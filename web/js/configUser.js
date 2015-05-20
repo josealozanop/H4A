@@ -8,6 +8,13 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 		for(i in devicesData){
 			var newDevice = angular.fromJson(devicesData[i])[0];
 			newDevice.name = devicesNames[i];
+			newDevice.config = {
+				layout :{
+					horizontal : [3,3],
+					vertical : [2,4],
+					verticalAllowed : false
+				}
+			}
 			$scope.devices.push(newDevice); //En esta variable ya quedan todos los datos del dispositivo: id, mac, nombre, usuario por defecto
 		}
 		$scope.selectedDevice = 0;
@@ -19,6 +26,24 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 		}
 		else{
 			return false;
+		}
+	}
+	
+	$scope.isAllowed = function(){
+		var allowed = $scope.devices[$scope.selectedDevice].config.layout.verticalAllowed;
+		return allowed;
+	}
+	
+	$scope.range = be_range;
+	
+	$scope.setVerticalAllowed = function(){
+		var allowed = $scope.devices[$scope.selectedDevice].config.layout.verticalAllowed;
+		console.log(allowed)
+		if(allowed){
+			$scope.devices[$scope.selectedDevice].config.layout.verticalAllowed = false;
+		}
+		else{
+			$scope.devices[$scope.selectedDevice].config.layout.verticalAllowed = true;
 		}
 	}
 	

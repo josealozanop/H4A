@@ -8,16 +8,58 @@
 	</div>
 	<div class="panel-body" ng-controller="configUser" id-usuario ={{idUsuario}} devices-data={{devicesData}} names={{names}}>
 		<div class="configSection">
-			<div>
-				<div>Elija un dispositivo para configurar su interfaz </div>
+			<div class="row">
+				<div class="col-xs-12">Elija un dispositivo para configurar su interfaz </div>
 				<div class="buttonsArea row">
 					<button ng-class="{'btn-success' : isSelected($index)}" ng-repeat="device in devices" class="col-lg-2 btn deviceButton" ng-bind="device.name" ng-click="setSelectedDevice($index)"> </button>
 				</div>
-				<div class=" row deviceConfig">
-					<label for="filas">Filas</label>
-					<input type="number" name="filas">
-					<label for="columnas">Columnas</label>
-					<input type="number" name="columnas">
+				<div class="  deviceConfig">
+					<div class="col-xs-12">
+						Especifique el número de elemento en pantalla
+					</div>
+					<div class="col-xs-12">
+						<button  ng-class="{'btn-success' : isAllowed()}" class="btn btn-sm" ng-click="setVerticalAllowed()">Permitir orientacion vertical</button>
+					</div>
+					<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+						<div class="form-group">
+							<label for="filas">Filas</label>
+							<input type="number" class="input-sm form-control" name="filas" ng-model="devices[selectedDevice].config.layout.horizontal[0]">
+						</div>
+						<div class="input-group">
+							<label for="columnas">Columnas</label>
+							<input type="number" class="input-sm form-control" name="columnas" ng-model="devices[selectedDevice].config.layout.horizontal[1]">
+						</div>
+						
+						
+					</div>
+					
+					<div ng-show="isAllowed()" class="col-lg-3 col-lg-offset-3 col-md-4 col-md-offset-2 col-sm-12 col-xs-12">
+						<div class="form-group">
+							<label for="filas">Filas</label>
+							<input type="number" class="input-sm form-control" name="filas" ng-model="devices[selectedDevice].config.layout.vertical[0]">
+						</div>
+						<div class="input-group">
+							<label for="columnas">Columnas</label>
+							<input type="number" class="input-sm form-control" name="columnas" ng-model="devices[selectedDevice].config.layout.vertical[1]">
+						</div>
+					</div>
+					
+					<div class="col-xs-12">
+						Previsualización dispositivo en horizontal
+						<div class="col-xs-10 col-xs-offset-1 horizontalDevice">
+							
+							<button ng-repeat="i in range(0,3)">Elemento <span ng-bind="i"></span></button>
+						</div>
+					</div>
+					
+					<div class="col-xs-12" ng-show="isAllowed()">
+						Previsualización dispositivo en vertical
+						<div class="col-xs-4 col-xs-offset-4 verticalDevice">
+							
+							<button ng-repeat="i in range(0,3)">Elemento <span ng-bind="i"></span></button>
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>
