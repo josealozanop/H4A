@@ -93,11 +93,12 @@
 			{% endif %}
 			</form>
 			<form id="form-login" class='standar_h4a_form' action="{{ path('modLinkDevicesUser') }}" method="post" role="form">
-							<input type="number" class="oculto" name="id_usuario"  value={{u.id_usuario}} required>
+							<input type="number" class="" name="id_usuario"  value={{u.id_usuario}} required>
 							<button id="boton_usu" type="submit" class="btn btn-primary btn-lg">Permisos</button>
 							
-						</form>	<form id="form-login" class='standar_h4a_form' action="{{ path('modUsuario') }}" method="post" role="form">
-								<input type="number" class="oculto" name="id_usuario"  value={{u.id_usuario}} required>
+						</form>	
+						<form id="form-login" class='standar_h4a_form' action="{{ path('modUsuario') }}" method="post" role="form">
+								<input type="number" class="" name="id_usuario"  value={{u.id_usuario}} required>
 								<button id="boton_usuari" type="submit" class="btn btn-primary btn-lg">Conficugación</button>
 							</form>
 		{% endfor %}  

@@ -82,6 +82,26 @@ $app->post('/linkDevicesUser', function (Request $request) use ($app) { //¡¡
 ;
 
 
+$app->post('/modLinkDevicesUser', function (Request $request) use ($app) { //¡¡
+	$idUsuario = $request->get('id_usuario');
+	
+	return $app['twig']->render('mod_enableSensors.html', array('idUsuario' =>$idUsuario
+	));
+})
+->bind('modLinkDevicesUser')
+;
+
+
+$app->post('/modEnableSensors', function (Request $request) use ($app) { //¡¡
+	$idUsuario = $request->get('id_usuario');
+	
+	
+	return $app['twig']->render('mod_enableSensors.html', array('idUsuario' =>$idUsuario
+	));
+})
+->bind('modEnableSensors')
+;
+
 $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 	$dataText = $request->get('send');
 	$data = json_decode($dataText, true);
@@ -1066,7 +1086,13 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 		break;
 		
 		case "getAllSensors":
-			$out = json_encode(get_all_sensors($app['db']));
+			$id_user = $input -> {'id_user'};
+			$out = json_encode(get_all_sensors($app['db'], $id_user));
+		break;
+		
+		case "getLinkSensors":
+			$id_user = $input -> {'id_user'};
+			$out = json_encode(get_link_sensors($app['db'], $id_user));
 		break;
 			
 		/***

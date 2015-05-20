@@ -60,6 +60,12 @@ app.service('asyncServices', ['$http', function($http) {
 		return $http.get('./serviceController',this.requestParams);
 	}
 	
+	this.getLinkSensors = new Service('getLinkSensors');
+	this.getLinkSensors.callback = function(inputData) {
+		this.requestParams.params.input = inputData;
+		return $http.get('./serviceController',this.requestParams);
+	}
+	
 	this.echo = new Service('echo');
 	this.echo.callback = function(inputData) {
 		this.requestParams.params.input = inputData;

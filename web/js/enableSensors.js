@@ -8,6 +8,11 @@ app.controller('enableSensors', ['$scope', 'asyncServices', '$attrs','$filter', 
 	$scope.current_idUsuario = $attrs.idUsuario;
 	$scope.allRooms = [];
 	$scope.allSensors = [];
+	$scope.linkSensors = [];
+	
+	$scope.queryInsert = {
+		id_user : $scope.current_idUsuario
+	}
 	
 	$scope.paginationFilter = function(value, index) {
 		var limits = $scope.getLimits();
@@ -68,13 +73,11 @@ app.controller('enableSensors', ['$scope', 'asyncServices', '$attrs','$filter', 
 		}
 	}
 	
-	$scope.init = function(){	
-		
-		
-		asyncServices.getAllSensors.init()
+	$scope.init = function(){			
+		asyncServices.getLinkSensors.init(JSON.stringify($scope.queryInsert))
 		.success(function(data, status, headers, config) {
 			$scope.allSensors = data;
-			$scope.allSensors = be_addAttr($scope.allSensors,"enabled",false);
+			$scope.allSensors = be_addAttr($scope.allSensors,"enabled",true);
 			asyncServices.getAllRooms.init()
 			.success(function(data, status, headers, config) {
 				$scope.requests.sensorsData = "done"
@@ -94,20 +97,53 @@ app.controller('enableSensors', ['$scope', 'asyncServices', '$attrs','$filter', 
 				$scope.requests.sensorsData = "error"
 			});
 		})
+		asyncServices.getAllSensors.init(JSON.stringify($scope.queryInsert))
+		.success(function(data, status, headers, config) {
+			$scope.linkSensors = data;
+			for(i in $scope.linkSensors) {
+				dev = $scope.linkSensors[i];
+				$scope.allSensors.push(dev);
+				console.log("pasa")							
+			}
+			$scope.linkSensors = be_addAttr($scope.linkSensors,"enabled",false);
+			asyncServices.getAllRooms.init()
+			.success(function(data, status, headers, config) {
+				$scope.requests.sensorsData = "done"
+				$scope.allRooms = data;
+				$scope.indexedRooms = be_indexer($scope.allRooms,"id_habitacion");
+				$scope.indexedRoomsByName = be_indexer($scope.allRooms,"nombre_habitacion");
+				$scope.roomsNames = be_getAttrVals($scope.allRooms,"nombre_habitacion");
+				$scope.roomsNames.unshift("Todas");
+				$scope.selectedRoom = $scope.roomsNames[0]; 
+				$scope.nSensors = $scope.linkSensors.length;
+				console.log("cargado")
+				//console.log($scope.indexedRooms);
+				//console.log($scope.roomsNames);
+			})
+			
+			.error(function(data, status, headers, config) {
+				console.log("ERROR el servicio: ");
+				$scope.requests.sensorsData = "error"
+			});
+		})
 		.error(function(data, status, headers, config) {
 			console.log("ERROR el servicio: ");
 			$scope.requests.sensorsData = "error"
 		});
+		
 	}
 	
 	$scope.dataToSendObject = {
 		user_id : $scope.current_idUsuario,
-		enabledSensors : $scope.allSensors
+		enabledSensors : $scope.allSensors,
+		disabledSensors : $scope.allSensors
 	}
 	
 	$scope.getDataToSend = function(){
 		$scope.dataToSendObject.enabledSensors = $scope.allSensors;
 		$scope.dataToSendObject.enabledSensors = $filter('filter')($scope.dataToSendObject.enabledSensors, {enabled : true}, true);
+		$scope.dataToSendObject.enabledSensors = $scope.allSensors;
+		$scope.dataToSendObject.disabledSensors = $filter('filter')($scope.dataToSendObject.enabledSensors, {enabled : false}, false);
 		$scope.dataToSend = angular.toJson($scope.dataToSendObject);
 	}
 	

@@ -22,7 +22,7 @@
 <div class="panel panel-primary data-panel" ng-controller="enableSensors" id-usuario ={{idUsuario}}>
 	<div class="panel-heading" >
 		<span class='title' >
-			Creando usuario, paso 3 de 4: Habilitando acciones
+			Modificar Permisos de sensores
 		</span>
 		
 	</div>
@@ -54,7 +54,7 @@
 				<td ng-bind="indexedRooms[sensor.id_habitacion].nombre_habitacion"></td>
 				<td ng-bind="sensor.tipo_sensor"></td>
 				<td>
-				<input type="checkbox" name="" value="" ng-model="sensor.enabled"> Habilitar este sensor<br>
+				<input type="checkbox" name="vehicle" value="" ng-model="sensor.enabled"> Habilitar este sensor<br>
 				</td>
 			</tr>
 			
@@ -63,8 +63,8 @@
 	
 		<pagination total-items="filteredSensors.length"  items-per-page="itemsPerPage" ng-model="currentPage" class="pagination" boundary-links="true" rotate="false"  ng-show="showPaginator()" ng-change="pageChange()"></pagination>
 		
-		<form method="post"  role="form" action="{{ path('enableSensors') }}">
-			<button type="submit" name="send" ng-value="dataToSend" ng-click="getDataToSend()" class="btn btn-primary btn-lg">Siguiente</button>
+		<form method="post"  role="form" action="{{ path('modEnableSensors') }}">
+			<button type="submit" name="send" ng-value="dataToSend" ng-click="getDataToSend()" class="btn btn-primary btn-lg">Modificar</button>
 		</form>
 		
 		<button ng-click="sinfo.s()">sinfo</button>

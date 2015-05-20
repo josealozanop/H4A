@@ -20,12 +20,16 @@ function get_all_tutors_name($con){
 	return $data;
 }
 
-function get_all_sensors($con){
-	$query = "select * FROM sensoractuador";
+function get_all_sensors($con, $user_id){
+	$query = "select * FROM sensoractuador WHERE id_sensor NOT IN (select S.id_sensor FROM sensoractuador S INNER JOIN sensor_usuario R ON S.id_sensor = R.id_sensor WHERE R.id_usuario= $user_id)";
 	$data = $con -> fetchAll($query);
 	return $data;
 }
-
+function get_link_sensors($con, $user_id){
+	$query = "select * FROM sensoractuador S INNER JOIN sensor_usuario R ON S.id_sensor = R.id_sensor WHERE R.id_usuario= $user_id";
+	$data = $con -> fetchAll($query);
+	return $data;
+}
 
 function get_all_rooms($con){
 	$query = "select * FROM habitacion";
