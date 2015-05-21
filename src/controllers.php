@@ -95,8 +95,23 @@ $app->post('/modLinkDevicesUser', function (Request $request) use ($app) { //¡�
 $app->post('/modEnableSensors', function (Request $request) use ($app) { //¡¡
 	$idUsuario = $request->get('id_usuario');
 	
+	$idUsuario = $request->get('id_usuario');
+	$dataText = $request->get('send');
+	$data = json_decode($dataText, true);
+	$tutor_id = $app['security']->getToken()->getUser()->getId();
+	$idUsuario = $data['user_id'];
+	$enabledSensors = $data['enabledSensors'];
+	$disabledSensors = $data['disabledSensors'];
+	$ids = array();
+	$app['db']->delete('sensor_usuario', array('id_usuario'=> $idUsuario));	
 	
-	return $app['twig']->render('mod_enableSensors.html', array('idUsuario' =>$idUsuario
+	foreach($enabledSensors as $sensor){
+		array_push($ids, $sensor["id_sen"]);
+	}
+	link_user_sensors($app['db'], $idUsuario, $ids);
+	
+	
+	return $app['twig']->render('tutor.html', array('accion' =>"permisos modificados correctamente"
 	));
 })
 ->bind('modEnableSensors')
@@ -115,8 +130,8 @@ $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 	$nEnabledSensors = count($enabledSensors);
 	
 	
-	
-	/*$out = "El id del usurio al que se le van a habilitar los sensores es: $idUsuario<br>";
+	/*
+	$out = "El id del usurio al que se le van a habilitar los sensores es: $idUsuario<br>";
 	$out .=  "y se le habilitarian  $nEnabledSensors sensores con los siguientes ids: <br>";
 	
 	

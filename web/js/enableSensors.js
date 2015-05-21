@@ -136,14 +136,14 @@ app.controller('enableSensors', ['$scope', 'asyncServices', '$attrs','$filter', 
 	$scope.dataToSendObject = {
 		user_id : $scope.current_idUsuario,
 		enabledSensors : $scope.allSensors,
-		disabledSensors : $scope.allSensors
+		//disabledSensors : $scope.allSensors
 	}
 	
 	$scope.getDataToSend = function(){
 		$scope.dataToSendObject.enabledSensors = $scope.allSensors;
 		$scope.dataToSendObject.enabledSensors = $filter('filter')($scope.dataToSendObject.enabledSensors, {enabled : true}, true);
-		$scope.dataToSendObject.enabledSensors = $scope.allSensors;
-		$scope.dataToSendObject.disabledSensors = $filter('filter')($scope.dataToSendObject.enabledSensors, {enabled : false}, false);
+		$scope.dataToSendObject.disabledSensors = $scope.allSensors;
+		$scope.dataToSendObject.disabledSensors = $filter('filter')($scope.dataToSendObject.disabledSensors, {enabled : false}, true);
 		$scope.dataToSend = angular.toJson($scope.dataToSendObject);
 	}
 	
