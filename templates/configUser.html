@@ -43,23 +43,35 @@
 							<input type="number" class="input-sm form-control" name="columnas" ng-model="devices[selectedDevice].config.layout.vertical[1]">
 						</div>
 					</div>
-					
-					<div class="col-xs-12">
-						Previsualización dispositivo en horizontal
-						<div class="col-xs-10 col-xs-offset-1 horizontalDevice">
-							
-							<button ng-repeat="i in range(0,3)">Elemento <span ng-bind="i"></span></button>
-						</div>
-					</div>
-					
-					<div class="col-xs-12" ng-show="isAllowed()">
-						Previsualización dispositivo en vertical
-						<div class="col-xs-4 col-xs-offset-4 verticalDevice">
-							
-							<button ng-repeat="i in range(0,3)">Elemento <span ng-bind="i"></span></button>
-						</div>
-					</div>
 
+					<div>
+					<div class="col-xs-12">
+						<button ng-click="changeSelectedView('horizontal')" class="btn" ng-class="{'btn-success' : isHorizontal()}">Horizontal</button>
+						<button ng-click="changeSelectedView('vertical')" class="btn" ng-class="{'btn-success' : !isHorizontal()}" ng-show="isAllowed()">Vertical</button>
+					</div>
+					<div class="col-xs-12 hidden-sm" ng-show="isHorizontal()">
+						Previsualización del dispositivo en horizontal
+						<div class="horizontalDevice">
+							<div class="row" ng-repeat="i in range(0,getRows())">
+								<div class="col-xs-12">
+									<button style="width : {{ '{{getElementWidth()}}' }} ; height:{{ '{{getElementHeight()}}' }}" ng-repeat="j in range(0,getCols())"><span ng-bind="getElementNumber(i,j)"></span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-lg-12 hidden-sm" ng-show="!isHorizontal()">
+						Previsualización dispositivo en vertical
+						<div class="verticalDevice">
+							<div class="row" ng-repeat="i in range(0,getRows())">
+								<div class="col-xs-12">
+									<button style="width : {{ '{{getElementWidth()}}' }} ; height:{{ '{{getElementHeight()}}' }}" ng-repeat="j in range(0,getCols())"><span ng-bind="getElementNumber(i,j)"></span></button>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
 				</div>
 			</div>
 		</div>
