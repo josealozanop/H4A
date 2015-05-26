@@ -43,8 +43,6 @@
 							<input type="number" class="input-sm form-control" name="columnas" ng-model="devices[selectedDevice].config.layout.vertical[1]">
 						</div>
 					</div>
-
-					<div>
 					<div class="col-xs-12">
 						<button ng-click="changeSelectedView('horizontal')" class="btn" ng-class="{'btn-success' : isHorizontal()}">Horizontal</button>
 						<button ng-click="changeSelectedView('vertical')" class="btn" ng-class="{'btn-success' : !isHorizontal()}" ng-show="isAllowed()">Vertical</button>
@@ -69,45 +67,39 @@
 									
 								</div>
 							</div>
-						</div>
+						</div>					
 					</div>
-<<<<<<< HEAD
-   <div class="row form-group">
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<div><label for="usuario_tlfn">Colores</label></div>
-					<label class="checkbox-inline">	<input type="checkbox" id="checkboxEnLinea1" value="opcion_1" ng-click="setDifCrom()"> Dificultad Cromatica</label>
-					
 				</div>
-		    </div>	
-			<div class="col-xs-12" ng-show="!isDifCrom()">
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for="usuario_tlfn">Color principal       <input name="color" type="color" /></label>
-					<label for="usuario_tlfn">Color secundario  <input name="color" type="color" /></label>									
-				</div>
-			</div>	
-			<div class="col-xs-12" ng-show="isDifCrom()">
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-				<label for="usuario_tlfn">Color principal</label></br>
-<button ng-class="CPRed" type="button" class="btn btn-danger" ng-click="btnPricolor('red')" type="button" >Rojo</button>
-<button ng-class="CPOr"  type="button" class="btn btn-warning" ng-click="btnPricolor('orange')">Naranja</button>
-<button ng-class="CPYe" type="button" class="btn btn-default" ng-click="btnPricolor('yellow')">Amarillo</button>
-<button ng-class="CPBlu" type="button" class="btn btn-primary" ng-click="btnPricolor('blue')">Azul</button>
-<button ng-class="CPPur" type="button" class="btn btn-info" ng-click="btnPricolor('purple')">Morado</button>
-<label for="usuario_tlfn">Color Secundario</label></br>
-<button ng-class="CSRed"  ng-show="isGama1()" type="button" class="btn btn-danger" ng-click="btnSecolor('red')" type="button" >Rojo</button>
-<button ng-class="CSOr"  ng-show="isGama1()" type="button" class="btn btn-warning" ng-click="btnSecolor('orange')">Naranja</button>
-<button ng-class="CSYe" ng-show="isGama1()" type="button" class="btn btn-default" ng-click="btnSecolor('yellow')">Amarillo</button>
-<button ng-class="CSBlu" ng-show="isGama2()" type="button" class="btn btn-primary" ng-click="btnSecolor('blue')">Azul</button>
-<button ng-class="CSPur" ng-show="isGama2()" type="button" class="btn btn-info" ng-click="btnSecolor('purple')">Morado</button>
-
-
-				</div>
-			</div>	
-=======
+				<div class="row form-group">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+						<div><label for="usuario_tlfn">Colores</label></div>
+						<label class="checkbox-inline">	<input type="checkbox" id="checkboxEnLinea1" value="opcion_1" ng-click="setDifCrom()"> Dificultad Cromatica</label>
+						
 					</div>
->>>>>>> origin/master
-				</div>
-			</div>
+				</div>	
+				<div class="col-xs-12" ng-show="!isDifCrom()">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+						<label for="usuario_tlfn">Color principal       <input name="color" type="color" /></label>
+						<label for="usuario_tlfn">Color secundario  <input name="color" type="color" /></label>									
+					</div>
+				</div>	
+				<div class="col-xs-12" ng-show="isDifCrom()">
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+						<label for="usuario_tlfn">Color principal</label></br>
+						<button ng-class="CPRed" type="button" class="btn btn-danger" ng-click="btnPricolor('red')" type="button" >Rojo</button>
+						<button ng-class="CPOr"  type="button" class="btn btn-warning" ng-click="btnPricolor('orange')">Naranja</button>
+						<button ng-class="CPYe" type="button" class="btn btn-default" ng-click="btnPricolor('yellow')">Amarillo</button>
+						<button ng-class="CPBlu" type="button" class="btn btn-primary" ng-click="btnPricolor('blue')">Azul</button>
+						<button ng-class="CPPur" type="button" class="btn btn-info" ng-click="btnPricolor('purple')">Morado</button>
+						<label for="usuario_tlfn">Color Secundario</label></br>
+						<button ng-class="CSRed"  ng-show="isGama1()" type="button" class="btn btn-danger" ng-click="btnSecolor('red')" type="button" >Rojo</button>
+						<button ng-class="CSOr"  ng-show="isGama1()" type="button" class="btn btn-warning" ng-click="btnSecolor('orange')">Naranja</button>
+						<button ng-class="CSYe" ng-show="isGama1()" type="button" class="btn btn-default" ng-click="btnSecolor('yellow')">Amarillo</button>
+						<button ng-class="CSBlu" ng-show="isGama2()" type="button" class="btn btn-primary" ng-click="btnSecolor('blue')">Azul</button>
+						<button ng-class="CSPur" ng-show="isGama2()" type="button" class="btn btn-info" ng-click="btnSecolor('purple')">Morado</button>
+					</div>
+				</div>	
+			</div>				
 		</div>
 	</div>
   <!--
