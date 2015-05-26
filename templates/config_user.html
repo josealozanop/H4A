@@ -6,7 +6,7 @@
 				Configuracion de usuario
 		</span>
 	</div>
-	<div class="panel-body">
+	<div class="panel-body" ng-controller="configUser" id-usuario =50 devices-data=2 names=4>
 		<form role="form"  class='standar_h4a_form'>
 			<div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
@@ -44,13 +44,18 @@
 					<div><label><p class="lead"><input type="radio" name="contraste" id="cMedio" value="cAlto"> Contraste Alto</p></label></div>
 				</div>
 		    </div>
+			
 		    <div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<div><label for="usuario_tlfn">Colores</label></div>
-					<label class="checkbox-inline">	<input type="checkbox" id="checkboxEnLinea1" value="opcion_1"> Dificultad Cromatica</label>
+					<label class="checkbox-inline">	<input type="checkbox" id="checkboxEnLinea1" value="opcion_1" ng-click="setDifCrom()"> Dificultad Cromatica</label>
 					
 				</div>
 		    </div>	
+			<div class="col-xs-12" ng-show="isDifCrom()">
+			fdsfdsfdsfsdfsdfsdfsd
+			
+			</div>	#despColor
 			<div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for="usuario_tlfn">Color principal<input name="color" type="color" /></label>
