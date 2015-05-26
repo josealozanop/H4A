@@ -18,13 +18,14 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 			newDevice.config = {
 				layout :{
 					horizontal : [3,3],
-					vertical : [2,4],
+					vertical : [4,2],
 					verticalAllowed : false
 				}
 			}
 			$scope.devices.push(newDevice); //En esta variable ya quedan todos los datos del dispositivo: id, mac, nombre, usuario por defecto
 		}
 		$scope.selectedDevice = 0;
+		$scope.selectedView = "horizontal";
 	}
 	
 	$scope.isSelected = function(index){
@@ -76,6 +77,64 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 	}
 	$scope.setSelectedDevice = function(index){
 		$scope.selectedDevice = index;
+		$scope.selectedView = "horizontal";
+	}
+	
+	$scope.changeSelectedView = function(view){
+		$scope.selectedView = view;
+	}
+	
+	$scope.isHorizontal = function(){
+		if($scope.selectedView == "horizontal"){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	$scope.getRows = function(){
+		var deviceLayout = $scope.devices[$scope.selectedDevice].config.layout;
+		if($scope.isHorizontal()){
+			return deviceLayout.horizontal[0];
+		}
+		else{
+			return deviceLayout.vertical[0];
+		}
+	}
+	
+	$scope.getCols = function(){
+		var deviceLayout = $scope.devices[$scope.selectedDevice].config.layout;
+		if($scope.isHorizontal()){
+			return deviceLayout.horizontal[1];
+		}
+		else{
+			return deviceLayout.vertical[1];
+		}
+	}
+	
+	$scope.getElementNumber = function(i,j){
+		return i*$scope.getCols()+j;
+	}
+	
+	$scope.getElementHeight = function(){
+		var baseHeight = 0;
+		if($scope.isHorizontal()){
+			baseHeight = 300;
+		}
+		else{
+			baseHeight = 530;
+		}
+		
+		var elemHeight = baseHeight / $scope.getRows();
+		
+		return elemHeight+"px";
+	}
+	
+	$scope.getElementWidth = function(){
+		var factor = 100/$scope.getCols();
+		//factor -= 2;
+		return factor+"%";
 	}
 	$scope.btnPricolor = function(index){
 		$scope.CPRed= "btn btn-danger";
