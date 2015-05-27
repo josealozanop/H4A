@@ -160,7 +160,7 @@ app.service('helpProvider',['$filter',function($filter){
 	
 	this.getInlineHelp = function(i) {
 		var helpData = $filter('filter')(help, {id:i}, true);
-		console.log(helpData);
+		//console.log(helpData);
 		//Cogemos el primer parrafo del único match(los ids son únicos por lo tanto solo debe haber un match)
 		
 		var inlineText =  deleteHtmlText(helpData[0].body[0]);

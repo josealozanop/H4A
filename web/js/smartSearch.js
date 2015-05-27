@@ -1,13 +1,21 @@
 app.controller('smartSearch', ['$scope', function($scope) {
 
+	$scope.selectedUser = "";
+
 	$scope.smartSearch = {
 		touched : false,
 		click : function() {
+			
 			if(!this.touched) {
 				this.touched = true;
+				
 			}
 			
 		}
+	}
+	
+	$scope.onClick = function(){
+		console.log($scope.selectedUser)
 	}
 	
 	$scope.$watch('smartSearch.touched', function(newValue, oldValue) {

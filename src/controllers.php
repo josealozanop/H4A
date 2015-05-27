@@ -507,7 +507,7 @@ switch($_POST["enviar"]) {
     case 3: 
 		$app['db']->delete('usuario', array('id_usuario' => $id_usuario));	
 		return $app->redirect($app["url_generator"]->generate("verdisc"));
-        break; 
+        break;
 	} 	
 })
 ->bind('opUsuarios')
@@ -786,7 +786,7 @@ $app->get('/verdisc', function (Request $request) use ($app) {
 ;
 
 $app->get('/verUsuario', function (Request $request) use ($app) {
-	$id_Usuario = $request->get('id_Usuario');	
+	$id_Usuario = $request->get('id_Usuario');
 })
 ->bind('verUsuario')
 ;
@@ -911,6 +911,32 @@ $app->get('/tutor', function () use ($app) {
 })
 ->bind('tutor')
 ;
+
+
+$app->get('/viewUser', function (Request $request) use ($app){
+	$userName = $request->get('userName');
+	if($userName!=""){
+		$sql = "select * from usuario where `nombre_usuario`='$userName'";
+		$data = $app['db'] -> fetchAll($sql);
+		$apellidos = $data[0]["apellidos_usuario"];
+		$mail = $data[0]["mail_usuario"];
+		$fec_nac = $data[0]["fnac_usuario"];
+		$telf = $data[0]["tlfn_usuario"];
+		return $app['twig']->render('viewUserSimple.html', array(
+															'userName' => $userName, 
+															"userSurname" => $apellidos,
+															"mail" => $mail,
+															"fec_nac" => $fec_nac,
+															"telf" => $telf)
+		);
+	}
+    else{
+		return $app['twig']->render('tutor.html', array('accion' => ""));
+	}
+})
+->bind('viewUser')
+;
+
 $app->get('/configUs', function () use ($app) {
     return $app['twig']->render('config_user.html');
 })

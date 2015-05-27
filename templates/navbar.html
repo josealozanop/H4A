@@ -21,12 +21,14 @@
 			
 			<div ng-controller="smartSearch" class='no-margin-bot form-group col-lg-2 col-lg-offset-0 col-md-3 col-md-offset-0 col-sm-4 col-sm-offset-1 col-xs-6'>
 				<div class = 'col-lg-10 col-md-10 col-sm-10 col-xs-10' style='padding-right:0px'>
-					<input type="text" class="form-control" placeholder="Buscar..." id='inText-navbar-search'  list='datalist-navbar-searchList'ng-click = "smartSearch.click()"></input>
+					<input type="text" class="form-control" placeholder="Buscar..." id='inText-navbar-search'  list='datalist-navbar-searchList' ng-click = "smartSearch.click()" ng-model="selectedUser"></input>
 					<datalist id="datalist-navbar-searchList">
 					</datalist>
 				</div>
 				<div class = 'col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px'>
-					<button style='inline' class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+					<form role="form" action="{{ path('viewUser') }}" method="get" >
+						<button style='inline' class="btn btn-default" name="userName" value="{{ '{{selectedUser}}' }}" ng-click="onClick()"><i class="glyphicon glyphicon-search"></i></button>
+					</form>
 				</div>
 				
 			</div>
