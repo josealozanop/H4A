@@ -7,6 +7,7 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 		Gama1 = false;
 		Gama2 = false;
 		DifCrom = false;
+		MostcolSec=false;
 		$scope.idUsuario = $attrs.idUsuario;
 		var devicesData = angular.fromJson($attrs.devicesData);
 		var devicesNames = angular.fromJson(window.atob($attrs.names));
@@ -43,6 +44,9 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 	}
 	$scope.isDifCrom = function(){
 		return DifCrom;		
+	}
+	$scope.isColSec = function(){
+		return MostcolSec;		
 	}
 	$scope.isGama2 = function(){
 		return Gama2;		
@@ -139,14 +143,15 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 	$scope.btnPricolor = function(index){
 		$scope.CPRed= "btn btn-danger";
 		$scope.CPOr= "btn btn-warning";		
-		$scope.CPYe= "btn btn-default";
+		$scope.CPYe= "btn btn-yellow";
 		$scope.CPBlu= "btn btn-primary";
-		$scope.CPPur= "btn btn-info";
+		$scope.CPPur= "btn btn-purple";
 		$scope.CSRed= "btn btn-danger";
 		$scope.CSOr= "btn btn-warning";		
-		$scope.CSYe= "btn btn-default";
+		$scope.CSYe= "btn btn-yellow";
 		$scope.CSBlu= "btn btn-primary";
-		$scope.CSPur= "btn btn-info";
+		$scope.CSPur= "btn btn-purple";
+		MostcolSec=true;
 		switch (index){
 			case "red":
 				$scope.CPRed= "btn btn-danger btn-lg active";
@@ -159,7 +164,7 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 				Gama1=false;
 			break;
 			case "yellow":
-				$scope.CPYe= "btn btn-default btn-lg active";
+				$scope.CPYe= "btn btn-yellow btn-lg active";
 				Gama2=true;
 				Gama1=false;
 			break;
@@ -169,7 +174,7 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 				Gama2=false;
 			break;
 			case "purple":
-				$scope.CPPur= "btn btn-info btn-lg active";
+				$scope.CPPur= "btn btn-purple btn-lg Lblanca active";
 				Gama1=true;
 				Gama2=false;
 			break;
@@ -180,9 +185,9 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 	$scope.btnSecolor = function(index){
 		$scope.CSRed= "btn btn-danger";
 		$scope.CSOr= "btn btn-warning";		
-		$scope.CSYe= "btn btn-default";
+		$scope.CSYe= "btn btn-yellow";
 		$scope.CSBlu= "btn btn-primary";
-		$scope.CSPur= "btn btn-info";
+		$scope.CSPur= "btn btn-purple";
 		switch (index){
 			case "red":
 				$scope.CSRed= "btn btn-danger btn-lg active";
@@ -191,13 +196,13 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 				$scope.CSOr= "btn btn-warning btn-lg active";
 			break;
 			case "yellow":
-				$scope.CSYe= "btn btn-default btn-lg active";
+				$scope.CSYe= "btn btn-yellow btn-lg active";
 			break;
 			case "blue":
 				$scope.CSBlu= "btn btn-primary btn-lg active";
 			break;
 			case "purple":
-				$scope.CSPur= "btn btn-info btn-lg active";
+				$scope.CSPur= "btn btn-purple Lblanca btn-lg active";
 			break;
 			}
 		ColSec=index;

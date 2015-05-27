@@ -12,6 +12,13 @@ a:visited {text-decoration:none;}
 .Lblanca{
 	color: #FFF;
 }
+.btn-yellow{
+	background-color: #F7FE2E;
+}
+.btn-purple{
+	color: #FFF;
+	background-color: #CC2EFA;
+}
 .oculto{
 	display: none;
 }

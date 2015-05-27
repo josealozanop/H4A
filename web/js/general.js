@@ -71,11 +71,23 @@ function PONLE_UN_NOMBRE() {
 		}
     });//fin click
 	var valido=false;
-	$("#pass").change(function() {
+	$("#pass").keyup(function() {
 		$("#divValidacion").fadeIn("slow");
 		var passw = $("#pass").val();
 		$("#divValidacion").fadeIn("slow");
 		document.getElementById("repass").value="";
+		var re_pass=$("#repass").val();
+		if(pass != re_pass)
+        {
+            $("#repass").css({"background":"#F22" }); //El input se pone rojo
+            valido=true;
+        }
+		 else if(pass == re_pass)
+        {
+            $("#repass").css({"background":"#8F8"}); //El input se ponen verde
+            $("#mensaje4").fadeOut();
+            valido=true;
+        }
 	})
 	var valido=false;
 	$("#repass").keyup(function() {
