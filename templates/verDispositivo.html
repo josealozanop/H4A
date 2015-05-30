@@ -57,25 +57,25 @@
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='MAC'>Usuarios vinculados</label><br/>
 					{% if editar=="false" %}
-						<div class="fondoblanco">
-						{% for u in dispAsociados %}
-							<div class="checkbox">
-							<input type="checkbox" value="{{u.id_usuario}}" name="numero[]" checked/>
-								<span>{{u.mail_usuario}}</span>							
+						<div class='fondoblanco'>	
+							<div class="checkboxes">			
+								{% for u in dispAsociados %}									
+										<label><input type="checkbox" value="{{u.id_usuario}}" name="numero[]" checked/><span> {{u.mail_usuario}}</span></label>							
+								{% endfor %} 
 							</div>
-						{% endfor %} 
-						{% for u in dispNoAsociados %}
-							<div class="checkbox">
-							<input type="checkbox" value="{{u.id_usuario}}" name="numero[]"/>
-								<span>{{u.mail_usuario}}</span>							
-							</div>
-						{% endfor %} 
-						</div>
+							<div class="checkboxes">
+								{% for u in dispNoAsociados %}								
+										<label><input type="checkbox" value="{{u.id_usuario}}" name="numero[]"/><span> {{u.mail_usuario}}</span>	</label>										
+								{% endfor %} 
+							</div>	
+						</div>								
 					{% else %}
-						<div>
-							{% for u in usuarios %}
-								{{u.mail_usuario}}<br/>								
-							{% endfor %} 
+						<div class='fondogris'>	
+							<div>
+								{% for u in usuarios %}
+									<span>{{u.mail_usuario}}</span>			
+								{% endfor %} 
+							</div>
 						</div>
 					{% endif %}	
 				</div>	
@@ -86,13 +86,11 @@
 					{% if editar=="false" %}
 						<select class="form-control" name="usuarioDefecto">
 							{% for d in uDef %}
-								<option value="{{d.id_usuario}}">{{d.mail_usuario}}</</option>							
-								<option value=""></option>								
-								{% for u in usuarios %}
-									{%if d.id_usuario!=u.id_usuario %}
-										<option  value="{{u.id_usuario}}">{{u.mail_usuario}}</option>
-									{% endif %}
-								{% endfor %} 
+								<option value="{{d.id_usuario}}">{{d.mail_usuario}}</</option>		
+							{% endfor %} 
+							<option value=""></option>			
+							{% for u in usuarios %}
+								<option  value="{{u.id_usuario}}">{{u.mail_usuario}}</option>
 							{% endfor %} 
 						</select>	
 					{% else %}

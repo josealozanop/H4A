@@ -8,63 +8,63 @@
 		</span>
 	</div>
 	<div class="panel-body">
+		{% for u in usuario %}
 		<form id="form-login" class='standar_h4a_form' action="{{ path('modUsuario') }}" method="post" role="form">
-		{% if error != "" %}
-			<div class='row form-group'>
-				<div class='col-lg-12 col-md-14 col-sm-16 col-xs-18 '>
-					<div class="bg-danger data-panel shadow">
-						<div class="panel-heading" >
-							{{error}}
+			{% if error != "" %}
+				<div class='row form-group'>
+					<div class='col-lg-12 col-md-14 col-sm-16 col-xs-18 '>
+						<div class="bg-danger data-panel shadow">
+							<div class="panel-heading" >
+								{{error}}
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>	
-		{% endif %}	
-		{% if editar=="true" %} <fieldset disabled>{% endif %}
-		{% for u in usuario %}
+				</div>	
+			{% endif %}	
+			{% if editar=="true" %} <fieldset disabled>{% endif %}		
 			<div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for="usuario_mail">Mail</label>
-					<input type="email" class="form-control" name="usuario_mail"  value={{u.mail_usuario}} required>
+					<input type="email" class="form-control" name="usuario_mail"  value='{{u.mail_usuario}}' required>
 				</div>
 			</div>
 			<div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for="usuario_nombre">Nombre</label>
-					<input type="text" class="form-control" name="usuario_nombre" value={{u.nombre_usuario}} required>
+					<input type="text" class="form-control" name="usuario_nombre" value='{{u.nombre_usuario}}' required>
 				</div>
 			</div>
 		    <div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for="usuario_apellidos">Apellidos</label>
-					<input type="text" class="form-control" name="usuario_apellidos" value={{u.apellidos_usuario}} required>
+					<input type="text" class="form-control" name="usuario_apellidos" value='{{u.apellidos_usuario}}' required>
 				</div>
 		    </div>
 		    <div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for="usuario_fnac">Fecha de nacimiento</label>
-					<input type="date" class="form-control"  name="usuario_fnac" value={{u.fnac_usuario}}>
+					<input type="date" class="form-control"  name="usuario_fnac" value='{{u.fnac_usuario}}'>
 				</div>
 		    </div>
 		    <div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for="usuario_tlfn">Telefono</label>
-					<input type="tel" class="form-control" name="usuario_tlfn" value={{u.tlfn_usuario}} >
+					<input type="tel" class="form-control" name="usuario_tlfn" value='{{u.tlfn_usuario}}' >
 				</div>
 		    </div>
 		    <div class="oculto row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<input type="text" class="form-control" name="id_usuario" value={{u.id_usuario}}>
+					<input type="text" class="form-control" name="id_usuario" value='{{u.id_usuario}}'>
 				 </div>
 			</div>	
 			<div class="oculto row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<input type="password" class="form-control pass" value={{u.pass_usuario}} name="usuario_oldpass">
+					<input type="password" class="form-control pass" value='{{u.pass_usuario}}' name="usuario_oldpass">
 				</div>
 		    </div>	
 			<div class="oculto row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<input type="text" class="form-control pass" value={{u.mail_usuario}} name="usuario_oldmail">
+					<input type="text" class="form-control pass" value='{{u.mail_usuario}}' name="usuario_oldmail">
 				</div>
 		    </div>				
 			{% if editar=="true" %}
@@ -86,23 +86,31 @@
 				</div>
 				<div class="row form-group">
 					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-						<button id="boton_usuario" type="submit" class="btn btn-primary btn-lg">Modificar</button>						
+						<button id="boton_usuario" type="submit" class=" widthPredButton btn btn-primary btn-lg">Modificar</button>						
 											
 					</div>
 				</div>
 			{% endif %}
 			</form>
-			<form id="form-login" class='standar_h4a_form' action="{{ path('modLinkDevicesUser') }}" method="post" role="form">
-							<input type="number" class="" name="id_usuario"  value={{u.id_usuario}} required>
-							<button id="boton_usu" type="submit" class="btn btn-primary btn-lg">Permisos</button>
-							
-						</form>	
-						<form id="form-login" class='standar_h4a_form' action="{{ path('modUsuario') }}" method="post" role="form">
-								<input type="number" class="" name="id_usuario"  value={{u.id_usuario}} required>
-								<button id="boton_usuari" type="submit" class="btn btn-primary btn-lg">Configuración</button>
-							</form>
-		{% endfor %}  
-		
+			{% if editar=="false" %}
+				<form id="form-login" class='standar_h4a_form' action="{{ path('modLinkDevicesUser') }}" method="post" role="form">				
+					<div class="row form-group">
+						<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+							<input type="number" class="oculto" name="id_usuario"  value='{{u.id_usuario}}' required>
+							<button id="boton_usu" type="submit" class="widthPredButton btn btn-primary btn-lg">Permisos</button>	
+						</div>
+					</div>				
+				</form>	
+				<form id="form-login" class='standar_h4a_form' action="{{ path('modUsuario') }}" method="post" role="form">
+					<div class="row form-group">
+						<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+							<input type="number" class="oculto" name="id_usuario"  value='{{u.id_usuario}}' required>
+							<button id="boton_usuari" type="submit" class=" widthPredButton btn btn-primary btn-lg">Configuración</button>
+						</div>
+					</div>
+				</form>
+			{% endif %}
+		{% endfor %} 	
 	</div>
 </div>
 {% endblock %}

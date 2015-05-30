@@ -18,7 +18,7 @@
 					<div ng-class="{active : dev.selected}" class="device" ng-repeat="dev in selectedSensors" ng-click="dev.select()">
 						<span class="bold_text">Nombre:</span>
 						<span ng-bind="dev.name"></span><br>
-						<span class="bold_text">MAC:</span>
+						<span class="bold_text">Tipo:</span>
 						<span ng-bind="dev.tipe"></span><br>
 						<span class="bold_text">Descripción:</span>
 						<span ng-bind="dev.description"></span>
@@ -45,7 +45,7 @@
 					<div ng-class="{active : dev.selected}" class="device" ng-repeat="dev in allSensors" ng-click="dev.select()">
 						<span class="bold_text">Nombre:</span>
 						<span ng-bind="dev.name"></span><br>
-						<span class="bold_text">MAC:</span>
+						<span class="bold_text">Tipo:</span>
 						<span ng-bind="dev.tipe"></span><br>
 						<span class="bold_text">Descripción:</span>
 						<span ng-bind="dev.description"></span>

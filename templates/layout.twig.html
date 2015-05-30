@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block inicio %}		
 	<div class="fondo_img"><br/> <br/> <br/> <br/> <br/> <br/> 
-		<div class="container" data-scrollreveal="enter donw after 0s over 1s">
+		<div class="container">
 			{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 			<div class="jumbotron">
 				{% if (app.security.token is not null) and ((is_granted('ROLE_USER')) or (is_granted('ROLE_ADMIN'))) %}

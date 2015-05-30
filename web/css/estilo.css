@@ -63,6 +63,24 @@ table#t01 th	{
     color: white;
 }
 
+
+.checkboxes label {
+    display: block;
+	font-weight: normal;
+}
+.checkboxes input {
+  vertical-align: middle;	
+  transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+}
+.checkboxes label span {
+    vertical-align: middle;
+}
+.widthPredButton{
+padding-buttom:10px;
+width:150px;
+}
+
 .errores{
     display: none;
 }
@@ -70,10 +88,16 @@ table#t01 th	{
 }
 .editar {color: blue; cursor:pointer;}
 
+.fondogris{
+background-color : #EEEEEE;
+}
 .fondoblanco{
 background-color : #FFFFFF;
+text-indent: 1%;
 }
-
+.fondogris span {
+    display: block;
+}
 a.tooltips {
   position: relative;
   display: inline;
