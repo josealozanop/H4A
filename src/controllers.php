@@ -614,10 +614,15 @@ $app->get('/help', function (Request $request) use ($app) {
 
 //crear nuevo tutor
 $app->get('/newTutor', function(Request $request) use ($app) {
-
+	$mail = $request->get("inicio_newTutor_mail");
+	$name = $request->get("inicio_newTutor_name");
+	$last_username = $mail;
+	$error = false;
     return $app['twig']->render('new_tutor.html', array(
-		'error' => $app['security.last_error']($request),
-		'last_username' => $app['session']->get('_security.last_username')
+		'mail' => $mail,
+		'name' => $name,
+		'last_username' => $last_username,
+		'error' => $error
 	));
 	
 })

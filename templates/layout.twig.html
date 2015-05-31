@@ -6,7 +6,7 @@
 			<div class="jumbotron">
 				{% if (app.security.token is not null) and ((is_granted('ROLE_USER')) or (is_granted('ROLE_ADMIN'))) %}
 					{% block contenido %}{% endblock %}					
-				{%elseif  currentPath  == '/H4A/web/index_dev.php/newTutor' %}				
+				{%elseif  (currentPath  == '/H4A/web/index_dev.php/newTutor') or (currentPath  == '/H4A/web/newTutor') %}				
 					{% block datos %}
 					{% endblock %}
 				{% else %}
