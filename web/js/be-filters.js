@@ -53,3 +53,7 @@ var be_range = function (a,b){
 	}
 	return range;
 }
+
+var be_random_int = function(min, max){
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}

@@ -139,6 +139,14 @@ a:hover.tooltips span {
 /** borja **/
 .shadow { 
 	box-shadow: 7px 7px 8px 0px rgba(0, 0, 0, 0.75) !important;
+	-webkit-box-shadow : 7px 7px 8px 0px rgba(0, 0, 0, 0.75) !important;
+	-moz-box-shadow: 7px 7px 8px 0px rgba(0, 0, 0, 0.75) !important;
+}
+
+.tiny-shadow{
+	-webkit-box-shadow: 4px 4px 3px 0px rgba(130,121,130,1);
+	-moz-box-shadow: 4px 4px 3px 0px rgba(130,121,130,1);
+	box-shadow: 4px 4px 3px 0px rgba(130,121,130,1);
 }
 
 .vertical_align_row {

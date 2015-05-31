@@ -7,23 +7,62 @@
 }
 
 
-.configSection .buttonsArea{
-	margin-top : 10px;
-}
-
 .configSection .deviceConfig{
 	margin-top: 15px;
 }
 
+.configSection .section{
+	margin-bottom: 25px !important;
+	
+}
+
+.configSection .section .body{
+	border : thin solid #3174AE;
+	padding-top : 15px;
+	padding-bottom : 15px;
+	border-radius : 10px;
+}
+
+.configSection  .device{
+	margin-top : 15px;
+}
+
 .configSection .horizontalDevice{
-	height : 300px;
-	width : 530px;
-	background-color : #dadada;
+	height : 255px;
+	width : 470px;
+	margin-left : auto;
+	margin-right : auto;
+	background-image : url(../images/movil_horizontal.png);
+	background-size : contain;
+	padding-top : 15px;	
+	padding-left : 90px;
+}
+
+.configSection .horizontalDevice .screen{
+	height : 224px;
+	width : 294px;
+	background-color : #191919;
 }
 
 .configSection .verticalDevice{
-	width : 300px;
-	height : 530px;
-	background-color : #dadada;
+	width : 204px;
+	height : 376px;
+	margin-left : auto;
+	margin-right : auto;
+	background-image : url(../images/movil_vertical.png);
+	background-size : contain;
+	padding-top : 48px;	
+	padding-left : 12px;
 }
 
+
+.configSection .verticalDevice .screen{
+	width : 179px;
+	height : 250px;
+	background-color : #191919;
+}
+
+.configSection  .screen button.element{
+	border: 3px solid #181818;
+    border-radius: 9px;
+}

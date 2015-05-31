@@ -3,75 +3,106 @@
 <div class="panel panel-primary data-panel shadow">
 	<div class="panel-heading" >	
 		<span class='title' >
-				Creando usuario, paso 4 de 4: Configuración de la interfaz 
+				Creando usuario, paso 4 de 4: Configuración de la interfaz  
 		</span>
 	</div>
 	<div class="panel-body" ng-controller="configUser" id-usuario ={{idUsuario}} devices-data={{devicesData}} names={{names}}>
 		<div class="configSection">
-			<div class="row form-group">
-				<div class="col-xs-12"><label for="usuario_fnac">Elija un dispositivo para configurar su interfaz </label></div>
-				<div class="col-xs-12 buttonsArea">
-					<button ng-class="{'btn-success' : isSelected($index)}" ng-repeat="device in devices" class="col-lg-2 btn deviceButton" ng-bind="device.name" ng-click="setSelectedDevice($index)"> </button>
-				</div>
-			</div>
-			<div class="deviceConfig">
-				<div class="row form-group">				
-					<div class="col-xs-12">
-						<label for="usuario_fnac">Especifique el número de elemento en pantalla </label>
-					</div>
-					<div class="col-xs-12 buttonsArea">
-						<button  ng-class="{'btn-success' : isAllowed()}" class="btn btn-sm" ng-click="setVerticalAllowed()">Permitir orientacion vertical</button>
-					</div>
-				</div>
-				<div class="row form-group">				
-					<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-						<div class="form-group">
-							Filas
-							<input type="number" class="input-sm form-control" name="filas" ng-model="devices[selectedDevice].config.layout.horizontal[0]">
-						</div>
-						<div class="input-group">
-							Columnas
-							<input type="number" class="input-sm form-control" name="columnas" ng-model="devices[selectedDevice].config.layout.horizontal[1]">
-						</div>				
-					</div>				
-					<div ng-show="isAllowed()" class="col-lg-3 col-lg-offset-3 col-md-4 col-md-offset-2 col-sm-12 col-xs-12">
-						<div class="form-group">
-							Filas
-							<input type="number" class="input-sm form-control" name="filas" ng-model="devices[selectedDevice].config.layout.vertical[0]">
-						</div>
-						<div class="input-group">
-							Columnas
-							<input type="number" class="input-sm form-control" name="columnas" ng-model="devices[selectedDevice].config.layout.vertical[1]">
-						</div>
-					</div>
-					<div class=	"col-xs-12 buttonsArea">
-						<button ng-click="changeSelectedView('horizontal')" class="btn" ng-class="{'btn-success' : isHorizontal()}">Horizontal</button>
-						<button ng-click="changeSelectedView('vertical')" class="btn" ng-class="{'btn-success' : !isHorizontal()}" ng-show="isAllowed()">Vertical</button>
-					</div>
-					<div class="col-xs-12 hidden-sm" ng-show="isHorizontal()">
-						<label for="columnas">Previsualización del dispositivo en horizontal</label>
-						<div class="horizontalDevice">
-							<div class="row" ng-repeat="i in range(0,getRows())">
-								<div class="col-xs-12">
-									<button style="width : {{ '{{getElementWidth()}}' }} ; height:{{ '{{getElementHeight()}}' }}" ng-repeat="j in range(0,getCols())"><span ng-bind="getElementNumber(i,j)"></span></button>
-								</div>
-							</div>
-						</div>
+			<div class="layout_config">
+				<div class="deviceConfig" ng-if="devices.length">
+					<div class="row form-group section">
+						<div class="col-xs-12"><label for="devices_list">Elija un dispositivo para configurar su interfaz:</label></div>
+						<div class="col-xs-12 buttonsArea body tiny-shadow" name="devices_list">
+							<button ng-class="{'btn-success' : isSelected($index)}" ng-repeat="device in devices" class="col-lg-2 btn deviceButton" ng-bind="device.name" ng-click="setSelectedDevice($index)"> </button>
+						</div>	
 					</div>
 					
-					<div class="col-lg-12 hidden-sm" ng-show="!isHorizontal()">
-						Previsualización dispositivo en vertical
-						<div class="verticalDevice">
-							<div class="row" ng-repeat="i in range(0,getRows())">
-								<div class="col-xs-12">
-									<button style="width : {{ '{{getElementWidth()}}' }} ; height:{{ '{{getElementHeight()}}' }}" ng-repeat="j in range(0,getCols())"><span ng-bind="getElementNumber(i,j)"></span></button>
-									
+					<div class="row form-group section">
+						<div class="col-xs-12 buttonsArea">
+							<label for="" style="display:block">Opciones de pantalla:</label>
+							<div class="row">
+								<div class="col-xs-12 body tiny-shadow">
+									<button  ng-class="{'btn-success' : isAllowed()}" class="btn" ng-click="setVerticalAllowed()">Pantalla giratoria</button>
 								</div>
 							</div>
-						</div>					
+						</div>
 					</div>
-				</div>	
-			</div>			
+				
+					<div class="row form-group">	
+						<div class="section col-xs-12">
+							<div class="row">
+								<div class="col-xs-12">
+									<label for="">Número de elementos en pantalla:</label>
+								</div>
+								<div class="col-xs-12 body tiny-shadow">
+									<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+										<div class="input-group">
+											Filas
+											<input type="number" class="input-sm form-control" name="filas" ng-model="devices[selectedDevice].config.layout.horizontal[0]">
+										</div>
+										<div class="input-group">
+											Columnas
+											<input type="number" class="input-sm form-control" name="columnas" ng-model="devices[selectedDevice].config.layout.horizontal[1]">
+										</div>				
+									</div>				
+									<div ng-show="isAllowed()" class="col-lg-3 col-lg-offset-3 col-md-4 col-md-offset-2 col-sm-12 col-xs-12">
+										<div class="input-group">
+											Filas
+											<input type="number" class="input-sm form-control" name="filas" ng-model="devices[selectedDevice].config.layout.vertical[0]">
+										</div>
+										<div class="input-group">
+											Columnas
+											<input type="number" class="input-sm form-control" name="columnas" ng-model="devices[selectedDevice].config.layout.vertical[1]">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="row section preview">
+							<div class="col-xs-12">
+								<div class="col-xs-12">
+									<label for="">Previsualización del dispositivo:	</label>
+								</div>
+								<div class="body col-xs-12 tiny-shadow">
+									<div class=	"col-xs-12 buttonsArea">
+										<button ng-click="changeSelectedView('horizontal')" class="btn" ng-class="{'btn-success' : isHorizontal()}">Horizontal</button>
+										<button ng-click="changeSelectedView('vertical')" class="btn" ng-class="{'btn-success' : !isHorizontal()}" ng-show="isAllowed()">Vertical</button>
+									</div>
+									<div class="col-xs-12 hidden-sm" ng-show="isHorizontal()">
+										Previsualización dispositivo en horizontal
+										<div class="horizontalDevice device">
+											<div class="screen">
+												 <div class="row" ng-repeat="i in range(0,getRows())">
+													<div class="col-xs-12">
+														<button ng-init="type = random_int(0,5)" ng-class="{'btn-success' : type==1, 'btn-warning' : type==2, 'btn-info' : type==3, 'btn-danger' : type==4 } " style="width : {{ '{{getElementWidth()}}' }} ; height:{{ '{{getElementHeight()}}' }}" class="element" ng-repeat="j in range(0,getCols())"><span ng-bind="getElementNumber(i,j)"></span></button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-lg-12 hidden-sm" ng-show="!isHorizontal()">
+										Previsualización dispositivo en vertical
+										<div class="verticalDevice device">
+											<div class="screen">
+												 <div class="row" ng-repeat="i in range(0,getRows())">
+													<div class="col-xs-12">
+														<button ng-init="type = random_int(0,5)" ng-class="{'btn-success' : type==1, 'btn-warning' : type==2, 'btn-info' : type==3, 'btn-danger' : type==4 } " class="element" style="width : {{ '{{getElementWidth()}}' }} ; height:{{ '{{getElementHeight()}}' }}" ng-repeat="j in range(0,getCols())"><span ng-bind="getElementNumber(i,j)"></span></button>
+														
+													</div>
+												</div>  
+											</div>
+										</div>					
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+					
 			<div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<div><label for="usuario_tlfn">Colores</label></div>

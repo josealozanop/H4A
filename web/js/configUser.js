@@ -12,7 +12,6 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 		var devicesData = angular.fromJson($attrs.devicesData);
 		var devicesNames = angular.fromJson(window.atob($attrs.names));
 		$scope.devices = [];
-		console.log(DifCrom);
 		for(i in devicesData){
 			var newDevice = angular.fromJson(devicesData[i])[0];
 			newDevice.name = devicesNames[i];
@@ -27,6 +26,7 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 		}
 		$scope.selectedDevice = 0;
 		$scope.selectedView = "horizontal";
+		console.log($scope.random_int(0,1));
 	}
 	
 	$scope.isSelected = function(index){
@@ -121,13 +121,15 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 		return i*$scope.getCols()+j;
 	}
 	
+	$scope.random_int = be_random_int;
+	
 	$scope.getElementHeight = function(){
 		var baseHeight = 0;
 		if($scope.isHorizontal()){
-			baseHeight = 300;
+			baseHeight = 224;
 		}
 		else{
-			baseHeight = 530;
+			baseHeight = 250;
 		}
 		
 		var elemHeight = baseHeight / $scope.getRows();
