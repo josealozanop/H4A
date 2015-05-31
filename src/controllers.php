@@ -17,8 +17,14 @@ $app->get('/', function(Request $request) use ($app) {
 	$mac=getMAC();
 	$query = "select id_dispositivo from dispositivo where mac_dispositivo='$mac'";
 	$data = $app['db']->fetchAll($query);
-	if($data == null){	
+	$user = $app['security']->getToken()->getUser();
+	if($user=="anon."){
 		return $app['twig']->render('index.html', array(
+			'error' => $app['security.last_error']($request),
+			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));	
+	}
+	if($data == null){	
+		return $app['twig']->render('tutor.html', array(
 			'error' => $app['security.last_error']($request),
 			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));	
 	}
