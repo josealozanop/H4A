@@ -19,7 +19,7 @@
 	}
 </style>
 
-<div class="panel panel-primary data-panel" ng-controller="enableSensors" id-usuario ={{idUsuario}}>
+<div class="panel panel-primary data-panel" ng-controller="enableSensorsNewUser" id-usuario ={{idUsuario}}>
 	<div class="panel-heading" >
 		<span class='title' >
 			Creando usuario, paso 3 de 4: Habilitando acciones
@@ -27,47 +27,53 @@
 		
 	</div>
 	<div class="panel-body" style="font-size:small">
-		
-		<div class="" style="background-color:#47a447 !important; border: thin solid black;color:white;margin-top:30px">
-			<div style="padding-bottom:30px;padding-top:10px">
-				<div style="float:left;padding-left:25px;display:inline-block;font-size:larger;font-weight:bolder">
-					Tabla de dispositivos
-				</div>
-				<div style="float:right;padding-right:25px;display:inline-block;">
-					<span>Buscar:</span>
-					<input type="text" ng-model="searcher" style="color:black;margin-right:30px">
-					<span>Habitación</span>
-					<select name="roomSelector" id="" style="color:black" ng-model="selectedRoom" ng-options="room for room in roomsNames"></select>
-					
+		<span ng-show="requests.sensorsData==1">
+			<div class="" style="background-color:#47a447 !important; border: thin solid black;color:white;margin-top:30px">
+				<div style="padding-bottom:30px;padding-top:10px">
+					<div style="float:left;padding-left:25px;display:inline-block;font-size:larger;font-weight:bolder">
+						Tabla de dispositivos
+					</div>
+					<div style="float:right;padding-right:25px;display:inline-block;">
+						<span>Buscar:</span>
+						<input type="text" ng-model="searcher" style="color:black;margin-right:30px">
+						<span>Habitación</span>
+						<select name="roomSelector" id="" style="color:black" ng-model="selectedRoom" ng-options="room for room in roomsNames"></select>
+						
+					</div>
 				</div>
 			</div>
+			<table class="table sensorsTable" style="border:none !important">
+				<tr style="background-color:#398439;color:white;border-top: none !important">
+					<th>Nombre del Sensor</th>
+					<th>Habitacion</th>
+					<th>Tipo</th>
+					<th>¿Habilitado?</th>
+				</tr>
+				<tr class="" ng-repeat="sensor in filteredSensors = (allSensors | filter:searcher | filter:{id_habitacion : indexedRoomsByName[selectedRoom].id_habitacion} : roomComparator | orderBy : sortPredicate) | filter : paginationFilter">
+					<td ng-bind="sensor.nombre_sensor"></td>
+					<td ng-bind="indexedRooms[sensor.id_habitacion].nombre_habitacion"></td>
+					<td ng-bind="sensor.tipo_sensor"></td>
+					<td>
+					<input type="checkbox" name="" value="" ng-model="sensor.enabled"> Habilitar este sensor<br>
+					</td>
+				</tr>
+				
+				
+			</table>
+		
+			<pagination total-items="filteredSensors.length"  items-per-page="itemsPerPage" ng-model="currentPage" class="pagination" boundary-links="true" rotate="false"  ng-show="showPaginator()" ng-change="pageChange()"></pagination>
+			
+		</span>	
+		
+		<div ng-if="requests.sensorsData==2" style="height:300px">
+			<i class="fa fa-spinner fa-pulse fa-4x"></i>
 		</div>
-		<table class="table sensorsTable" style="border:none !important">
-			<tr style="background-color:#398439;color:white;border-top: none !important">
-				<th>Nombre del Sensor</th>
-				<th>Habitacion</th>
-				<th>Tipo</th>
-				<th>¿Habilitado?</th>
-			</tr>
-			<tr class="" ng-repeat="sensor in filteredSensors = (allSensors | filter:searcher | filter:{id_habitacion : indexedRoomsByName[selectedRoom].id_habitacion} : roomComparator | orderBy : sortPredicate) | filter : paginationFilter">
-				<td ng-bind="sensor.nombre_sensor"></td>
-				<td ng-bind="indexedRooms[sensor.id_habitacion].nombre_habitacion"></td>
-				<td ng-bind="sensor.tipo_sensor"></td>
-				<td>
-				<input type="checkbox" name="" value="" ng-model="sensor.enabled"> Habilitar este sensor<br>
-				</td>
-			</tr>
-			
-			
-		</table>
-	
-		<pagination total-items="filteredSensors.length"  items-per-page="itemsPerPage" ng-model="currentPage" class="pagination" boundary-links="true" rotate="false"  ng-show="showPaginator()" ng-change="pageChange()"></pagination>
 		
 		<form method="post"  role="form" action="{{ path('enableSensors') }}">
 			<button type="submit" name="send" ng-value="dataToSend" ng-click="getDataToSend()" class="btn btn-primary btn-lg">Siguiente</button>
 		</form>
 		
-		<button ng-click="sinfo.s()">sinfo</button>
+		<!-- <button ng-click="sinfo.s()">sinfo</button> -->
 	</div>
 </div> 
 
