@@ -11,14 +11,17 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 require 'utils.php';
 require 'db_utils.php';
-
+$s=1;
 
 $app->get('/', function(Request $request) use ($app) {
 	$mac=getMAC();
 	$query = "select id_dispositivo from dispositivo where mac_dispositivo='$mac'";
 	$data = $app['db']->fetchAll($query);
 	$user = $app['security']->getToken()->getUser();
-	if($user=="anon."){
+	if ( $GLOBALS['s'] == 0){
+	return $app['twig']->render('negro.html', array('error' => $app['security.last_error']($request),
+			'last_username' => $app['session']->get('_security.last_username')));}
+	if($user=="anon." and $data==null){
 		return $app['twig']->render('index.html', array(
 			'error' => $app['security.last_error']($request),
 			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));	
@@ -183,7 +186,7 @@ $app->post('/newHabitacion', function (Request $request) use ($app) { //¡¡
 	
 	$dataText = $request->get('send');
 	$data = json_decode($dataText);
-	$idSensorVin = $data -> {'idSensorVin'};
+	$idSensorVin = $data -> {'idSensorDes'};
 	$ids = array();	
 	$out="";
 	
@@ -191,11 +194,11 @@ $app->post('/newHabitacion', function (Request $request) use ($app) { //¡¡
 		$sql = "select id_habitacion FROM habitacion WHERE nombre_habitacion = '$nombre_hab'";
 		$id_habitacion = $app['db']->fetchColumn($sql, array(), 0);
 	foreach($idSensorVin as $id){
-		$app['db']->update('sensoractuador', array(
+		$app['db']->update('sensoractuado', array(
 		'id_habitacion'=>$id_habitacion), array('id_sen'=>$id
 	));
 	}
-	return $app['twig']->render('tutor.html', array('accion' =>"habitacion creada correctamente"
+	return $app['twig']->render('tutor.html', array('accion' =>"habitacion creada correctamente $id "
 	));
 })
 ->bind('newHabitacion')
@@ -332,10 +335,17 @@ $app->post('/modHabitacion', function (Request $request) use ($app) {
 	$idSensorDes = $data -> {'idSensorDes'};
 	$ids = array();	
 	$out="";
+	if($propietario_hab=="sameuser"){
+		$app['db']->update('habitacion', array('nombre_habitacion' => $nombre_hab,'tipo_habitacion' => $tipo_hab),
+		array('id_habitacion'=>$id_habitacion
+		));
+	}
+	else{
+		$app['db']->update('habitacion', array('nombre_habitacion' => $nombre_hab,'tipo_habitacion' => $tipo_hab, 'id_propietario' =>$propietario_hab),
+		array('id_habitacion'=>$id_habitacion
+		));
+	}
 	
-	$app['db']->update('habitacion', array('nombre_habitacion' => $nombre_hab,'tipo_habitacion' => $tipo_hab, 'id_propietario' =>$propietario_hab),
-	array('id_habitacion'=>$id_habitacion
-	));
 	//$app['db']->insert('habitacion', array('nombre_habitacion' => $nombre_hab,'tipo_habitacion' => $tipo_hab, 'id_propietario' =>$propietario_hab));
 	//$sql = "select id_habitacion FROM habitacion WHERE nombre_habitacion = '$nombre_hab'";
 	//$id_habitacion = $app['db']->fetchColumn($sql, array(), 0);

@@ -93,7 +93,7 @@
 						<label for='propietario_hab'>Usuario por defecto</label><br>
 						<select class="form-control" name="propietario_hab">
 							{%if propietario == "conProp" %}
-							<option>{{h.mail_usuario}}</option>
+							<option value="sameuser">{{h.mail_usuario}}</option>
 							{% endif %}
 							<option></option>
 							{% for u in usuarios %}

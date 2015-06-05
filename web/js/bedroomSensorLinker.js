@@ -12,7 +12,7 @@ app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scop
 			$scope.raw_data = data;
 			for(i in $scope.raw_data) {
 				var currentSensor = $scope.raw_data[i];
-				$scope.allSensors.push(new Sensor(currentSensor.id_sensor,currentSensor.codigo_sensor,currentSensor.nombre_sensor,currentSensor.senact_sensor,currentSensor.tipo_sensor, currentSensor.modelo_sensor,currentSensor.descripcion_sensor));
+				$scope.allSensors.push(new Sensor(currentSensor.id_sen,currentSensor.codigo_sensor,currentSensor.nombre_sensor,currentSensor.senact_sensor,currentSensor.tipo_sensor, currentSensor.modelo_sensor,currentSensor.descripcion_sensor));
 			}
 		})
 		.error(function(data, status, headers, config) {
@@ -24,7 +24,7 @@ app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scop
 			$scope.raw_data = data;
 			for(i in $scope.raw_data) {
 				var currentSensor = $scope.raw_data[i];
-				$scope.selectedSensors.push(new Sensor(currentSensor.id_sensor,currentSensor.codigo_sensor,currentSensor.nombre_sensor,currentSensor.senact_sensor,currentSensor.tipo_sensor, currentSensor.modelo_sensor,currentSensor.descripcion_sensor));
+				$scope.selectedSensors.push(new Sensor(currentSensor.id_sen,currentSensor.codigo_sensor,currentSensor.nombre_sensor,currentSensor.senact_sensor,currentSensor.tipo_sensor, currentSensor.modelo_sensor,currentSensor.descripcion_sensor));
 			}
 		})
 		.error(function(data, status, headers, config) {
@@ -64,7 +64,9 @@ app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scop
 	
 	$scope.prepareData = function () {
 		var ld = $scope.selectedSensors;
+		
 		for(i in ld) {
+			
 			dev = ld[i];
 			dataToSend.idSensorVin.push(dev.id);
 		}
@@ -77,6 +79,7 @@ app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scop
 	}
 	
 	$scope.linkSensors = function() {
+		console.log($scope.selectedSensors);
 		var toPass = new Array();
 		var rightSensors = JSON.parse(JSON.stringify($scope.allSensors));
 		var newIndex = 0;

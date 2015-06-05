@@ -16,7 +16,7 @@
 		<tr>
 			<td>{{habitacion.nombre_habitacion}}</td>
 			<td>{{habitacion.tipo_habitacion}}</td>
-			<td>{{habitacion.tipo_habitacion}}</td>
+			<td>{{habitacion.nombre_usuario}}</td>
 			<td>
 			 <form role="form" action="{{ path('opHabitaciones') }}" method="post" style='padding:0px'>
 				<div class="oculto">
@@ -66,7 +66,7 @@
 		{% endfor %}
 	</table>
 	<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-			<a href="{{ path('nuevaHabitacion') }}" class="btn btn-primary btn-lg" role="button">Administrar habitaciones</a>
+			<a href="{{ path('nuevaHabitacion') }}" class="btn btn-primary btn-lg" role="button">Añadir habitacion</a>
 	</div><br/>
 	{% else %}
 		<center><h3>Aún no has registrado nungun usuario</h3></center>
