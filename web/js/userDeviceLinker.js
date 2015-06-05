@@ -2,12 +2,61 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 
 	var services = asyncServices;
 	var current_idUsuario = $attrs.idUsuario;
+	$scope.reqsStatus = {
+		getMyDevices : 0,
+		insertDevice : 0
+	}
+	
+	$scope.itemsPerPage = 5;
+	
+	$scope.paginator1 = {
+		currentPage : 1
+	};
+	
+	$scope.paginator2 = {
+		currentPage : 1
+	};
+	
+	var getLimits = function(currentPage, itemsPerPage){
+		var inferiorLimit = (currentPage-1)*itemsPerPage;
+		var superiorLimit = inferiorLimit+itemsPerPage;
+		
+		return [inferiorLimit, superiorLimit]
+	}
+	
+	$scope.paginator1Filter = function(value, index){	
+		var limits = getLimits($scope.paginator1.currentPage, $scope.itemsPerPage);
+		var inferiorLimit = limits[0];
+		var superiorLimit = limits[1];
+		//console.log(value,index,$scope.paginator1.currentPage,$scope.itemsPerPage)
+		if(index >= inferiorLimit && index < superiorLimit){
+			return true
+		}
+		else{
+			return false
+		}
+	}
+	
+	$scope.paginator2Filter = function(value, index){
+		var limits = getLimits($scope.paginator2.currentPage, $scope.itemsPerPage);
+		var inferiorLimit = limits[0];
+		var superiorLimit = limits[1];
+		
+		if(index >= inferiorLimit && index < superiorLimit){
+			return true
+		}
+		else{
+			return false
+		}
+	}
 	
 	console.log("id del usuario creado:");
 	console.log(current_idUsuario);
 	
+	$scope.reqsStatus.getMyDevices = 2;
 	services.getMyDevices.init()
 		.success(function(data, status, headers, config) {
+			$scope.reqsStatus.getMyDevices = 1;
 			$scope.raw_data = data;
 			for(i in $scope.raw_data) {
 				var currentDevice = $scope.raw_data[i];
@@ -16,6 +65,7 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 		})
 		.error(function(data, status, headers, config) {
 			console.log("ERROR el servicio ");
+			$scope.reqsStatus.getMyDevices = -1;
 		});
 		
 	function Device(name, MAC, UDefault) {
@@ -61,31 +111,47 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 		}
 	};
 	
+	var validateNewDeviceFields = function(){
+		var devData = $scope.newDevice.data;
+		if(!devData.name || !devData.MAC){
+			return false;
+		}
+		else{
+			if(devData.name=="" || devData.MAC==""){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	$scope.addDevice = function() {
-		var nDevice = $scope.newDevice;
-		var toAdd = new Device(nDevice.data.name,nDevice.data.MAC,nDevice.data.UDefault);
-		$scope.selectedDevices.push(toAdd);
-		if($scope.newDevice.defaultWanted) {
-			$scope.indexOfDefault = $scope.selectedDevices.length-1;
-		}
-		
-		var devideData = {
-			MAC : nDevice.data.MAC,
-			uDefault : ""
-		}
-		
-		var linkDeviceTutorData = {
-			idDispositivo : "",
-			nombreDispositivo : nDevice.data.name,
+		if(validateNewDeviceFields()){
+			var nDevice = $scope.newDevice;
+			var toAdd = new Device(nDevice.data.name,nDevice.data.MAC,nDevice.data.UDefault);
+			$scope.selectedDevices.push(toAdd);
+			if($scope.newDevice.defaultWanted) {
+				$scope.indexOfDefault = $scope.selectedDevices.length-1;
+			}
 			
-		}
-		
-		var linkDeviceUserData = {
-			idDispositivo : "",
-			idUsuario : ""
-		}
-		
-		services.insertDevice.init(JSON.stringify(devideData))
+			var devideData = {
+				MAC : nDevice.data.MAC,
+				uDefault : ""
+			}
+			
+			var linkDeviceTutorData = {
+				idDispositivo : "",
+				nombreDispositivo : nDevice.data.name,
+				
+			}
+			
+			var linkDeviceUserData = {
+				idDispositivo : "",
+				idUsuario : ""
+			}
+			
+			
+			services.insertDevice.init(JSON.stringify(devideData))
 			.success(function(data, status, headers, config) {
 				$scope.output = data;
 				if(typeof data == "object"){
@@ -93,8 +159,10 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 					console.log(data);
 					linkDeviceTutorData.idDispositivo = data[0].id_dispositivo;
 					
+					$scope.reqsStatus.insertDevice = 2;
 					services.linkDeviceTutor.init(JSON.stringify(linkDeviceTutorData))
 					.success(function(data, status, headers, config) {
+						$scope.reqsStatus.insertDevice = 1;
 						if(typeof data == "object"){
 							$scope.queryInsert = {
 								status : "success",
@@ -102,9 +170,7 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 							}
 							console.log("linkando dispositivo");
 							console.log(data);
-							
-							
-							
+
 							//Limpiamos los datos
 							$scope.newDevice = {
 								wantNewDevice : false,
@@ -128,6 +194,7 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 					})
 				}
 				else{
+					
 					console.log("error en el servicio insertDevice");
 					$scope.queryInsert = {
 						status : "error",
@@ -137,8 +204,10 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 				
 			})
 			.error(function(data, status, headers, config) {
+				$scope.reqsStatus.insertDevice = -1;
 				console.log("ERROR en el servicio insertDevice");
 			});
+		}
 	}
 	
 	var dataToSend = {

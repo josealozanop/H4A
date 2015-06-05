@@ -74,8 +74,13 @@
 	background-color : #e0706c;
 }
 
+.userDeviceLinker button.defaultU{
+	font-size : smaller;
+	white-space: normal !important;
+}
+
 .userDeviceLinker .selectDevices .toAddDevice {
-	height : 300px;
+	
 	background-color : #eee;
 	padding-left : 0px;
 	padding-right : 0px;
@@ -83,8 +88,12 @@
 
 }
 
+.userDeviceLinker .btn-select-devices{
+	margin-bottom : 15px;
+}
+
 .userDeviceLinker .selectDevices .allDevices {
-	height : 300px;
+	
 	background-color : #eee;
 	overflow:auto;
 	padding-left : 0px;
