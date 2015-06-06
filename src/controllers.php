@@ -148,8 +148,8 @@ $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 		$id = $sensor['id_sensor'];
 		$out .= "$id<br>";
 	}*/
-	
-	link_user_sensors($app['db'], $idUsuario, $ids);
+	////////////////////////////////////////////////////////////////descomentar la linea de abajo!!!!!!!!!!!!!!!!!!
+	//link_user_sensors($app['db'], $idUsuario, $ids);
 
 	$ids_devices = get_user_devices($app['db'], $idUsuario);
 	$devicesData = get_devices_data($app['db'], $ids_devices);

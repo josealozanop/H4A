@@ -7,6 +7,7 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 		Gama1 = false;
 		Gama2 = false;
 		DifCrom = false;
+		SistBar = false;
 		MostcolSec=false;
 		$scope.idUsuario = $attrs.idUsuario;
 		var devicesData = angular.fromJson($attrs.devicesData);
@@ -45,6 +46,9 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 	$scope.isDifCrom = function(){
 		return DifCrom;		
 	}
+	$scope.isSistBar = function(){
+		return SistBar;		
+	}
 	$scope.isColSec = function(){
 		return MostcolSec;		
 	}
@@ -77,6 +81,14 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 			DifCrom = true;
 			ColPrin="blue";
 			ColSec="orange";
+		}
+	}
+	$scope.setSistBar = function(){
+		if(SistBar){
+			SistBar = false;	
+		}
+		else{
+			SistBar = true;
 		}
 	}
 	$scope.setSelectedDevice = function(index){

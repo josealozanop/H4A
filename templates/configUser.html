@@ -171,22 +171,44 @@
 						<label for="usuario_tlfn">Otros:</label>
 						<div class="row">
 							<div class="tiny-shadow body col-xs-12">
-
-								<div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 section">
-									<label for="usuario_apellidos" class="importantText">Tamaño de letra:</label>
-									<input type="number" class="form-control" name="usuario_apellidos" placeholder="Tamaño de letra" required>
+								<div class="col-xs-12 section">								
+									<label for="usuario_apellidos" class="importantText">Tamaño de letra:</label><br/>
+									<div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+										<input type="number" class="form-control" name="usuario_apellidos" placeholder="Tamaño de letra" required>
+									</div>
+								</div>
+								<div class='section'>
+									<label class="checkbox-inline vertical_align_row" style="display:inherit">
+										<button ng-click="setSistBar()" class="btn" ng-class="{'btn-success btn_selected active' : isDifCrom()}">Sistema de barrido</button>
+									</label>
+									
+									<div class="col-xs-12 section" ng-show="isSistBar()">	
+										<label for="usuario_apellidos" class="importantText">Duracion del barrido:</label><br/>
+										<div class="col-lg-4 col-md-6 col-sm-8 col-xs-12" >
+											<input type="number" class="form-control" name="usuario_apellidos" placeholder="Duracion del barrido" required>
+										</div>
+									</div>
 								</div>
 								
-								<div class='col-xs-12'>
-									<label for="usuario_nombre" class="importantText ">¿Necesita el usuario apoyo por un sistema de barrido?</label>
+								
+								<div class='col-xs-12 section'>
+									<label for="usuario_nombre" class="importantText ">Reconocimiento de voz</label>
 									<div class='col-xs-12 '>
 										<label><p class="lead"><input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked> Si</p></label>
 										<label><p class="lead"><input type="radio" name="opciones" id="opciones_2" value="opcion_2"> No</p></label>
 									</div>
 								</div>
 								
-								<div class='col-xs-12'>
-									<label for="usuario_nombre" class="importantText ">Reconocimiento de voz</label>
+								<div class='col-xs-12 section'>
+									<label for="usuario_nombre" class="importantText ">Respuesta por voz</label>
+									<div class='col-xs-12 '>
+										<label><p class="lead"><input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked> Si</p></label>
+										<label><p class="lead"><input type="radio" name="opciones" id="opciones_2" value="opcion_2"> No</p></label>
+									</div>
+								</div>
+								
+								<div class='col-xs-12 section'>
+									<label for="usuario_nombre" class="importantText ">Respuesta por vibración</label>
 									<div class='col-xs-12 '>
 										<label><p class="lead"><input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked> Si</p></label>
 										<label><p class="lead"><input type="radio" name="opciones" id="opciones_2" value="opcion_2"> No</p></label>
