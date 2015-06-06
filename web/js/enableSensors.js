@@ -5,7 +5,9 @@ app.controller('enableSensors', ['$scope', 'asyncServices', '$attrs','$filter', 
 	$scope.currentPage = 1
 	$scope.itemsPerPage = 5
 	
-	$scope.current_idUsuario = $attrs.idUsuario;
+	
+	if(!$attrs.idUsuario){$scope.current_idUsuario= -1}
+	else{$scope.current_idUsuario = $attrs.idUsuario;}
 	$scope.allRooms = [];
 	$scope.allSensors = [];
 	$scope.linkSensors = [];
@@ -73,7 +75,7 @@ app.controller('enableSensors', ['$scope', 'asyncServices', '$attrs','$filter', 
 		}
 	}
 	
-	$scope.init = function(){			
+	$scope.init = function(){
 		asyncServices.getLinkSensors.init(JSON.stringify($scope.queryInsert))
 		.success(function(data, status, headers, config) {
 			$scope.allSensors = data;

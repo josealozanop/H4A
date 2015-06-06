@@ -46,7 +46,7 @@
 				<th>Nombre del Sensor</th>
 				<th>Habitacion</th>
 				<th>Tipo</th>
-				<th>¿Habilitado?</th>
+				<th>Acciones</th>
 			</tr>
 			<tr class="" ng-repeat="sensor in allSensors | filter:searcher | filter:{id_habitacion : indexedRoomsByName[selectedRoom].id_habitacion} : roomComparator | orderBy : sortPredicate">
 				<td ng-bind="sensor.nombre_sensor"></td>
