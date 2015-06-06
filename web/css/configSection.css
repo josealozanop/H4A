@@ -6,6 +6,14 @@
 	margin-right : 10px;
 }
 
+.configSection .importantText{
+	font-size : smaller;
+	font-weight : bolder;
+}
+
+.configSection .info_text{
+	font-size : smaller;
+}
 
 .configSection .deviceConfig{
 	margin-top: 15px;
@@ -13,7 +21,20 @@
 
 .configSection .section{
 	margin-bottom: 25px !important;
-	
+}
+
+.configSection .small-group{
+	margin-top: 20px
+}
+
+
+.configSection .lead{
+	margin-bottom : 5px !important;
+}
+
+.configSection button.btn_selected{
+	text-decoration : underline;
+	font-weight : bold;
 }
 
 .configSection .section .body{

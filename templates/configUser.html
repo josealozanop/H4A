@@ -13,7 +13,7 @@
 					<div class="row form-group section">
 						<div class="col-xs-12"><label for="devices_list">Elija un dispositivo para configurar su interfaz:</label></div>
 						<div class="col-xs-12 buttonsArea body tiny-shadow" name="devices_list">
-							<button ng-class="{'btn-success' : isSelected($index)}" ng-repeat="device in devices" class="col-lg-2 btn deviceButton" ng-bind="device.name" ng-click="setSelectedDevice($index)"> </button>
+							<button ng-class="{'btn-success btn_selected active' : isSelected($index)}" ng-repeat="device in devices" class="col-lg-2 btn deviceButton" ng-bind="device.name" ng-click="setSelectedDevice($index)"> </button>
 						</div>	
 					</div>
 					
@@ -22,7 +22,7 @@
 							<label for="" style="display:block">Opciones de pantalla:</label>
 							<div class="row">
 								<div class="col-xs-12 body tiny-shadow">
-									<button  ng-class="{'btn-success' : isAllowed()}" class="btn" ng-click="setVerticalAllowed()">Pantalla giratoria</button>
+									<button  ng-class="{'btn-success btn_selected active' : isAllowed()}" class="btn" ng-click="setVerticalAllowed()">Pantalla giratoria</button>
 								</div>
 							</div>
 						</div>
@@ -36,21 +36,27 @@
 								</div>
 								<div class="col-xs-12 body tiny-shadow">
 									<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-										<div class="input-group">
+										<div class="importantText" ng-show="isAllowed()">
+											En vertical:
+										</div>
+										<div class="input-group info_text">
 											Filas
 											<input type="number" class="input-sm form-control" name="filas" ng-model="devices[selectedDevice].config.layout.horizontal[0]">
 										</div>
-										<div class="input-group">
+										<div class="input-group info_text">
 											Columnas
 											<input type="number" class="input-sm form-control" name="columnas" ng-model="devices[selectedDevice].config.layout.horizontal[1]">
 										</div>				
 									</div>				
 									<div ng-show="isAllowed()" class="col-lg-3 col-lg-offset-3 col-md-4 col-md-offset-2 col-sm-12 col-xs-12">
-										<div class="input-group">
+										<div class="importantText">
+											En horizontal:
+										</div>
+										<div class="input-group info_text">
 											Filas
 											<input type="number" class="input-sm form-control" name="filas" ng-model="devices[selectedDevice].config.layout.vertical[0]">
 										</div>
-										<div class="input-group">
+										<div class="input-group info_text">
 											Columnas
 											<input type="number" class="input-sm form-control" name="columnas" ng-model="devices[selectedDevice].config.layout.vertical[1]">
 										</div>
@@ -67,11 +73,11 @@
 								</div>
 								<div class="body col-xs-12 tiny-shadow">
 									<div class=	"col-xs-12 buttonsArea">
-										<button ng-click="changeSelectedView('horizontal')" class="btn" ng-class="{'btn-success' : isHorizontal()}">Horizontal</button>
-										<button ng-click="changeSelectedView('vertical')" class="btn" ng-class="{'btn-success' : !isHorizontal()}" ng-show="isAllowed()">Vertical</button>
+										<button ng-click="changeSelectedView('horizontal')" class="btn" ng-class="{'btn-success btn_selected active' : isHorizontal()}">Horizontal</button>
+										<button ng-click="changeSelectedView('vertical')" class="btn" ng-class="{'btn-success btn_selected active' : !isHorizontal()}" ng-show="isAllowed()">Vertical</button>
 									</div>
 									<div class="col-xs-12 hidden-sm" ng-show="isHorizontal()">
-										Previsualización dispositivo en horizontal
+										<span  class="info_text">Previsualización dispositivo en horizontal</span>
 										<div class="horizontalDevice device">
 											<div class="screen">
 												 <div class="row" ng-repeat="i in range(0,getRows())">
@@ -100,10 +106,104 @@
 							</div>
 						</div>
 					</div>	
+				</div>	
+			</div>
+			
+					
+			<div class="colorConfig">
+				<div class="row section form-group">
+					<div class='col-xs-12 '>
+						<label for="usuario_tlfn">Colores:</label>
+						<div class="row">
+							<div class="tiny-shadow body col-xs-12">
+								<label class="checkbox-inline vertical_align_row" style="display:inherit">
+									<!-- <input type="checkbox" id="checkboxEnLinea1" value="opcion_1" ng-click="setDifCrom()"> Dificultad Cromatica -->
+									<button ng-click="setDifCrom()" class="btn" ng-class="{'btn-success btn_selected active' : isDifCrom()}">Dificultad Cromatica</button>
+								</label>
+								<div class="small-group col-xs-12">
+									<div class="col-xs-12 importantText">
+										Elige el esquema de color:
+									</div>
+								
+									<div class="col-xs-12" ng-show="!isDifCrom()">
+										<div class='col-xs-12 '>
+											<label class="lead" for="usuario_tlfn">Color principal: <input name="color" type="color" /></label><br/>
+											<label class="lead" for="usuario_tlfn">Color secundario: <input name="color" type="color" /></label>									
+										</div>
+									</div>
+									
+									<div class="col-xs-12" ng-show="isDifCrom()">
+										<div class='col-xs-12 buttonsArea'>
+											<label class="lead" for="usuario_tlfn">Color principal:</label></br>
+											<button ng-class="CPRed" type="button" class="btn btn-danger" ng-click="btnPricolor('red')" type="button" >Rojo</button>
+											<button ng-class="CPOr"  type="button" class="btn btn-warning" ng-click="btnPricolor('orange')">Naranja</button>
+											<button ng-class="CPYe" type="button" class="btn btn-yellow" ng-click="btnPricolor('yellow')">Amarillo</button>
+											<button ng-class="CPBlu" type="button" class="btn btn-primary" ng-click="btnPricolor('blue')">Azul</button>
+											<button ng-class="CPPur" type="button" class="btn btn-purple" ng-click="btnPricolor('purple')">Morado</button><br>
+											<label class="lead" ng-show="isColSec()" for="usuario_tlfn">Color Secundario:	</label></br>
+											<button ng-class="CSRed"  ng-show="isGama1()" type="button" class="btn btn-danger" ng-click="btnSecolor('red')" type="button" >Rojo</button>
+											<button ng-class="CSOr"  ng-show="isGama1()" type="button" class="btn btn-warning" ng-click="btnSecolor('orange')">Naranja</button>
+											<button ng-class="CSYe" ng-show="isGama1()" type="button" class="btn btn-yellow" ng-click="btnSecolor('yellow')">Amarillo</button>
+											<button ng-class="CSBlu" ng-show="isGama2()" type="button" class="btn btn-primary" ng-click="btnSecolor('blue')">Azul</button>
+											<button ng-class="CSPur" ng-show="isGama2()" type="button" class="btn btn-purple" ng-click="btnSecolor('purple')">Morado</button>
+										</div>
+									</div>
+								</div>
+								<div class="small-group col-xs-12">
+									<div class='col-xs-12 '>
+										<label class="importantText" for="usuario_fnac">Contraste de colores:</label>						
+										<div class='col-xs-12 info_text'>
+											<div><label><p class="lead"><input type="radio" name="contraste" id="cAlto" value="cBajo" > Contraste bajo</p></label></div>
+											<div><label><p class="lead"><input type="radio" name="contraste" id="cMedio" value="cMedio" checked> Contraste Medio</p></label></div>
+											<div><label><p class="lead"><input type="radio" name="contraste" id="cMedio" value="cAlto"> Contraste Alto</p></label></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>	
 				</div>
 			</div>
-					
-			<div class="row form-group">
+			
+			<div class="otherConfig">
+				<div class="row section form-group">
+					<div class='col-xs-12'>
+						<label for="usuario_tlfn">Otros:</label>
+						<div class="row">
+							<div class="tiny-shadow body col-xs-12">
+
+								<div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 section">
+									<label for="usuario_apellidos" class="importantText">Tamaño de letra:</label>
+									<input type="number" class="form-control" name="usuario_apellidos" placeholder="Tamaño de letra" required>
+								</div>
+								
+								<div class='col-xs-12'>
+									<label for="usuario_nombre" class="importantText ">¿Necesita el usuario apoyo por un sistema de barrido?</label>
+									<div class='col-xs-12 '>
+										<label><p class="lead"><input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked> Si</p></label>
+										<label><p class="lead"><input type="radio" name="opciones" id="opciones_2" value="opcion_2"> No</p></label>
+									</div>
+								</div>
+								
+								<div class='col-xs-12'>
+									<label for="usuario_nombre" class="importantText ">Reconocimiento de voz</label>
+									<div class='col-xs-12 '>
+										<label><p class="lead"><input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked> Si</p></label>
+										<label><p class="lead"><input type="radio" name="opciones" id="opciones_2" value="opcion_2"> No</p></label>
+									</div>
+								</div>
+							
+							</div>
+							
+							
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+			<!-- estilo antiguo de jose -->
+			<!--<div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<div><label for="usuario_tlfn">Colores</label></div>
 					<label class="checkbox-inline">	<input type="checkbox" id="checkboxEnLinea1" value="opcion_1" ng-click="setDifCrom()"> Dificultad Cromatica</label>
@@ -115,7 +215,7 @@
 					<label class="lead" for="usuario_tlfn">Color principal <input name="color" type="color" /></label><br/>
 					<label class="lead" for="usuario_tlfn">Color secundario <input name="color" type="color" /></label>									
 				</div>
-			</div>	
+			</div>
 			<div class="col-lg-7 col-md-9 col-sm-11 col-xs-12" ng-show="isDifCrom()">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 buttonsArea'>
 					<label class="lead" for="usuario_tlfn">Color principal</label></br>
@@ -131,7 +231,7 @@
 					<button ng-class="CSBlu" ng-show="isGama2()" type="button" class="btn btn-primary" ng-click="btnSecolor('blue')">Azul</button>
 					<button ng-class="CSPur" ng-show="isGama2()" type="button" class="btn btn-purple" ng-click="btnSecolor('purple')">Morado</button>
 				</div>
-			</div>
+			</div>	
 			<div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for="usuario_fnac">Contraste de colores</label>						
@@ -142,6 +242,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="row form-group">
 				<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
 					<label for="usuario_apellidos">Tamaño de letra</label>
@@ -171,7 +272,7 @@
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<button id="boton_usuario" type="submit" class="btn btn-primary btn-lg">Siguiente</button>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>	
