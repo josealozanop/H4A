@@ -72,21 +72,29 @@
 			{% else %}
 				<div class="row form-group">
 					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+						<a id="btn_pass" class="btn btn-default" title="Eliminar el usuario">
+							Modificar Contraseña
+						</a>
+					</div>
+				</div>
+				<div id="divPass" class="errores row form-group">					
+					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 						<label for="pass">Contraseña</label>
 						<input type="password" class="form-control pass" id="pass" value="passpordefecto" name="pass" >
 					</div>
-				</div>
-				<div id="divValidacion" class="errores row form-group">
-					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-						<label for="repass">Repita Contraseña</label>
-						<input type="password" class="form-control repass" id="repass" value="passpordefecto" name="repass"> 
-						<div id="mensaje2" class="errores"> La contraseña y la validacion debe ser iguales</div>
-						<div id="mensaje1" class="errores"> La contraseña no puede estar vacia</div>
+					<div class='col-lg-12'></div>
+					<div id="divValidacion" class="errores">
+						<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+							<label for="repass">Repita Contraseña</label>
+							<input type="password" class="form-control repass" id="repass" value="passpordefecto" name="repass"> 
+							<div id="mensaje2" class="errores"> La contraseña y la validacion debe ser iguales</div>
+							<div id="mensaje1" class="errores"> La contraseña no puede estar vacia</div>
+						</div>
 					</div>
 				</div>
 				<div class="row form-group">
 					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-						<button id="boton_usuario" type="submit" class=" widthPredButton btn btn-primary btn-lg">Modificar</button>						
+						<button id="boton_usuarioSC" type="submit" class=" widthPredButton btn btn-primary btn-lg">Modificar</button>						
 											
 					</div>
 				</div>

@@ -5,7 +5,7 @@
 	
 	todo();
 	$('#inicio_newTutor').click({name:'test'},newTutor2);
-	PONLE_UN_NOMBRE();
+	compruebapass();
 });
 
 function newTutor2(){
@@ -50,10 +50,63 @@ function pregunta(){
 	if (agree) return true ;
 	return false;
 } 
+function modpass(){ 
+	$("#divPass").fadeIn("slow");
+} 
 
-//ME CAGO EN TI, a ver si vamos con mas cuidado
 
-function PONLE_UN_NOMBRE() {
+function compruebapass() {
+	var visible=false;
+	$("#boton_usuarioSC").click(function (){ //función para el boton de enviar
+        //recolectamos en variables, lo que tenga cada input.
+        //Para mejor manipulación en los if's
+        var passw = $("#pass").val();
+        var repass = $("#repass").val();   
+		if(passw != repass){
+			$("#mensaje2").fadeIn("slow");
+			return false;
+		}
+    });//fin click
+	$("#btn_pass").click(function (){
+		if(visible){	
+			$("#btn_pass").removeClass('btn-success');
+			$("#btn_pass").removeClass('btnMarcado');
+			$("#btn_pass").removeClass('active');
+			$("#btn_pass").addClass('btn-default');
+			$("#divPass").fadeOut("fast");
+			visible=false;
+			document.getElementById("pass").value="passpordefecto";			
+		}
+		else{ 
+			$("#btn_pass").removeClass('btn-default');
+			$("#btn_pass").addClass('btn-success');
+			$("#btn_pass").addClass('btnMarcado');
+			$("#btn_pass").addClass('active');
+			$("#divPass").fadeIn("slow");
+			visible =true;
+			document.getElementById("pass").value="";
+		}
+	})
+	$("#btn_passNew").click(function (){
+		if(visible){	
+			$("#btn_passNew").removeClass('btn-success');
+			$("#btn_passNew").removeClass('btnMarcado');
+			$("#btn_passNew").removeClass('active');
+			$("#btn_passNew").addClass('btn-default');
+			$("#divPass").fadeOut("fast");
+			document.getElementById("pass").value="";
+			visible=false;	
+		}
+		else{ 
+			$("#btn_passNew").removeClass('btn-default');
+			$("#btn_passNew").addClass('btn-success');
+			$("#btn_passNew").addClass('btnMarcado');
+			$("#btn_passNew").addClass('active');
+			$("#divPass").fadeIn("slow");
+			document.getElementById("pass").value="";
+			visible =true;
+		}
+	})
 	$("#boton_usuario").click(function (){ //función para el boton de enviar
         //recolectamos en variables, lo que tenga cada input.
         //Para mejor manipulación en los if's
@@ -73,14 +126,13 @@ function PONLE_UN_NOMBRE() {
 	var valido=false;
 	$("#pass").keyup(function() {
 		$("#divValidacion").fadeIn("slow");
-		var passw = $("#pass").val();
-		$("#divValidacion").fadeIn("slow");
+		var pass = $("#pass").val();
 		document.getElementById("repass").value="";
 		var re_pass=$("#repass").val();
 		if(pass != re_pass)
         {
             $("#repass").css({"background":"#F22" }); //El input se pone rojo
-            valido=true;
+            valido=false;
         }
 		 else if(pass == re_pass)
         {
@@ -97,7 +149,7 @@ function PONLE_UN_NOMBRE() {
         if(pass != re_pass)
         {
             $("#repass").css({"background":"#F22" }); //El input se pone rojo
-            valido=true;
+            valido=false;
         }
         else if(pass == re_pass)
         {
@@ -107,8 +159,6 @@ function PONLE_UN_NOMBRE() {
         }
     });//fin keyup repass
 }
-
-
 //funcion para la tabla editable de dispositivos que no sirvió
 /*
 var editando=false;

@@ -91,6 +91,12 @@ width:150px;
 .fondogris{
 background-color : #EEEEEE;
 }
+
+.btnMarcado{
+	font-weight: bold;
+	text-decoration: underline;
+}
+
 .fondoblanco{
 background-color : #FFFFFF;
 text-indent: 1%;
