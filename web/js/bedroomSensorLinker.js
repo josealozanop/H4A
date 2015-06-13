@@ -7,8 +7,59 @@ app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scop
 	$scope.queryInsert = {
 		id_hab : id_habitacion
 	}
+	$scope.reqsStatus = {
+		getMySensors : 0,
+		insertSensor : 0
+	}
+	
+	$scope.itemsPerPage = 3;
+	
+	$scope.paginator1 = {
+		currentPage : 1
+	};
+	
+	$scope.paginator2 = {
+		currentPage : 1
+	};
+	var getLimits = function(currentPage, itemsPerPage){
+		var inferiorLimit = (currentPage-1)*itemsPerPage;
+		var superiorLimit = inferiorLimit+itemsPerPage;
+		
+		return [inferiorLimit, superiorLimit]
+	}
+	$scope.paginator1Filter = function(value, index){	
+		var limits = getLimits($scope.paginator1.currentPage, $scope.itemsPerPage);
+		var inferiorLimit = limits[0];
+		var superiorLimit = limits[1];
+		//console.log(value,index,$scope.paginator1.currentPage,$scope.itemsPerPage)
+		if(index >= inferiorLimit && index < superiorLimit){
+			return true
+		}
+		else{
+			return false
+		}
+	}
+	
+	$scope.paginator2Filter = function(value, index){
+		var limits = getLimits($scope.paginator2.currentPage, $scope.itemsPerPage);
+		var inferiorLimit = limits[0];
+		var superiorLimit = limits[1];
+		
+		if(index >= inferiorLimit && index < superiorLimit){
+			return true
+		}
+		else{
+			return false
+		}
+	}
+	
+	
+	
+	
+	$scope.reqsStatus.getMySensors = 2;
 	services.getMySensor.init()
 		.success(function(data, status, headers, config) {
+			$scope.reqsStatus.getMySensors = 1;
 			$scope.raw_data = data;
 			for(i in $scope.raw_data) {
 				var currentSensor = $scope.raw_data[i];
@@ -17,6 +68,7 @@ app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scop
 		})
 		.error(function(data, status, headers, config) {
 			console.log("ERROR el servicio ");
+			$scope.reqsStatus.getMySensors = -1;
 		});
 		
 	services.getMySensorBedroom.init(JSON.stringify($scope.queryInsert))

@@ -10,7 +10,102 @@
 	</div>
 	<input type='number' class="oculto" value='-1' name='id_hab' id='id_hab' required/>
 	<div class="panel-body userDeviceLinker">
-		<div class="row selectDevices">
+		<div class="row selectDevices">			
+			<div class="col-lg-6 ">
+				<div class="col-lg-11  col-lg-offset-1 allDevices shadow" style="height: 460px">
+					<div class="title col-lg-12">
+						Sensores existentes
+					</div>
+					<div class="data col-lg-12" >
+						<div ng-if="reqsStatus.getMySensors==1" ng-class="{active : dev.selected}" class="device" ng-repeat="dev in allSensors | filter : paginator1Filter" ng-click="dev.select()">
+							<span class="bold_text">Nombre:</span>
+							<span ng-bind="dev.name"></span><br>
+							<span class="bold_text">Tipo:</span>
+							<span ng-bind="dev.tipe"></span><br>
+							<span class="bold_text">Descripción:</span>
+							<span ng-bind="dev.description"></span>
+						</div>
+					</div>
+				
+					<div class="col-lg-12 vertical_align_row" ng-show="allSensors.length">
+						<div class="col-lg-8">
+							<pagination total-items="allSensors.length"  
+										items-per-page="itemsPerPage" 
+										class="pagination" 
+										ng-show = "allSensors.length > itemsPerPage"
+										ng-model="paginator1.currentPage"
+										max-size = "3"
+										next-text = ">"
+										previous-text = "<"
+										rotate="false">
+							</pagination>
+						</div>
+						<div class="col-lg-4">
+							<button ng-click="linkSensors()"  type="submit" class="btn btn-success btn-lg col-lg-12 btn-select-devices">Enlazar &#9654; </button>
+						</div>
+					</div>
+				</div>	
+			</div>
+			
+			
+			<!-- <div class="col-lg-2 actions">
+				<div class="col-lg-12">
+					<button ng-click="linkDevices()"  type="submit" class="btn btn-success btn-lg col-lg-12">Enlazar &#9654; </button>
+				</div>
+				<div class="col-lg-12">
+					<button ng-click="unlinkDevices()" type="submit" class="btn btn-danger btn-lg col-lg-12">&#9664; Quitar</button>
+				</div>
+				<div>
+				<button ng-click="sinfo()">
+					showInfo
+				</button>
+				</div>
+			</div> -->
+			
+			<div class="col-lg-6 ">
+				<div class="col-lg-11  toAddDevice shadow" style="height: 460px">
+					<div class="title col-lg-12">
+						Sensores enlazados
+					</div>
+					<div class="data col-lg-12">
+						<div class="col-lg-12">
+							<div ng-if="reqsStatus.getMySensors==1" ng-class="{toQuit : dev.selected  }" class="device row" ng-repeat="dev in selectedSensors | filter : paginator2Filter" >
+								<div ng-click="dev.select()" class="deviceSelect">
+									<span class="bold_text">Nombre:</span>
+									<span ng-bind="dev.name"></span><br>
+									<span class="bold_text">Tipo:</span>
+									<span ng-bind="dev.tipe"></span><br>
+									<span class="bold_text">Descripción:</span>
+									<span ng-bind="dev.description"></span>
+								</div>
+														
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-lg-12 vertical_align_row" ng-show="selectedSensors.length">
+						<div class="col-lg-4">
+							<button ng-click="unlinkSensors()" type="submit" class="btn btn-danger btn-lg col-lg-12 btn-select-devices">&#9664; Quitar</button>
+						</div>
+						<div class="col-lg-8">
+							<pagination total-items="selectedSensors.length"
+										ng-show = "selectedSensors.length > itemsPerPage"
+										items-per-page="itemsPerPage" 
+										class="pagination" 
+										ng-model="paginator2.currentPage" 
+										max-size = "3"
+										next-text = ">"
+										previous-text = "<"
+										rotate="false">
+							</pagination>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<!--
 			<div class="col-lg-4 col-lg-offset-1 toAddDevice shadow">
 				<div class="title">
 					Sensores/Actiadores enlazados
@@ -51,7 +146,7 @@
 						<span ng-bind="dev.description"></span>
 					</div>
 				</div>
-			</div>
+			</div>-->
 		</div><br/>
 		<form  class='standar_h4a_form' method="post"  role="form" action="{{ path('newHabitacion') }}">
 
