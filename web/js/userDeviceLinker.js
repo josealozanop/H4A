@@ -7,7 +7,7 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 		insertDevice : 0
 	}
 	
-	$scope.itemsPerPage = 5;
+	$scope.itemsPerPage = 4;
 	
 	$scope.paginator1 = {
 		currentPage : 1

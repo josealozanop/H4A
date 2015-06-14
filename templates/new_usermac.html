@@ -17,7 +17,7 @@
 					<div class="title col-lg-12">
 						Dispositivos existentes
 					</div>
-					<div class="data col-lg-12">
+					<div class="data col-lg-12" style="height:241px">
 						<div ng-if="reqsStatus.getMyDevices==1" ng-class="{active : dev.selected}" class="device" ng-repeat="dev in allDevices | filter : paginator1Filter" ng-click="dev.select()">
 							<span class="bold_text">Nombre:</span>
 							<span ng-bind="dev.name"></span><br>
@@ -67,7 +67,7 @@
 						Dispositivos enlazados
 					</div>
 					<div class="data col-lg-12">
-						<form class="col-lg-12">
+						<form class="col-lg-12" style="height:241px">
 							<div ng-if="reqsStatus.getMyDevices==1" ng-class="{toQuit : dev.selected  }" class="device row" ng-repeat="dev in selectedDevices | filter : paginator2Filter" >
 								<div class="col-lg-7" ng-click="dev.select()" class="deviceSelect">
 									<span class="bold_text">Nombre:</span>
