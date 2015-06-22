@@ -1,14 +1,29 @@
-app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', function($scope,asyncServices,$attrs,$filter) {
-	var ColPrin;
-	var ColSec;
+app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $window, configService, $http) {
+	
 	$scope.init = function(){
-		ColPrin="";
-		ColSec="";
+		//console.log(configService.a);
+		$scope.colorMap = {
+			red : "#c12e2a",
+			orange : "#eb9316",
+			yellow : "#F7FE2E",
+			blue : "#265a88",
+			purple : "#CC2EFA"
+		};
+		
+		$scope.colPrin= "#265a88";
+		$scope.colSec= "#eb9316";
+		$scope.contrast = 1;
+		$scope.fontSize = 12;
+		$scope.reconocimientoVoz = false;
+		$scope.respuestaPorVoz = false;
+		$scope.vibracion = false;
 		Gama1 = false;
 		Gama2 = false;
-		DifCrom = false;
-		SistBar = false;
+		$scope.difCrom = false;
+		$scope.sistemaBarrido = false;
+		$scope.tiempoBarrido = 4;
 		MostcolSec=false;
+		
 		$scope.idUsuario = $attrs.idUsuario;
 		var devicesData = angular.fromJson($attrs.devicesData);
 		var devicesNames = angular.fromJson(window.atob($attrs.names));
@@ -39,19 +54,73 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 		}
 	}
 	
+	$scope.setContrast = function(value){
+		$scope.contrast = value;
+	}
+	
+	$scope.setDataToSend = function(){
+		var data = {
+			"dificultadCromatica" : $scope.difCrom,
+			"color1" : $scope.colPrin,
+			"color2" : $scope.colSec,
+			"sistemaBarrido" : $scope.sistemaBarrido,
+			"tiempoBarrido" : $scope.tiempoBarrido,
+			"contraste" : $scope.contrast,
+			"tamLetra" : $scope.fontSize,
+			"reconocimientoVoz" : $scope.reconocimientoVoz,
+			"respuestaPorVoz" : $scope.respuestaPorVoz,			
+			"vibracion" : $scope.vibracion,						
+		}
+		
+		console.log(data);
+		var dataEncoded = window.btoa(angular.toJson(data));
+				
+		dataToSend = window.btoa(angular.toJson({
+			data: dataEncoded,
+			action : "saveConfig"
+		}));
+		
+		$http.post("/H4A/src/Controllers/configController.php", dataToSend).
+		then(function(data, status, headers, config) {
+			var requestData = data.data;
+			var requestStatus = requestData.status;
+			//console.log(data);
+			if(requestStatus == 1){
+				var configData = requestData.data;
+				//console.log(window.atob(configData));
+			}
+			else{
+				console.log("Error al realizar la setConfig")
+			}
+		})
+		
+		$scope.redirect = 1;
+	}
+	
+	
+	$scope.$watch("redirect", function(){
+		if($scope.redirect == 2){
+			 $window.location.href = '/H4A/web/tutor';
+		}
+	})
+	
 	$scope.isAllowed = function(){
 		var allowed = $scope.devices[$scope.selectedDevice].config.layout.verticalAllowed;
 		return allowed;
 	}
+
 	$scope.isDifCrom = function(){
-		return DifCrom;		
+		return $scope.difCrom;		
 	}
+	
 	$scope.isSistBar = function(){
-		return SistBar;		
+		return $scope.sistemaBarrido;		
 	}
+	
 	$scope.isColSec = function(){
 		return MostcolSec;		
 	}
+	
 	$scope.isGama2 = function(){
 		return Gama2;		
 	}
@@ -71,24 +140,24 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 		}
 	}
 	$scope.setDifCrom = function(){
-		console.log(DifCrom)
-		if(DifCrom){
-			DifCrom = false;			
-			ColPrin="";
-			ColSec="";
+		//console.log(DifCrom)
+		if($scope.difCrom){
+			$scope.difCrom = false;			
+			$scope.colPrin = "";
+			$scope.colSec = "";
 		}
 		else{
-			DifCrom = true;
-			ColPrin="blue";
-			ColSec="orange";
+			$scope.difCrom = true;
+			$scope.colPrin = $scope.colorMap.blue;
+			$scope.colSec = $scope.colorMap.orange;
 		}
 	}
 	$scope.setSistBar = function(){
-		if(SistBar){
-			SistBar = false;	
+		if($scope.sistemaBarrido){
+			$scope.sistemaBarrido = false;	
 		}
 		else{
-			SistBar = true;
+			$scope.sistemaBarrido = true;
 		}
 	}
 	$scope.setSelectedDevice = function(index){
@@ -154,6 +223,7 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 		//factor -= 2;
 		return factor+"%";
 	}
+	
 	$scope.btnPricolor = function(index){
 		$scope.CPRed= "btn btn-danger";
 		$scope.CPOr= "btn btn-warning";		
@@ -193,7 +263,8 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 				Gama2=false;
 			break;
 			}
-		ColPrin=index;
+		$scope.colPrin = $scope.colorMap[index];
+		
 		ColSec="";
 	}
 	$scope.btnSecolor = function(index){
@@ -219,7 +290,7 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 				$scope.CSPur= "btn btn-purple Lblanca btn-lg active";
 			break;
 			}
-		ColSec=index;
+		$scope.colSec = $scope.colorMap[index];
 	}
 	$scope.sinfo = function(){
 		console.log($scope)
@@ -227,4 +298,4 @@ app.controller('configUser', ['$scope', 'asyncServices', '$attrs','$filter', fun
 	
 	$scope.init();
 	$scope.sinfo();
-}]);
+});

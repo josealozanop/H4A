@@ -127,8 +127,8 @@
 								
 									<div class="col-xs-12" ng-show="!isDifCrom()">
 										<div class='col-xs-12 '>
-											<label class="lead" for="usuario_tlfn">Color principal: <input name="color" type="color" /></label><br/>
-											<label class="lead" for="usuario_tlfn">Color secundario: <input name="color" type="color" /></label>									
+											<label class="lead" for="usuario_tlfn">Color principal: <input name="color" type="color" ng-model="colPrin"/></label><br/>
+											<label class="lead" for="usuario_tlfn">Color secundario: <input name="color" type="color" ng-model="colSec"/></label>									
 										</div>
 									</div>
 									
@@ -153,9 +153,9 @@
 									<div class='col-xs-12 '>
 										<label class="importantText" for="usuario_fnac">Contraste de colores:</label>						
 										<div class='col-xs-12 info_text'>
-											<div><label><p class="lead"><input type="radio" name="contraste" id="cAlto" value="cBajo" > Contraste bajo</p></label></div>
-											<div><label><p class="lead"><input type="radio" name="contraste" id="cMedio" value="cMedio" checked> Contraste Medio</p></label></div>
-											<div><label><p class="lead"><input type="radio" name="contraste" id="cMedio" value="cAlto"> Contraste Alto</p></label></div>
+											<div><label><p class="lead"><input type="radio" name="contraste" id="cAlto" value="cBajo" ng-click="setContrast(0)"> Contraste bajo</p></label></div>
+											<div><label><p class="lead"><input type="radio" name="contraste" id="cMedio" value="cMedio" checked ng-click="setContrast(1)"> Contraste Medio</p></label></div>
+											<div><label><p class="lead"><input type="radio" name="contraste" id="cMedio" value="cAlto" ng-click="setContrast(2)"> Contraste Alto</p></label></div>
 										</div>
 									</div>
 								</div>
@@ -174,18 +174,18 @@
 								<div class="col-xs-12 section">								
 									<label for="usuario_apellidos" class="importantText">Tamaño de letra:</label><br/>
 									<div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
-										<input type="number" class="form-control" name="usuario_apellidos" placeholder="Tamaño de letra" required>
+										<input type="number" class="form-control" name="usuario_apellidos" placeholder="Tamaño de letra" ng-model="fontSize" required>
 									</div>
 								</div>
-								<div class='section'>
+								<div class=' col-xs-12 section'>
 									<label class="checkbox-inline vertical_align_row" style="display:inherit">
-										<button ng-click="setSistBar()" class="btn" ng-class="{'btn-success btn_selected active' : isDifCrom()}">Sistema de barrido</button>
+										<button ng-click="setSistBar()" class="btn" ng-class="{'btn-success btn_selected active' : sistemaBarrido}">Sistema de barrido</button>
 									</label>
 									
 									<div class="col-xs-12 section" ng-show="isSistBar()">	
 										<label for="usuario_apellidos" class="importantText">Duracion del barrido:</label><br/>
 										<div class="col-lg-4 col-md-6 col-sm-8 col-xs-12" >
-											<input type="number" class="form-control" name="usuario_apellidos" placeholder="Duracion del barrido" required>
+											<input type="number" class="form-control" name="usuario_apellidos" placeholder="Duracion del barrido" ng-model="tiempoBarrido" required>
 										</div>
 									</div>
 								</div>
@@ -194,36 +194,51 @@
 								<div class='col-xs-12 section'>
 									<label for="usuario_nombre" class="importantText ">Reconocimiento de voz</label>
 									<div class='col-xs-12 '>
-										<label><p class="lead"><input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked> Si</p></label>
-										<label><p class="lead"><input type="radio" name="opciones" id="opciones_2" value="opcion_2"> No</p></label>
+										<label><p class="lead"><input type="radio" name="reconocimientoVoz"  value="opcion_1" ng-click="reconocimientoVoz = true" > Si</p></label>
+										<label><p class="lead"><input checked type="radio" name="reconocimientoVoz"  value="opcion_2" ng-click="reconocimientoVoz = false"> No</p></label>
 									</div>
 								</div>
 								
 								<div class='col-xs-12 section'>
 									<label for="usuario_nombre" class="importantText ">Respuesta por voz</label>
 									<div class='col-xs-12 '>
-										<label><p class="lead"><input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked> Si</p></label>
-										<label><p class="lead"><input type="radio" name="opciones" id="opciones_2" value="opcion_2"> No</p></label>
+										<label><p class="lead"><input type="radio" name="respuestaVoz" value="opcion_1"  ng-click="respuestaPorVoz = true"> Si</p></label>
+										<label><p class="lead"><input checked type="radio" name="respuestaVoz"  value="opcion_2" ng-click="respuestaPorVoz = false"> No</p></label>
 									</div>
 								</div>
 								
 								<div class='col-xs-12 section'>
 									<label for="usuario_nombre" class="importantText ">Respuesta por vibración</label>
 									<div class='col-xs-12 '>
-										<label><p class="lead"><input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked> Si</p></label>
-										<label><p class="lead"><input type="radio" name="opciones" id="opciones_2" value="opcion_2"> No</p></label>
+										<label><p class="lead"><input type="radio" name="vibracion" id="opciones_1" value="opcion_1"  ng-click="vibracion = true"> Si</p></label>
+										<label><p class="lead"><input checked type="radio" name="vibracion" id="opciones_2" value="opcion_2" ng-click="vibracion = false"> No</p></label>
 									</div>
 								</div>
 							
 							</div>
-							
-							
+		
 						</div>
-						
-						
+
 					</div>
 				</div>
 			</div>
+			
+			
+			
+			<!-- <form method="post" role="form" action="{{ path('saveConfig') }}">-->
+			<!-- <form method="post" role="form"> 
+				<button type="submit" name="send" ng-value="dataToSend" ng-click="setDataToSend()" class="btn btn-primary btn-lg">Siguiente</button>
+			</form> -->
+			
+			<button ng-click="setDataToSend()">data</button>
+			
+			{% if data is defined%}
+				<div class="panel  panel-success data-panel shadow">
+					<div class="panel-heading" >
+						{{data}}
+					</div>
+				</div>
+			{% endif %}	
 			<!-- estilo antiguo de jose -->
 			<!--<div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>

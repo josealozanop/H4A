@@ -1,54 +1,8 @@
 {% extends "layout.twig.html" %}
 {% block contenido %}
 
-<!-- este fichero es para hacer tests -->
-
 <div class='testingServices' ng-controller="testingServices">
-	{{nombreUsuario}}
-	<div class="service row">
-		<div class="serviceName col-lg-12">
-			<label>Nombre del servicio:</label>
-			<input type="text" ng-model="selectedService">
-		</div>
-		<div class="input col-lg-12">
-			<label>Input en json:</label>
-			<textarea rows="4" cols="50" ng-model="input">
-
-			</textarea> 
-		<button ng-click="callService()">Consultar servicio</button>
-		</div>
-		
-		<!-- <div class="output col-lg-12">
-			<p>output en json</p>
-			<p ng-bind="output"></p>
-		</div> -->
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<button ng-click="error()">error</button>
-		</div>
-		<div class="col-lg-12">
-			<button ng-click="linkDeviceUser()">linkDeviceUser</button>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-lg-12">
-			Se me han pasado los siguientes datos {{data}}
-		</div>
-
-	</div>
-	<!-- <div style="background-color:gray">
-		<a href="serviceController?service=getMAC"><button>getMac()</button></a>
-	</div> 
-	<div style="background-color:gray">
-		<a ng-click="serviceSwitcher()" href="serviceController?service=addDevice&name=hola&MAC=4A-DD"><button>addDevice()</button></a>
-	</div>	
-	-->	
-	
-	
+	que pasa nigga {{variable}}
 </div>
-
-	
 
 {% endblock %}

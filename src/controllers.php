@@ -11,6 +11,8 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 require 'utils.php';
 require 'db_utils.php';
+require "Model/config.php";
+
 $s=1;
 
 $app->get('/', function(Request $request) use ($app) {
@@ -137,8 +139,6 @@ $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 		array_push($ids, $sensor["id_sen"]);
 	}
 	$nEnabledSensors = count($enabledSensors);
-	
-	
 	/*
 	$out = "El id del usurio al que se le van a habilitar los sensores es: $idUsuario<br>";
 	$out .=  "y se le habilitarian  $nEnabledSensors sensores con los siguientes ids: <br>";
@@ -163,8 +163,15 @@ $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 	));
 	//return new Response($out);
 })
-->bind('enableSensors')
-;
+->bind('enableSensors');
+
+$app->post('/saveConfig', function (Request $request) use ($app){
+	$data = $request->get('send');
+	$userConfig = new Config();
+	$userConfig->fromBase64($data);
+	return $app['twig']->render('tutor.html', array('accion' => $userConfig->toJson()));
+	//return new Response($userConfig);
+})->bind('saveConfig');
 
 
 
@@ -591,15 +598,24 @@ $app->post('/modDispositivo', function (Request $request) use ($app) {
 
 */
 
+
+
 $app->get('/vacia', function (Request $request) use ($app) {
 	$data = $request->get('data');
+		
+	$data = array(
+		"color1" => "blue",
+		"color2" => "white",
+	);
+	$c = new Config();
+	$c->fromArray($data);
+	//configController::setConfig($app['db'], $c);
+	$variable = $c->getColor1();
 	
-	$variable="vacia";
-	$usuarios = $app['db']->fetchAll('SELECT mail_tutor FROM tutor');
-	$text = json_encode($usuarios); 
-	$tam = count ($usuarios);
+	$formatedObject = $c->toJson();
+	
     return $app['twig']->render('vacia.html', array(
-	'variable' => $usuarios,
+	'variable' => $formatedObject,
 	'data' => $data
 	));
 })
@@ -961,13 +977,15 @@ $app->get('/viewUser', function (Request $request) use ($app){
 $app->get('/configUs', function () use ($app) {
     return $app['twig']->render('config_user.html');
 })
-->bind('configUs')
-;
+->bind('configUs');
+
+
+
+
 $app->get('/verSensor', function () use ($app) {
     return $app['twig']->render('ver_sensor.html');
 })
-->bind('verSensor')
-;
+->bind('verSensor');
 
 
 $app->post('/new_usermac', function (Request $request) use ($app){
