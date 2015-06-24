@@ -1,18 +1,10 @@
 <?php
+	require_once __DIR__.'/../../vendor/autoload.php';
+	$app = require __DIR__.'/../app.php';
+	require_once( __DIR__."'/../Model/config.php");
+	require_once("BD/DAO_config.php");
 
-	require_once("../Model/config.php");
-	require_once("./DAO_config.php");
-	
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-
-
-	
+	$usuario = $app['db'];
 	//$conn2 = Doctrine_Manager::connection();
 	
 	//Decodificamos los datos pasados
@@ -20,42 +12,29 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 	$input = base64_decode($input);
 	$input = json_decode($input, true);
 	
-	/*$data = base64_decode($input["data"]);
-	$data = json_decode($data, true);*/
-	
-	
+	/**
+		Estructura de los datos de salida
+	**/
 	$output = array(
 		"status" => 0,
 		"error_msg" => "",
 		"data" =>"no data set"
-	);
-	
-	
+	);	
 	
 	switch($input["action"]){
-		case "saveConfig":
-			
+		case "insertConfig":
+			$id_usuario = $input["id"];
 			$config = new Config();
 			$config->fromBase64($input["data"]);
-			//$output["data"] = $config->toBase64();
+			$devicesLayout = json_decode(base64_decode($input["layoutsData"]), true);
+			$db = new DAO_config($usuario);
+			$db->insertConfig($config, $devicesLayout, $id_usuario);
 			$output["status"] = 1;
-			$output["data"] = true;
-		break;
-		
-		default:
-			$output["status"] = -1;
-			$output["error_msg"] = "invalid action";
+			$output["data"] = $input["layoutsData"];
 		break;
 	}
 	
 	
-	//$input = json_decode($input, true);
-	//$data = $input["data2"];
-	//$data = base64_decode($data);
-	//$inputData = json_decode(base64_decode($input), true);
-	/*$email = $request->a;
-	$email = $email;*/
-	//print json_encode($inputData);
 	print(json_encode($output));
-	//print("a");
+
 ?>

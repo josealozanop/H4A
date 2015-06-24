@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 require 'utils.php';
 require 'db_utils.php';
-require "Model/config.php";
+
 
 $s=1;
 

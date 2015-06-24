@@ -5,24 +5,25 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 		$scope.colorMap = {
 			red : "#c12e2a",
 			orange : "#eb9316",
-			yellow : "#F7FE2E",
+			yellow : "#f7fe2e",
 			blue : "#265a88",
-			purple : "#CC2EFA"
+			purple : "#cc2efa"
 		};
 		
 		$scope.colPrin= "#265a88";
 		$scope.colSec= "#eb9316";
 		$scope.contrast = 1;
 		$scope.fontSize = 12;
-		$scope.reconocimientoVoz = false;
-		$scope.respuestaPorVoz = false;
-		$scope.vibracion = false;
+		$scope.reconocimientoVoz = 0;
+		$scope.respuestaPorVoz = 0;
+		$scope.vibracion = 0;
 		Gama1 = false;
 		Gama2 = false;
 		$scope.difCrom = false;
-		$scope.sistemaBarrido = false;
+		$scope.sistemaBarrido = 0;
 		$scope.tiempoBarrido = 4;
 		MostcolSec=false;
+		$scope.requestStatus = 0;
 		
 		$scope.idUsuario = $attrs.idUsuario;
 		var devicesData = angular.fromJson($attrs.devicesData);
@@ -59,6 +60,7 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 	}
 	
 	$scope.setDataToSend = function(){
+		//datos de la configuración
 		var data = {
 			"dificultadCromatica" : $scope.difCrom,
 			"color1" : $scope.colPrin,
@@ -72,13 +74,42 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 			"vibracion" : $scope.vibracion,						
 		}
 		
-		console.log(data);
+		//Cada dispositivo tendra su propia layout definida
+		var layouts = [];
+		
+		for(i in $scope.devices){
+			var device = $scope.devices[i];
+			//datos del layout
+			var configLayout = {
+				"id_dispositivo" : device["id_dispositivo"],
+				"id_usuario" : $scope.idUsuario,
+				"rotacion" : 0,
+				"filas_vertical" : null,
+				"columnas_vertical" : null,
+				"filas_horizontal" : device.config.layout.horizontal[1],
+				"columnas_horizontal" : device.config.layout.horizontal[0]
+			}
+			
+			if(device.config.layout.verticalAllowed){
+				configLayout["rotacion"] = 1;
+				configLayout["columnas_vertical"] = device.config.layout.vertical[1];
+				configLayout["filas_vertical"] = device.config.layout.vertical[0];
+			}
+			layouts.push(configLayout);
+		}
+		
+		//console.log(data, layouts, $scope.idUsuario);
 		var dataEncoded = window.btoa(angular.toJson(data));
+		var layoutsEncoded = window.btoa(angular.toJson(layouts));
 				
 		dataToSend = window.btoa(angular.toJson({
 			data: dataEncoded,
-			action : "saveConfig"
+			layoutsData : layoutsEncoded,
+			id : $scope.idUsuario,
+			action : "insertConfig"
 		}));
+		
+		//console.log(dataToSend);
 		
 		$http.post("/H4A/src/Controllers/configController.php", dataToSend).
 		then(function(data, status, headers, config) {
@@ -87,20 +118,19 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 			//console.log(data);
 			if(requestStatus == 1){
 				var configData = requestData.data;
-				//console.log(window.atob(configData));
+				$scope.requestStatus = 1;
+				console.log(window.atob(configData));
 			}
 			else{
+				$scope.requestStatus = -1;
 				console.log("Error al realizar la setConfig")
 			}
 		})
-		
-		$scope.redirect = 1;
 	}
-	
-	
-	$scope.$watch("redirect", function(){
-		if($scope.redirect == 2){
-			 $window.location.href = '/H4A/web/tutor';
+		
+	$scope.$watch("requestStatus", function(){
+		if($scope.requestStatus == 1){
+			$window.location.href = '/H4A/web/tutor?status=1';
 		}
 	})
 	
@@ -154,10 +184,10 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 	}
 	$scope.setSistBar = function(){
 		if($scope.sistemaBarrido){
-			$scope.sistemaBarrido = false;	
+			$scope.sistemaBarrido = 0;	
 		}
 		else{
-			$scope.sistemaBarrido = true;
+			$scope.sistemaBarrido = 1;
 		}
 	}
 	$scope.setSelectedDevice = function(index){
@@ -293,7 +323,7 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 		$scope.colSec = $scope.colorMap[index];
 	}
 	$scope.sinfo = function(){
-		console.log($scope)
+		//console.log($scope)
 	}
 	
 	$scope.init();

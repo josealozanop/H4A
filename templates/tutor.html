@@ -7,6 +7,18 @@
 		</div>
 	</div>
 {% endif %}	
+
+{% if app.request.query.get("status") is defined %}
+	{% if app.request.query.get("status") == 1 %}
+		<div class="panel  panel-success data-panel shadow">
+			<div class="panel-heading" >
+				El proceso de configuración del usuario ha terminado satisfactoriamente
+			</div>
+		</div>
+	{% endif %}	
+{% endif %}	
+
+
 {% if (app.security.token is not null) and (is_granted('ROLE_ADMIN')) %}
 	<div class="panel panel-primary data-panel shadow">
 		<div class="panel-heading" >

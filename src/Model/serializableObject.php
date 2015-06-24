@@ -51,7 +51,7 @@
 			$defaults = $this->me->getDefaultProperties();
 			$return = array();
 			foreach ($defaults as $var => $val) {
-				if ($this->$var instanceof FR_Object) {
+				if ($this->$var instanceof serializableObject) {
 					$return[$var] = $this->$var->toArray();
 				} else {
 					$return[$var] = $this->$var;

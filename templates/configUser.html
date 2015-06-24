@@ -194,24 +194,24 @@
 								<div class='col-xs-12 section'>
 									<label for="usuario_nombre" class="importantText ">Reconocimiento de voz</label>
 									<div class='col-xs-12 '>
-										<label><p class="lead"><input type="radio" name="reconocimientoVoz"  value="opcion_1" ng-click="reconocimientoVoz = true" > Si</p></label>
-										<label><p class="lead"><input checked type="radio" name="reconocimientoVoz"  value="opcion_2" ng-click="reconocimientoVoz = false"> No</p></label>
+										<label><p class="lead"><input type="radio" name="reconocimientoVoz"  value="opcion_1" ng-click="reconocimientoVoz = 1" > Si</p></label>
+										<label><p class="lead"><input checked type="radio" name="reconocimientoVoz"  value="opcion_2" ng-click="reconocimientoVoz = 0"> No</p></label>
 									</div>
 								</div>
 								
 								<div class='col-xs-12 section'>
 									<label for="usuario_nombre" class="importantText ">Respuesta por voz</label>
 									<div class='col-xs-12 '>
-										<label><p class="lead"><input type="radio" name="respuestaVoz" value="opcion_1"  ng-click="respuestaPorVoz = true"> Si</p></label>
-										<label><p class="lead"><input checked type="radio" name="respuestaVoz"  value="opcion_2" ng-click="respuestaPorVoz = false"> No</p></label>
+										<label><p class="lead"><input type="radio" name="respuestaVoz" value="opcion_1"  ng-click="respuestaPorVoz = 1"> Si</p></label>
+										<label><p class="lead"><input checked type="radio" name="respuestaVoz"  value="opcion_2" ng-click="respuestaPorVoz = 0"> No</p></label>
 									</div>
 								</div>
 								
 								<div class='col-xs-12 section'>
 									<label for="usuario_nombre" class="importantText ">Respuesta por vibración</label>
 									<div class='col-xs-12 '>
-										<label><p class="lead"><input type="radio" name="vibracion" id="opciones_1" value="opcion_1"  ng-click="vibracion = true"> Si</p></label>
-										<label><p class="lead"><input checked type="radio" name="vibracion" id="opciones_2" value="opcion_2" ng-click="vibracion = false"> No</p></label>
+										<label><p class="lead"><input type="radio" name="vibracion" id="opciones_1" value="opcion_1"  ng-click="vibracion = 1"> Si</p></label>
+										<label><p class="lead"><input checked type="radio" name="vibracion" id="opciones_2" value="opcion_2" ng-click="vibracion = 0"> No</p></label>
 									</div>
 								</div>
 							
@@ -223,14 +223,9 @@
 				</div>
 			</div>
 			
+			<alert ng-if="requestStatus == -1" type="danger">Error al insertar la configuración. Revise que todos los datos estén bien puestos.</alert>
 			
-			
-			<!-- <form method="post" role="form" action="{{ path('saveConfig') }}">-->
-			<!-- <form method="post" role="form"> 
-				<button type="submit" name="send" ng-value="dataToSend" ng-click="setDataToSend()" class="btn btn-primary btn-lg">Siguiente</button>
-			</form> -->
-			
-			<button ng-click="setDataToSend()">data</button>
+			<button class="btn btn-primary btn-lg" ng-click="setDataToSend()">Siguiente</button>
 			
 			{% if data is defined%}
 				<div class="panel  panel-success data-panel shadow">
