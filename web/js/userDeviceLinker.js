@@ -17,6 +17,8 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 		currentPage : 1
 	};
 	
+	$scope.newDeviceOpened = false;
+	
 	var getLimits = function(currentPage, itemsPerPage){
 		var inferiorLimit = (currentPage-1)*itemsPerPage;
 		var superiorLimit = inferiorLimit+itemsPerPage;
@@ -267,6 +269,31 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 		}
 	}
 	
+	$scope.indexOfDefault = -1;
+	$scope.doDefault = function(i) {
+		$scope.indexOfDefault = i;
+		console.log("dispostivio por defecto es el "+i);
+	}
+	
+	$scope.isOpenedNewDevice = function(){
+		if($scope.newDeviceOpened == true){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	$scope.clickNewDevice = function(){
+		console.log("you clicked");
+		if($scope.newDeviceOpened == false){
+			$scope.newDeviceOpened = true;
+		}
+		else{
+			$scope.newDeviceOpened = false;
+		}
+	}
+	
 	$scope.sinfo = function() {
 		console.log($scope.allDevices);
 		console.log($scope.selectedDevices);
@@ -274,10 +301,6 @@ app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', functio
 		console.log($scope);
 	}
 	
-	$scope.indexOfDefault = -1;
-	$scope.doDefault = function(i) {
-		$scope.indexOfDefault = i;
-		console.log("dispostivio por defecto es el "+i);
-	}
+	
 
 }]);

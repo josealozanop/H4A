@@ -21,32 +21,34 @@
 {% endblock %}
 
 {% block Registro %}
-	<h1 align = "right">Abrir una cuenta </h1>
-	<form role="form" method="get" action="{{ path('newTutor') }}"  align = "right" >
+	<div class="openAccount">
+		<h1 class="title">Abrir una cuenta </h1>
+		<form role="form" method="get" action="{{ path('newTutor') }}"  align = "right" >
+			
+			<div class="form-group" >
+				<div class="col-sm-5" ></div>
+				<div class="col-sm-7" >
+					<label><h3>Correo electrónico</h3></label>
+					<input class="form-control" id="inicio_newTutor_mail" type="email" name="inicio_newTutor_mail"  placeholder="Introduzca su correo electrónico" 	ng-model="newTutor.mail">
+				</div>
+			</div>
 		
-		<div class="form-group" >
-			<div class="col-sm-5" ></div>
-			<div class="col-sm-7" >
-				<label><h2>Correo electrónico</h2></label>
-				<input class="form-control" id="inicio_newTutor_mail" type="email" name="inicio_newTutor_mail"  placeholder="Introduzca su correo electrónico" 	ng-model="newTutor.mail">
+			<div class="form-group"  >
+				<div class="col-sm-5" ></div>
+				<div class="col-sm-7" >
+					<label><h3>Nombre</h3></label>
+					<input class="form-control" id="inicio_newTutor_name" type="text" name="inicio_newTutor_name" value="" placeholder="Introduzca su nombre" ng-model="newTutor.name">
+					<br/>
+				</div>
 			</div>
-		</div>
-	
-		<div class="form-group"  >
-			<div class="col-sm-5" ></div>
-			<div class="col-sm-7" >
-				<label><h2>Nombre</h2></label>
-				<input class="form-control" id="inicio_newTutor_name" type="text" name="inicio_newTutor_name" value="" placeholder="Introduzca su nombre" ng-model="newTutor.name">
-				<br/>
-			</div>
-		</div>
 
-		<div class="form-group" >
-			<div class="col-sm-5" ></div>
-			<div class="col-sm-7" >
-			<button type="submit" id='inicio_newTutor' class="btn btn-primary" value=""> Continuar </button>
+			<div class="form-group" >
+				<div class="col-sm-5" ></div>
+				<div class="col-sm-7" >
+				<button type="submit" id='inicio_newTutor' class="btn btn-primary" value=""> Continuar </button>
+				</div>
 			</div>
-		</div>
-	</form>
+		</form>
+	</div>
 {% endblock %}
 

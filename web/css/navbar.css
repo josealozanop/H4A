@@ -29,7 +29,6 @@
 	}
 }
 
-
 .navbar-inverse .mobile_login_btn {
 	
 }
@@ -56,4 +55,16 @@
 
 .navbar-inverse .item  a{
 	color : white;
+}
+
+.navbar-inverse .search-group input{
+	border-top-right-radius : 0px;
+	border-bottom-right-radius : 0px;
+	height : 34px;
+}
+
+.navbar-inverse .search-group button{
+	border-top-left-radius : 0px;
+	border-bottom-left-radius : 0px;
+	height : 34px;
 }

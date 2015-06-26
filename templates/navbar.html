@@ -19,7 +19,7 @@
 				<span>Bienvenido {{ app.security.token.user.username }} </span>
 			</div>
 			
-			<div ng-controller="smartSearch" class='no-margin-bot form-group col-lg-2 col-lg-offset-0 col-md-3 col-md-offset-0 col-sm-4 col-sm-offset-1 col-xs-6'>
+			<div ng-controller="smartSearch" class='search-group no-margin-bot form-group col-lg-2 col-lg-offset-0 col-md-3 col-md-offset-0 col-sm-4 col-sm-offset-1 col-xs-6'>
 				<div class = 'col-lg-10 col-md-10 col-sm-10 col-xs-10' style='padding-right:0px'>
 					<input type="text" class="form-control" placeholder="Buscar..." id='inText-navbar-search'  list='datalist-navbar-searchList' ng-click = "smartSearch.click()" ng-model="selectedUser"></input>
 					<datalist id="datalist-navbar-searchList">
@@ -42,11 +42,8 @@
 			</div>
 		
 		{% else %}
-			<div class="visible-xs col-xs-3 navIcon">
-				<i class="fa fa-bars fa-3x"></i>
-			</div>
-			
-			<div class='col-md-2 col-lg-2 col-sm-2 col-xs-3'>
+					
+			<div class='col-md-2 col-lg-2 col-sm-2 col-xs-3 col-xs-offset-1 col-sm-offset-0'>
 				<a href='{{ app.request.basepath }}'><img src="{{ app.request.basepath }}/images/logo.svg" alt="Responsive image"  class="navLogo"></img></a>
 			</div>
 			<div class='col-md-2 col-lg-2  col-sm-2 hidden-xs'>
@@ -58,7 +55,7 @@
 					<label class='Lblanca'>Correo Electrónico</label>
 					<input class="form-control input-sm" id="username" type="email" name="email" value="{{ last_username }}" placeholder="Introduzca correo electronico" required>
 				</div>
-				
+					
 				<div class="form-group col-md-5 col-lg-5 col-sm-5" style='padding-left:1em'>
 					<label class= "Lblanca">Contraseña</label>
 					<input class="form-control input-sm" id="password" type="password" name="password"  placeholder="Introduzca contraseña">
@@ -67,14 +64,12 @@
 				<div class="col-md-2 col-lg-2 col-sm-2" style='padding-left:1em;'>
 					<input type="submit" class="btn btn-primary btn-sm" value="Iniciar sesión">
 				</div>
-				
-				
-				
+
 				{% if error %}
 					<div class="error Lblanca">{{ error }}</div>
 				{% endif %}
 			</form>
-			<div class='col-xs-5 col-xs-offset-1 visible-xs mobile_login'>
+			<div class='col-xs-5 col-xs-offset-3 visible-xs mobile_login'>
 				<button type="submit" class="col-xs-10 btn btn-primary btn-sm mobile_login_btn" value="Login" ng-click="navBarMobile.click_login()">
 					Login <span ng-show="!navBarMobile.expand_login">&#9660;</span><span ng-show="navBarMobile.expand_login">&#9650;</span>
 				</button>
@@ -100,13 +95,16 @@
 	{% else %}
 	<div ng-show="navBarMobile.expand_menu" class="visible-xs navMenu">
 		<div class="item">
+			<a href="{{ path('tutor') }}">Panel del tutor</a>
+		</div>
+		<div class="item">
 			<a href="{{ path('verdisc') }}">Ver Usuarios</a>
 		</div>
 		<div class="item">
 			<a href="{{ path('newuser') }}">Crear Usuarios</a>
 		</div>
 		<div class="item">
-			<a href="">Administrar casa</a>
+			<a href="{{ path('adminCasa') }}">Administrar casa</a>
 		</div>
 		<div class="item">
 			<a href="{{ path('verDisp') }}">Ver dispositivos</a>

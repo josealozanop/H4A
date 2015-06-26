@@ -13,6 +13,12 @@
 	margin-top : 25px;
 }
 
+@media (max-width: 992px) {
+	.userDeviceLinker .selectDevices {
+		margin-top : 5px;
+	}
+}
+
 .userDeviceLinker .selectDevices .title{
 	background-color : #4CAE4C;
 	font-size : larger;
@@ -22,15 +28,21 @@
 }
 
 .userDeviceLinker .selectDevices .data{
-	padding:10px;
+	padding : 10px;
 	position : relative;
+	min-height : 241px;
+}
+
+@media (max-width: 992px) {
+	.userDeviceLinker .selectDevices .data{
+		min-height : 60px;
+	}
 }
 
 .userDeviceLinker .selectDevices .data .device{
 	padding: 5px;
 	border : thin solid blue;
 	border-bottom : none;
-	
 }
 
 .userDeviceLinker .selectDevices .data .device .deviceSelect {
@@ -101,7 +113,6 @@
 	
 }
 
-
 .userDeviceLinker .addDevice {
 	margin-top : 40px;
 }
@@ -112,11 +123,23 @@
 }
 
 .userDeviceLinker .addDevice  .newDevice span {
-	font-size : larger;
 	font-weight : bold;
 }
 
 
 .userDeviceLinker .addDevice  .newDeviceData{
 	margin-top : 20px;
+	font-size : medium;
+}
+
+.userDeviceLinker .resume{
+	margin-bottom : 10px;
+	font-weight : bold;
+}
+
+
+@media (max-width: 992px) {
+	.userDeviceLinker .linkedDevices{
+		margin-top : 25px;
+	}
 }

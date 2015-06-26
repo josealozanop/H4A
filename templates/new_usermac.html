@@ -4,20 +4,28 @@
 
 <div class="panel panel-primary data-panel" ng-controller="userDeviceLinker" id-usuario = {{id_usuario}}>
 	<div class="panel-heading" >
-		<span class='title' >
+		<span class='title hidden-xs' >
 			Creando usuario, paso 2 de 4: Enlazando dispositivos al usuario
+		</span>
+		
+		<span class='title visible-xs' >
+			Enlazando dispositivos
 		</span>
 		
 	</div>
 	<div ng-show="reqsStatus.getMyDevices==1" class="panel-body userDeviceLinker">
 		<div class="row selectDevices">
-			
-			<div class="col-lg-6 ">
-				<div class="col-lg-11  col-lg-offset-1 allDevices shadow">
-					<div class="title col-lg-12">
+			<div class="col-md-6 col-xs-12">
+				<div class="resume col-xs-12 col-md-11  col-md-offset-1">
+					Escoja los dispositivos que enlazará a X:
+				</div>
+				
+				<div class="col-xs-12 col-md-11  col-md-offset-1 allDevices shadow">
+					<div class="title col-xs-12">
 						Dispositivos existentes
 					</div>
-					<div class="data col-lg-12" style="height:241px">
+					
+					<div class="data col-xs-12" >
 						<div ng-if="reqsStatus.getMyDevices==1" ng-class="{active : dev.selected}" class="device" ng-repeat="dev in allDevices | filter : paginator1Filter" ng-click="dev.select()">
 							<span class="bold_text">Nombre:</span>
 							<span ng-bind="dev.name"></span><br>
@@ -26,8 +34,8 @@
 						</div>
 					</div>
 				
-					<div class="col-lg-12 vertical_align_row" ng-show="allDevices.length">
-						<div class="col-lg-8">
+					<div class="col-xs-12 vertical_align_row clean-sm" ng-show="allDevices.length">
+						<div class="col-xs-12 col-lg-8">
 							<pagination total-items="allDevices.length"  
 										items-per-page="itemsPerPage" 
 										class="pagination" 
@@ -39,62 +47,45 @@
 										rotate="false">
 							</pagination>
 						</div>
-						<div class="col-lg-4">
-							<button ng-click="linkDevices()"  type="submit" class="btn btn-success btn-lg col-lg-12 btn-select-devices">Enlazar &#9654; </button>
+						<div class="col-xs-12 col-lg-4">
+							<button ng-click="linkDevices()" type="submit" class="btn btn-success btn-lg col-xs-12 btn-select-devices">Enlazar &#9654; </button>
 						</div>
 					</div>
 				</div>	
 			</div>
-			
-			
-			<!-- <div class="col-lg-2 actions">
-				<div class="col-lg-12">
-					<button ng-click="linkDevices()"  type="submit" class="btn btn-success btn-lg col-lg-12">Enlazar &#9654; </button>
+
+			<div class="col-md-6 col-xs-12 linkedDevices">
+				<div class="resume col-xs-12">
+					Dispositivos desde los que podrá acceder X:
 				</div>
-				<div class="col-lg-12">
-					<button ng-click="unlinkDevices()" type="submit" class="btn btn-danger btn-lg col-lg-12">&#9664; Quitar</button>
-				</div>
-				<div>
-				<button ng-click="sinfo()">
-					showInfo
-				</button>
-				</div>
-			</div> -->
-			
-			<div class="col-lg-6 ">
-				<div class="col-lg-11  toAddDevice shadow">
+				<div class="col-xs-12 col-md-11  toAddDevice shadow">
 					<div class="title col-lg-12">
 						Dispositivos enlazados
 					</div>
-					<div class="data col-lg-12">
-						<form class="col-lg-12" style="height:241px">
+					<div class="data col-xs-12">
+						<form class="col-xs-12" >
 							<div ng-if="reqsStatus.getMyDevices==1" ng-class="{toQuit : dev.selected  }" class="device row" ng-repeat="dev in selectedDevices | filter : paginator2Filter" >
-								<div class="col-lg-7" ng-click="dev.select()" class="deviceSelect">
+								<div class="col-lg-7 col-xs-12" ng-click="dev.select()" class="deviceSelect">
 									<span class="bold_text">Nombre:</span>
 									<span ng-bind="dev.name"></span><br>
 									<span class="bold_text">MAC:</span>
 									<span ng-bind="dev.MAC"></span>
 								</div>
-								<div class="col-lg-5" ng-if="dev.UDefault==0" >
+								<div class="col-lg-5 col-xs-12" ng-if="dev.UDefault==0" >
 									<button ng-class = "{'btn-success' : $index == indexOfDefault}" class="btn defaultU" ng-click="doDefault($index)">
 										Hacerlo usuario por defecto
 									</button>
 								</div>
 								
-								
-								<!-- <div class="col-lg-4" ng-if="dev.UDefault==0"  ng-class = "{default : $index == indexOfDefault}" class="defaultSelect" >
-									input type="radio" name="udefault" value="" ng-click="doDefault($index)">Usuario por defecto
-									<button ng-click="doDefault($index)">Usuario por defecto</button>
-								</div>-->
 							</div>
 						</form>
 					</div>
 					
-					<div class="col-lg-12 vertical_align_row" ng-show="selectedDevices.length">
-						<div class="col-lg-4">
-							<button ng-click="unlinkDevices()" type="submit" class="btn btn-danger btn-lg col-lg-12 btn-select-devices">&#9664; Quitar</button>
+					<div class="col-lg-12 vertical_align_row clean-sm" ng-show="selectedDevices.length">
+						<div class="col-lg-4 col-xs-12">
+							<button ng-click="unlinkDevices()" type="submit" class="btn btn-danger btn-lg col-xs-12 btn-select-devices">&#9664; Quitar</button>
 						</div>
-						<div class="col-lg-8">
+						<div class="col-lg-8 col-xs-12">
 							<pagination total-items="selectedDevices.length"
 										ng-show = "selectedDevices.length > itemsPerPage"
 										items-per-page="itemsPerPage" 
@@ -109,58 +100,50 @@
 					</div>
 				</div>
 			</div>
-			
-			
-			
-			
+
 		</div>
 		
 		<div class="row addDevice">
-			<div class="col-lg-10 col-lg-offset-1 newDevice">
-				<input type="checkbox" name="Nuevo_Dispositivo" value="" ng-model="newDevice.wantNewDevice">
-				<span>Añadir nuevo dispositivo </span>
+			<div class="col-md-10 col-md-offset-1 col-xs-12 newDevice">
+				<button  ng-class="{'btn-success btn_selected active' : isOpenedNewDevice()}" class="btn btn-lg" ng-click="clickNewDevice()">Nuevo dispositivo</button>
 			</div>
 			
-			<div class="col-lg-10 col-lg-offset-1 newDeviceData standar_h4a_form" ng-show="newDevice.wantNewDevice">
-				<div class="col-lg-12">
-					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-						<label for='nombreDispositivo'>Nombre del dispositivo</label><br>
-						<input type='text' class="form-control" name='nombreDispositivo' ng-model="newDevice.data.name"/>
-					</div>
-				</div>
-				
-				<div class="col-lg-12">
-					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-						<label for='MAC'>MAC</label><br>
-						<ng-switch on="newDevice.useThisMAC">
-							<input ng-switch-when="true" type='text' class="form-control" name='mac' ng-model="newDevice.data.MAC" ng-init="newDevice.data.MAC='{{mac}}'" value='{{mac}}'/>
-							<input ng-switch-default type='text' class="form-control" name='mac' ng-model="newDevice.data.MAC" ng-init="newDevice.data.MAC=''" value=''/>
-						</ng-switch>
-						
-						<div class="aditional-info">
-							<input type="checkbox" name="MAC_dispostivo" value="" ng-model="newDevice.useThisMAC"/>
-							<span>Usar la MAC de este equipo </span>
-						</div>
-						
-						<div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="queryInsert.status=='error'">
-							<p>Error al insertar el dispositivo. MAC ya en uso</p>
-						</div>
-						
-						<div class="alert alert-success col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="queryInsert.status == 'success'">
-							<p>Dispositivo insertado correctamente</p>
+			<div class="col-lg-10 col-lg-offset-1 col-xs-12 newDeviceData standar_h4a_form" ng-show="newDeviceOpened">
+				<div class="group col-xs-12">
+					<div class="col-xs-12">
+						<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+							<label for='nombreDispositivo'>Nombre del dispositivo</label><br>
+							<input type='text' class="form-control" name='nombreDispositivo' ng-model="newDevice.data.name"/>
 						</div>
 					</div>
-					
-				</div>
 				
-				<!-- <div class="col-lg-12" style="margin-top:15px">
-					<input type="checkbox" name="MAC_dispostivo" value="" ng-model="newDevice.defaultWanted">
-					<span>Hacer que X sea el usuario por defecto del dispositivo</span>
-				</div> -->
+					<div class="col-xs-12">
+						<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+							<label for='MAC'>MAC</label><br>
+							<ng-switch on="newDevice.useThisMAC">
+								<input ng-switch-when="true" type='text' class="form-control" name='mac' ng-model="newDevice.data.MAC" ng-init="newDevice.data.MAC='{{mac}}'" value='{{mac}}'/>
+								<input ng-switch-default type='text' class="form-control" name='mac' ng-model="newDevice.data.MAC" ng-init="newDevice.data.MAC=''" value=''/>
+							</ng-switch>
+						
+							<div class="aditional-info">
+								<input type="checkbox" name="MAC_dispostivo" value="" ng-model="newDevice.useThisMAC"/>
+								<span>Usar la MAC de este equipo </span>
+							</div>
+						
+							<div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="queryInsert.status=='error'">
+								<p>Error al insertar el dispositivo. MAC ya en uso</p>
+							</div>
+						
+							<div class="alert alert-success col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="queryInsert.status == 'success'">
+								<p>Dispositivo insertado correctamente</p>
+							</div>
+						</div>
+					</div>				
+				</div>
 				<button type="submit" ng-click="addDevice()" class="btn btn-primary btn">Añadir dispositivo</button>
 			</div>
 			
-			<div class="col-lg-10 col-lg-offset-1" style="margin-top:15px">
+			<div class="col-lg-10 col-lg-offset-1 col-xs-12" style="margin-top:15px">
 				<form method="post"  role="form" action="{{ path('linkDevicesUser') }}">
 					<button type="submit" name="send" ng-value="formatedData" ng-click="prepareData()" class="btn btn-primary btn-lg">Siguiente</button>
 				</form>

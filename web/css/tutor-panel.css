@@ -9,6 +9,12 @@ div.data-panel>div.panel-heading>span.title{
 	vertical-align : middle;
 }
 
+@media (max-width: 992px) {
+	div.data-panel>div.panel-heading>span.title{
+		font-size : large;
+	}
+}
+
 div.data-panel>div.panel-body{
 	font-family: 'Open Sans', sans-serif;
 	font-size : x-large;
@@ -30,4 +36,9 @@ div.data-panel>div.panel-body>ul>li>a{
 	color : black;
 }
 
+@media (max-width: 992px){
+	div.data-panel>div.panel-body>ul>li>a{
+		font-size : medium;
+	}
+}
 
