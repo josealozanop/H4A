@@ -11,28 +11,69 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 require 'utils.php';
 require 'db_utils.php';
-$s=1;
+
+/**
+	0 => Redirección a la interfaz de usuario
+	1 => Redirección a la interfaz de tutor
+**/
+$tipoInterfaz = 1;
 
 $app->get('/', function(Request $request) use ($app) {
 	$mac=getMAC();
 	$query = "select id_dispositivo from dispositivo where mac_dispositivo='$mac'";
 	$data = $app['db']->fetchAll($query);
 	$user = $app['security']->getToken()->getUser();
-	if ( $GLOBALS['s'] == 0){
-	return $app['twig']->render('negro.html', array('error' => $app['security.last_error']($request),
-			'last_username' => $app['session']->get('_security.last_username')));}
+	
+	//Si la MAC no está registrada y no estás logueado redirección a la pantalla de inicio
 	if($user=="anon." and $data==null){
 		return $app['twig']->render('index.html', array(
 			'error' => $app['security.last_error']($request),
 			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));	
 	}
-	if($data == null){	
+	//Si la Mac no está registrada y estás logueado
+	else if($data==null){
 		return $app['twig']->render('tutor.html', array(
 			'error' => $app['security.last_error']($request),
-			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));	
+			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));
 	}
+	//Si la MAC registrada
+	else if($data){
+		if($GLOBALS['$tipoInterfaz'] == 0){
+			return $app['twig']->render('negro.html', array('error' => $app['security.last_error']($request),
+			'last_username' => $app['session']->get('_security.last_username')));
+		}
+		else if($GLOBALS['$tipoInterfaz'] == 1 and $user!="anon."){
+			return $app['twig']->render('tutor.html', array(
+				'error' => $app['security.last_error']($request),
+				'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));	
+		}
+		else if($GLOBALS['$tipoInterfaz'] == 1 and $user=="anon."){
+			return $app['twig']->render('index.html', array(
+				'error' => $app['security.last_error']($request),
+				'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));
+		}
+	}
+	
+	/*
+	if ( $GLOBALS['s'] == 0){
 	return $app['twig']->render('negro.html', array('error' => $app['security.last_error']($request),
+			'last_username' => $app['session']->get('_security.last_username')));
+	}
+	else if($GLOBALS['s'] == 1){
+		if($user=="anon." and $data==null){
+			return $app['twig']->render('index.html', array(
+				'error' => $app['security.last_error']($request),
+				'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));	
+		}
+		if($data == null){	
+			return $app['twig']->render('tutor.html', array(
+				'error' => $app['security.last_error']($request),
+				'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));	
+		}
+		return $app['twig']->render('negro.html', array('error' => $app['security.last_error']($request),
 			'last_username' => $app['session']->get('_security.last_username')));	
+	}*/
+		
 })
 ->bind('homepage')
 ;

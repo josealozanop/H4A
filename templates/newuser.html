@@ -7,7 +7,7 @@
 		</span>
 	</div>
 	<div class="panel-body">
-		<form action="{{ path('new_user') }}" method="post" role="form"  class='standar_h4a_form'>
+		<form action="{{ path('new_user') }}" method="post" role="form"  class='standar_h4a_form' enctype="multipart/form-data">
 			<div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for="usuario_mail">Mail</label>
@@ -41,7 +41,8 @@
 			 <div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for="usuario_foto">Foto</label>
-					 <input id="campofotografia" name="campofotografia" type="file" />
+					<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+					<input  name="campofotografia" type="file" />
 				</div>
 		    </div>
 			<div class="row form-group">

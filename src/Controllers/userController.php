@@ -221,7 +221,7 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 	$directorio_destino = $mail;
 	$serv = "/";
 
-	$ruta = $serv . $directorio_destino;
+	$ruta = $directorio_destino;
 	if(!file_exists($ruta))
 	{
 	mkdir($ruta);
@@ -230,7 +230,7 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 	echo "la ruta:" . $ruta . "ya existe";
 	}
 	
-		
+	print_r($_FILES);
 	$tmp_name = $_FILES['campofotografia']['tmp_name'];
     //si hemos enviado un directorio que existe realmente y hemos subido el archivo    
     if (is_dir($directorio_destino) && is_uploaded_file($tmp_name))
