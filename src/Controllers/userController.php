@@ -217,44 +217,19 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 	$tlfn =$request->get('usuario_tlfn');
 	$encoder = new MessageDigestPasswordEncoder();
 	$encodePass = $encoder->encodePassword($pass, '');
-	$nombre_fichero=$request->get('campofotografia');
+	/*foreach($request->getFiles() as $file)
+{
+	echo 1;
+}*/
+	$nombre_fichero= $request->files->get('campofotografia');// $request->getFiles('campofotografia');
 	$directorio_destino = $mail;
 	$serv = "/";
 
 	$ruta = $serv . $directorio_destino;
-	if(!file_exists($ruta))
-	{
-	mkdir($ruta);
-	echo "Se ha creado el directorio:" . $ruta;
-	} else {
-	echo "la ruta:" . $ruta . "ya existe";
-	}
+	if(!file_exists($ruta))	mkdir($ruta);
 	
-		
-	$tmp_name = $_FILES['campofotografia']['tmp_name'];
+	$nombre_fichero->move($ruta,$nombre_fichero->getClientOriginalName());
     //si hemos enviado un directorio que existe realmente y hemos subido el archivo    
-    if (is_dir($directorio_destino) && is_uploaded_file($tmp_name))
-    {
-        $img_file = $_FILES[$nombre_fichero]['name'];
-        $img_type = $_FILES[$nombre_fichero]['type'];
-        echo 1;
-        // Si se trata de una imagen   
-        if (((strpos($img_type, "gif") || strpos($img_type, "jpeg") ||
- strpos($img_type, "jpg")) || strpos($img_type, "png")))
-        {
-            //¿Tenemos permisos para subir la imágen?
-            echo 2;
-            if (move_uploaded_file($tmp_name, $directorio_destino . '/' . $img_file))
-            {
-                return true;
-            }
-        }
-    }
-    //Si llegamos hasta aquí es que algo ha fallado
-    return false;
-	
-	
-	
 	$app['db']->insert('usuario', array('mail_usuario' => $mail, 'nombre_usuario' => $nombre,'apellidos_usuario' => $apellidos,'fnac_usuario' => $fnac,'tlfn_usuario' => $tlfn, 'pass_usuario' => $encodePass,'roles'=>'ROLE_USER'));
 	$sql = "select id_usuario FROM usuario WHERE mail_usuario = '$mail'";
 	$id_usuario = $app['db']->fetchColumn($sql, array(), 0);
