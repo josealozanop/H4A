@@ -16,7 +16,7 @@ require 'db_utils.php';
 	0 => Redirección a la interfaz de usuario
 	1 => Redirección a la interfaz de tutor
 **/
-$tipoInterfaz = 1;
+$tipoInterfaz = 0;
 
 $app->get('/', function(Request $request) use ($app) {
 	$mac=getMAC();
@@ -38,16 +38,17 @@ $app->get('/', function(Request $request) use ($app) {
 	}
 	//Si la MAC registrada
 	else if($data){
-		if($GLOBALS['$tipoInterfaz'] == 0){
+		//$GLOBALS['tipoInterfaz'] = 0;
+		if($GLOBALS['tipoInterfaz'] == 0){
 			return $app['twig']->render('negro.html', array('error' => $app['security.last_error']($request),
 			'last_username' => $app['session']->get('_security.last_username')));
 		}
-		else if($GLOBALS['$tipoInterfaz'] == 1 and $user!="anon."){
+		else if($GLOBALS['tipoInterfaz'] == 1 and $user!="anon."){
 			return $app['twig']->render('tutor.html', array(
 				'error' => $app['security.last_error']($request),
 				'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));	
 		}
-		else if($GLOBALS['$tipoInterfaz'] == 1 and $user=="anon."){
+		else if($GLOBALS['tipoInterfaz'] == 1 and $user=="anon."){
 			return $app['twig']->render('index.html', array(
 				'error' => $app['security.last_error']($request),
 				'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));
