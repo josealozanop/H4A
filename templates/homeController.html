@@ -3,63 +3,90 @@
 
 <style>
 	.leftArrow{
-		height : 99vh;
-		background-color : red;
+		height : 100vh;
 		padding : 0px;
 	}
 	
 	.leftArrow button{
-		height : 99vh;
+		height : 100vh;
 		width : 100%;
+		background-color : black;
+		color : white;
+		font-weight : bold;
+		font-size : x-large;
+		border-radius : 0px;
+	}
+	
+	.leftArrow button.disabled{
+		
+		background-color : gray;
+		color : white;
+		
 	}
 	
 	.rightArrow{
-		height : 99vh;
-		background-color : green;
+		height : 100vh;
 		padding : 0px;
 	}
 	
 	.rightArrow button{
-		height : 99vh;
+		height : 100vh;
 		width  : 100%;
+		background-color : black;
+		color : white;
+		font-weight : bold;
+		font-size : x-large;
+		border-radius : 0px;
+	}
+	
+	.rightArrow button.disabled{
+		
+		background-color : gray;
+		color : white;
+		
 	}
 	
 	.roomsButtons{
 		background-color : blue;
-		height : 99vh;
+		height : 100	vh;
 		padding-left : 1%;
 		padding-right : 1%;
 		padding-top : 20px;
-		padding-bottom : 20px;
+		padding-bottom : 10px;
 	}
 	
 	.roomsButtons button{
 		width : 33%;
-		height : 30vh;
+		height : 31vh;
+		border-radius : 10px;
+		border : 4px solid;
+		border-color : blue;
+		font-size : x-large;
+		font-weight : bold;
 	}
 </style>
 
-<div class="homeController" ng-controller="homeController" user-data={{data}}>
+<div class="homeController" ng-controller="homeController" user-data={{data}} style="background-color:blue">
 
 	<!-- layout horizontal -->
 	<div class="container-fluid" ng-if="position == 'horizontal'" ng-switch="selectedSection">
 		<div class="row" ng-switch-when="0">
 			<div class="col-xs-1 leftArrow" ng-if="needNavigation == 1">
-				<button><</button>
+				<button class="btn" ng-class="{'disabled' : page == 0}" ng-click="clickPrevious()"><</button>
 			</div>
 			
 			<div class="roomsButtons" ng-class="{'col-xs-12' : needNavigation == 0, 'col-xs-10' : needNavigation == 1}">
 				<div ng-repeat="fila in range(0, filas)">
-					<button ng-repeat="col in range(0, cols)">
-						<span>
-					
+					<button ng-repeat="col in range(0, cols)" ng-init="index = getButtonIndex(fila, col, cols, page, fila*col)" ng-show="showButton(getButtonIndex(fila, col, cols, page, filas*cols))" style="height	 : {{'{{buttonSize.height}}'}}vh ; width : {{'{{buttonSize.width}}'}}%">
+						<span ng-bind="rooms[getButtonIndex(fila, col, cols, page, filas*cols)].nombre_habitacion">
+						
 						</span>
 					</button>
 				</div>
 			</div>
 			
 			<div class="col-xs-1 rightArrow" ng-if="needNavigation == 1"> 
-				<button>></button>
+				<button ng-click="clickNext()" class="btn" ng-class="{'disabled' : page == nPages-1}">></button>
 			</div>
 			
 			<div></button>

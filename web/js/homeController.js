@@ -11,8 +11,15 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		
 		$scope.sections = ["rooms", "sensors", "sensor"];
 		$scope.selectedSection = 0;
+		$scope.page = 0;
+		$scope.nPages = $scope.getNpages();
 		$scope.needNavigation = needNavigation();
 		$scope.position = "horizontal";
+		
+		$scope.buttonSize = {
+			width : $scope.getButtonWidth(),
+			height : $scope.getButtonHeight()
+		}
 	}
 	
 	var needNavigation = function(){
@@ -46,9 +53,41 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		return parseInt(cols);
 	}
 	
-	var buttonsSize = function(){
-
+	$scope.getNpages = function(){
+		return Math.ceil($scope.rooms.length / ($scope.filas * $scope.cols));
 	}
+	
+	$scope.getButtonHeight = function(){
+		return (100/$scope.filas)-1.8;
+	}
+	
+	$scope.getButtonWidth = function(){
+		return 100/$scope.cols;
+	}
+	
+	$scope.clickNext = function(){
+		if($scope.page+1 < $scope.nPages){
+			$scope.page += 1;
+		}
+		//console.log($scope.page);
+	}
+	
+	$scope.clickPrevious = function(){
+		if($scope.page > 0){
+			$scope.page -= 1;
+		}
+	}
+	
+	$scope.showButton = function(index){
+		if(index < $scope.rooms.length){
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+	
+	$scope.getButtonIndex = getUnidimensionalIndex;
 	
 	$scope.range = range;
 	

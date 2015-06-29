@@ -25,8 +25,8 @@ require_once( __DIR__."/Controllers/BD/DAO_config.php");
 }*/
 
 $app->get("/homeController", function(Request $request) use ($app){
-	$userId4x4 = 113;
-	$userId3x6 = 112;
+	$userId4x4 = 112;
+	$userId3x6 = 113;
 	$userId3x3 = 115;
 	
 	$dbRooms = new DAO_rooms($app["db"]);
@@ -62,9 +62,9 @@ $app->get("/homeController", function(Request $request) use ($app){
 
 $app->get('/', function(Request $request) use ($app) {
 	
-	/*return $app['twig']->render('index.html', array(
+	return $app['twig']->render('index.html', array(
 			'error' => $app['security.last_error']($request),
-			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));*/
+			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));
 	
 	$subRequest = Request::create('/homeController', 'GET');
     return $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
