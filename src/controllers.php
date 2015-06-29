@@ -9,16 +9,66 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 //Request::setTrustedProxies(array('127.0.0.1'));
 
-require 'utils.php';
-require 'db_utils.php';
+require_once 'utils.php';
+require_once 'db_utils.php';
+require_once( __DIR__."/Controllers/BD/DAO_rooms.php");
+require_once( __DIR__."/Controllers/BD/DAO_config.php");
 
 /**
 	0 => Redirección a la interfaz de usuario
 	1 => Redirección a la interfaz de tutor
 **/
-$tipoInterfaz = 0;
+
+ setcookie("sessionType", 0);
+/*if(!isset($_COOKIE['sessionType'])){
+    setcookie("sessionType",1);
+}*/
+
+$app->get("/homeController", function(Request $request) use ($app){
+	$userId4x4 = 113;
+	$userId3x6 = 112;
+	$userId3x3 = 115;
+	
+	$dbRooms = new DAO_rooms($app["db"]);
+	$dbConfig = new DAO_config($app["db"]);
+	
+	
+	$room = $dbRooms->getRoom(15);
+	$allRoomsIds = $dbRooms->getRooms("");
+	$filteredRoomsIds =  $dbRooms->getRooms("nombre_habitacion = 'hab2'");
+	//print_r($room->toArray());
+	//print_r($rooms);
+	//print_r($filteredRooms);
+	
+	$allRooms = array_map(function($id) use ($dbRooms){
+		$newRoom = $dbRooms->getRoom($id);
+		return $newRoom->toArray();
+	}, $allRoomsIds);
+	
+	$configData = $dbConfig->getConfigByUserId($userId3x3);
+	$config = $configData["config"];
+	$layout = $configData["layout"];
+	//print_r($config);
+	
+	$data = base64_encode(json_encode(array(
+		"rooms" => $allRooms,
+		"config" => $config->toArray(),
+		"layout" => $layout->toArray()
+	)));
+	
+	return $app['twig']->render('homeController.html', array(
+		'data' => $data));
+})->bind('homeController');
 
 $app->get('/', function(Request $request) use ($app) {
+	
+	/*return $app['twig']->render('index.html', array(
+			'error' => $app['security.last_error']($request),
+			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));*/
+	
+	$subRequest = Request::create('/homeController', 'GET');
+    return $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
+	
 	$mac=getMAC();
 	$query = "select id_dispositivo from dispositivo where mac_dispositivo='$mac'";
 	$data = $app['db']->fetchAll($query);
@@ -39,16 +89,15 @@ $app->get('/', function(Request $request) use ($app) {
 	//Si la MAC registrada
 	else if($data){
 		//$GLOBALS['tipoInterfaz'] = 0;
-		if($GLOBALS['tipoInterfaz'] == 0){
-			return $app['twig']->render('negro.html', array('error' => $app['security.last_error']($request),
-			'last_username' => $app['session']->get('_security.last_username')));
+		if($_COOKIE['sessionType'] == 0){
+			return $app['twig']->render('userLogin.html', array());
 		}
-		else if($GLOBALS['tipoInterfaz'] == 1 and $user!="anon."){
+		else if($_COOKIE['sessionType'] == 1 and $user!="anon."){
 			return $app['twig']->render('tutor.html', array(
 				'error' => $app['security.last_error']($request),
 				'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));	
 		}
-		else if($GLOBALS['tipoInterfaz'] == 1 and $user=="anon."){
+		else if($_COOKIE['sessionType'] == 1 and $user=="anon."){
 			return $app['twig']->render('index.html', array(
 				'error' => $app['security.last_error']($request),
 				'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));
@@ -79,6 +128,24 @@ $app->get('/', function(Request $request) use ($app) {
 ->bind('homepage')
 ;
 
+$app->get('/userLogin', function(Request $request) use ($app) {
+	echo $_COOKIE['sessionType'];
+    return $app['twig']->render('userLogin.html', array());
+})
+->bind('userLogin');
+
+$app->get('/changeType', function(Request $request) use ($app) {
+	if($_COOKIE['sessionType'] == 1){
+		setcookie("sessionType", 0);
+	}
+	else{
+		setcookie("sessionType", 1);
+	}
+	return $app['twig']->render('index.html', array(
+			'error' => $app['security.last_error']($request),
+			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));
+})
+->bind('changeType');
 
 $app->get('/login_check', function(Request $request) use ($app) {
     return $app['twig']->render('index.html', array(
@@ -95,13 +162,6 @@ $app->get('/_profiler/wdt/{id}', function(Request $request) use ($app) {
 })
 ->bind('wdt')
 ;
-
-
-
-
-
-
-
 
 /*
 $app->post('/modDispositivo', function (Request $request) use ($app) {

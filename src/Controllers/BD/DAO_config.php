@@ -1,11 +1,15 @@
 <?php
 require_once( __DIR__."'/../../Model/deviceLayout.php");
+require_once( __DIR__."'/../../Model/config.php");
+require_once( __DIR__."'/../../Controllers/BD/dbUtils.php");
 
 class DAO_config{
 	protected $conn;
 	protected static $configTableName = "configuracion_usuario";
 	protected static $devicesLayoutTableName = "dispositivo_usuario";
-	protected static $configMap = array(
+	protected static $userTableName = "usuario";
+	protected static $idField = "id_configuracion_usuario";
+	/*protected static $configMap = array(
 		"color1" => "color_principal",
 		"color2" => "color_secundario",
 		"sistemaBarrido" => "barrido",
@@ -15,7 +19,19 @@ class DAO_config{
 		"respuestaPorVoz" => "retroalimentacion_voz",
 		"vibracion" => "retroalimentacion_vibracion",
 		"reconocimientoVoz" => "reconocimiento_voz"
+	);*/
+	protected static $configMap = array(
+		"color_principal" => "color_principal",
+		"color_secundario" => "color_secundario",
+		"barrido" => "barrido",
+		"tiempo_barrido" => "tiempo_barrido",
+		"contraste" => "contraste",
+		"tam_letra" => "tam_letra",
+		"retroalimentacion_voz" => "retroalimentacion_voz",
+		"retroalimentacion_vibracion" => "retroalimentacion_vibracion",
+		"reconocimiento_voz" => "reconocimiento_voz"
 	);
+	
 	
 	protected static $layoutMap = array(
 		"rotacion" => "rotacion",
@@ -43,7 +59,7 @@ class DAO_config{
 		}
 		
 		//Insertamos los valores de la configuración que no son del layout
-		$configData = self::parseConfigObject($configObject, self::$configMap);
+		$configData = dbUtils::mapObject($configObject, self::$configMap);
 		$tableName = self::$configTableName;
 		$this->conn->insert($tableName, $configData);
 		
@@ -57,7 +73,7 @@ class DAO_config{
 		foreach($devicesLayout as $layout){
 			$newLayout = new deviceLayout();
 			$newLayout->fromArray($layout);
-			$layoutData = self::parseConfigObject($newLayout, self::$layoutMap);
+			$layoutData = dbUtils::mapObject($newLayout, self::$layoutMap);
 			$id_dispositivo = $newLayout->getId_dispositivo();
 			$filter = array(
 				"id_dispositivo" => $id_dispositivo,
@@ -71,7 +87,37 @@ class DAO_config{
 		$this->conn->delete(self::$configTableName, array("id_configuracion_usuario" => $configId));
 	}
 	
+	public function getConfig($id, $userId){
+		$configTableName = self::$configTableName;
+		$layoutTableName = self::$devicesLayoutTableName;
+		$idField = self::$idField;
+		
+		$configAssoc = $this->conn->fetchAssoc("SELECT * FROM $configTableName WHERE $idField = ?", array($id));
+		$config = new Config();
+		$config->fromArray($configAssoc);
+		
+		$devieLayoutAssoc = $this->conn->fetchAssoc("SELECT * FROM $layoutTableName WHERE id_usuario = ?", array($userId));
+		$deviceLayout = new DeviceLayout();
+		$deviceLayout->fromArray($devieLayoutAssoc);
+		
+		$output = array(
+			"config" => $config,
+			"layout" => $deviceLayout
+		);
+		return $output;
+	}
 	
+	public function getConfigByUserId($userId){
+		$configTableName = self::$configTableName;
+		$layoutTableName = self::$devicesLayoutTableName;
+		$userTableName = self::$userTableName;
+		$idField = self::$idField;
+		
+		$id = $this->conn->fetchColumn("SELECT $idField FROM $userTableName WHERE id_usuario = ?", array($userId), 0);
+			
+		return $this->getConfig($id, $userId);
+	}
+		
 	public static function parseConfigObject($configObject, $map){
 		$configArray = $configObject->toArray();
 		$parsedData = array();

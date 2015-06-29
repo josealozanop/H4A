@@ -4,15 +4,15 @@ require_once "serializableObject.php";
 
 class Config extends serializableObject{
 	protected $dificultadCromatica;
-	protected $color1;
-	protected $color2;
-	protected $sistemaBarrido;
-	protected $tiempoBarrido;
+	protected $color_principal;
+	protected $color_secundario;
+	protected $barrido;
+	protected $tiempo_barrido;
 	protected $contraste;
-	protected $tamLetra;
-	protected $reconocimientoVoz;
-	protected $respuestaPorVoz;
-	protected $vibracion;
+	protected $tam_letra;
+	protected $reconocimiento_voz;
+	protected $retroalimentacion_voz;
+	protected $retroalimentacion_vibracion;
 	
 	public function __construct(){
 		parent::__construct();
@@ -26,36 +26,36 @@ class Config extends serializableObject{
 		$this->dificultadCromatica = $dificultadCromatica;
 	}
 
-	public function getColor1(){
-		return $this->color1;
+	public function getColor_principal(){
+		return $this->color_principal;
 	}
 
-	public function setColor1($color1){
-		$this->color1 = $color1;
+	public function setColor_principal($color_principal){
+		$this->color_principal = $color_principal;
 	}
 
-	public function getColor2(){
-		return $this->color2;
+	public function getColor_secundario(){
+		return $this->color_secundario;
 	}
 
-	public function setColor2($color2){
-		$this->color2 = $color2;
+	public function setColor_secundario($color_secundario){
+		$this->color_secundario = $color_secundario;
 	}
 
-	public function getSistemaBarrido(){
-		return $this->sistemaBarrido;
+	public function getBarrido(){
+		return $this->barrido;
 	}
 
-	public function setSistemaBarrido($sistemaBarrido){
-		$this->sistemaBarrido = $sistemaBarrido;
+	public function setBarrido($barrido){
+		$this->barrido = $barrido;
 	}
 
-	public function getTiempoBarrido(){
-		return $this->tiempoBarrido;
+	public function getTiempo_barrido(){
+		return $this->tiempo_barrido;
 	}
 
-	public function setTiempoBarrido($tiempoBarrido){
-		$this->tiempoBarrido = $tiempoBarrido;
+	public function setTiempo_barrido($tiempo_barrido){
+		$this->tiempo_barrido = $tiempo_barrido;
 	}
 
 	public function getContraste(){
@@ -66,36 +66,37 @@ class Config extends serializableObject{
 		$this->contraste = $contraste;
 	}
 
-	public function getTamLetra(){
-		return $this->tamLetra;
+	public function getTam_letra(){
+		return $this->tam_letra;
 	}
 
-	public function setTamLetra($tamLetra){
-		$this->tamLetra = $tamLetra;
+	public function setTam_letra($tam_letra){
+		$this->tam_letra = $tam_letra;
 	}
 
-	public function getReconocimientoVoz(){
-		return $this->reconocimientoVoz;
+	public function getReconocimiento_voz(){
+		return $this->reconocimiento_voz;
 	}
 
-	public function setReconocimientoVoz($reconocimientoVoz){
-		$this->reconocimientoVoz = $reconocimientoVoz;
+	public function setReconocimiento_voz($reconocimiento_voz){
+		$this->reconocimiento_voz = $reconocimiento_voz;
 	}
 
-	public function getRespuestaPorVoz(){
-		return $this->respuestaPorVoz;
+	public function getRetroalimentacion_voz(){
+		return $this->retroalimentacion_voz;
 	}
 
-	public function setRespuestaPorVoz($respuestaPorVoz){
-		$this->respuestaPorVoz = $respuestaPorVoz;
+	public function setRetroalimentacion_voz($retroalimentacion_voz){
+		$this->retroalimentacion_voz = $retroalimentacion_voz;
 	}
 
-	public function getVibracion(){
-		return $this->vibracion;
+	public function getRetroalimentacion_vibracion(){
+		return $this->retroalimentacion_vibracion;
 	}
 
-	public function setVibracion($vibracion){
-		$this->vibracion = $vibracion;
+	public function setRetroalimentacion_vibracion($retroalimentacion_vibracion){
+		$this->retroalimentacion_vibracion = $retroalimentacion_vibracion;
 	}
+
 }
 ?>

@@ -229,8 +229,10 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 	$ruta = $serv . $directorio_destino;
 	if(!file_exists($ruta))	mkdir($ruta);
 	
-	$nombre_fichero->move($ruta,$nombre_fichero->getClientOriginalName());
-
+	if($nombre_fichero){
+		$nombre_fichero->move($ruta,$nombre_fichero->getClientOriginalName());
+	}
+	
     //si hemos enviado un directorio que existe realmente y hemos subido el archivo    
 	$app['db']->insert('usuario', array('mail_usuario' => $mail, 'nombre_usuario' => $nombre,'apellidos_usuario' => $apellidos,'fnac_usuario' => $fnac,'tlfn_usuario' => $tlfn, 'pass_usuario' => $encodePass,'roles'=>'ROLE_USER'));
 	$sql = "select id_usuario FROM usuario WHERE mail_usuario = '$mail'";
