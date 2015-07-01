@@ -29,23 +29,18 @@ $app->get("/homeController", function(Request $request) use ($app){
 	$userId3x6 = 113;
 	$userId3x3 = 115;
 	
+	$MAC = getMAC();
+	
 	$dbRooms = new DAO_rooms($app["db"]);
 	$dbConfig = new DAO_config($app["db"]);
 	
-	
-	$room = $dbRooms->getRoom(15);
 	$allRoomsIds = $dbRooms->getRooms("");
-	$filteredRoomsIds =  $dbRooms->getRooms("nombre_habitacion = 'hab2'");
-	//print_r($room->toArray());
-	//print_r($rooms);
-	//print_r($filteredRooms);
-	
 	$allRooms = array_map(function($id) use ($dbRooms){
 		$newRoom = $dbRooms->getRoom($id);
 		return $newRoom->toArray();
 	}, $allRoomsIds);
 	
-	$configData = $dbConfig->getConfigByUserId($userId3x3);
+	$configData = $dbConfig->getFullConfig($userId3x3, $MAC);
 	$config = $configData["config"];
 	$layout = $configData["layout"];
 	//print_r($config);
@@ -62,9 +57,10 @@ $app->get("/homeController", function(Request $request) use ($app){
 
 $app->get('/', function(Request $request) use ($app) {
 	
-	return $app['twig']->render('index.html', array(
+	//descomentar para ir a la parte de tutor
+	/*return $app['twig']->render('index.html', array(
 			'error' => $app['security.last_error']($request),
-			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));
+			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));*/
 	
 	$subRequest = Request::create('/homeController', 'GET');
     return $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
