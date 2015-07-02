@@ -13,6 +13,8 @@ require_once 'utils.php';
 require_once 'db_utils.php';
 require_once( __DIR__."/Controllers/BD/DAO_rooms.php");
 require_once( __DIR__."/Controllers/BD/DAO_config.php");
+require_once( __DIR__."/Controllers/BD/DAO_sensorActuador.php");
+
 
 /**
 	0 => Redirección a la interfaz de usuario
@@ -33,6 +35,7 @@ $app->get("/homeController", function(Request $request) use ($app){
 	
 	$dbRooms = new DAO_rooms($app["db"]);
 	$dbConfig = new DAO_config($app["db"]);
+	$dbSensors = new DAO_sensorActuador($app["db"]);
 	
 	$allRoomsIds = $dbRooms->getRooms("");
 	$allRooms = array_map(function($id) use ($dbRooms){

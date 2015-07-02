@@ -1,4 +1,4 @@
-app.controller('homeController', function($scope, $attrs, $filter, $window, $http) {
+app.controller('homeController', function($scope, $attrs, $filter, $window, $http, $timeout) {
 	var init = function(){
 		var jsonData = $attrs.userData;
 		var rawData = angular.fromJson(window.atob(jsonData));
@@ -16,11 +16,24 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.needNavigation = needNavigation();
 		$scope.position = "horizontal";
 		
+		$scope.scanning = {
+			activated : true,
+			position : 0
+		}
+		
 		$scope.buttonSize = {
 			width : $scope.getButtonWidth(),
 			height : $scope.getButtonHeight()
 		}
+		
+		$scope.tick();
 	}
+	
+	$scope.tick = function() {
+        $timeout($scope.tick, 1000); 
+		$scope.scanning.position = ($scope.scanning.position + 1) % 9;
+		console.log($scope.scanning.position)
+    }
 	
 	var needNavigation = function(){
 		var nRooms = $scope.rooms.length;
@@ -53,6 +66,16 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		return parseInt(cols);
 	}
 	
+	$scope.isCurrentScanned = function(index){
+		console.log(index, $scope.scanning.position)
+		if($scope.scanning.activated && index == $scope.scanning.position){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 	$scope.getNpages = function(){
 		return Math.ceil($scope.rooms.length / ($scope.filas * $scope.cols));
 	}
@@ -67,6 +90,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	
 	$scope.clickNext = function(){
 		if($scope.page+1 < $scope.nPages){
+			$scope.scanning.position = 0;
 			$scope.page += 1;
 		}
 		//console.log($scope.page);
@@ -74,11 +98,17 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	
 	$scope.clickPrevious = function(){
 		if($scope.page > 0){
+			$scope.scanning.position = 0;
 			$scope.page -= 1;
 		}
 	}
 	
+	$scope.clickRoom = function(room){
+		console.log(room)
+	}
+	
 	$scope.showButton = function(index){
+		//console.log(index,  $scope.rooms.length)
 		if(index < $scope.rooms.length){
 			return 1;
 		}
@@ -87,7 +117,9 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		}
 	}
 	
-	$scope.getButtonIndex = getUnidimensionalIndex;
+	$scope.getButtonIndex = function(fila, col){
+		return getUnidimensionalIndex(fila, col, $scope.cols, $scope.page, $scope.filas*$scope.cols)
+	}
 	
 	$scope.range = range;
 	

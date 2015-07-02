@@ -64,6 +64,11 @@
 		font-size : x-large;
 		font-weight : bold;
 	}
+	
+	.roomsButtons button.selected{
+		background-color : yellow;
+	}
+	
 </style>
 
 <div class="homeController" ng-controller="homeController" user-data={{data}} style="background-color:blue">
@@ -77,8 +82,14 @@
 			
 			<div class="roomsButtons" ng-class="{'col-xs-12' : needNavigation == 0, 'col-xs-10' : needNavigation == 1}">
 				<div ng-repeat="fila in range(0, filas)">
-					<button ng-repeat="col in range(0, cols)" ng-init="index = getButtonIndex(fila, col, cols, page, fila*col)" ng-show="showButton(getButtonIndex(fila, col, cols, page, filas*cols))" style="height	 : {{'{{buttonSize.height}}'}}vh ; width : {{'{{buttonSize.width}}'}}%">
-						<span ng-bind="rooms[getButtonIndex(fila, col, cols, page, filas*cols)].nombre_habitacion">
+					<button 
+					ng-repeat = "col in range(0, cols)" 
+					ng-show = "showButton(getButtonIndex(fila, col))" 
+					style = "height : {{'{{buttonSize.height}}'}}vh ; width : {{'{{buttonSize.width}}'}}%"
+					ng-click = "clickRoom(rooms[getButtonIndex(fila, col)])"
+					ng-class = "{'selected' : isCurrentScanned(fila*cols + col)}"
+					>
+						<span ng-bind="rooms[getButtonIndex(fila, col)].nombre_habitacion">
 						
 						</span>
 					</button>

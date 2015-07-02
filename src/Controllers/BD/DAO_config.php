@@ -6,9 +6,7 @@ require_once( __DIR__."'/../../Controllers/BD/TD.php");
 
 class DAO_config{
 	protected $conn;
-	protected static $configTableName = "configuracion_usuario";
-	protected static $devicesLayoutTableName = "dispositivo_usuario";
-	protected static $userTableName = "usuario";
+	
 	protected static $idField = "id_configuracion_usuario";
 	/*protected static $configMap = array(
 		"color1" => "color_principal",
@@ -123,7 +121,7 @@ class DAO_config{
 		
 		//Obtenemos el layout del dispositivo con mac $MAC para el usuario con id $userId
 		$deviceId = $this->conn->fetchColumn("SELECT $tableDeviceId FROM $tableDeviceName WHERE $tableDeviceMacField = ?", array($MAC), 0);
-		print "user: $userId, deviceId: $deviceId";
+		//print "user: $userId, deviceId: $deviceId";
 		$devieLayoutAssoc = $this->conn->fetchAssoc("SELECT * FROM $layoutTableName WHERE id_usuario = ? and id_dispositivo = ?", array($userId, $deviceId));
 		$deviceLayout = new DeviceLayout();
 		$deviceLayout->fromArray($devieLayoutAssoc);
@@ -135,17 +133,6 @@ class DAO_config{
 		);
 		return $output;
 	}
-		
-	public static function parseConfigObject($configObject, $map){
-		$configArray = $configObject->toArray();
-		$parsedData = array();
-		foreach ($map as $key => $value) {
-			if($configArray[$key] or $configArray[$key]==0){
-				$parsedData[$value] = $configArray[$key];
-			}
-		}
-		return $parsedData;
-	}
-	
+			
 }
 ?>

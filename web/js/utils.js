@@ -1,6 +1,7 @@
 var getUnidimensionalIndex = function(row, col, nCols, page, pageSize){
-	//console.log("entro: ", page);
+	//console.log(row, col, nCols, page, pageSize);
 	var offset = page * pageSize;
+	//console.log(offset + row*nCols + col)
 	return offset + row*nCols + col;
 }
 

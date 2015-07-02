@@ -60,6 +60,52 @@ class TD{
 		"id" => "id_dispositivo",
 		"name" => "dispositivo"
 	);
+	
+	public static $sensorActuador = array(
+		"schema" => array(
+			"id_sen",
+			"Id_Sensor",
+			"PIN",
+			"Tipo",
+			"TipoValor",
+			"Valor",
+			"Localizacion",
+			"id_usuario",
+			"id_habitacion",
+			"codigo_sensor",
+			"codigo_sensor",
+			"senact_sensor",
+			"tipo_sensor",
+			"modelo_sensor",
+			"descripcion_sensor"			
+		),
+		"id" => "id_sen",
+		"name" => "sensoractuador"
+	);
+	
+	public static $sensor_usuario = array(
+		"schema" => array(
+			"id_sensor_usuario",
+			"id_sensor",
+			"id_usuario"
+		),
+		"id" => "id_sensor_usuario",
+		"name" => "sensor_usuario"
+	);
+	
+	public static $habitacion = array(
+		"schema" => array(
+			"id_habitacion",
+			"nombre_habitacion",
+			"id_vivienda",
+			"tipo_habitacion",
+			"id_sensores",
+			"id_propietario",
+			"id_usuarios",
+		),
+		"id" => "id_habitacion",
+		"name" => "habitacion"
+	);
 }
 ?>
 
