@@ -58,11 +58,11 @@ $app->post('/newHabitacion', function (Request $request) use ($app) { //¡¡
 		$sql = "select id_habitacion FROM habitacion WHERE nombre_habitacion = '$nombre_hab'";
 		$id_habitacion = $app['db']->fetchColumn($sql, array(), 0);
 	foreach($idSensorVin as $id){
-		$app['db']->update('sensoractuado', array(
+		$app['db']->update('sensoractuador', array(
 		'id_habitacion'=>$id_habitacion), array('id_sen'=>$id
 	));
 	}
-	return $app['twig']->render('tutor.html', array('accion' =>"habitacion creada correctamente $id "
+	return $app['twig']->render('tutor.html', array('accion' =>"habitacion creada correctamente $nombre_hab "
 	));
 })
 ->bind('newHabitacion')

@@ -9,9 +9,14 @@
 		</span>
 	</div>
 	<div class="panel-body">
-		<form id="form-login" class='standar_h4a_form' action="{{ path('tutor') }}" method="get" role="form">
+		<form class='standar_h4a_form' action="{{ path('busmodUsuario') }}" method="post" role="form">
 		
-		
+			<div class="row form-group">
+				<div class='oculto'>			
+					<input type="text" class="form-control" name="usuario_id"  value="{{id}}" >
+				</div>
+			</div>
+			<fieldset disabled>
 			<div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for="usuario_mail">Mail</label>
@@ -57,11 +62,11 @@
 					<input type="text" class="form-control pass" value="" name="usuario_oldmail">
 				</div>
 		    </div>				
-			
+			</fieldset>
 			<div class="row form-group" style="padding:20px">
 
 				<button id="boton_usuario" type="submit" class="btn btn-primary btn-lg">Modificar</button>
-				</form>
+		</form>
 						
 					
 				<form id="form-exit"  action="{{ path('tutor') }}" method="get" role="form" style="display:inline">

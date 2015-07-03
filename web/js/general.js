@@ -66,6 +66,20 @@ function compruebapass() {
 			$("#mensaje2").fadeIn("slow");
 			return false;
 		}
+		else
+		{
+			$("#mensaje2").fadeOut("slow");
+		}
+		valor = parseInt(passw) 
+     	//Compruebo si es un valor numérico 
+     	if (isNaN(valor)) { 
+			$("#mensaje1").fadeIn("slow");
+			return false;
+		}
+		else
+		{
+			$("#mensaje1").fadeOut("slow");
+		}
     });//fin click
 	$("#btn_pass").click(function (){
 		if(visible){	
@@ -104,6 +118,7 @@ function compruebapass() {
 			$("#btn_passNew").addClass('active');
 			$("#divPass").fadeIn("slow");
 			document.getElementById("pass").value="";
+			document.getElementById("repass").value="";
 			visible =true;
 		}
 	})
@@ -116,11 +131,17 @@ function compruebapass() {
 			$("#mensaje1").fadeIn("slow");
 			return false;
 		}
-		else{
-			if(passw != repass){
-				$("#mensaje2").fadeIn("slow");
-				return false;
-			}
+		else
+		{
+			$("#mensaje1").fadeOut("slow");
+		}
+		if(passw != repass){
+			$("#mensaje2").fadeIn("slow");
+			return false;
+		}
+		else
+		{
+			$("#mensaje2").fadeOut("slow");
 		}
     });//fin click
 	var valido=false;

@@ -17,7 +17,17 @@ $app->get('/newuser', function () use ($app) {
 })
 ->bind('newuser')
 ;
-
+$app->post('/busmodUsuario', function (Request $request) use ($app) {
+	$id_usuario = $request->get('usuario_id');
+	$editar="false";
+	$sql = "select * FROM usuario WHERE id_Usuario = '$id_usuario'";
+	$usuario = $app['db']->fetchAll($sql);	
+	return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
+	'usuario' => $usuario,'error' =>""
+	));
+})
+->bind('busmodUsuario')
+;
 $app->post('/opUsuarios', function (Request $request) use ($app) {
 $id_usuario = $request->get('idUsuario');
 switch($_POST["enviar"]) { 
@@ -261,11 +271,13 @@ $app->get('/viewUser', function (Request $request) use ($app){
 	if($userName!=""){
 		$sql = "select * from usuario where `nombre_usuario`='$userName'";
 		$data = $app['db'] -> fetchAll($sql);
+		$id = $data[0]["id_usuario"];
 		$apellidos = $data[0]["apellidos_usuario"];
 		$mail = $data[0]["mail_usuario"];
 		$fec_nac = $data[0]["fnac_usuario"];
 		$telf = $data[0]["tlfn_usuario"];
 		return $app['twig']->render('viewUserSimple.html', array(
+															'id' => $id,
 															'userName' => $userName, 
 															"userSurname" => $apellidos,
 															"mail" => $mail,

@@ -61,9 +61,9 @@ $app->get("/homeController", function(Request $request) use ($app){
 $app->get('/', function(Request $request) use ($app) {
 	
 	//descomentar para ir a la parte de tutor
-	/*return $app['twig']->render('index.html', array(
+	return $app['twig']->render('index.html', array(
 			'error' => $app['security.last_error']($request),
-			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));*/
+			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));
 	
 	$subRequest = Request::create('/homeController', 'GET');
     return $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST);

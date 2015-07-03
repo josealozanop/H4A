@@ -115,14 +115,14 @@ app.controller('bedroomSensorLinker', ['$scope', 'asyncServices', function($scop
 	$scope.formatedData = JSON.stringify(dataToSend);
 	
 	$scope.prepareData = function () {
-		var ld = $scope.selectedSensors;
+		var ld = $scope.allSensors;
 		
 		for(i in ld) {
 			
 			dev = ld[i];
 			dataToSend.idSensorVin.push(dev.id);
 		}
-		var ld = $scope.allSensors;
+		var ld = $scope.selectedSensors;
 		for(i in ld) {
 			dev = ld[i];
 			dataToSend.idSensorDes.push(dev.id);
