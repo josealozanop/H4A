@@ -11,6 +11,10 @@ class Room extends serializableObject{
 	protected $id_propietario;
 	protected $id_usuarios;
 	
+	public function __construct(){
+		parent::__construct();
+	}
+	
 	public function getId_habitacion(){
 		return $this->id_habitacion;
 	}

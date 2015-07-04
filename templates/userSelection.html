@@ -1,0 +1,14 @@
+{% extends "layoutUsers.html" %}
+{% block homeApp %}	
+
+<div class="userSelection" ng-controller="userSelectionController" user-data={{data}}>
+	<ul>
+		<li ng-repeat="user in users">
+			<a ng-bind="user.nombre_usuario"></a>
+		</li>
+	</ul>
+</div>
+
+{% endblock %}
+
+

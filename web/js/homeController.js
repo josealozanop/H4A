@@ -26,7 +26,10 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			height : $scope.getButtonHeight()
 		}
 		
-		$scope.tick();
+		if($scope.scanning.activated){
+			$scope.tick();
+		}
+		
 	}
 	
 	$scope.tick = function() {

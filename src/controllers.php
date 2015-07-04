@@ -14,6 +14,8 @@ require_once 'db_utils.php';
 require_once( __DIR__."/Controllers/BD/DAO_rooms.php");
 require_once( __DIR__."/Controllers/BD/DAO_config.php");
 require_once( __DIR__."/Controllers/BD/DAO_sensorActuador.php");
+require_once( __DIR__."/Controllers/BD/DAO_users.php");
+require_once( __DIR__."/Controllers/BD/DAO_devices.php");
 
 
 /**
@@ -25,6 +27,31 @@ require_once( __DIR__."/Controllers/BD/DAO_sensorActuador.php");
 /*if(!isset($_COOKIE['sessionType'])){
     setcookie("sessionType",1);
 }*/
+
+$app->get("/userSelection", function(Request $request) use ($app){
+	$MAC = getMAC();
+	
+	$dbDevices = new DAO_devices($app["db"]);
+	$dbUsers = new DAO_users($app["db"]);
+	//Obtenemos el id del dispositivo con dicha mac
+	$devicesIds = $dbDevices->getDevices("mac_dispositivo = '$MAC'");
+	//Obtenemos los usuarios que tiene acceso a dicho dipositivo
+	$usersIds = $dbUsers->getUsersByDevices($devicesIds);
+	$users = array_map(function($id) use ($dbUsers){
+		$newUser = $dbUsers->getUser($id);
+		return $newUser->toArray();
+	}, $usersIds);
+	
+	$data = base64_encode(json_encode(array(
+		"mac" => $MAC,
+		"users" => $users
+	)));
+	
+	return $app['twig']->render('userSelection.html', array(
+		'data' => $data));
+})->bind('userSelection');
+
+
 
 $app->get("/homeController", function(Request $request) use ($app){
 	$userId4x4 = 112;
