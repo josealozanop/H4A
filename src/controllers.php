@@ -54,10 +54,11 @@ $app->get("/userSelection", function(Request $request) use ($app){
 
 
 $app->get("/homeController", function(Request $request) use ($app){
-	$userId4x4 = 112;
+	/*$userId4x4 = 112;
 	$userId3x6 = 113;
-	$userId3x3 = 115;
-	
+	$userId3x3 = 115;*/
+	$selectedUser = intval($request->get('user'));
+	//echo($selectedUser);
 	$MAC = getMAC();
 	
 	$dbRooms = new DAO_rooms($app["db"]);
@@ -70,7 +71,7 @@ $app->get("/homeController", function(Request $request) use ($app){
 		return $newRoom->toArray();
 	}, $allRoomsIds);
 	
-	$configData = $dbConfig->getFullConfig($userId3x3, $MAC);
+	$configData = $dbConfig->getFullConfig($selectedUser, $MAC);
 	$config = $configData["config"];
 	$layout = $configData["layout"];
 	//print_r($config);

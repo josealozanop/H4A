@@ -4,7 +4,7 @@
 <div class="userSelection" ng-controller="userSelectionController" user-data={{data}}>
 	<ul>
 		<li ng-repeat="user in users">
-			<a ng-bind="user.nombre_usuario"></a>
+			<a ng-bind="user.nombre_usuario" ng-href="{{ '{{getPath(user)}}' }}"></a>
 		</li>
 	</ul>
 </div>
