@@ -5,6 +5,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.rooms = rawData.rooms;
 		$scope.config = rawData.config;
 		$scope.layout = rawData.layout;
+		$scope.sensors = rawData.sensors;
 		
 		$scope.filas = $scope.getFilas();
 		$scope.cols = $scope.getCols();
@@ -17,7 +18,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.position = "horizontal";
 		
 		$scope.scanning = {
-			activated : true,
+			activated : false,
 			position : 0
 		}
 		
@@ -35,7 +36,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	$scope.tick = function() {
         $timeout($scope.tick, 1000); 
 		$scope.scanning.position = ($scope.scanning.position + 1) % 9;
-		console.log($scope.scanning.position)
+		//console.log($scope.scanning.position)
     }
 	
 	var needNavigation = function(){
@@ -70,7 +71,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 	
 	$scope.isCurrentScanned = function(index){
-		console.log(index, $scope.scanning.position)
+		//console.log(index, $scope.scanning.position)
 		if($scope.scanning.activated && index == $scope.scanning.position){
 			return true;
 		}
