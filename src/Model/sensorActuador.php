@@ -21,7 +21,7 @@ class sensorActuador extends serializableObject{
 	protected $modelo_sensor;
 	protected $descripcion_sensor;
 	
-		public function getId_sen(){
+	public function getId_sen(){
 		return $this->id_sen;
 	}
 

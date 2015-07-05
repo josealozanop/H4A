@@ -71,6 +71,12 @@ $app->get("/homeController", function(Request $request) use ($app){
 		return $newRoom->toArray();
 	}, $allRoomsIds);
 	
+	$allSensorsIds = $dbSensors->getSensorByUsers(array($selectedUser));
+	$allSensors = array_map(function($id) use ($dbSensors){
+		$newSensor = $dbSensors->getSensor($id);
+		return $newSensor->toArray();
+	}, $allSensorsIds);
+	//print_r($allSensorsIds);
 	$configData = $dbConfig->getFullConfig($selectedUser, $MAC);
 	$config = $configData["config"];
 	$layout = $configData["layout"];
@@ -78,6 +84,7 @@ $app->get("/homeController", function(Request $request) use ($app){
 	
 	$data = base64_encode(json_encode(array(
 		"rooms" => $allRooms,
+		"sensors" => $allSensors,
 		"config" => $config->toArray(),
 		"layout" => $layout->toArray()
 	)));
