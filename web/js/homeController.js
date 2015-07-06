@@ -13,8 +13,9 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.sections = ["rooms", "sensors", "sensor"];
 		$scope.selectedSection = 0;
 		$scope.page = 0;
+		$scope.roomSelected = null;
 		$scope.nPages = $scope.getNpages();
-		$scope.needNavigation = needNavigation();
+		$scope.needNavigation = needNavigation($scope.rooms.length);
 		$scope.position = "horizontal";
 		
 		$scope.scanning = {
@@ -39,14 +40,14 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		//console.log($scope.scanning.position)
     }
 	
-	var needNavigation = function(){
-		var nRooms = $scope.rooms.length;
+	var needNavigation = function(items){
+		
 		var cols = $scope.cols;
 		var filas =  $scope.filas;
 		
 		var nSlots = parseInt(filas) * parseInt(cols);
 		//console.log(nSlots, nRooms);
-		if(nSlots < nRooms){
+		if(nSlots < items){
 			return 1;
 		}
 		else{
@@ -85,7 +86,12 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 	
 	$scope.getButtonHeight = function(){
-		return (100/$scope.filas)-1.8;
+		var margin = [3, 3, 2, 1.8];
+		var index = $scope.filas;
+		if($scope.filas >= margin.length){
+			index = margin.length-1;
+		}
+		return (100/$scope.filas)-margin[index];
 	}
 	
 	$scope.getButtonWidth = function(){
@@ -108,7 +114,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 	
 	$scope.clickRoom = function(room){
-		console.log(room)
+		$scope.selectedRoom = room;
+		$scope.selectedSection = 1;
 	}
 	
 	$scope.showButton = function(index){

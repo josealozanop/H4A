@@ -246,7 +246,7 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 	if(!file_exists($ruta))	mkdir($ruta);
 	
 	if($nombre_fichero){
-		$nombre_fichero->move($ruta,$nombre_fichero->getClientOriginalName());
+		$nombre_fichero->move($ruta, $nombre_fichero->getClientOriginalName());
 	}
 	
     //si hemos enviado un directorio que existe realmente y hemos subido el archivo    
