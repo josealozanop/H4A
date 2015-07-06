@@ -226,8 +226,13 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 	$apellidos =$request->get('usuario_apellidos');
 	$fnac =$request->get('usuario_fnac');
 	$tlfn =$request->get('usuario_tlfn');
-	$encoder = new MessageDigestPasswordEncoder();
-	$encodePass = $encoder->encodePassword($pass, '');
+	if($pass == ""){
+		$encodePass = NULL;
+	}
+	else{
+		$encoder = new MessageDigestPasswordEncoder();
+		$encodePass = $encoder->encodePassword($pass, '');
+	}
 	/*foreach($request->getFiles() as $file)
 {
 	echo 1;

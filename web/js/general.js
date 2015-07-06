@@ -70,15 +70,19 @@ function compruebapass() {
 		{
 			$("#mensaje2").fadeOut("slow");
 		}
-		valor = parseInt(passw) 
-     	//Compruebo si es un valor numérico 
-     	if (isNaN(valor)) { 
-			$("#mensaje1").fadeIn("slow");
-			return false;
-		}
-		else
-		{
-			$("#mensaje1").fadeOut("slow");
+		if (passw != ""){
+			valor = parseInt(passw) 
+			//Compruebo si es un valor numérico 
+			
+			if (isNaN(valor)) { 
+				$("#mensaje1").fadeIn("slow");
+				return false;
+			}
+		
+			else
+			{
+				$("#mensaje1").fadeOut("slow");
+			}
 		}
     });//fin click
 	$("#btn_pass").click(function (){
