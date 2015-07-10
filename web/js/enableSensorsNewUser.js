@@ -3,7 +3,7 @@ app.controller('enableSensorsNewUser', ['$scope', 'asyncServices', '$attrs','$fi
 	$scope.requests.sensorsData = "requesting"
 	$scope.nSensors = 0
 	$scope.currentPage = 1
-	$scope.itemsPerPage = 5
+	$scope.itemsPerPage = 15
 	
 	$scope.current_idUsuario = $attrs.idUsuario;
 	$scope.allRooms = [];

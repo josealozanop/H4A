@@ -63,7 +63,7 @@
 			</div>
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='tipoValorSensor'>Tipo del valor decuelto por el Sensor/Actuador</label><br>
+					<label for='tipoValorSensor'>Tipo del valor devuelto por el Sensor/Actuador</label><br>
 					<label>
 						<p class="lead"><input type="radio" name="tipoValorSensor" id="opciones_1" value="Digital" checked> Digital</input></p>
 						<p class="lead"><input type="radio" name="tipoValorSensor" id="opciones_2" value="Analógico"> Analógico</input></p>
@@ -72,13 +72,13 @@
 			</div>			
 			<div class='row  form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='pinSensor'>Pin de conexion</label><br>
+					<label for='pinSensor'>Pin de conexión</label><br>
 					<input type='number' class="form-control" name='pinSensor' required/>
 				</div>
 			</div>
 			<div class='row form-group'>
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for='habitacionSensor'>Habitacion del Sensor/Actuador</label><br>
+					<label for='habitacionSensor'>Habitación del Sensor/Actuador</label><br>
 					<select class="form-control" name="habitacionSensor">
 						<option></option>
 						{% for u in habitaciones %}

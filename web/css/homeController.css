@@ -1,0 +1,94 @@
+.leftArrow{
+	height : 100vh;
+	padding : 0px !important;
+}
+
+.leftArrow button{
+	height : 100vh;
+	width : 100%;
+	background-color : black;
+	color : white;
+	font-weight : bold;
+	font-size : x-large;
+	border-radius : 0px;
+}
+
+.leftArrow button.disabled{
+	
+	background-color : gray;
+	color : white;
+	
+}
+
+.leftArrow button.active{
+	background-color : yellow;
+}
+
+.rightArrow{
+	height : 100vh;
+	padding : 0px !important;
+}
+
+.rightArrow button{
+	height : 100vh;
+	width  : 100%;
+	background-color : black;
+	color : white;
+	font-weight : bold;
+	font-size : x-large;
+	border-radius : 0px;
+}
+
+.rightArrow button.disabled{
+	
+	background-color : gray;
+	color : white;
+	
+}
+
+.rightArrow button.active{
+	
+	background-color : yellow;
+	
+}
+
+.roomsButtons{
+	background-color : blue;
+	height : 100vh;
+	padding-left : 1% !important;
+	padding-right : 1% !important;
+	padding-top : 1vh !important;
+	padding-bottom : 1vh !important;
+}
+
+.roomsButtons .button{
+	border-radius : 10px;
+	border : 4px solid;
+	border-color : blue;
+	font-size : x-large;
+	font-weight : bold;
+	background-color : gray;
+	display : inline-block;
+	cursor : pointer;
+	color : black;
+}
+
+.roomsButtons .button .buttonLayout{
+	display : flex;
+	flex-direction : column-reverse;
+	justify-content : space-around;
+}
+
+.roomsButtons .button .buttonLayout > *{
+	align-self : center;
+}
+
+.roomsButtons .button .buttonLayout > img{
+	width : 50%;
+	max-height : 50%;
+}
+
+
+.roomsButtons .button.selected{
+	background-color : yellow;
+}
