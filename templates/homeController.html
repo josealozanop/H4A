@@ -76,12 +76,15 @@
 					ng-class = "{'selected' : isCurrentScanned(fila*cols + col)}"
 					>
 						<div class="buttonLayout" ng-if="roomSensors[getButtonIndex(fila, col)].type != 'salir'" style = "height : {{'{{buttonSize.height}}'}}vh">
-							<span ng-bind="roomSensors[getButtonIndex(fila, col)].nombre_sensor">
+							<span>
+								Valor: <span ng-bind = "roomSensors[getButtonIndex(fila, col)].Valor"></span>
 							</span>
+							
 							
 							<img src="/H4A/web/images/svg/bulb.svg" alt="" />
 							
-							<span>
+							<span ng-bind="roomSensors[getButtonIndex(fila, col)].nombre_sensor">
+								
 							</span>
 						</div> 
 						
@@ -93,6 +96,7 @@
 							<img src="/H4A/web/images/svg/back.svg" alt="" />
 							
 							<span>
+								&nbsp;
 							</span>
 						</div> 
 					</div>

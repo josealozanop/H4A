@@ -6,8 +6,6 @@ require_once( __DIR__."'/../../Controllers/BD/TD.php");
 class DAO_sensorActuador{
 	protected $conn;
 		
-	
-	
 	public function __construct($dbConn){
 		$this->conn = $dbConn;
 	}
@@ -48,6 +46,14 @@ class DAO_sensorActuador{
 		
 		return $sensors;
 	}
-	
+		
+	public function updateSensor(sensorActuador $sensor){
+		if($sensor){
+			$sensorTableName = TD::$sensorActuador["name"];
+			$sensorIdField = TD::$sensorActuador["id"];
+			//print_r($sensor->toArray());
+			$this->conn->update($sensorTableName, $sensor->toArray(), array($sensorIdField => $sensor->getId_sen()));
+		}
+	}	
 }
 ?>

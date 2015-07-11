@@ -54,7 +54,9 @@
 				if ($this->$var instanceof serializableObject) {
 					$return[$var] = $this->$var->toArray();
 				} else {
-					$return[$var] = $this->$var;
+					if($var != "me"){
+						$return[$var] = $this->$var;
+					}
 				}
 			}
   

@@ -111,7 +111,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	$scope.clickOnScanning = function(){
 	
 		if($scope.scanning.rightArrow){
-			console.log("entro quiii");
+			
 			$scope.clickNext();
 		}
 		else if($scope.scanning.leftArrow){
@@ -136,7 +136,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		
 		//Selección de habitacion
 		if($scope.sectionControll.selected == 0){
-			console.log("entro");
+			//console.log("entro");
 			$scope.reset();
 		}
 		
@@ -153,6 +153,43 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				type : "salir"
 			});
 			
+			var idsSensors = [];
+			for(i in $scope.roomSensors){
+				var sensor = $scope.roomSensors[i];
+				if(sensor.id_sen > -1){
+					idsSensors.push(sensor.id_sen);
+				}
+			}
+
+			/*
+				Hacemos una petición asíncrona del valor de los sensores paginados de la habitacion
+			*/
+			dataToSend = window.btoa(angular.toJson({
+				action : "getSensors",
+				data : idsSensors
+			}));
+			
+			$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
+			then(function(data, status, headers, config) {
+				var requestData = data.data;
+				var requestStatus = requestData.status;
+				/*
+					Si la peticion de datos ha tenido exito
+					actualizamos los valores de los sensores 
+				*/
+				if(requestStatus == 1){
+					var sensorsValues = requestData.data;
+					//console.log(sensorsValues);
+					for(i in sensorsValues){
+						var value = sensorsValues[i];
+						$scope.roomSensors[i].Valor = value;
+					}
+					//console.log($scope.roomSensors);
+				}
+				else{
+					console.log("Error al obtener valor de los sensores")
+				}
+			});
 			
 			$scope.nPages = $scope.getNpages($scope.roomSensors.length);
 			$scope.needNavigation = $scope.getNeedNavigation($scope.roomSensors.length);
@@ -295,16 +332,35 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 	
 	$scope.clickSensor = function(sensor){
-		
 			if(sensor.type == "salir"){
 				$scope.backToRooms();
 			}
 			else{
-				console.log(sensor);
+				var newValue = 0;
+				if(sensor.Valor == 0){
+					newValue = 1;
+				}
+				
+				dataToSend = window.btoa(angular.toJson({
+					action : "setSensor",
+					id : sensor.id_sen,
+					value : newValue
+				}));
+				
+				$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
+				then(function(data, status, headers, config) {
+					var requestData = data.data;
+					var requestStatus = requestData.status;
+					
+					if(requestStatus == 1){
+						sensor.Valor = newValue;
+					}
+					else{
+						console.log("Error al modificar el valor del sensor")
+					}
+				});
 			}
-		
-	}
-	
+	}	
 	
 	$scope.backToRooms = function(){
 		$scope.sectionControll.selected = 0;
