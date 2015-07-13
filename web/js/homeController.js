@@ -1,4 +1,5 @@
-app.controller('homeController', function($scope, $attrs, $filter, $window, $http, $timeout) {
+app.controller('homeController', function($scope, $attrs, $filter, $window, $http, $timeout, $rootScope) {
+
 	var init = function(){
 		var jsonData = $attrs.userData;
 		var rawData = angular.fromJson(window.atob(jsonData));
@@ -26,7 +27,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.position = "horizontal";
 		
 		$scope.scanning = {
-			activated : true,
+			activated : false,
+			miliseconds : 1800,
 			position : 0,
 			leftArrow : false,
 			rightArrow : false
@@ -47,6 +49,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	$scope.reset = function(){
 		if($scope.scanning.activated){
 			$scope.scanning.position = 0;
+			
 		}
 		$scope.page = 0;
 		$scope.roomSelected = null;
@@ -105,17 +108,18 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			}
 		}
 		//console.log($scope.scanning.position);
-		$timeout($scope.tick, 1500); 
+		$timeout($scope.tick, $scope.scanning.miliseconds); 
     }
 	
 	$scope.clickOnScanning = function(){
-	
+				
 		if($scope.scanning.rightArrow){
-			
 			$scope.clickNext();
+			$scope.scanning.rightArrow = false;
 		}
 		else if($scope.scanning.leftArrow){
 			$scope.clickPrevious();
+			$scope.scanning.leftArrow = false;
 		}
 		else{
 			var index = $scope.scanning.position + $scope.page * $scope.filas * $scope.cols;
@@ -131,6 +135,10 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		}
 	
 	}
+	
+	/**
+	* Watchers
+	**/
 	
 	$scope.$watch("sectionControll.selected", function(){
 		
@@ -200,11 +208,24 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		}
 	})
 
-	$scope.$watch("page", function(){
+	/*$scope.$watch("page", function(){
 		if($scope.isLastPage()){
 			
 		}
+	})*/
+	
+	/**
+	* Listeners
+	**/
+	
+	$rootScope.$on("screenChange", function(context, data){
+		$scope.position = data.position;
+		$scope.$apply();
 	})
+	
+	/**
+	* Getters
+	**/
 	
 	$scope.getNeedNavigation = function(items){
 		
@@ -237,6 +258,10 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		return parseInt(cols);
 	}
 	
+	$scope.getScreenPosition = function(){
+		return $scope.position;
+	}
+
 	$scope.isCurrentScanned = function(index){
 		//console.log(index, $scope.scanning.position)
 		if($scope.scanning.activated && index == $scope.scanning.position){

@@ -2,7 +2,7 @@
 {% block contenido %}	
 {% if accion != "" %}
 	<div class="panel  panel-success data-panel shadow">
-		<div class="panel-heading" >
+		<div class="panel-heading tutorSuccess" >
 			{{accion}}
 		</div>
 	</div>
@@ -10,8 +10,8 @@
 
 {% if app.request.query.get("status") is defined %}
 	{% if app.request.query.get("status") == 1 %}
-		<div class="panel  panel-success data-panel shadow">
-			<div class="panel-heading" >
+		<div class="panel panel-success data-panel shadow">
+			<div class="panel-heading tutorSuccess" >
 				El proceso de configuración del usuario ha terminado satisfactoriamente
 			</div>
 		</div>
