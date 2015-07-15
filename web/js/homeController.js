@@ -1,4 +1,4 @@
-app.controller('homeController', function($scope, $attrs, $filter, $window, $http, $timeout, $rootScope) {
+app.controller('homeController', function($scope, $attrs, $filter, $window, $http, $timeout, $rootScope, screenService) {
 
 	var init = function(){
 		var jsonData = $attrs.userData;
@@ -12,9 +12,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.layout = rawData.layout;
 		$scope.sensors = rawData.sensors;
 		
-		$scope.filas = $scope.getFilas();
-		$scope.cols = $scope.getCols();
-		
+
 		$scope.sectionControll = {
 			selected : 0,
 			names : ["rooms", "sensors", "sensor"]
@@ -22,9 +20,12 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		
 		$scope.page = 0;
 		$scope.roomSelected = null;
-		$scope.nPages = $scope.getNpages($scope.rooms.length);
+		
 		$scope.needNavigation = $scope.getNeedNavigation($scope.rooms.length);
-		$scope.position = "horizontal";
+		$scope.position = $scope.getInitialLayout();
+		$scope.filas = $scope.getFilas();
+		$scope.cols = $scope.getCols();
+		$scope.nPages = $scope.getNpages($scope.rooms.length);
 		
 		$scope.scanning = {
 			activated : false,
@@ -220,6 +221,24 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	
 	$rootScope.$on("screenChange", function(context, data){
 		$scope.position = data.position;
+		
+		if($scope.sectionControll.selected == 0){
+			$scope.needNavigation = $scope.getNeedNavigation($scope.rooms.length);
+		}
+		else if($scope.sectionControll.selected == 1){
+			$scope.needNavigation = $scope.getNeedNavigation($scope.roomSensors);
+		}
+		
+
+		$scope.filas = $scope.getFilas();
+		$scope.cols = $scope.getCols();		
+		$scope.scanning.position = 0;
+		$scope.nPages = $scope.getNpages($scope.rooms.length);
+		
+		$scope.buttonSize = {
+			width : $scope.getButtonWidth(),
+			height : $scope.getButtonHeight()
+		}
 		$scope.$apply();
 	})
 	
@@ -260,6 +279,63 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	
 	$scope.getScreenPosition = function(){
 		return $scope.position;
+	}
+	
+	$scope.getInitialLayout = function(){
+		var width  = angular.element(window).width();
+		var height = angular.element(window).height();
+		if(height > width){
+			return "vertical";
+		}
+		else{
+			return "horizontal";
+		}
+	}
+	
+	$scope.getLimitedText = function(text){
+		if(text){
+			var max = text.length;
+			var screen = screenService.getScreenSize();
+			var shortName = false;
+			
+			switch(screen){
+				case "xs":
+					if(max > 7){
+						max = 5;
+						shortName = true;
+					}	
+				break;
+				
+				case "sm" :
+					if(max > 10){
+						max = 8;
+						shortName = true;
+					}
+				break;
+				
+				case "md" :
+					if(max > 14){
+						max = 12;
+						shortName = true;
+					}
+				break;
+				
+				case "lg" : 
+					if(max > 16){
+						max = 14;
+						shortName = true;
+					}
+				break;
+			}
+			
+			var result = text.substring(0, max);
+			if(shortName){
+				result += "...";
+			}
+			
+			return result;
+		}
+	
 	}
 
 	$scope.isCurrentScanned = function(index){
@@ -304,12 +380,13 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 	
 	$scope.getButtonHeight = function(){
-		var margin = [3, 3, 2, 1.8, 1.5];
+		/*var margin = [3, 3, 2, 1.8, 1.5];
 		var index = $scope.filas;
 		if($scope.filas >= margin.length){
 			index = margin.length-1;
 		}
-		return (100/$scope.filas)-margin[index];
+		return (100/$scope.filas)-margin[index];*/
+		return (100/$scope.filas);
 	}
 	
 	$scope.getButtonWidth = function(){

@@ -1,10 +1,14 @@
-.leftArrow{
+.homeController  .container-fluid.horizontalLayout  > .row{
 	height : 100vh;
-	padding : 0px !important;
 }
 
-.leftArrow button{
-	height : 100vh;
+.homeController .leftArrow{
+	padding : 0px !important;
+	height : 100%;
+}
+
+.homeController .leftArrow button{
+	height : 100%;
 	width : 100%;
 	background-color : black;
 	color : white;
@@ -13,24 +17,22 @@
 	border-radius : 0px;
 }
 
-.leftArrow button.disabled{
-	
+.homeController .leftArrow button.disabled{
 	background-color : gray;
 	color : white;
-	
 }
 
-.leftArrow button.active{
+.homeController .leftArrow button.active{
 	background-color : yellow;
 }
 
-.rightArrow{
-	height : 100vh;
+.homeController .rightArrow{
+	height : 100%;
 	padding : 0px !important;
 }
 
-.rightArrow button{
-	height : 100vh;
+.homeController .rightArrow button{
+	height : 100%;
 	width  : 100%;
 	background-color : black;
 	color : white;
@@ -39,20 +41,18 @@
 	border-radius : 0px;
 }
 
-.rightArrow button.disabled{
+.homeController .rightArrow button.disabled{
 	
 	background-color : gray;
 	color : white;
 	
 }
 
-.rightArrow button.active{
-	
+.homeController .rightArrow button.active{
 	background-color : yellow;
-	
 }
 
-.roomsButtons{
+.homeController .roomsButtons{
 	background-color : blue;
 	height : 100vh;
 	padding-left : 1% !important;
@@ -61,7 +61,7 @@
 	padding-bottom : 1vh !important;
 }
 
-.roomsButtons .button{
+.homeController .roomsButtons .button{
 	border-radius : 10px;
 	border : 4px solid;
 	border-color : blue;
@@ -71,24 +71,78 @@
 	display : inline-block;
 	cursor : pointer;
 	color : black;
+	height : 100%;
 }
 
-.roomsButtons .button .buttonLayout{
+@media (max-width: 768px) {
+	.homeController .roomsButtons .button{
+		font-size : medium;
+	}
+}
+@media (min-width: 768px) and (max-width: 992px) {
+	.homeController .roomsButtons .button{
+		font-size : large;
+	}
+}
+
+.homeController .roomsButtons .button .buttonLayout{
 	display : flex;
 	flex-direction : column-reverse;
 	justify-content : space-around;
+	height : 100%;
 }
 
-.roomsButtons .button .buttonLayout > *{
+.homeController .roomsButtons .button .buttonLayout > *{
 	align-self : center;
 }
 
-.roomsButtons .button .buttonLayout > img{
+.homeController .roomsButtons .button .buttonLayout > img{
 	width : 50%;
 	max-height : 50%;
 }
 
-
-.roomsButtons .button.selected{
+.homeController .roomsButtons .button.selected{
 	background-color : yellow;
 }
+
+.homeController  .container-fluid.verticalLayout {
+	height : 100vh;
+}
+
+.homeController  .verticalLayout .verticalBody{
+	height : 90% !important;
+}
+
+.homeController  .verticalLayout .navigationArrows{
+	background-color : white;
+	height : 10%;
+}
+
+.homeController  .verticalLayout .navigationArrows .arrow{
+	height : 100%;
+	padding : 0px;
+}
+
+.homeController  .verticalLayout .navigationArrows .arrow.leftArrow{
+	padding-right : 0.5% !important;
+}
+
+.homeController  .verticalLayout .navigationArrows .arrow.rightArrow{
+	padding-left : 0.5% !important;
+}
+
+.homeController  .verticalLayout .navigationArrows .arrow > button{
+	height : 100%;
+	width : 100%;
+	background-color : black;
+	color : white;
+	font-weight : bold;
+	font-size : x-large;
+	border-radius : 0px;
+}
+
+.homeController  .verticalLayout .navigationArrows .arrow > button.active{
+	background-color : yellow;
+}
+
+
