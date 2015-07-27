@@ -28,7 +28,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.nPages = $scope.getNpages($scope.rooms.length);
 		
 		$scope.scanning = {
-			activated : false,
+			activated : true,
 			miliseconds : 1800,
 			position : 0,
 			leftArrow : false,
@@ -43,6 +43,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		if($scope.scanning.activated){
 			//console.log("activado")
 			$scope.tick();
+			$scope.tickBarProgress();
 		}
 		
 	}
@@ -59,6 +60,9 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 	
 	$scope.tick = function() {
+		$scope.lastTickTime = (new Date()).getTime();
+		$scope.barPercent = 0;
+		//console.log($scope.lastTickTime);
 		
 		$scope.scanning.leftArrow = false;
 		$scope.scanning.rightArrow = false;
@@ -111,6 +115,13 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		//console.log($scope.scanning.position);
 		$timeout($scope.tick, $scope.scanning.miliseconds); 
     }
+	
+	$scope.tickBarProgress = function(){
+		var currentTime = (new Date()).getTime();
+		var diff = currentTime - $scope.lastTickTime;
+		$scope.barPercent = (diff*100)/$scope.scanning.miliseconds;
+		$timeout($scope.tickBarProgress, 20); 
+	}
 	
 	$scope.clickOnScanning = function(){
 				
