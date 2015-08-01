@@ -13,7 +13,7 @@
 			</div>
 			
 			<div class="roomsButtons" ng-class="{'col-xs-12' : needNavigation == 0, 'col-xs-10' : needNavigation == 1}">
-				<div class="elementsLayout">
+				<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
 					<div ng-repeat="fila in range(0, filas)"  style = "height : {{'{{buttonSize.height}}'}}%">
 						<div 
 						class = "button"
@@ -28,7 +28,7 @@
 								<span ng-bind="getLimitedText(rooms[getButtonIndex(fila, col)].nombre_habitacion)">
 								</span>
 								
-								<img src="/H4A/web/images/svg/home.svg" alt="" />
+								<img ng-src="{{'{{rooms[getButtonIndex(fila, col)].img}}'}}" alt="" />
 								
 								<span>
 								</span>
@@ -51,7 +51,7 @@
 					</div>
 				</div>
 
-				<div class="progressBarContainer">
+				<div class="progressBarContainer" ng-if = "isScanning()">
 					<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 					</div>
 				</div>
@@ -73,7 +73,7 @@
 							
 			<div class="roomsButtons" ng-class="{'col-xs-12' : needNavigation == 0, 'col-xs-10' : needNavigation == 1}">
 			
-				<div class="elementsLayout">
+				<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
 					<div ng-repeat="fila in range(0, filas)" style = "height : {{'{{buttonSize.height}}'}}%">
 						<div 
 						class = "button"
@@ -89,7 +89,7 @@
 								</span>
 								
 								
-								<img src="/H4A/web/images/svg/bulb.svg" alt="" />
+								<img ng-src="{{'{{roomSensors[getButtonIndex(fila, col)].img}}'}}" alt="" />
 								
 								<span ng-bind="getLimitedText(roomSensors[getButtonIndex(fila, col)].nombre_sensor)">
 									
@@ -111,7 +111,7 @@
 					</div>
 				</div>
 
-				<div class="progressBarContainer">
+				<div class="progressBarContainer" ng-if = "isScanning()">
 					<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 					</div>
 				</div>
@@ -132,7 +132,7 @@
 	<div class="container-fluid verticalLayout" ng-if="getScreenPosition() == 'vertical'" ng-switch="sectionControll.selected" ng-click="isScanning() && clickOnScanning()">
 		<!-- seccion de las habitaciones de la casa -->
 		<div class="row verticalBody roomsButtons" ng-class = "{'fullBody' : needNavigation == 0}" ng-switch-when="0">
-			<div class="elementsLayout">
+			<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
 				<div ng-repeat="fila in range(0, filas)"  style = "height : {{'{{buttonSize.height}}'}}%">
 					<div 
 					class = "button"
@@ -147,7 +147,7 @@
 							<span ng-bind="getLimitedText(rooms[getButtonIndex(fila, col)].nombre_habitacion)">
 							</span>
 							
-							<img src="/H4A/web/images/svg/home.svg" alt="" />
+							<img ng-src="{{'{{rooms[getButtonIndex(fila, col)].img}}'}}" alt="" />
 							
 							<span>
 							</span>
@@ -168,14 +168,14 @@
 				</div>
 			</div>
 			
-			<div class="progressBarContainer">
+			<div class="progressBarContainer" ng-if = "isScanning()">
 				<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 				</div>
 			</div>		
 		</div>
 		
 		<div class="row verticalBody roomsButtons" ng-class = "{'fullBody' : needNavigation == 0}" ng-switch-when="1">
-			<div class="elementsLayout">
+			<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
 				<div ng-repeat="fila in range(0, filas)" style = "height : {{'{{buttonSize.height}}'}}%">
 					<div 
 					class = "button"
@@ -189,9 +189,8 @@
 							<span>
 								Valor: <span ng-bind = "roomSensors[getButtonIndex(fila, col)].Valor"></span>
 							</span>
-							
-							
-							<img src="/H4A/web/images/svg/bulb.svg" alt="" />
+
+								<img ng-src="{{'{{roomSensors[getButtonIndex(fila, col)].img}}'}}" alt="" />
 							
 							<span ng-bind="getLimitedText(roomSensors[getButtonIndex(fila, col)].nombre_sensor)">
 								
@@ -213,7 +212,7 @@
 				</div>
 			</div>
 			
-			<div class="progressBarContainer" >
+			<div class="progressBarContainer" ng-if = "isScanning()">
 				<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 				</div>
 			</div>

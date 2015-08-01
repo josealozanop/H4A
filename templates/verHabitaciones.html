@@ -69,7 +69,10 @@
 			<a href="{{ path('nuevaHabitacion') }}" class="btn btn-primary btn-lg" role="button">Añadir habitacion</a>
 	</div><br/>
 	{% else %}
-		<center><h3>Aún no has registrado nungun usuario</h3></center>
+		<center><h3>Aún no has registrado ninguna habitación</h3></center>
+		<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
+			<a href="{{ path('nuevaHabitacion') }}" class="btn btn-primary btn-lg" role="button">Añadir habitacion</a>
+		</div><br/>
 	{% endif %}
 {% endblock %}
 

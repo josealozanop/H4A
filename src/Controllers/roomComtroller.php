@@ -9,10 +9,7 @@
 	$input = file_get_contents("php://input");
 	$input = base64_decode($input);
 	$input = json_decode($input, true);
-	
-	
-	
-	
+
 	print(1);
 
 ?>

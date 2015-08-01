@@ -28,7 +28,23 @@ $app->post('/newSensor', function (Request $request) use ($app) {
 	$tipoValorSensor = $request->get('tipoValorSensor');
 	$pinSensor = $request->get('pinSensor');
 	$habitacionSensor = $request->get('habitacionSensor');
+	$valorMinimo = $request->get('valorMinimo');
+	$valorMaximo = $request->get('valorMaximo');
+	$incremento = $request->get('incremento');
 	$senAct01=1;
+	
+	if(!isset($valorMinimo)){
+		$valorMinimo = 0;
+	}
+	
+	if(!isset($valorMaximo)){
+		$valorMaximo = 1;
+	}
+	
+	if(!isset($incremento)){
+		$incremento = 1;
+	}
+	
 	if($senActSensor=="Sensor")$senAct01=0;
 	$sql = "select id_sen FROM sensoractuador WHERE nombre_sensor = '$nombreSensor'";
 	$nombreRep = $app['db']->fetchColumn($sql, array(), 0);
@@ -45,9 +61,25 @@ $app->post('/newSensor', function (Request $request) use ($app) {
 		return $app['twig']->render('new_sensor.html', array('habitaciones' => $habitacion, 'error' => "El codigo del $tipoSensor ya existe, introduzca un codigo diferente"));
 	}
 	if($habitacionSensor=="")$habitacionSensor=NULL;
-	$app['db']->insert('sensoractuador', array('PIN' => $pinSensor,'TipoValor' => $tipoValorSensor,'Tipo' => $senActSensor, 'Valor' =>'0',
-		'id_habitacion' =>$habitacionSensor,'codigo_sensor' =>$codigoSensor,'nombre_sensor' =>$nombreSensor,'senact_sensor' => $senAct01,
-		'tipo_sensor' => $tipoSensor,'modelo_sensor' =>$modeloSensor,'descripcion_sensor' =>$descripSensor));
+	
+	$app['db']->insert('sensoractuador', array(
+		'PIN' => $pinSensor,
+		'TipoValor' => $tipoValorSensor,
+		'Tipo' => $senActSensor,
+		'Valor' =>'0',
+		'id_habitacion' => $habitacionSensor,
+		'codigo_sensor' =>$codigoSensor,
+		'nombre_sensor' =>$nombreSensor,
+		'senact_sensor' => $senAct01,
+		'tipo_sensor' => $tipoSensor,
+		'modelo_sensor' =>$modeloSensor,
+		'descripcion_sensor' =>$descripSensor,
+		'valor_min' => $valorMinimo,
+		'valor_max' => $valorMaximo,
+		'incremento' => $incremento
+		)
+	);
+	
 	$sql = "select id_sen FROM sensoractuador WHERE nombre_sensor = '$nombreSensor'";
 	$id = $app['db']->fetchColumn($sql, array(), 0);
 	$app['db']->update('sensoractuador', array(

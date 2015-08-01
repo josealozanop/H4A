@@ -51,14 +51,8 @@ $app->get("/userSelection", function(Request $request) use ($app){
 		'data' => $data));
 })->bind('userSelection');
 
-
-
 $app->get("/homeController", function(Request $request) use ($app){
-	/*$userId4x4 = 112;
-	$userId3x6 = 113;
-	$userId3x3 = 115;*/
 	$selectedUser = intval($request->get('user'));
-	//echo($selectedUser);
 	$MAC = getMAC();
 	
 	$dbRooms = new DAO_rooms($app["db"]);
@@ -70,12 +64,39 @@ $app->get("/homeController", function(Request $request) use ($app){
 		$newRoom = $dbRooms->getRoom($id);
 		return $newRoom->toArray();
 	}, $allRoomsIds);
+	//Establecemos las imagenes de cada habitación
+	foreach($allRooms as &$room){
+		$room["img"] = "/H4A/web/images/svg/home.svg";
+	}
 	
 	$allSensorsIds = $dbSensors->getSensorByUsers(array($selectedUser));
 	$allSensors = array_map(function($id) use ($dbSensors){
 		$newSensor = $dbSensors->getSensor($id);
 		return $newSensor->toArray();
 	}, $allSensorsIds);
+	//Establecemos las imágenes para cada uno de los sensores
+	foreach($allSensors as &$sensor){
+		switch($sensor["TipoValor"]){
+			case '0':
+				$sensor["img"] = "/H4A/web/images/svg/digitalOFF.svg";
+				$sensor["imgActive"] = "/H4A/web/images/svg/digitalON.svg";
+			break;
+			
+			case '1':
+				$sensor["img"] = "/H4A/web/images/svg/digital.svg";
+			break;
+			
+			case '2':
+				$sensor["img"] = "/H4A/web/images/svg/analogic.svg";
+			break;
+			
+			default:
+				$sensor["img"] = "/H4A/web/images/svg/digitalOFF.svg";
+				$sensor["imgActive"] = "/H4A/web/images/svg/digitalON.svg";
+			break;
+		}
+	}
+	
 	//print_r($allSensorsIds);
 	$configData = $dbConfig->getFullConfig($selectedUser, $MAC);
 	$config = $configData["config"];

@@ -233,10 +233,7 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 		$encoder = new MessageDigestPasswordEncoder();
 		$encodePass = $encoder->encodePassword($pass, '');
 	}
-	/*foreach($request->getFiles() as $file)
-{
-	echo 1;
-}*/
+	
 	$nombre_fichero= $request->files->get('campofotografia');// $request->getFiles('campofotografia');
 	$directorio_destino = $mail;
 	$serv = "/";
@@ -247,6 +244,12 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 	
 	if($nombre_fichero){
 		$nombre_fichero->move($ruta, $nombre_fichero->getClientOriginalName());
+	}
+	
+	//Si el usuario no tiene su carpeta creada se la hacemos
+	$userDir = "C:/wamp/www/H4A/users/".$mail;
+	if(!is_dir($userDir)){
+		mkdir($userDir);
 	}
 	
     //si hemos enviado un directorio que existe realmente y hemos subido el archivo    

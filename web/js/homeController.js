@@ -28,7 +28,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.nPages = $scope.getNpages($scope.rooms.length);
 		
 		$scope.scanning = {
-			activated : true,
+			activated : false,
 			miliseconds : 1800,
 			position : 0,
 			leftArrow : false,
@@ -164,7 +164,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		if($scope.sectionControll.selected == 1){
 			$scope.roomSensors = $scope.sensors.filter(function(sensor){
 				//console.log(sensor);
-				if(sensor.id_habitacion == $scope.selectedRoom.id_habitacion){
+				if(sensor.id_habitacion == $scope.selectedRoom.id_habitacion && sensor.Tipo == "Actuador"){
 					return sensor;
 				}
 			});
@@ -311,29 +311,29 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			
 			switch(screen){
 				case "xs":
-					if(max > 7){
-						max = 5;
+					if(max > 9){
+						max = 7;
 						shortName = true;
 					}	
 				break;
 				
 				case "sm" :
-					if(max > 10){
-						max = 8;
+					if(max > 12){
+						max = 10;
 						shortName = true;
 					}
 				break;
 				
 				case "md" :
-					if(max > 14){
-						max = 12;
+					if(max > 16){
+						max = 14;
 						shortName = true;
 					}
 				break;
 				
 				case "lg" : 
-					if(max > 16){
-						max = 14;
+					if(max > 18){
+						max = 16;
 						shortName = true;
 					}
 				break;
@@ -449,31 +449,55 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				$scope.backToRooms();
 			}
 			else{
-				var newValue = 0;
-				if(sensor.Valor == 0){
-					newValue = 1;
-				}
-				
-				dataToSend = window.btoa(angular.toJson({
-					action : "setSensor",
-					id : sensor.id_sen,
-					value : newValue
-				}));
-				
-				$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
-				then(function(data, status, headers, config) {
-					var requestData = data.data;
-					var requestStatus = requestData.status;
+				switch(sensor.TipoValor){
+					case '0':
+						click2stateSensor(sensor);
+					break;
 					
-					if(requestStatus == 1){
-						sensor.Valor = newValue;
-					}
-					else{
-						console.log("Error al modificar el valor del sensor")
-					}
-				});
+					case '1':
+						clickNstateSensor(sensor);
+					break;
+					
+					case '2':
+						clickAnalogicSensor(sensor);
+					break;
+				}
 			}
-	}	
+	}
+
+	var click2stateSensor = function(sensor){
+		var newValue = 0;
+		if(sensor.Valor == 0){
+			newValue = 1;
+		}
+		
+		dataToSend = window.btoa(angular.toJson({
+			action : "setSensor",
+			id : sensor.id_sen,
+			value : newValue
+		}));
+		
+		$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
+		then(function(data, status, headers, config) {
+			var requestData = data.data;
+			var requestStatus = requestData.status;
+			
+			if(requestStatus == 1){
+				sensor.Valor = newValue;
+			}
+			else{
+				console.log("Error al modificar el valor del sensor")
+			}
+		});
+	}
+	
+	var clickNstateSensor = function(sensor){
+		console.log("sensor de n estados");
+	}
+	
+	var clickAnalogicSensor = function(sensor){
+		console.log("sensor analógico");
+	}
 	
 	$scope.backToRooms = function(){
 		$scope.sectionControll.selected = 0;
