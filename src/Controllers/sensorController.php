@@ -66,7 +66,7 @@ $app->post('/newSensor', function (Request $request) use ($app) {
 		'PIN' => $pinSensor,
 		'TipoValor' => $tipoValorSensor,
 		'Tipo' => $senActSensor,
-		'Valor' =>'0',
+		'Valor' => $valorMinimo,
 		'id_habitacion' => $habitacionSensor,
 		'codigo_sensor' =>$codigoSensor,
 		'nombre_sensor' =>$nombreSensor,

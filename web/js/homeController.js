@@ -12,10 +12,18 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.layout = rawData.layout;
 		$scope.sensors = rawData.sensors;
 		
-
+		
+		for(i in $scope.sensors){
+			var sensor = $scope.sensors[i];
+			if(sensor.TipoValor == '0' && sensor.Valor == 1){
+				sensor.imgNotActive = sensor.img;
+				sensor.img = sensor.imgActive;
+			}
+		}
+		
 		$scope.sectionControll = {
 			selected : 0,
-			names : ["rooms", "sensors", "sensor"]
+			names : ["rooms", "sensors", "digitalSensor", "analogicSensor"]
 		}
 		
 		$scope.page = 0;
@@ -28,7 +36,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.nPages = $scope.getNpages($scope.rooms.length);
 		
 		$scope.scanning = {
-			activated : false,
+			activated : true,
 			miliseconds : 1800,
 			position : 0,
 			leftArrow : false,
@@ -161,7 +169,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		}
 		
 		//Selección de sensor dentro de una habitación
-		if($scope.sectionControll.selected == 1){
+		else if($scope.sectionControll.selected == 1){
+			$scope.reset();
 			$scope.roomSensors = $scope.sensors.filter(function(sensor){
 				//console.log(sensor);
 				if(sensor.id_habitacion == $scope.selectedRoom.id_habitacion && sensor.Tipo == "Actuador"){
@@ -214,6 +223,28 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			$scope.nPages = $scope.getNpages($scope.roomSensors.length);
 			$scope.needNavigation = $scope.getNeedNavigation($scope.roomSensors.length);
 			
+			if($scope.scanning.activated){
+				$scope.scanning.position = 0;
+			}
+		}
+		
+		//Sección de sensores de nEstados
+		else if($scope.sectionControll.selected == 2){
+			var start = parseInt($scope.selectedNStateSensor.valor_min);
+			var end = parseInt($scope.selectedNStateSensor.valor_max);
+			var inc = parseInt($scope.selectedNStateSensor.incremento);
+			//console.log(start, end, inc);
+			$scope.sensorStates = [];
+			for(i = start; i <= end; i = i+inc){
+				//console.log(i);	
+				$scope.sensorStates.push(i);
+			}
+			$scope.sensorStates.push({
+				type : "salir"
+			});
+			
+			$scope.nPages = $scope.getNpages($scope.sensorStates.length);
+			$scope.needNavigation = $scope.getNeedNavigation($scope.sensorStates.length);
 			if($scope.scanning.activated){
 				$scope.scanning.position = 0;
 			}
@@ -483,26 +514,113 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			var requestStatus = requestData.status;
 			
 			if(requestStatus == 1){
+				if(sensor.Valor == 0){
+					sensor.imgNotActive = sensor.img;
+					sensor.img = sensor.imgActive;
+				}
+				else{
+					sensor.img = sensor.imgNotActive;
+				}
 				sensor.Valor = newValue;
 			}
 			else{
-				console.log("Error al modificar el valor del sensor")
+				console.log("Error al modificar el valor del sensor");
 			}
 		});
+		
+		/*
+		if(sensor.Valor == 0){
+			sensor.imgNotActive = sensor.img;
+			sensor.img = sensor.imgActive;
+		}
+		else{
+			sensor.img = sensor.imgNotActive;
+		}
+		sensor.Valor = newValue;
+		*/
 	}
 	
 	var clickNstateSensor = function(sensor){
-		console.log("sensor de n estados");
+		$scope.sectionControll.selected = 2;
+		$scope.selectedNStateSensor = sensor;
+		//console.log("sensor de n estados");
 	}
 	
 	var clickAnalogicSensor = function(sensor){
 		console.log("sensor analógico");
 	}
 	
+	$scope.clickNewState = function(newValue){
+		//console.log(newValue);
+		if(newValue.type == "salir"){
+			$scope.backToSensors();
+		}
+		else{			
+			dataToSend = window.btoa(angular.toJson({
+				action : "setSensor",
+				id : $scope.selectedNStateSensor.id_sen,
+				value : newValue
+			}));
+			
+			$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
+			then(function(data, status, headers, config) {
+				var requestData = data.data;
+				var requestStatus = requestData.status;
+				
+				if(requestStatus == 1){
+					
+				}
+				else{
+					console.log("Error al modificar el valor del sensor");
+				}
+			});
+			$scope.backToSensors();
+		}
+	}
+	
+	$scope.isCurrentSensorValue = function(value){
+		if(value == $scope.selectedNStateSensor.Valor){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	$scope.isSensorActive = function(sensor){
+		if(sensor && sensor.TipoValor == '0' && sensor.Valor != 0){
+			//console.log(sensor);
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 	$scope.backToRooms = function(){
 		$scope.sectionControll.selected = 0;
 	}
 	
+	$scope.backToSensors = function(){
+		console.log("volviendo a los sensores");
+		$scope.sectionControll.selected = 1;
+	}
+	
+	$scope.parseSensorValue = function(sensor){
+		if(sensor){
+			if(sensor.type != 'salir' && sensor.TipoValor == '0'){
+				if(sensor.Valor == 0){
+					return 'OFF';
+				}
+				else{
+					return 'ON';
+				}
+			}
+			else{
+				return sensor.Valor;
+			}
+		}
+	}
 	/**
 	*	Funciones auxiliares.
 	**/
@@ -512,9 +630,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 	
 	$scope.range = range;
-	
-	
-	
+		
 	$scope.debug = function(){
 		console.log("Cargando homeController...");
 		console.log($scope);

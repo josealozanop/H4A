@@ -20,6 +20,9 @@ class sensorActuador extends serializableObject{
 	protected $tipo_sensor;
 	protected $modelo_sensor;
 	protected $descripcion_sensor;
+	protected $valor_min;
+	protected $valor_max;
+	protected $incremento;
 	
 	public function getId_sen(){
 		return $this->id_sen;
@@ -139,6 +142,30 @@ class sensorActuador extends serializableObject{
 
 	public function setDescripcion_sensor($descripcion_sensor){
 		$this->descripcion_sensor = $descripcion_sensor;
+	}
+	
+	public function getValor_min(){
+		return $this->valor_min;
+	}
+
+	public function setValor_min($valor_min){
+		$this->valor_min = $valor_min;
+	}
+
+	public function getValor_max(){
+		return $this->valor_max;
+	}
+
+	public function setValor_max($valor_max){
+		$this->valor_max = $valor_max;
+	}
+
+	public function getIncremento(){
+		return $this->incremento;
+	}
+
+	public function setIncremento($incremento){
+		$this->incremento = $incremento;
 	}
 	
 }

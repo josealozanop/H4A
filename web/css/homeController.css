@@ -127,6 +127,21 @@
 	background-color : yellow;
 }
 
+.homeController .roomsButtons .button.isActive .sensorValue{
+	text-decoration : underline;
+	font-weight : bolder;
+}
+
+.homeController .roomsButtons .button.currentValue{
+	border : medium solid black;
+	background-color : #aaaaaa;
+}
+
+.homeController .roomsButtons .button.currentValue .sensorValue{
+	text-decoration : underline;
+	font-weight : bolder;
+}
+
 .homeController  .container-fluid.verticalLayout {
 	height : 100vh;
 }
