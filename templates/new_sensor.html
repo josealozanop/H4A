@@ -56,12 +56,12 @@
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='senAct'>Sensor o Actuador</label><br>
 					<label>
-						<p class="lead"><input type="radio" name="senAct" id="opciones_1" value="Sensor" checked> Sensor</input></p>
-						<p class="lead"><input type="radio" name="senAct" id="opciones_2" value="Actuador"> Actuador</input></p>
+						<p class="lead"><input type="radio" name="senAct" id="opciones_1" ng-value="'Sensor'" ng-model="tipo"> Sensor</input></p>
+						<p class="lead"><input type="radio" name="senAct" id="opciones_2" ng-value="'Actuador'" ng-model="tipo"> Actuador</input></p>
 					</label>
 				</div>
 			</div>
-			<div class='row  form-group'>
+			<div class='row  form-group' ng-if="tipo == 'Actuador'">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='tipoValorSensor'>Tipo del valor devuelto por el Sensor/Actuador</label><br>
 					<label>

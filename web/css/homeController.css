@@ -119,17 +119,17 @@
 }
 
 .homeController .roomsButtons .button .buttonLayout > img{
-	width : 50%;
+	
 	max-height : 50%;
 }
 
 .homeController .roomsButtons .button.selected{
-	background-color : yellow;
+	background-color : yellow !important;
 }
 
 .homeController .roomsButtons .button.isActive .sensorValue{
 	text-decoration : underline;
-	font-weight : bolder;
+
 }
 
 .homeController .roomsButtons .button.currentValue{

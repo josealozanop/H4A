@@ -12,3 +12,7 @@ var range = function (a,b){
 	}
 	return range;
 }
+
+var randi = function randomIntFromInterval(min, max){
+    return Math.floor(Math.random()*(max-min+1)+min);
+}

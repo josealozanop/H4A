@@ -90,6 +90,10 @@ $app->get("/homeController", function(Request $request) use ($app){
 				$sensor["img"] = "/H4A/web/images/svg/analogic.svg";
 			break;
 			
+			case '-1':
+				$sensor["img"] = "/H4A/web/images/svg/sensors.svg";
+			break;
+			
 			default:
 				$sensor["img"] = "/H4A/web/images/svg/digitalOFF.svg";
 				$sensor["imgActive"] = "/H4A/web/images/svg/digitalON.svg";

@@ -62,6 +62,10 @@ $app->post('/newSensor', function (Request $request) use ($app) {
 	}
 	if($habitacionSensor=="")$habitacionSensor=NULL;
 	
+	if($senActSensor == "Sensor"){
+		$tipoValorSensor = '-1';
+	}
+	
 	$app['db']->insert('sensoractuador', array(
 		'PIN' => $pinSensor,
 		'TipoValor' => $tipoValorSensor,
