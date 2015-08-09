@@ -406,6 +406,6 @@ $app->get('/serviceController', function (Request $request) use ($app) {
 	}
 	
     return new Response($out);
-})
-->bind('serviceController')
-;
+})->bind('serviceController');
+
+

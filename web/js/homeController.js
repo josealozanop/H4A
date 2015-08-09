@@ -234,7 +234,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				$scope.clickNewState(selectedItem);
 			}
 			else if($scope.sectionControll.selected == 4){
-				//El úniso caso posible en los sensores de sólo lectura es que el botón de atrá este seleccionado
+				//El úniso caso posible en los sensores de sólo lectura es que el botón de atrás este seleccionado
 				$scope.backToRooms();
 			}
 		}

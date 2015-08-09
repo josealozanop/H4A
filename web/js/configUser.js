@@ -130,7 +130,7 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 		
 	$scope.$watch("requestStatus", function(){
 		if($scope.requestStatus == 1){
-			$window.location.href = '/H4A/web/tutor?status=1';
+			$window.location.href = '/H4A/web/setAssets?idUsuario='+$scope.idUsuario;
 		}
 	})
 	
@@ -323,7 +323,7 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 		$scope.colSec = $scope.colorMap[index];
 	}
 	$scope.sinfo = function(){
-		//console.log($scope)
+		console.log($scope)
 	}
 	
 	$scope.init();

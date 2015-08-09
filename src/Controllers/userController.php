@@ -9,6 +9,8 @@ use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
+require_once( __DIR__."/../utils/userAssets.php");
+
 $app->get('/newuser', function () use ($app) {
 	$mac = getMAC();
 	$user = $app['security']->getToken()->getUser();
@@ -234,6 +236,7 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 		$encodePass = $encoder->encodePassword($pass, '');
 	}
 	
+	/*
 	$nombre_fichero= $request->files->get('campofotografia');// $request->getFiles('campofotografia');
 	$directorio_destino = $mail;
 	$serv = "/";
@@ -250,12 +253,25 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 	$userDir = "C:/wamp/www/H4A/users/".$mail;
 	if(!is_dir($userDir)){
 		mkdir($userDir);
-	}
+	}*/
+	
+	
 	
     //si hemos enviado un directorio que existe realmente y hemos subido el archivo    
 	$app['db']->insert('usuario', array('mail_usuario' => $mail, 'nombre_usuario' => $nombre,'apellidos_usuario' => $apellidos,'fnac_usuario' => $fnac,'tlfn_usuario' => $tlfn, 'pass_usuario' => $encodePass,'roles'=>'ROLE_USER'));
 	$sql = "select id_usuario FROM usuario WHERE mail_usuario = '$mail'";
 	$id_usuario = $app['db']->fetchColumn($sql, array(), 0);
+	
+	$assetsManager = new userAssets($id_usuario);
+	$assetsManager->createDir();
+	$img = $request->files->get('campofotografia');
+	
+	if($img){
+		$extension = (new SplFileInfo($img->getClientOriginalName()))->getExtension();
+		$request->files->get('campofotografia')->move($assetsManager->getFullPath(), "profileImg.".$extension);
+	}
+	
+	
 	$app['db']->insert('tutor_usuario', array('id_tutor' => $id_tutor, 'id_usuario' => $id_usuario));
 	return $app['twig']->render('new_usermac.html', array('mac' => $mac, 'id_usuario' => $id_usuario));
 })
@@ -296,8 +312,66 @@ $app->get('/viewUser', function (Request $request) use ($app){
     else{
 		return $app['twig']->render('tutor.html', array('accion' => ""));
 	}
-})
-->bind('viewUser')
-;
+})->bind('viewUser');
+
+$app->get('/setAssets', function (Request $request) use ($app){
+	$idUsuario = $request->get('idUsuario');
+	return $app['twig']->render('setAssets.html', array('idUsuario' => $idUsuario));
+})->bind('setAssets');
+
+$app->post('/updateAssets', function (Request $request) use ($app){
+	//return $app->redirect('/H4A/web/tutor');
+	//$dbUsers = new DAO_users($app["db"]);
+	
+	$idUsuario = $request->get('idUsuario');
+	$assetsManager = new userAssets($idUsuario);
+	$assetsManager->createDir();
+	//echo $assetsManager->getFullPath();
+	//$user = $dbUsers->getUser($idUsuario);
+	//$idUsuario = 55;
+	
+	$roomsJson = $request->get('rooms');
+	$rooms = json_decode($roomsJson, true);
+	$roomsIds = array_column($rooms, "id_habitacion");
+	
+	$sensorsJson = $request->get('sensors');
+	$sensors = json_decode($sensorsJson, true);
+	$sensorsIds = array_column($sensors, "id_sen");
+	
+	$fotos = array();
+	foreach($roomsIds as $id){
+		//echo($id);
+		if($request->files->get($id)){
+			//$fotos[$id] = $request->files->get($id);
+			array_push($fotos, array(
+				"file" => $request->files->get($id),
+				"name" => $id.'.'.((new SplFileInfo($request->files->get($id)->getClientOriginalName()))->getExtension())
+			));
+		}
+	}
+	
+	$fotosSensores = array();
+	foreach($sensorsIds as $id){
+		//echo($id);
+		if($request->files->get("sensor".$id)){
+			array_push($fotosSensores, array(
+				"file" => $request->files->get("sensor".$id),
+				"name" => $id.'.'.((new SplFileInfo($request->files->get("sensor".$id)->getClientOriginalName()))->getExtension())
+			));
+		}
+	}
+	
+	
+	foreach($fotos as $foto){
+		$foto["file"]->move($assetsManager->getFullPath()."/rooms/", $foto["name"]);
+	}
+	
+	foreach($fotosSensores as $foto){
+		$foto["file"]->move($assetsManager->getFullPath()."/sensors/", $foto["name"]);
+	}
+	
+	//$out = count($fotos);
+	return $app->redirect('/H4A/web/tutor?status=1');
+})->bind('updateAssets');
 
 ?>

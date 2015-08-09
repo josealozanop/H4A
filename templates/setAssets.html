@@ -1,0 +1,83 @@
+{% extends "layout.twig.html" %}
+{% block contenido %}
+<div class="panel panel-primary data-panel shadow">
+	<div class="panel-heading" >	
+		<span class='title' >
+				Creando usuario, paso 5 de 5: Personalización de la interfaz  
+		</span>
+	</div>
+	<div class="panel-body setAssets" ng-controller="userAssetsController" id-usuario ={{idUsuario}}>
+		<div class="dataLoaded" ng-if="reqStatus.global == 1">
+			<div class="row">
+				<div class="col-xs-12 infoText">
+					Ya casi hemos terminado. Ahora podrá definir una imagen para cada una de las habitaciones y de los actuadores/sensores de la casa. Si no define imágenes HOME4ALL pondrá las fotos por defecto.
+				</div>
+				<div class="col-xs-12 question">
+					¿Desea definir las imágenes para las habitaciones y para los sensores/actuadores?
+				</div>
+			
+				<div class="col-xs-12">
+					<button class="btn btn-info" ng-click="setImages = true">
+						Sí, configurar imágenes.
+					</button>
+					<button class="btn btn-success" ng-click="endConfig()">
+						No, finalizar proceso.
+					</button>
+				</div>
+			</div>
+
+			<form enctype="multipart/form-data" action="{{ path('updateAssets') }}" method="post" role="form" class = "insertImages" ng-show="setImages">
+				
+				<div class="row images_group" ng-show="rooms.length">
+					<div class="col-xs-12" >
+						<label for="">
+							Seleccione una habitacion: 
+							<select ng-model="selectedRoom.room" ng-options="room.nombre_habitacion for room in rooms" class="form-control">
+							</select>
+						</label>			
+					</div>
+					
+					<div class="col-xs-12">
+						
+						<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+						<input type="hidden" name="idUsuario" ng-value="idUsuario" />
+						<input type="hidden" name="rooms" ng-value="getRoomsData()" />
+						
+						<input custom-on-change="uploadFile" ng-repeat="room in rooms" ng-show="room.id_habitacion == selectedRoom.room.id_habitacion"  name="{{ '{{room.id_habitacion}}' }}" type="file" class="btn"/>
+							
+						
+					</div>
+				</div>
+
+				<div class="row" ng-show="sensors.length">
+					<div class="col-xs-12">
+						<label for="">
+							Seleccione un Sensor/Actuador: 
+							<select ng-model="selectedSensor.sensor" ng-options="sensor.nombre_sensor for sensor in sensors" class="form-control">
+							</select>
+						</label>			
+					</div>
+					
+					<div class="col-xs-12">
+
+						<input type="hidden" name="sensors" ng-value="getSensorsData()" />
+						<input custom-on-change="uploadFileSensor" ng-repeat="sensor in sensors" ng-show="sensor.id_sen == selectedSensor.sensor.id_sen"  name="{{ '{{getSensorInputName(sensor)}}' }}" type="file" class="btn"/>
+							
+					</div>
+				</div>
+				<button type="submit" class="btn btn-success btn-lg">Finalizar</button>
+				
+			</form>
+		</div>
+		
+		<!-- <button ng-click="showScope()">scope</button> -->
+		
+		
+		<div class="loading" loader ng-if="reqStatus.global==2">			
+		</div>
+		
+	</div>
+</div>	
+{% endblock %}
+
+

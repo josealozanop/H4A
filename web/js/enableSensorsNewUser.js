@@ -61,6 +61,7 @@ app.controller('enableSensorsNewUser', ['$scope', 'asyncServices', '$attrs','$fi
 			console.log($scope.selectedRoom);*/
 			$scope.getDataToSend();
 			console.log($scope.dataToSendObject);
+			console.log($scope);
 		}
 	}
 	
@@ -120,7 +121,6 @@ app.controller('enableSensorsNewUser', ['$scope', 'asyncServices', '$attrs','$fi
 	$scope.getDataToSend = function(){
 		$scope.dataToSendObject.enabledSensors = $scope.allSensors;
 		$scope.dataToSendObject.enabledSensors = $filter('filter')($scope.dataToSendObject.enabledSensors, {enabled : true}, true);
-		$scope.dataToSendObject.enabledSensors = $scope.allSensors;
 		$scope.dataToSendObject.disabledSensors = $filter('filter')($scope.dataToSendObject.enabledSensors, {enabled : false}, false);
 		$scope.dataToSend = angular.toJson($scope.dataToSendObject);
 	}

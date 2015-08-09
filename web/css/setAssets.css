@@ -1,0 +1,21 @@
+.setAssets {
+	font-size : smaller;
+}
+
+.setAssets .question{
+	font-weight : bold;
+	margin-top : 20px;
+}
+
+.setAssets .insertImages{
+	margin-top : 20px;
+}
+
+.setAssets .insertImages label{
+	font-size : smaller;
+	font-weight : medium;
+}
+
+.setAssets .images_group{
+	margin-bottom : 20px;
+}
