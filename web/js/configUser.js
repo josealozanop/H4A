@@ -111,7 +111,7 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 		
 		//console.log(dataToSend);
 		
-		$http.post("/H4A2/H4A/src/Controllers/configController.php", dataToSend).
+		$http.post("/H4A2/H4A/web/index_dev.php/../src/Controllers/configController.php", dataToSend).
 		then(function(data, status, headers, config) {
 			var requestData = data.data;
 			var requestStatus = requestData.status;
