@@ -64,7 +64,7 @@ class userAssets{
 	
 	public function createDir(){
 		if(!$this->hasDir()){
-			mkdir($this->getFullPath());
+			mkdir($this->getFullPath(), 0777, true);
 		}
 	}
 
