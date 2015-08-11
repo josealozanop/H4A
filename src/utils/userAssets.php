@@ -6,9 +6,9 @@ require_once __DIR__.'/../Model/user.php';
 
 
 class userAssets{
-	public static $linuxPath = "/var/www/H4A2/H4A/";
-	public static $windowsPath = "C:/wamp/www/H4A/";
-	public static $h4aPath = "users/";
+	public static $linuxPath = "/var/www/H4A2/";
+	public static $windowsPath = "C:/wamp/www/";
+	public static $h4aPath = "H4A/users/";
 		
 	protected $conn;
 	protected $dbUsers;
@@ -67,6 +67,29 @@ class userAssets{
 			mkdir($this->getFullPath(), 0777, true);
 		}
 	}
+	
+	public function itemHasOwnImage($base, $id, $append = ""){
+		$allowedExtensions = array(
+			".svg",
+			".png",
+			".jpg",
+			".jpeg"
+		);
+		
+		foreach($allowedExtensions as $extension){
+			$filePath = $this->getFullPath().$base.$id.$append.$extension;
+			$paths = array(userAssets::$linuxPath, userAssets::$windowsPath);
+
+			if(is_file($filePath)){
+				return str_replace($paths, "/", $filePath);
+				//return $filePath;
+			}
+		}
+		
+		return false;
+	}
+	
+	
 
 }
 ?>

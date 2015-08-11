@@ -63,15 +63,15 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 		//datos de la configuración
 		var data = {
 			"dificultadCromatica" : $scope.difCrom,
-			"color1" : $scope.colPrin,
-			"color2" : $scope.colSec,
-			"sistemaBarrido" : $scope.sistemaBarrido,
-			"tiempoBarrido" : $scope.tiempoBarrido,
+			"color_principal" : $scope.colPrin,
+			"color_secundario" : $scope.colSec,
+			"barrido" : $scope.sistemaBarrido,
+			"tiempo_barrido" : $scope.tiempoBarrido,
 			"contraste" : $scope.contrast,
-			"tamLetra" : $scope.fontSize,
-			"reconocimientoVoz" : $scope.reconocimientoVoz,
-			"respuestaPorVoz" : $scope.respuestaPorVoz,			
-			"vibracion" : $scope.vibracion,						
+			"tam_letra" : $scope.fontSize,
+			"reconocimiento_voz" : $scope.reconocimientoVoz,
+			"retroalimentacion_voz" : $scope.respuestaPorVoz,			
+			"retroalimentacion_vibracion" : $scope.vibracion,						
 		}
 		
 		//Cada dispositivo tendra su propia layout definida
@@ -99,19 +99,21 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 		}
 		
 		//console.log(data, layouts, $scope.idUsuario);
-		var dataEncoded = window.btoa(angular.toJson(data));
-		var layoutsEncoded = window.btoa(angular.toJson(layouts));
+		
+		//??
+		//var dataEncoded = window.btoa(angular.toJson(data));
+		//var layoutsEncoded = window.btoa(angular.toJson(layouts));
 				
 		dataToSend = window.btoa(angular.toJson({
-			data: dataEncoded,
-			layoutsData : layoutsEncoded,
-			id : $scope.idUsuario,
-			action : "insertConfig"
+			config: data,
+			layout : layouts,
+			id : $scope.idUsuario
 		}));
 		
 		//console.log(dataToSend);
 		
-		$http.post("/H4A2/H4A/src/Controllers/configController.php", dataToSend).
+		//??
+		/*$http.post("/H4A2/H4A/src/Controllers/configController.php", dataToSend).
 		then(function(data, status, headers, config) {
 			var requestData = data.data;
 			var requestStatus = requestData.status;
@@ -124,6 +126,21 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 			else{
 				$scope.requestStatus = -1;
 				console.log("Error al realizar la setConfig")
+			}
+		})*/
+		
+		$http.get("./insertConfig?data="+dataToSend).
+		then(function(data, status, headers, config) {
+			var requestData = data.data;
+			var requestStatus = requestData.status;
+			
+			if(requestStatus == 1){
+				var response = requestData.data;
+				$scope.requestStatus = 1;
+				console.log(response);
+			}
+			else{
+				console.log("Error al realizar peticion")
 			}
 		})
 	}
@@ -322,6 +339,30 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 			}
 		$scope.colSec = $scope.colorMap[index];
 	}
+	
+	$scope.echo = function(){
+		
+		var ob ={
+			action : "ping"
+		};
+		//arfu = angular.toJson(arfu);
+		
+		$http.get("./echo?data="+window.btoa(angular.toJson(ob))).
+		then(function(data, status, headers, config) {
+			var requestData = data.data;
+			var requestStatus = requestData.status;
+			//console.log(data);
+			if(requestStatus == 1){
+				var response = requestData.data;
+				console.log(configData);
+			}
+			else{
+				console.log("Error al realizar peticion")
+			}
+		})
+		
+	}
+	
 	$scope.sinfo = function(){
 		console.log($scope)
 	}

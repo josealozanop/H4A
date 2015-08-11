@@ -3,7 +3,7 @@
 		This file is an extension of the object FR_Object created by Joe Stump in his book "Understanding MVC in PHP"
 		This file has been modified by Borja Molina Zea, borja.mz8'at~gmail.com
 	**/
-	abstract class serializableObject{
+abstract class serializableObject{
 		/**
 		* $me
 		*
@@ -21,25 +21,25 @@
 			$this->me = new ReflectionClass($this);
 		}
 
-		/**
-		* setFrom
-		*
-		* @author Joe Stump <joe@joestump.net>
-		* @access public
-		* @param mixed $data Array of variables to assign to instance
-		* @return void
-		*/
-			public function fromArray($data){
-			  if (is_array($data) && count($data)){
-					$valid = get_class_vars(get_class($this));
-				  foreach ($valid as $var => $val) {
-					  if (isset($data[$var])) {
-						  $this->$var = $data[$var];
-					  }
-				  }
-			  }
-			  //echo $this->color1;
-		  }
+	/**
+	* setFrom
+	*
+	* @author Joe Stump <joe@joestump.net>
+	* @access public
+	* @param mixed $data Array of variables to assign to instance
+	* @return void
+	*/
+	public function fromArray($data){
+		if (is_array($data) && count($data)){
+			$valid = get_class_vars(get_class($this));
+			foreach ($valid as $var => $val) {
+				if (isset($data[$var])) {
+					$this->$var = $data[$var];
+				}
+			}
+		}
+	//echo $this->color1;
+	}
 
 		/**
 		* toArray
@@ -82,5 +82,5 @@
 		public function toBase64(){
 			return base64_encode($this->toJson());
 		}
-	}
+}
 ?>

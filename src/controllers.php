@@ -65,8 +65,15 @@ $app->get("/homeController", function(Request $request) use ($app){
 		return $newRoom->toArray();
 	}, $allRoomsIds);
 	//Establecemos las imagenes de cada habitación
+	$assetsManager = new userAssets($selectedUser);
 	foreach($allRooms as &$room){
-		$room["img"] = "/H4A/web/images/svg/home.svg";
+		$filePath = $assetsManager->itemHasOwnImage("/rooms/", $room["id_habitacion"]);
+		if($filePath){
+			$room["img"] = $filePath;
+		}
+		else{
+			$room["img"] = "/H4A/web/images/svg/home.svg";
+		}	
 	}
 	
 	$allSensorsIds = $dbSensors->getSensorByUsers(array($selectedUser));
@@ -74,24 +81,57 @@ $app->get("/homeController", function(Request $request) use ($app){
 		$newSensor = $dbSensors->getSensor($id);
 		return $newSensor->toArray();
 	}, $allSensorsIds);
+	
 	//Establecemos las imágenes para cada uno de los sensores
 	foreach($allSensors as &$sensor){
+		$filePath = $assetsManager->itemHasOwnImage("/sensors/", $sensor["id_sen"]);
+		//echo $filePath;
 		switch($sensor["TipoValor"]){
 			case '0':
-				$sensor["img"] = "/H4A/web/images/svg/digitalOFF.svg";
-				$sensor["imgActive"] = "/H4A/web/images/svg/digitalON.svg";
+				$filePathOn = $assetsManager->itemHasOwnImage("/sensors/", $sensor["id_sen"], "ON");
+				$filePathOff = $assetsManager->itemHasOwnImage("/sensors/", $sensor["id_sen"], "OFF");
+				
+				if($filePathOff){
+					$sensor["img"] = $filePathOff;
+				}
+				else{
+					$sensor["img"] = "/H4A/web/images/svg/digitalOFF.svg";
+				}
+				
+				if($filePathOn){
+					$sensor["imgActive"] = $filePathOn;
+				}
+				else{
+					$sensor["imgActive"] = "/H4A/web/images/svg/digitalON.svg";
+				}
 			break;
 			
 			case '1':
-				$sensor["img"] = "/H4A/web/images/svg/digital.svg";
+				if($filePath){
+					$sensor["img"] = $filePath;
+				}
+				else{
+					$sensor["img"] = "/H4A/web/images/svg/digital.svg";
+				}
 			break;
 			
 			case '2':
-				$sensor["img"] = "/H4A/web/images/svg/analogic.svg";
+				if($filePath){
+					$sensor["img"] = $filePath;
+				}
+				else{
+					$sensor["img"] = "/H4A/web/images/svg/analogic.svg";
+				}
 			break;
 			
 			case '-1':
-				$sensor["img"] = "/H4A/web/images/svg/sensors.svg";
+				if($filePath){
+					$sensor["img"] = $filePath;
+				}
+				else{
+					$sensor["img"] = "/H4A/web/images/svg/sensors.svg";
+				}
+
 			break;
 			
 			default:
@@ -289,6 +329,61 @@ $app->get('/help', function (Request $request) use ($app) {
 })
 ->bind('help')
 ;
+
+$app->get('/insertConfig', function (Request $request) use ($app) {
+	$input = json_decode(base64_decode($request->get("data")), true);
+	$configData = $input["config"];
+	//print_r($configData);
+	$layout = $input["layout"];
+	$id_usuario = $input["id"];
+	
+	$out = array(
+		"data" => null,
+		"status" => 0,
+		"error_msg" => ""
+	);
+	
+	$config = new Config();
+	$config->fromArray($configData);
+	//print_r($config);
+	$db = new DAO_config($app['db']);
+	$db->insertConfig($config, $layout, $id_usuario);
+	$out["status"] = 1;
+	$out["data"] = array(
+		"id_usuario" => $id_usuario,
+		"config" => $configData,
+		"layout" => $layout
+	);
+	
+	$out = json_encode($out, true);
+	return new Response($out);
+})->bind("insertConfig");
+
+
+//Ejemplo de servicio asíncrono utilizando get. 
+$app->get('/echo', function (Request $request) use ($app) {
+	$input = json_decode(base64_decode($request->get("data")), true);
+	
+	$out = array(
+		"data" => null,
+		"status" => 0,
+		"error_msg" => ""
+	);
+	
+	if($input["action"] == "ping"){
+		$out["status"] = -1;
+		$out["data"] = "pong";
+		
+	}
+	else{
+		$out["status"] = -1;
+		$out["error_msg"] = "action not allowed";
+		$out["data"] = $input;
+	}
+	
+	$out = json_encode($out, true);
+	return new Response($out);
+})->bind("echo");
 
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {

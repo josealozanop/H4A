@@ -61,8 +61,11 @@
 					<div class="col-xs-12">
 
 						<input type="hidden" name="sensors" ng-value="getSensorsData()" />
-						<input custom-on-change="uploadFileSensor" ng-repeat="sensor in sensors" ng-show="sensor.id_sen == selectedSensor.sensor.id_sen"  name="{{ '{{getSensorInputName(sensor)}}' }}" type="file" class="btn"/>
-							
+						<span ng-repeat="sensor in sensors" ng-show="sensor.id_sen == selectedSensor.sensor.id_sen">
+							<input ng-show="sensor.TipoValor != 0" custom-on-change="uploadFileSensor"   name="{{ '{{getSensorInputName(sensor, -1)}}' }}" type="file" class="btn"/>
+							<input ng-show="sensor.TipoValor == 0" custom-on-change="uploadFileSensorOn"   name="{{ '{{getSensorInputName(sensor, 0)}}' }}" type="file" class="btn"/>
+							<input ng-show="sensor.TipoValor == 0" custom-on-change="uploadFileSensorOff"   name="{{ '{{getSensorInputName(sensor, 1)}}' }}" type="file" class="btn"/>
+						</span>
 					</div>
 				</div>
 				<button type="submit" class="btn btn-success btn-lg">Finalizar</button>
@@ -70,7 +73,7 @@
 			</form>
 		</div>
 		
-		<!-- <button ng-click="showScope()">scope</button> -->
+		<button ng-click="showScope()">scope</button> 
 		
 		
 		<div class="loading" loader ng-if="reqStatus.global==2">			

@@ -359,6 +359,20 @@ $app->post('/updateAssets', function (Request $request) use ($app){
 				"name" => $id.'.'.((new SplFileInfo($request->files->get("sensor".$id)->getClientOriginalName()))->getExtension())
 			));
 		}
+		
+		if($request->files->get("sensor".$id."ON")){
+			array_push($fotosSensores, array(
+				"file" => $request->files->get("sensor".$id."ON"),
+				"name" => $id.'ON'.'.'.((new SplFileInfo($request->files->get("sensor".$id."ON")->getClientOriginalName()))->getExtension())
+			));
+		}
+		
+		if($request->files->get("sensor".$id."OFF")){
+			array_push($fotosSensores, array(
+				"file" => $request->files->get("sensor".$id."OFF"),
+				"name" => $id.'OFF'.'.'.((new SplFileInfo($request->files->get("sensor".$id."OFF")->getClientOriginalName()))->getExtension())
+			));
+		}
 	}
 	
 	

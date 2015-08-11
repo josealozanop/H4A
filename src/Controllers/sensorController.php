@@ -199,7 +199,34 @@ switch($_POST["enviar"]) {
 
 $app->get('/verSensor', function () use ($app) {
     return $app['twig']->render('ver_sensor.html');
-})
-->bind('verSensor');
+})->bind('verSensor');
+
+$app->get('/getSensorsByUsers', function (Request $request) use ($app) {
+	$input = json_decode(base64_decode($request->get("data")), true);
+	//print_r($input);
+	$ids = $input["usersIds"];
+	
+	$out = array(
+		"data" => null,
+		"status" => 0,
+		"error_msg" => ""
+	);
+	
+	$dbSensors = new DAO_sensorActuador($app["db"]);
+	$sensorsIds = $dbSensors->getSensorByUsers($ids);
+	$sensorsData = array();
+	foreach($sensorsIds as $sensorId){
+		$newSensor = $dbSensors->getSensor($sensorId);
+		array_push($sensorsData, $newSensor->toArray());
+	}
+	
+	$out["status"] = 1;
+	$out["data"] = array(
+		"sensors" => $sensorsData
+	);
+	
+	$out = json_encode($out, true);
+	return new Response($out);
+})->bind("getSensorsByUsers");
 
 ?>

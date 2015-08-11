@@ -189,6 +189,32 @@ $app->get('/nuevaHabitacion', function (Request $request) use ($app) {
     return $app['twig']->render('new_habitacion.html', array('usuarios' => $usuarios, 'error' => ""
 	));
 })
-->bind('nuevaHabitacion')
-;
+->bind('nuevaHabitacion');
+
+$app->get('/getRooms', function (Request $request) use ($app) {
+			
+	$out = array(
+		"data" => null,
+		"status" => 0,
+		"error_msg" => ""
+	);
+	
+	$dbRooms = new DAO_rooms($app['db']);
+	$ids = $dbRooms->getRooms();
+	$values = array();
+	foreach($ids as $id){
+		$room = $dbRooms->getRoom($id);
+		array_push($values, $room->toArray());			
+	}
+	
+	$out["status"] = 1;
+	$out["data"] = array(
+		"rooms" => $values
+	);
+	
+	$out = json_encode($out, true);
+	return new Response($out);
+})->bind("getRooms");
+
+
 ?>

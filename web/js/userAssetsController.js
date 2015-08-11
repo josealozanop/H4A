@@ -23,19 +23,27 @@ app.controller('userAssetsController', function($scope, asyncServices, $attrs, $
 			$scope.selectedSensor.sensor.imgFile = event.target.files;
 		};
 		
+		$scope.uploadFileSensorOn = function(event){
+			$scope.selectedSensor.sensor.imgFileOn = event.target.files;
+		};
+		
+		$scope.uploadFileSensorOff = function(event){
+			$scope.selectedSensor.sensor.imgFileOff = event.target.files;
+		};
+		
 		//Pedimos las habitaciones
 		dataToSend = window.btoa(angular.toJson({
 			action : "getRooms"
 		}));
 		
 		$scope.reqStatus.rooms = 2;
-		$http.post("/H4A/src/Controllers/asyncRoomController.php", dataToSend).
+		$http.get("./getRooms").
 		then(function(data, status, headers, config) {
 			var requestData = data.data;
 			var requestStatus = requestData.status;
 			//console.log(data);
 			if(requestStatus == 1){
-				$scope.rooms = angular.fromJson(requestData.data);
+				$scope.rooms = angular.fromJson(requestData.data).rooms;
 				for(i in $scope.rooms){
 					//var item = $scope.rooms[i];
 					//item["img"] = "/H4A/web/images/svg/home.svg";
@@ -52,17 +60,16 @@ app.controller('userAssetsController', function($scope, asyncServices, $attrs, $
 		
 		//Pedimos los sensores ligados a un usuario
 		dataToSend = window.btoa(angular.toJson({
-			action : "getSensorsByUsers",
 			usersIds : [$scope.idUsuario]
 		}));
 		$scope.reqStatus.sensors = 2;
-		$http.post("/H4A/src/Controllers/asyncUserController.php", dataToSend).
+		$http.get("./getSensorsByUsers?data="+dataToSend).
 		then(function(data, status, headers, config) {
 			var requestData = data.data;
 			var requestStatus = requestData.status;
 			//console.log(data);
 			if(requestStatus == 1){
-				$scope.sensors = angular.fromJson(requestData.data);
+				$scope.sensors = angular.fromJson(requestData.data).sensors;
 				for(i in $scope.sensors){
 					$scope.sensors[i].imgFile = new FileReader();
 				}
@@ -105,8 +112,17 @@ app.controller('userAssetsController', function($scope, asyncServices, $attrs, $
 		$window.location.href = '/H4A/web/updateAssets';
 	}
 	
-	$scope.getSensorInputName = function(sensor){
-		return "sensor"+sensor.id_sen;
+	$scope.getSensorInputName = function(sensor, type){
+		if(type==0){
+			return "sensor"+sensor.id_sen+"OFF";
+		}
+		else if(type==1){
+			return "sensor"+sensor.id_sen+"ON";
+		}
+		else if(type==-1){
+			return "sensor"+sensor.id_sen;
+		}
+		
 	}
 	
 	$scope.getRoomsData = function(){
