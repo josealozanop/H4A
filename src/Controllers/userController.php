@@ -394,7 +394,7 @@ $app->post('/updateAssets', function (Request $request) use ($app){
 	}
 	
 	//$out = count($fotos);
-	return $app->redirect('/H4A/web/tutor?status=1');
+	return $app->redirect('./tutor?status=1');
 })->bind('updateAssets');
 
 ?>
