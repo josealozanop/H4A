@@ -332,11 +332,20 @@ $app->post('/updateAssets', function (Request $request) use ($app){
 	
 	$roomsJson = $request->get('rooms');
 	$rooms = json_decode($roomsJson, true);
-	$roomsIds = array_column($rooms, "id_habitacion");
+	
+	//$roomsIds = array_column($rooms, "id_habitacion");
+	$roomsIds = array();
+	foreach($rooms as $room){
+		array_push($roomsIds, $room["id_habitacion"]);
+	}
 	
 	$sensorsJson = $request->get('sensors');
 	$sensors = json_decode($sensorsJson, true);
-	$sensorsIds = array_column($sensors, "id_sen");
+	//$sensorsIds = array_column($sensors, "id_sen");
+	$sensorsIds = array();
+	foreach($sensors as $sensor){
+		array_push($sensorsIds, $sensor["id_sen"]);
+	}
 	
 	$fotos = array();
 	foreach($roomsIds as $id){
