@@ -88,7 +88,7 @@ class DAO_config{
 		$this->conn->delete(TD::$configuracion_usuario["name"], array("id_configuracion_usuario" => $configId));
 	}
 	
-	public function getConfig($id, $userId){
+	public function getConfig($id, $userId=""){
 		$configTableName = TD::$configuracion_usuario["name"];
 		$layoutTableName = TD::$dispositivo_usuario["name"];
 		$idField = TD::$configuracion_usuario["id"];

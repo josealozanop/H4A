@@ -229,4 +229,53 @@ $app->get('/getSensorsByUsers', function (Request $request) use ($app) {
 	return new Response($out);
 })->bind("getSensorsByUsers");
 
+$app->get('/getSensorsValues', function (Request $request) use ($app) {
+	$input = json_decode(base64_decode($request->get("data")), true);
+	$sensorsIds = $input["sensorsIds"];
+	
+	$out = array(
+		"data" => null,
+		"status" => 0,
+		"error_msg" => ""
+	);
+	
+	$dbSensors = new DAO_sensorActuador($app["db"]);
+	$values = array();
+	foreach($sensorsIds as $sensorId){
+		$newSensor = $dbSensors->getSensor($sensorId);
+		array_push($values, $newSensor->getValor());
+	}
+	
+	$out["status"] = 1;
+	$out["data"] = array(
+		"values" => $values
+	);
+	
+	$out = json_encode($out, true);
+	return new Response($out);
+})->bind("getSensorsValues");
+
+$app->get('/setSensor', function (Request $request) use ($app) {
+	$input = json_decode(base64_decode($request->get("data")), true);
+	$sensorId = $input["id"];
+	$newValue = $input["value"];
+	
+	$out = array(
+		"data" => null,
+		"status" => 0,
+		"error_msg" => ""
+	);
+	
+	$dbSensors = new DAO_sensorActuador($app["db"]);
+	$sensor = $dbSensors->getSensor($sensorId);
+	$sensor->setValor($newValue);
+	$dbSensors->updateSensor($sensor);
+	
+	$out["status"] = 1;
+	$out["data"] = $newValue;
+	
+	$out = json_encode($out, true);
+	return new Response($out);
+})->bind("setSensor");
+
 ?>

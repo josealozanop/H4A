@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__.'/../../vendor/autoload.php';
 require_once __DIR__.'/../Controllers/BD/DAO_users.php';
+require_once __DIR__.'/../Controllers/BD/DAO_config.php';
 require_once __DIR__.'/../Model/user.php';
 
 
@@ -89,7 +90,14 @@ class userAssets{
 		return false;
 	}
 	
-	
+	public function getCssFile(){
+		//print_r($this->user);
+		$dbConfig = new DAO_config($this->conn);
+		$config = $dbConfig->getConfig($this->user->getId_configuracion_usuario());
+		//echo $this->user->getId_usuario();
+		//print_r($config);
+		return $config->getCss();
+	}
 
 }
 ?>

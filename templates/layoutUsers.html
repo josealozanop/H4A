@@ -4,32 +4,34 @@
     <head>		
 		<title>HOME4LL</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
-		<link href="/H4A/web/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-		<link href="/H4A/web/css/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
-		<link href="/H4A/web/css/homeController.css" rel="stylesheet" type="text/css" />
+		<link href="{{ app.request.basepath }}/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<link href="{{ app.request.basepath }}/css/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+		{% block cssInclude%}{% endblock %}
 		
-		<script src="/H4A/web/js/jquery-1.11.1.min.js" type="text/javascript"></script>  
-		<script src="/H4A/web/js/angular.min.js"></script> 
-		<script src="/H4A/web/js/angular-animate.min.js"></script> 
-		<script src="/H4A/web/js/angular-sanitize.min.js"></script> 
-		<script src="/H4A/web/js/ui2.js"></script> 
-		<script src="/H4A/web/css/bootstrap/js/bootstrap.min.js"></script> 
 		
-		<script src="/H4A/web/js/app.js"></script>
+		<script src="{{ app.request.basepath }}/js/jquery-1.11.1.min.js" type="text/javascript"></script>  
+		<script src="{{ app.request.basepath }}/js/angular.min.js"></script> 
+		<script src="{{ app.request.basepath }}/js/angular-animate.min.js"></script> 
+		<script src="{{ app.request.basepath }}/js/angular-sanitize.min.js"></script> 
+		<script src="{{ app.request.basepath }}/js/ui2.js"></script> 
+		<script src="{{ app.request.basepath }}/css/bootstrap/js/bootstrap.min.js"></script> 
 		
-		<script src="/H4A/web/js/services/screenService.js"></script>
+		<script src="{{ app.request.basepath }}/js/app.js"></script>
+		
+		<script src="{{ app.request.basepath }}/js/services/screenService.js"></script>
 				
-		<script src="/H4A/web/js/directives/resizeDispacher.js"></script>
+		<script src="{{ app.request.basepath }}/js/directives/resizeDispacher.js"></script>
 		
-		<script src="/H4A/web/js/sectionController.js"></script>
-		<script src="/H4A/web/js/homeController.js"></script>
-		<script src="/H4A/web/js/userSelectionController.js"></script>
-		<script src="/H4A/web/js/utils.js"></script>
+		<script src="{{ app.request.basepath }}/js/sectionController.js"></script>
+		<script src="{{ app.request.basepath }}/js/homeController.js"></script>
+		<script src="{{ app.request.basepath }}/js/userSelectionController.js"></script>
+		<script src="{{ app.request.basepath }}/js/utils.js"></script>
 		
 		
     </head>
     <body  ng-controller='sectionController'>
 	{% block homeApp%}{% endblock %}
+
 	</body>
 </html>
 

@@ -13,6 +13,7 @@ class Config extends serializableObject{
 	protected $reconocimiento_voz;
 	protected $retroalimentacion_voz;
 	protected $retroalimentacion_vibracion;
+	protected $css;
 	
 	public function __construct(){
 		parent::__construct();
@@ -96,6 +97,14 @@ class Config extends serializableObject{
 
 	public function setRetroalimentacion_vibracion($retroalimentacion_vibracion){
 		$this->retroalimentacion_vibracion = $retroalimentacion_vibracion;
+	}
+	
+	public function getCss(){
+		return $this->css;
+	}
+	
+	public function setCss($css){
+		$this->css = $css;
 	}
 
 }

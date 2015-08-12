@@ -250,21 +250,39 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				Hacemos una petición asíncrona del valor de los sensores paginados de la habitacion
 			*/
 			dataToSend = window.btoa(angular.toJson({
-				action : "getSensors",
-				data : idsSensors
+				sensorsIds : idsSensors
 			}));
 			
-			$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
+			/*$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
 			then(function(data, status, headers, config) {
 				var requestData = data.data;
 				var requestStatus = requestData.status;
-				/*
-					Si la peticion de datos ha tenido exito
-					actualizamos los valores de los sensores 
-				*/
+				
+				//Si la peticion de datos ha tenido exito		actualizamos los valores de los sensores 
 				if(requestStatus == 1){
 					var sensorsValues = requestData.data;
 					//console.log(sensorsValues);
+					for(i in sensorsValues){
+						var value = sensorsValues[i];
+						$scope.roomSensors[i].Valor = value;
+					}
+					//console.log($scope.roomSensors);
+				}
+				else{
+					console.log("Error al obtener valor de los sensores: ", idsSensors, status)
+				}
+			});*/
+			
+			$http.get("./getSensorsValues?data="+dataToSend).
+			then(function(data, status, headers, config) {
+				var requestData = data.data;
+				var requestStatus = requestData.status;
+				
+				//Si la peticion de datos ha tenido exito		actualizamos los valores de los sensores 
+				if(requestStatus == 1){
+					var sensorsValues = requestData.data.values;
+					//console.log(sensorsValues);
+					//console.log(requestData.data);
 					for(i in sensorsValues){
 						var value = sensorsValues[i];
 						$scope.roomSensors[i].Valor = value;
@@ -281,12 +299,11 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	var set2StateSensor = function(newValue, sensor){
 		if(!$scope.offline){
 			dataToSend = window.btoa(angular.toJson({
-				action : "setSensor",
 				id : sensor.id_sen,
 				value : newValue
 			}));
 			
-			$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
+			/*$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
 			then(function(data, status, headers, config){
 				var requestData = data.data;
 				var requestStatus = requestData.status;
@@ -304,7 +321,29 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				else{
 					console.log("Error al modificar el valor del sensor");
 				}
+			});*/
+			
+			$http.get("./setSensor?data="+dataToSend).
+			then(function(data, status, headers, config) {
+				var requestData = data.data;
+				var requestStatus = requestData.status;
+				
+				//Si la peticion de datos ha tenido exito		actualizamos los valores de los sensores 
+				if(requestStatus == 1){
+					if(sensor.Valor == 0){
+						sensor.imgNotActive = sensor.img;
+						sensor.img = sensor.imgActive;
+					}
+					else{
+						sensor.img = sensor.imgNotActive;
+					}
+					sensor.Valor = newValue;
+				}
+				else{
+					console.log("Error al obtener valor de los sensores: ", idsSensors, status)
+				}
 			});
+			
 		}
 		
 		else{
@@ -322,12 +361,11 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	var setNStateSensor = function(newValue){
 		if(!$scope.offline){
 			dataToSend = window.btoa(angular.toJson({
-				action : "setSensor",
 				id : $scope.selectedNStateSensor.id_sen,
 				value : newValue
 			}));
 			
-			$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
+			/*$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
 			then(function(data, status, headers, config) {
 				var requestData = data.data;
 				var requestStatus = requestData.status;
@@ -337,6 +375,21 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				}
 				else{
 					console.log("Error al modificar el valor del sensor");
+				}
+			});*/
+			
+			$http.get("./setSensor?data="+dataToSend).
+			then(function(data, status, headers, config) {
+				var requestData = data.data;
+				var requestStatus = requestData.status;
+				
+				//Si la peticion de datos ha tenido exito		actualizamos los valores de los sensores 
+				if(requestStatus == 1){
+					
+					$scope.selectedNStateSensor.Valor = newValue;
+				}
+				else{
+					console.log("Error al obtener valor de los sensores: ", idsSensors, status)
 				}
 			});
 			$scope.backToSensors();
@@ -404,7 +457,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			}
 		}
 		
-		//Sección de sensores de nEstados
+		//Sección de actuadores de nEstados
 		else if($scope.sectionControll.selected == 2){
 			//$scope.reset();
 			var start = parseInt($scope.selectedNStateSensor.valor_min);
@@ -425,6 +478,12 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			if($scope.scanning.activated){
 				$scope.scanning.position = 0;
 			}
+		}
+		
+		//sección de actuadores analógicos
+		else if($scope.sectionControll.selected == 3){
+			$scope.nPages = 1;
+			$scope.needNavigation = false;
 		}
 		
 		//Sección de sensores de sólo lectura.
@@ -730,6 +789,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 	
 	var clickAnalogicSensor = function(sensor){
+		$scope.sectionControll.selected = 3;
+		$scope.selectedNStateSensor = sensor;
 		console.log("sensor analógico");
 	}
 	

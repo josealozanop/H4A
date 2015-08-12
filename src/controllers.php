@@ -64,8 +64,13 @@ $app->get("/homeController", function(Request $request) use ($app){
 		$newRoom = $dbRooms->getRoom($id);
 		return $newRoom->toArray();
 	}, $allRoomsIds);
-	//Establecemos las imagenes de cada habitación
+	
+	//Establecemos el fichero css que le corresponde al usuario
 	$assetsManager = new userAssets($selectedUser);
+	$cssFile = $assetsManager->getCssFile();
+	//echo $cssFile;
+	
+	//Establecemos las imagenes de cada habitación
 	foreach($allRooms as &$room){
 		$filePath = $assetsManager->itemHasOwnImage("/rooms/", $room["id_habitacion"]);
 		if($filePath){
@@ -155,7 +160,11 @@ $app->get("/homeController", function(Request $request) use ($app){
 	)));
 	
 	return $app['twig']->render('homeController.html', array(
-		'data' => $data));
+		'data' => $data,
+		'userId' => $selectedUser,
+		'cssFile' => $cssFile
+		)
+	);
 })->bind('homeController');
 
 $app->get('/', function(Request $request) use ($app) {

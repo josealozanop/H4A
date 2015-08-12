@@ -106,7 +106,6 @@ class User extends serializableObject{
 	public function setId_configuracion_usuario($id_configuracion_usuario){
 		$this->id_configuracion_usuario = $id_configuracion_usuario;
 	}
-	
 }
 
 ?>
