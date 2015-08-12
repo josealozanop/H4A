@@ -136,7 +136,7 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 			
 			if(requestStatus == 1){
 				var response = requestData.data;
-				$scope.requestStatus = 1;
+				//$scope.requestStatus = 1;
 				console.log(response);
 			}
 			else{
