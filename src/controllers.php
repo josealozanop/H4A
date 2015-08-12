@@ -150,7 +150,8 @@ $app->get("/homeController", function(Request $request) use ($app){
 	$configData = $dbConfig->getFullConfig($selectedUser, $MAC);
 	$config = $configData["config"];
 	$layout = $configData["layout"];
-	//print_r($config);
+	print_r($config);
+	print_r($layout);
 	
 	$data = base64_encode(json_encode(array(
 		"rooms" => $allRooms,
