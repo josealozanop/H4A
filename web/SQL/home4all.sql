@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-08-2015 a las 11:09:04
+-- Tiempo de generación: 12-08-2015 a las 13:31:47
 -- Versión del servidor: 5.6.17
 -- Versión de PHP: 5.5.12
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `configuracion_usuario` (
   `retroalimentacion_voz` int(1) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_configuracion_usuario`),
   UNIQUE KEY `id_configuracion_usuario_UNIQUE` (`id_configuracion_usuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf16 AUTO_INCREMENT=109 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf16 AUTO_INCREMENT=153 ;
 
 --
 -- Volcado de datos para la tabla `configuracion_usuario`
@@ -148,7 +148,44 @@ INSERT INTO `configuracion_usuario` (`id_configuracion_usuario`, `color_principa
 (105, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
 (106, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
 (107, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(108, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL);
+(108, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(109, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(110, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(112, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(114, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(115, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(117, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(118, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(119, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(120, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(121, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(122, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(123, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(124, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(125, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(126, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(127, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(128, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(130, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(132, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(133, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(134, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(135, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(136, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(137, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(139, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(140, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(141, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(142, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(143, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(144, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(145, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(147, '#265a88', '#eb9316', 1, 355, 0, 4, 0, 0, 0),
+(148, '#265a88', '#eb9316', 1, 12, 1, 4, 0, 0, 0),
+(149, '#265a88', '#eb9316', 1, 12, 0, 4, 0, 0, 0),
+(150, '#265a88', '#eb9316', 1, 12, 0, 4, 0, 0, 0),
+(151, '#265a88', '#eb9316', 1, 12, 0, 4, 0, 0, 0),
+(152, '#265a88', '#eb9316', 1, 12, 0, 4, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -200,44 +237,13 @@ CREATE TABLE IF NOT EXISTS `dispositivo_usuario` (
   UNIQUE KEY `dispositivoUsuario` (`id_dispositivo`,`id_usuario`),
   KEY `usuarios_idx` (`id_usuario`),
   KEY `dispositivos_idx` (`id_dispositivo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf16 AUTO_INCREMENT=134 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf16 AUTO_INCREMENT=161 ;
 
 --
 -- Volcado de datos para la tabla `dispositivo_usuario`
 --
 
 INSERT INTO `dispositivo_usuario` (`id_dispositivo_usuario`, `id_dispositivo`, `id_usuario`, `rotacion`, `filas_vertical`, `columnas_vertical`, `filas_horizontal`, `columnas_horizontal`) VALUES
-(23, 18, 59, NULL, NULL, NULL, NULL, NULL),
-(24, 18, 58, NULL, NULL, NULL, NULL, NULL),
-(29, 18, 66, NULL, NULL, NULL, NULL, NULL),
-(31, 18, 67, NULL, NULL, NULL, NULL, NULL),
-(32, 20, 67, NULL, NULL, NULL, NULL, NULL),
-(34, 20, 68, NULL, NULL, NULL, NULL, NULL),
-(36, 18, 69, NULL, NULL, NULL, NULL, NULL),
-(37, 20, 70, NULL, NULL, NULL, NULL, NULL),
-(43, 20, 75, NULL, NULL, NULL, NULL, NULL),
-(44, 20, 76, NULL, NULL, NULL, NULL, NULL),
-(45, 18, 76, NULL, NULL, NULL, NULL, NULL),
-(46, 20, 77, NULL, NULL, NULL, NULL, NULL),
-(49, 20, 78, NULL, NULL, NULL, NULL, NULL),
-(50, 20, 79, NULL, NULL, NULL, NULL, NULL),
-(51, 18, 79, NULL, NULL, NULL, NULL, NULL),
-(52, 19, 65, NULL, NULL, NULL, NULL, NULL),
-(53, 19, 67, NULL, NULL, NULL, NULL, NULL),
-(54, 19, 68, NULL, NULL, NULL, NULL, NULL),
-(55, 19, 69, NULL, NULL, NULL, NULL, NULL),
-(56, 19, 70, NULL, NULL, NULL, NULL, NULL),
-(57, 19, 71, NULL, NULL, NULL, NULL, NULL),
-(58, 19, 72, NULL, NULL, NULL, NULL, NULL),
-(59, 19, 73, NULL, NULL, NULL, NULL, NULL),
-(60, 19, 74, NULL, NULL, NULL, NULL, NULL),
-(61, 19, 77, NULL, NULL, NULL, NULL, NULL),
-(62, 19, 78, NULL, NULL, NULL, NULL, NULL),
-(63, 21, 84, NULL, NULL, NULL, NULL, NULL),
-(64, 21, 85, NULL, NULL, NULL, NULL, NULL),
-(65, 21, 86, NULL, NULL, NULL, NULL, NULL),
-(66, 22, 87, NULL, NULL, NULL, NULL, NULL),
-(67, 21, 87, NULL, NULL, NULL, NULL, NULL),
 (68, 21, 88, NULL, NULL, NULL, NULL, NULL),
 (69, 22, 88, NULL, NULL, NULL, NULL, NULL),
 (70, 21, 89, NULL, NULL, NULL, NULL, NULL),
@@ -292,7 +298,25 @@ INSERT INTO `dispositivo_usuario` (`id_dispositivo_usuario`, `id_dispositivo`, `
 (127, 26, 121, 0, NULL, NULL, 4, 4),
 (128, 26, 123, 0, NULL, NULL, 2, 2),
 (129, 26, 124, 0, NULL, NULL, 4, 4),
-(133, 26, 135, 1, 2, 2, 3, 3);
+(135, 26, 139, 1, 2, 2, 3, 3),
+(136, 26, 140, 1, 2, 2, 3, 3),
+(140, 26, 144, 0, NULL, NULL, 3, 3),
+(141, 26, 145, 0, NULL, NULL, 3, 3),
+(142, 26, 146, 0, NULL, NULL, 3, 3),
+(145, 26, 149, 0, NULL, NULL, 3, 3),
+(146, 26, 150, 0, NULL, NULL, 3, 3),
+(147, 26, 153, NULL, NULL, NULL, NULL, NULL),
+(148, 26, 154, NULL, NULL, NULL, NULL, NULL),
+(149, 26, 155, 0, NULL, NULL, 3, 3),
+(150, 26, 156, 0, NULL, NULL, 3, 3),
+(151, 26, 157, NULL, NULL, NULL, NULL, NULL),
+(152, 26, 158, NULL, NULL, NULL, NULL, NULL),
+(153, 26, 159, 0, NULL, NULL, 3, 3),
+(156, 26, 162, 1, 4, 2, 3, 3),
+(157, 26, 163, 1, 3, 1, 4, 4),
+(158, 26, 164, 1, 2, 1, 3, 3),
+(159, 26, 165, 0, NULL, NULL, 3, 3),
+(160, 26, 166, 0, NULL, NULL, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -376,7 +400,7 @@ CREATE TABLE IF NOT EXISTS `sensoractuador` (
   PRIMARY KEY (`id_sen`),
   UNIQUE KEY `id_sensor_UNIQUE` (`id_sen`),
   KEY `sensorhab_idx` (`id_habitacion`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf16 AUTO_INCREMENT=39 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf16 AUTO_INCREMENT=49 ;
 
 --
 -- Volcado de datos para la tabla `sensoractuador`
@@ -384,11 +408,20 @@ CREATE TABLE IF NOT EXISTS `sensoractuador` (
 
 INSERT INTO `sensoractuador` (`Id_Sensor`, `PIN`, `Tipo`, `TipoValor`, `Valor`, `Localizacion`, `id_sen`, `id_usuario`, `id_habitacion`, `codigo_sensor`, `nombre_sensor`, `senact_sensor`, `tipo_sensor`, `modelo_sensor`, `descripcion_sensor`, `valor_min`, `valor_max`, `incremento`) VALUES
 ('33', 2, 'Actuador', '0', 0, NULL, 33, NULL, 30, '_bn0', 'Bombilla1', 1, '', 'bn', '', 0, 1, 1),
-('34', 12, 'Actuador', '0', 0, NULL, 34, NULL, 30, '_bn2', 'Bombilla 2', 1, '', 'bn', '', 0, 1, 1),
+('34', 12, 'Actuador', '0', 1, NULL, 34, NULL, 30, '_bn2', 'Bombilla 2', 1, '', 'bn', '', 0, 1, 1),
 ('35', 12, 'Actuador', '2', 0, NULL, 35, NULL, 30, '_bn2344', 'Aire acondicionado', 1, '', 'bn', '', 18, 30, 1),
-('36', 12, 'Actuador', '1', 0, NULL, 36, NULL, 30, '_bn34930948', 'Luz regulable', 1, '', 'bn', '', 0, 3, 1),
-('37', 24, 'Actuador', '1', 0, NULL, 37, NULL, 30, '_bn39840938403', 'luz 2', 1, '', 'bn', '', 0, 27, 1),
-('38', 12, 'Sensor', '0', 0, NULL, 38, NULL, 30, '_bn_sen_38493840', 'Temperatura', 0, '', 'sen', '', 0, 1, 1);
+('36', 12, 'Actuador', '1', 3, NULL, 36, NULL, 30, '_bn34930948', 'Luz regulable', 1, '', 'bn', '', 0, 3, 1),
+('37', 24, 'Actuador', '1', 7, NULL, 37, NULL, 30, '_bn39840938403', 'luz 2', 1, '', 'bn', '', 0, 27, 1),
+('39', 12, 'Sensor', '-1', 0, NULL, 39, NULL, 31, '_bn_sen_3849348903', 'Temperatura', 0, '', 'bn', '', 0, 1, 1),
+('40', 33, 'Sensor', '-1', 0, NULL, 40, NULL, 31, '_bn_sen_3984380', 'Humedad', 0, '', 'bn', '', 0, 1, 1),
+('41', 55, 'Actuador', '2', 0, NULL, 41, NULL, 30, 'bn_3ui43o4u', 'Actuador salon', 1, '', 'bn', '', 0, 1, 1),
+('42', 444, 'Sensor', '-1', 12, NULL, 42, NULL, 31, '_bn_sen_894934', 'Luminosidad', 0, '', 'sen', '', 0, 1, 1),
+('43', 343543453, 'Sensor', '-1', 0, NULL, 43, NULL, 31, '_bn_sen_39483094', 'Pecera', 0, '', 'bn', '', 0, 1, 1),
+('44', 23535, 'Sensor', '-1', 0, NULL, 44, NULL, 31, '_bn_sen_394830934', 'Temperatura 2', 0, '', 'bn', '', 0, 1, 1),
+('45', 234323, 'Sensor', '-1', 55, NULL, 45, NULL, 30, '_bn_sen_3849334', 'Temperatura3', 0, '', 'bn', '', 0, 1, 1),
+('46', 345, 'Sensor', '-1', 0, NULL, 46, NULL, 31, '_bn_sen_98', 'temperatura 4', 0, '', 'bn', '', 0, 1, 1),
+('47', 345, 'Sensor', '-1', 33, NULL, 47, NULL, 31, '_bn_sen_384943804', 'temperatura 5', 0, '', 'bn', '', 0, 1, 1),
+('48', 235, 'Sensor', '-1', 0, NULL, 48, NULL, 31, '_bn_sen_3948334', 'temperatura 6', 0, '', 'bn', '', 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -404,19 +437,167 @@ CREATE TABLE IF NOT EXISTS `sensor_usuario` (
   UNIQUE KEY `sensorUsuario` (`id_sensor`,`id_usuario`),
   KEY `sensorUs_idx` (`id_sensor`),
   KEY `usuarioSen_idx` (`id_usuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf16 AUTO_INCREMENT=107 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf16 AUTO_INCREMENT=338 ;
 
 --
 -- Volcado de datos para la tabla `sensor_usuario`
 --
 
 INSERT INTO `sensor_usuario` (`id_sensor_usuario`, `id_sensor`, `id_usuario`) VALUES
-(101, 33, 135),
-(102, 34, 135),
-(103, 35, 135),
-(104, 36, 135),
-(105, 37, 135),
-(106, 38, 135);
+(107, 33, 139),
+(119, 33, 140),
+(179, 33, 144),
+(194, 33, 145),
+(210, 33, 146),
+(255, 33, 149),
+(270, 33, 150),
+(285, 33, 155),
+(288, 33, 157),
+(293, 33, 164),
+(308, 33, 165),
+(323, 33, 166),
+(108, 34, 139),
+(120, 34, 140),
+(180, 34, 144),
+(195, 34, 145),
+(211, 34, 146),
+(256, 34, 149),
+(271, 34, 150),
+(294, 34, 164),
+(309, 34, 165),
+(324, 34, 166),
+(109, 35, 139),
+(121, 35, 140),
+(181, 35, 144),
+(196, 35, 145),
+(212, 35, 146),
+(257, 35, 149),
+(272, 35, 150),
+(289, 35, 157),
+(295, 35, 164),
+(310, 35, 165),
+(325, 35, 166),
+(110, 36, 139),
+(122, 36, 140),
+(182, 36, 144),
+(197, 36, 145),
+(213, 36, 146),
+(258, 36, 149),
+(273, 36, 150),
+(290, 36, 157),
+(296, 36, 164),
+(311, 36, 165),
+(326, 36, 166),
+(111, 37, 139),
+(123, 37, 140),
+(183, 37, 144),
+(198, 37, 145),
+(214, 37, 146),
+(259, 37, 149),
+(274, 37, 150),
+(297, 37, 164),
+(312, 37, 165),
+(327, 37, 166),
+(112, 39, 139),
+(124, 39, 140),
+(184, 39, 144),
+(199, 39, 145),
+(215, 39, 146),
+(260, 39, 149),
+(275, 39, 150),
+(298, 39, 164),
+(313, 39, 165),
+(328, 39, 166),
+(113, 40, 139),
+(125, 40, 140),
+(185, 40, 144),
+(200, 40, 145),
+(216, 40, 146),
+(261, 40, 149),
+(276, 40, 150),
+(299, 40, 164),
+(314, 40, 165),
+(329, 40, 166),
+(114, 41, 139),
+(126, 41, 140),
+(186, 41, 144),
+(201, 41, 145),
+(217, 41, 146),
+(262, 41, 149),
+(277, 41, 150),
+(286, 41, 155),
+(287, 41, 156),
+(291, 41, 157),
+(300, 41, 164),
+(315, 41, 165),
+(330, 41, 166),
+(115, 42, 139),
+(127, 42, 140),
+(187, 42, 144),
+(202, 42, 145),
+(218, 42, 146),
+(263, 42, 149),
+(278, 42, 150),
+(301, 42, 164),
+(316, 42, 165),
+(331, 42, 166),
+(116, 43, 139),
+(128, 43, 140),
+(188, 43, 144),
+(203, 43, 145),
+(219, 43, 146),
+(264, 43, 149),
+(279, 43, 150),
+(302, 43, 164),
+(317, 43, 165),
+(332, 43, 166),
+(117, 44, 139),
+(129, 44, 140),
+(189, 44, 144),
+(204, 44, 145),
+(220, 44, 146),
+(265, 44, 149),
+(280, 44, 150),
+(303, 44, 164),
+(318, 44, 165),
+(333, 44, 166),
+(118, 45, 139),
+(130, 45, 140),
+(190, 45, 144),
+(205, 45, 145),
+(221, 45, 146),
+(266, 45, 149),
+(281, 45, 150),
+(304, 45, 164),
+(319, 45, 165),
+(334, 45, 166),
+(131, 46, 140),
+(191, 46, 144),
+(206, 46, 145),
+(222, 46, 146),
+(267, 46, 149),
+(282, 46, 150),
+(305, 46, 164),
+(320, 46, 165),
+(335, 46, 166),
+(132, 47, 140),
+(192, 47, 144),
+(207, 47, 145),
+(223, 47, 146),
+(268, 47, 149),
+(283, 47, 150),
+(306, 47, 164),
+(321, 47, 165),
+(336, 47, 166),
+(133, 48, 140),
+(193, 48, 144),
+(208, 48, 145),
+(224, 48, 146),
+(269, 48, 149),
+(284, 48, 150),
+(307, 48, 164),
+(322, 48, 165),
+(337, 48, 166);
 
 -- --------------------------------------------------------
 
@@ -501,44 +682,13 @@ CREATE TABLE IF NOT EXISTS `tutor_usuario` (
   UNIQUE KEY `tutorUsuario` (`id_tutor`,`id_usuario`),
   KEY `id_usuario_idx` (`id_usuario`),
   KEY `tutoresUs` (`id_tutor`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf16 AUTO_INCREMENT=89 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf16 AUTO_INCREMENT=119 ;
 
 --
 -- Volcado de datos para la tabla `tutor_usuario`
 --
 
 INSERT INTO `tutor_usuario` (`id_tutor`, `id_usuario`, `tutor_usuario`) VALUES
-(4, 58, 16),
-(4, 59, 17),
-(4, 60, 18),
-(4, 61, 19),
-(4, 62, 20),
-(4, 63, 21),
-(4, 64, 22),
-(4, 65, 23),
-(4, 66, 24),
-(4, 67, 25),
-(4, 68, 26),
-(4, 69, 27),
-(4, 70, 28),
-(4, 71, 29),
-(4, 72, 30),
-(4, 73, 31),
-(4, 74, 32),
-(4, 75, 33),
-(4, 76, 34),
-(4, 77, 35),
-(4, 78, 36),
-(4, 79, 37),
-(4, 80, 38),
-(4, 81, 39),
-(4, 82, 40),
-(4, 83, 41),
-(5, 46, 10),
-(14, 84, 42),
-(14, 85, 43),
-(14, 86, 44),
-(14, 87, 45),
 (14, 88, 46),
 (14, 89, 47),
 (14, 91, 48),
@@ -570,7 +720,26 @@ INSERT INTO `tutor_usuario` (`id_tutor`, `id_usuario`, `tutor_usuario`) VALUES
 (14, 121, 76),
 (14, 123, 78),
 (14, 124, 79),
-(14, 135, 88);
+(14, 139, 92),
+(14, 140, 93),
+(14, 144, 97),
+(14, 145, 98),
+(14, 146, 99),
+(14, 149, 102),
+(14, 150, 103),
+(14, 151, 104),
+(14, 153, 105),
+(14, 154, 106),
+(14, 155, 107),
+(14, 156, 108),
+(14, 157, 109),
+(14, 158, 110),
+(14, 159, 111),
+(14, 162, 114),
+(14, 163, 115),
+(14, 164, 116),
+(14, 165, 117),
+(14, 166, 118);
 
 -- --------------------------------------------------------
 
@@ -594,45 +763,13 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   UNIQUE KEY `id_usuario_UNIQUE` (`id_usuario`),
   UNIQUE KEY `nUsuario_usuario_UNIQUE` (`mail_usuario`),
   KEY `configuracionUsuario_idx` (`id_configuracion_usuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf16 AUTO_INCREMENT=136 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf16 AUTO_INCREMENT=167 ;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`id_usuario`, `mail_usuario`, `pass_usuario`, `roles`, `nombre_usuario`, `apellidos_usuario`, `foto_usuario`, `tlfn_usuario`, `fnac_usuario`, `direccion_usuario`, `id_configuracion_usuario`) VALUES
-(46, 'cojjo@gmail.com', 0, 'ROLE_FO', 'required', 'cojo', NULL, '12', '2015-05-23', NULL, NULL),
-(56, 'coj@gmail.com', 0, 'ROLE_USER', 'Stehen', 'Haking', NULL, '6545421', '2014-05-16', NULL, NULL),
-(58, 'fdsa@fds', 0, 'ROLE_USER', '', '', NULL, '', '', NULL, NULL),
-(59, '', 0, 'ROLE_USER', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(60, 'fdsa@fds.d', 3, 'ROLE_USER', 'vcx', 'fs', NULL, '', '', NULL, NULL),
-(61, 'scd@ds.s', 3, 'ROLE_USER', 'ad', 'da', NULL, '', '', NULL, NULL),
-(62, 'fdsa@fds.fd', 3, 'ROLE_USER', 'fsd', 'fds', NULL, '', '1988-02-17', NULL, NULL),
-(63, 'fds@fds.f', 3, 'ROLE_USER', 'ds', 'nk', NULL, '', '', NULL, NULL),
-(64, 'fds@dfa.dsfds', 3, 'ROLE_USER', 'fs', 'fd', NULL, '', '2012-02-29', NULL, NULL),
-(65, 'da@fds.c', 3, 'ROLE_USER', 'csd', 'fds', NULL, '', '', NULL, NULL),
-(66, 'fds@da.f', 3, 'ROLE_USER', 'f', 'f', NULL, '', '', NULL, NULL),
-(67, 'jose@mail.com', 0, 'ROLE_USER', 'jose', 'lozano', NULL, '654875421', '', NULL, NULL),
-(68, 'minus@d.s', 3, 'ROLE_USER', 'minus', 'muuuus', NULL, '', '', NULL, NULL),
-(69, 'fs@fs.s', 3, 'ROLE_USER', 'd', 'd', NULL, '', '', NULL, NULL),
-(70, 'a@a.c', 3, 'ROLE_USER', 'd', 'd', NULL, '', '', NULL, NULL),
-(71, 'j@d.a', 3, 'ROLE_USER', 'a', 'd', NULL, '', '', NULL, NULL),
-(72, 'usuarios@gmail.com', 3, 'ROLE_USER', 'usus', 'sensus', NULL, '', '', NULL, NULL),
-(73, 'qq@aa.s', 3, 'ROLE_USER', 'aass', 'qqaa', NULL, '', '', NULL, NULL),
-(74, 'da@f.f', 3, 'ROLE_USER', 'f', 'f', NULL, '', '', NULL, NULL),
-(75, 'g@g.s', 3, 'ROLE_USER', 's', 's', NULL, '', '', NULL, NULL),
-(76, 'as@e.s', 3, 'ROLE_USER', 's', 's', NULL, '', '', NULL, NULL),
-(77, 's.d@d', 3, 'ROLE_USER', 'da', 'd', NULL, '', '', NULL, NULL),
-(78, 'fdsa@fds.a', 0, 'ROLE_USER', 'f', '4', NULL, '', '', NULL, NULL),
-(79, 'asd@d.d', 3, 'ROLE_USER', 'd', 'da', NULL, '', '', NULL, NULL),
-(80, 'das@sd.d', 3, 'ROLE_USER', 'fsd', 'a', NULL, '', '', NULL, NULL),
-(81, 'dfs@g.trr', 3, 'ROLE_USER', 'l', 'l', NULL, '', '', NULL, NULL),
-(82, 'fsd@gdf.f', 3, 'ROLE_USER', 'fs', 'sf', NULL, '', '', NULL, NULL),
-(83, 'weq@ea.f', 3, 'ROLE_USER', 'f', 'f', NULL, '', '', NULL, NULL),
-(84, 'marta@mail.com', 0, 'ROLE_USER', 'marta', 'marta', NULL, '', '', NULL, NULL),
-(85, 'juani@mail.com', 0, 'ROLE_USER', 'juani', 'a', NULL, '', '', NULL, NULL),
-(86, 'marta3@mail.com', 0, 'ROLE_USER', 'marta', 'a', NULL, '', '', NULL, NULL),
-(87, 'roci@mail.com', 0, 'ROLE_USER', 'cio', 'ro', NULL, '', '', NULL, NULL),
 (88, 'padilla@mail.com', 0, 'ROLE_USER', 'padilla', 'padilla', NULL, '', '', NULL, NULL),
 (89, 'oscar@mail.com', 0, 'ROLE_USER', 'oscar', 'a', NULL, '', '', NULL, NULL),
 (91, 'oscar@mail.com33', 0, 'ROLE_USER', 'oscar', 'oscar', NULL, '', '', NULL, NULL),
@@ -664,7 +801,26 @@ INSERT INTO `usuario` (`id_usuario`, `mail_usuario`, `pass_usuario`, `roles`, `n
 (121, 'jony@mail.com', NULL, 'ROLE_USER', 'jony', 'a', NULL, '', '', NULL, 102),
 (123, 'true2x2@mail.com', NULL, 'ROLE_USER', 'true2x2', 'true', NULL, '', '', NULL, 103),
 (124, 'true4x4@mail.com', NULL, 'ROLE_USER', 'true4x4', 'true', NULL, '', '', NULL, 104),
-(135, 'true3x3_2x2_bn@mail.com', NULL, 'ROLE_USER', 'true3x3_2x2_bn', 'true', NULL, '', '', NULL, 108);
+(139, 'true3x3_2x2_bn@mail.com', NULL, 'ROLE_USER', 'true3x3_2x2_bn', 'bn', NULL, '', '', NULL, 109),
+(140, 'tr22x33@mail.com', NULL, 'ROLE_USER', 'tr22x33', 'molina', NULL, '', '', NULL, 110),
+(144, 'rocio77@mail.com', 0, 'ROLE_USER', 'rocio', 'carcajona', NULL, '', '', NULL, 126),
+(145, 'borja343@mail.com', NULL, 'ROLE_USER', 'borja', 'molina', NULL, '', '', NULL, 127),
+(146, 'borja44@mail.com', NULL, 'ROLE_USER', 'borja', 'molina', NULL, '', '', NULL, 128),
+(149, 'borjita@mail.com', NULL, 'ROLE_USER', 'borji', 'a', NULL, '', '', NULL, 133),
+(150, 'martita22@mail.com', NULL, 'ROLE_USER', 'martita', 'martita', NULL, '', '', NULL, 134),
+(151, 'josesito@mail.com', NULL, 'ROLE_USER', 'josesito', 'jos', NULL, '', '', NULL, NULL),
+(153, 'jose333@mail.com', NULL, 'ROLE_USER', 'jose', 'jose', NULL, '', '', NULL, NULL),
+(154, 'ertotes@mail.com', NULL, 'ROLE_USER', 'ertotes', 'd', NULL, '', '', NULL, NULL),
+(155, 'ertotes2@mail.com', NULL, 'ROLE_USER', 'a', 'a', NULL, '', '', NULL, 135),
+(156, 'nata33@mail.com', NULL, 'ROLE_USER', 'nata', 'nata', NULL, '', '', NULL, 136),
+(157, 'pomelo@mail.com', NULL, 'ROLE_USER', 'pomelo', 'a', NULL, '', '', NULL, NULL),
+(158, 'narco@mail.com', NULL, 'ROLE_USER', 'narco', 'a', NULL, '', '', NULL, NULL),
+(159, 'kaseo@mail.com', NULL, 'ROLE_USER', 'kase', 'kase', NULL, '', '', NULL, 137),
+(162, 'mala@mail.com', NULL, 'ROLE_USER', 'mala', 'rod', NULL, '', '', NULL, 148),
+(163, 'dove@mail.com', NULL, 'ROLE_USER', 'dover', 'dov', NULL, '', '', NULL, 149),
+(164, 'relief@mail.com', NULL, 'ROLE_USER', 'relief', 'rel', NULL, '', '', NULL, 150),
+(165, 'mairo@mail.com', NULL, 'ROLE_USER', 'mairo', 'tross', NULL, '', '', NULL, 151),
+(166, 'rocionata@mail.com', NULL, 'ROLE_USER', 'rocio', 'nata', NULL, '', '', NULL, 152);
 
 -- --------------------------------------------------------
 
