@@ -136,7 +136,7 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 			
 			if(requestStatus == 1){
 				var response = requestData.data;
-				//$scope.requestStatus = 1;
+				$scope.requestStatus = 1;
 				console.log(response);
 			}
 			else{
@@ -147,7 +147,7 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 		
 	$scope.$watch("requestStatus", function(){
 		if($scope.requestStatus == 1){
-			$window.location.href = '/H4A/web/index_dev.php/setAssets?idUsuario='+$scope.idUsuario;
+			$window.location.href = './setAssets?idUsuario='+$scope.idUsuario;
 		}
 	})
 	

@@ -177,7 +177,7 @@ $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 		$newName = get_device_name($app['db'],$id, $tutor_id);
 		array_push($names, $newName);
 	}
-	//link_user_sensors($app['db'], $idUsuario, $ids);
+	link_user_sensors($app['db'], $idUsuario, $ids);
 	
 	return $app['twig']->render('configUser.html', array('idUsuario' =>$idUsuario, "devicesData" => json_encode($devicesData), "names" =>  base64_encode ( json_encode($names))
 	));
