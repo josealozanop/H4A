@@ -105,7 +105,7 @@ app.controller('userAssetsController', function($scope, asyncServices, $attrs, $
 	})
 	
 	$scope.endConfig = function(){
-		$window.location.href = '/H4A/web/index.php/tutor?status=1';
+		$window.location.href = './tutor?status=1';
 	}
 	
 	$scope.updateAssets = function(){
