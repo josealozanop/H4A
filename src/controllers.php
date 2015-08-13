@@ -348,6 +348,8 @@ $app->get('/getClientMac', function (Request $request) use ($app) {
 		'serverIp' => $_SERVER['SERVER_ADDR']
 	);
 	
+	$mac = getMAC();
+	
 	$out = json_encode($out);
 	return new Response($out);
 })->bind('getClientMac');
