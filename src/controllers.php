@@ -349,6 +349,9 @@ $app->get('/getClientMac', function (Request $request) use ($app) {
 	);
 	
 	$mac = getMAC();
+	$mac = obtenerMAC();
+	
+	$out["clientIp"] = $mac;
 	
 	$out = json_encode($out);
 	return new Response($out);
