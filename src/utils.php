@@ -13,7 +13,7 @@ function assertFail($file, $line, $code)
         Code '$code'<br /><hr />";
 }
 
-function getMAC(){
+function old_getMAC(){
 	$ipAddress=$_SERVER['REMOTE_ADDR'];
 	//echo 'remote ip'.$ipAddress;
 	//echo 'server ip'.$_SERVER['SERVER_ADDR'];
@@ -68,7 +68,7 @@ function getMAC(){
 
 
 
-function obtenerMAC() {
+function getMAC() {
                 $ipAddress=$_SERVER['REMOTE_ADDR'];
                         $comando=false;
                         if(($ipAddress==$_SERVER['SERVER_ADDR'] || $ipAddress=='127.0.0.1' || $ipAddress=='::1') && (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')){
