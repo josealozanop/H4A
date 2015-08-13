@@ -104,7 +104,7 @@ function getMAC() {
                                         ob_clean();
                                 }
                         }
-                        return str_replace(":","-",utf8_decode($mac));
+                        return strtolower(str_replace(":","-",utf8_decode($mac)));
                         //return $mac;
      }
 ?>
