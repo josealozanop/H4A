@@ -16,7 +16,7 @@ class userAssets{
 		"digitalON" => "digitalON.svg",
 		"digitalOFF" => "digitalOFF.svg",
 		"sensors" => "sensors.svg",
-		"home" => "home.svg",
+		"room" => "home.svg",
 		"user" => "user.svg",
 		"back" => "back.svg",
 		"logOut" => "logOut.svg",
