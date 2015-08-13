@@ -2,23 +2,6 @@
 {% block contenido %}
 
 
-<style>
-	.sensorsTable {
-		font-family: 'Ubuntu', sans-serif;
-	}
-	
-	.sensorsTable th{
-		border-top : none !important;
-	}
-	
-	.sensorsTable tr:nth-child(even){
-		background: #EEE
-	}
-	.sensorsTable tr:nth-child(odd){
-		background: #FFF
-	}
-</style>
-
 <div class="panel panel-primary data-panel" ng-controller="enableSensorsNewUser" id-usuario ={{idUsuario}}>
 	<div class="panel-heading" >
 		<span class='title hidden-xs'>
@@ -30,39 +13,69 @@
 		</span>
 		
 	</div>
-	<div class="panel-body" style="font-size:small">
+	<div class="panel-body enableSensors" style="font-size:small">
 		<span ng-show="requests.sensorsData==1">
-			<div class="hidden-sm hidden-xs" style="background-color:#47a447 !important; border: thin solid black;color:white;margin-top:30px">
+			<!--
+			<div class="" style="background-color:#47a447 !important; border: thin solid black;color:white;margin-top:30px">
 				<div style="padding-bottom:30px;padding-top:10px">
 					<div style="float:left;padding-left:25px;display:inline-block;font-size:larger;font-weight:bolder">
 						Tabla de dispositivos
 					</div>
-					<div style="float:right;padding-right:25px;display:inline-block;" class="hidden-xs hidden-sm">
-						<span>Buscar:</span>
-						<input type="text" ng-model="searcher" style="color:black;margin-right:30px">
+					<div style="float:right;padding-right:25px;display:inline-block;" class="">
+						<span class="hidden-xs hidde-sm">
+							<span>Buscar:</span>
+							<input type="text" ng-model="searcher" style="color:black;margin-right:30px">
+						</span>
+						
 						<span>Habitación</span>
 						<select name="roomSelector" id="" style="color:black" ng-model="selectedRoom" ng-options="room for room in roomsNames"></select>
+						
+						<button class="btn btn-xs" > Seleccionar todos</button>
 						
 					</div>
 				</div>
 			</div>
-			<table class="table sensorsTable hidden-sm hidden-xs" style="border:none !important">
+			-->
+			<div class="searcherHead" style="">
+				<span class="title ">
+					<span class="hidden-xs">Tabla de dispositivos</span>
+				</span>
+				
+				<span class="actions">
+					<span class="hidden-xs hidde-sm innerGroup">
+						<span>Buscar:</span>
+						<input type="text" ng-model="searcher" style="">
+					</span>
+					
+					<span class="innerGroup">
+						<span class="hidden-xs">Habitación:</span>
+						<select name="roomSelector" id="" ng-model="selectedRoom" ng-options="room for room in roomsNames"></select>
+					</span>
+					
+					
+					<span class="innerGroup">
+						<button class="btn btn-sm btn-info" ng-click="selectAllSensors()">Seleccionar todos</button>
+					</span>
+					
+				</span>
+				
+			</div>
+			
+			<table class="table sensorsTable" style="border:none !important">
 				<tr style="background-color:#398439;color:white;border-top: none !important">
 					<th>Nombre del Sensor</th>
-					<th>Habitacion</th>
-					<th>Tipo</th>
+					<th class="hidden-xs">Habitacion</th>
+					<th class="hidden-xs hidden-sm">Tipo</th>
 					<th>¿Habilitado?</th>
 				</tr>
 				<tr class="" ng-repeat="sensor in filteredSensors = (allSensors | filter:searcher | filter:{id_habitacion : indexedRoomsByName[selectedRoom].id_habitacion} : roomComparator | orderBy : sortPredicate) | filter : paginationFilter">
 					<td ng-bind="sensor.nombre_sensor"></td>
-					<td ng-bind="indexedRooms[sensor.id_habitacion].nombre_habitacion"></td>
-					<td ng-bind="sensor.tipo_sensor"></td>
+					<td class="hidden-xs" ng-bind="indexedRooms[sensor.id_habitacion].nombre_habitacion"></td>
+					<td class="hidden-xs hidden-sm" ng-bind="sensor.tipo_sensor"></td>
 					<td>
-					<input type="checkbox" name="" value="" ng-model="sensor.enabled"> Habilitar este sensor<br>
+						<input type="checkbox" name="" value="" ng-model="sensor.enabled"> Habilitar <span class="hidden-xs">este sensor</span><br>
 					</td>
 				</tr>
-				
-				
 			</table>
 			
 			<!-- <table class="table sensorsTable visible-sm visible-xs smallTable" style="border:none !important">

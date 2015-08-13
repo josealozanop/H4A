@@ -1,0 +1,60 @@
+.sensorsTable {
+	font-family : 'Ubuntu', sans-serif;
+}
+
+.sensorsTable th{
+	border-top : none !important;
+}
+
+.sensorsTable tr:nth-child(even){
+	background : #EEE
+}
+.sensorsTable tr:nth-child(odd){
+	background : #FFF
+}
+
+.enableSensors .panel-body{
+	font-size : small;
+}
+
+.enableSensors .searcherHead{
+	background-color:#47a447 !important;
+	border: thin solid black;
+	color:white;
+	margin-top:30px;
+	padding : 12px;
+	display : flex;
+	flex-direction: row;
+	justify-content : space-between;
+}
+
+.enableSensors .searcherHead .title{
+	font-size : larger;
+	font-weight : bolder;
+	display : flex;
+	align-items : center;
+}
+
+.enableSensors .searcherHead .actions{
+	display : flex;
+	align-items : center;
+}
+
+.enableSensors .searcherHead .actions > .innerGroup{
+	padding-left : 20px;
+}
+
+.enableSensors .searcherHead .actions select{
+	color : black;
+}
+
+.enableSensors .searcherHead .actions input{
+	color : black;
+}
+
+.enableSensors .searcherHead .actions button{
+
+}
+
+
+

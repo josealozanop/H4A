@@ -10,6 +10,18 @@ class userAssets{
 	public static $linuxPath = "/var/www/H4A2/";
 	public static $windowsPath = "C:/wamp/www/";
 	public static $h4aPath = "H4A/users/";
+	public static $defultAsset = array(
+		"analogic" => "analogic.svg",
+		"digital" => "digital.svg",
+		"digitalON" => "digitalON.svg",
+		"digitalOFF" => "digitalOFF.svg",
+		"sensors" => "sensors.svg",
+		"home" => "home.svg",
+		"user" => "user.svg",
+		"back" => "back.svg",
+		"logOut" => "logOut.svg",
+		"default" => "user.svg"
+	);
 		
 	protected $conn;
 	protected $dbUsers;
@@ -69,6 +81,10 @@ class userAssets{
 		}
 	}
 	
+	public function getDirPath(){
+		return $this->dirPath();
+	}
+	
 	public function itemHasOwnImage($base, $id, $append = ""){
 		$allowedExtensions = array(
 			".svg",
@@ -97,6 +113,15 @@ class userAssets{
 		//echo $this->user->getId_usuario();
 		//print_r($config);
 		return $config->getCss();
+	}
+	
+	public function getDefaultAsset($asset){
+		if(userAssets::$defultAsset[$asset]){
+			return $this->getDirPath().userAssets::$defultAsset[$asset];
+		}
+		else{
+			return $this->getDirPath().userAssets::$defultAsset["default"];
+		}
 	}
 
 }

@@ -12,7 +12,7 @@ app.controller('userSelectionController', function($scope, $attrs, $filter, $win
 	}
 	
 	$scope.getPath = function(user){
-		var base = "http://localhost/H4A/web/index_dev.php/homeController?user=";
+		var base = "./homeController?user=";
 		var id = user.id_usuario;
 		return base+id;
 	}

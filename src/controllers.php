@@ -30,6 +30,7 @@ require_once( __DIR__."/Controllers/BD/DAO_devices.php");
 
 $app->get("/userSelection", function(Request $request) use ($app){
 	$MAC = getMAC();
+	echo $MAC;
 	
 	$dbDevices = new DAO_devices($app["db"]);
 	$dbUsers = new DAO_users($app["db"]);
@@ -77,7 +78,7 @@ $app->get("/homeController", function(Request $request) use ($app){
 			$room["img"] = $filePath;
 		}
 		else{
-			$room["img"] = "/H4A/web/images/svg/home.svg";
+			$room["img"] = $assetsManager->getDefaultAsset("room");
 		}	
 	}
 	
@@ -100,14 +101,14 @@ $app->get("/homeController", function(Request $request) use ($app){
 					$sensor["img"] = $filePathOff;
 				}
 				else{
-					$sensor["img"] = "/H4A/web/images/svg/digitalOFF.svg";
+					$room["img"] = $assetsManager->getDefaultAsset("digitalOFF");
 				}
 				
 				if($filePathOn){
 					$sensor["imgActive"] = $filePathOn;
 				}
 				else{
-					$sensor["imgActive"] = "/H4A/web/images/svg/digitalON.svg";
+					$sensor["imgActive"] = $assetsManager->getDefaultAsset("digitalON");
 				}
 			break;
 			
@@ -116,7 +117,7 @@ $app->get("/homeController", function(Request $request) use ($app){
 					$sensor["img"] = $filePath;
 				}
 				else{
-					$sensor["img"] = "/H4A/web/images/svg/digital.svg";
+					$sensor["img"] = $assetsManager->getDefaultAsset("digital");
 				}
 			break;
 			
@@ -125,7 +126,7 @@ $app->get("/homeController", function(Request $request) use ($app){
 					$sensor["img"] = $filePath;
 				}
 				else{
-					$sensor["img"] = "/H4A/web/images/svg/analogic.svg";
+					$sensor["img"] = $assetsManager->getDefaultAsset("analogic");
 				}
 			break;
 			
@@ -134,14 +135,14 @@ $app->get("/homeController", function(Request $request) use ($app){
 					$sensor["img"] = $filePath;
 				}
 				else{
-					$sensor["img"] = "/H4A/web/images/svg/sensors.svg";
+					$sensor["img"] = $assetsManager->getDefaultAsset("sensors");
 				}
 
 			break;
 			
 			default:
-				$sensor["img"] = "/H4A/web/images/svg/digitalOFF.svg";
-				$sensor["imgActive"] = "/H4A/web/images/svg/digitalON.svg";
+				$sensor["img"] = $assetsManager->getDefaultAsset("digitalOFF");
+				$sensor["imgActive"] = $assetsManager->getDefaultAsset("digitalON");
 			break;
 		}
 	}
@@ -150,8 +151,9 @@ $app->get("/homeController", function(Request $request) use ($app){
 	$configData = $dbConfig->getFullConfig($selectedUser, $MAC);
 	$config = $configData["config"];
 	$layout = $configData["layout"];
-	print_r($config);
-	print_r($layout);
+	//print_r($config);
+	//print_r($layout);
+	//echo $MAC;
 	
 	$data = base64_encode(json_encode(array(
 		"rooms" => $allRooms,
@@ -336,9 +338,19 @@ $app->get('/help', function (Request $request) use ($app) {
     return $app['twig']->render('help.html', array(
 		"datos" => $datos
 	));
-})
-->bind('help')
-;
+})->bind('help');
+
+$app->get('/getClientMac', function (Request $request) use ($app) {
+	$out = array(
+		'serverMac' => null,
+		'clientMac' => null,
+		'clientIp' => $_SERVER['REMOTE_ADDR'],
+		'serverIp' => $_SERVER['SERVER_ADDR']
+	);
+	
+	$out = json_encode($out);
+	return new Response($out);
+})->bind('getClientMac');
 
 $app->get('/insertConfig', function (Request $request) use ($app) {
 	$input = json_decode(base64_decode($request->get("data")), true);

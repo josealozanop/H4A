@@ -125,5 +125,11 @@ app.controller('enableSensorsNewUser', ['$scope', 'asyncServices', '$attrs','$fi
 		$scope.dataToSend = angular.toJson($scope.dataToSendObject);
 	}
 	
+	$scope.selectAllSensors = function(){
+		for(i in $scope.allSensors){
+			$scope.allSensors[i].enabled = true;
+		}
+	}
+	
 	$scope.init();
 }]);
