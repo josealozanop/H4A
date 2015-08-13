@@ -82,7 +82,7 @@ class userAssets{
 	}
 	
 	public function getDirPath(){
-		return $this->dirPath();
+		return $this->dirPath;
 	}
 	
 	public function itemHasOwnImage($base, $id, $append = ""){
@@ -117,11 +117,26 @@ class userAssets{
 	
 	public function getDefaultAsset($asset){
 		if(userAssets::$defultAsset[$asset]){
-			return $this->getDirPath().userAssets::$defultAsset[$asset];
+			$localUrl =  $this->getDirPath().userAssets::$defultAsset[$asset];
 		}
 		else{
-			return $this->getDirPath().userAssets::$defultAsset["default"];
+			$localUrl = $this->getDirPath().userAssets::$defultAsset["default"];
 		}
+		
+		return $this->publicUrl($localUrl);
+	}
+	
+	public function publicUrl($base){
+		$paths = array($this->getDirPath());
+		if($this->os == "Linux"){
+			$basePath = "/H4A/H4A2/web/";
+		}
+		else{
+			$basePath = "/H4A/web/";
+		}
+		
+		$publicUrl = str_replace($paths, $basePath."images/svg/", $base);
+		return $publicUrl;
 	}
 
 }

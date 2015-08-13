@@ -101,7 +101,7 @@ $app->get("/homeController", function(Request $request) use ($app){
 					$sensor["img"] = $filePathOff;
 				}
 				else{
-					$room["img"] = $assetsManager->getDefaultAsset("digitalOFF");
+					$sensor["img"] = $assetsManager->getDefaultAsset("digitalOFF");
 				}
 				
 				if($filePathOn){
@@ -147,6 +147,14 @@ $app->get("/homeController", function(Request $request) use ($app){
 		}
 	}
 	
+	//establecemos las imagenes de los elementos de de navegacion
+	$defultItemsImgs = array(
+		"back" => $assetsManager->getDefaultAsset("back"),
+		"logOut" => $assetsManager->getDefaultAsset("logOut"),
+		"user" => $assetsManager->getDefaultAsset("user"),
+		"sensors" => $assetsManager->getDefaultAsset("sensors")
+	);
+	
 	//print_r($allSensorsIds);
 	$configData = $dbConfig->getFullConfig($selectedUser, $MAC);
 	$config = $configData["config"];
@@ -159,7 +167,8 @@ $app->get("/homeController", function(Request $request) use ($app){
 		"rooms" => $allRooms,
 		"sensors" => $allSensors,
 		"config" => $config->toArray(),
-		"layout" => $layout->toArray()
+		"layout" => $layout->toArray(),
+		"assets" => $defultItemsImgs
 	)));
 	
 	return $app['twig']->render('homeController.html', array(

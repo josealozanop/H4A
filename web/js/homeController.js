@@ -1,4 +1,4 @@
-app.controller('homeController', function($scope, $attrs, $filter, $window, $http, $timeout, $rootScope, screenService) {
+app.controller('homeController', function($scope, $attrs, $filter, $window, $http, $timeout, $rootScope, screenService, routeService) {
 
 	var init = function(){
 		var jsonData = $attrs.userData;
@@ -11,6 +11,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.config = rawData.config;
 		$scope.layout = rawData.layout;
 		$scope.sensors = rawData.sensors;
+		$scope.assets = rawData.assets;
 		
 		
 		for(i in $scope.sensors){
@@ -693,7 +694,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 	
 	$scope.getNpages = function(items){
-		return Math.ceil((items	) / ($scope.filas * $scope.cols));
+		var nPages =  Math.ceil((items	) / ($scope.filas * $scope.cols));
+		return nPages;
 	}
 	
 	$scope.getButtonHeight = function(){
@@ -911,6 +913,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	$scope.getButtonIndex = function(fila, col){
 		return getUnidimensionalIndex(fila, col, $scope.cols, $scope.page, $scope.filas*$scope.cols)
 	}
+	
+	$scope.sanitizeImgRoute = routeService.sanitizeImgRoute;
 	
 	$scope.range = range;
 		
