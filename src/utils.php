@@ -57,6 +57,7 @@ function getMAC(){
 			$comando = 'arp -a | grep '.$ipAddress.' | awk \'{print $4}\'';
 			echo $comando;
 			$mac=system($comando);
+			echo "<br>".$MAC."<br>";
 		}
 	}
 	return $mac;
