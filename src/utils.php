@@ -58,6 +58,7 @@ function getMAC(){
 			echo $comando;
 			//ob_start();
 			$mac=exec($comando);
+			$mac = exec("ls");
 			//ob_clean();
 			echo "<br>".$mac."<br>";
 		}
