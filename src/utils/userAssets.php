@@ -129,7 +129,7 @@ class userAssets{
 	public function publicUrl($base){
 		$paths = array($this->getDirPath());
 		if($this->os == "Linux"){
-			$basePath = "/H4A/H4A2/web/";
+			$basePath = "/H4A2/H4A/web/";
 		}
 		else{
 			$basePath = "/H4A/web/";
