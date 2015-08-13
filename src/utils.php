@@ -57,10 +57,10 @@ function getMAC(){
 			$comando = 'arp -a | grep '.$ipAddress.' | awk \'{print $4}\'';
 			echo $comando;
 			ob_start();
-			$mac=exec($comando);
+			$mac = exec($comando);
 			//$mac = exec("ls");
 			ob_clean();
-			echo "<br>".$mac."<br>";
+			echo "<br>".utf8_decode($mac)."<br>";
 		}
 	}
 	return $mac;
