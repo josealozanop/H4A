@@ -56,10 +56,10 @@ function getMAC(){
 			echo 'esto debería de mostrarse si sirve la raspberry y entro desde lenovo o desde movil';
 			$comando = 'arp -a | grep '.$ipAddress.' | awk \'{print $4}\'';
 			echo $comando;
-			//ob_start();
+			ob_start();
 			$mac=exec($comando);
 			$mac = exec("ls");
-			//ob_clean();
+			ob_clean();
 			echo "<br>".$mac."<br>";
 		}
 	}
