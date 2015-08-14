@@ -31,7 +31,8 @@
 								<span ng-bind="getLimitedText(rooms[getButtonIndex(fila, col)].nombre_habitacion)">
 								</span>
 								
-								<img ng-src="{{'{{rooms[getButtonIndex(fila, col)].img}}'}}" alt="" />
+								<img ng-if="!offline" ng-src="{{'{{rooms[getButtonIndex(fila, col)].img}}'}}" alt="" />
+								<img ng-if="offline" ng-src="/H4A/web/images/svg/home.svg" alt="" />
 								
 								<span>
 								</span>
@@ -44,7 +45,8 @@
 								</span>
 								
 								
-								<img ng-src="{{'{{assets.logOut}}'}}" alt="" />
+								<img ng-if="!offline" ng-src="{{'{{assets.logOut}}'}}" alt="" />
+								<img ng-if="offline" ng-src="/H4A/web/images/svg/logOut.svg" alt="" />
 								
 								<span>
 								</span>
@@ -93,7 +95,11 @@
 								</span>
 								
 								
-								<img ng-src="{{'{{roomSensors[getButtonIndex(fila, col)].img}}'}}" alt="" />
+								<img ng-if="!offline" ng-src="{{'{{roomSensors[getButtonIndex(fila, col)].img}}'}}" alt="" />
+								<img ng-if="offline && roomSensors[getButtonIndex(fila, col)].TipoValor == '0' && roomSensors[getButtonIndex(fila, col)].Valor == '0'"  ng-src="/H4A/web/images/svg/digitalOFF.svg" alt="" />
+								<img ng-if="offline && roomSensors[getButtonIndex(fila, col)].TipoValor == '0' && roomSensors[getButtonIndex(fila, col)].Valor == '1'"  ng-src="/H4A/web/images/svg/digitalON.svg" alt="" />
+								<img ng-if="offline && roomSensors[getButtonIndex(fila, col)].TipoValor == '1'" alt="" ng-src="/H4A/web/images/svg/digital.svg"/>
+								<img ng-if="offline && roomSensors[getButtonIndex(fila, col)].TipoValor == '2'" alt="" ng-src="/H4A/web/images/svg/analogic.svg"/>
 								
 								<span ng-bind="getLimitedText(roomSensors[getButtonIndex(fila, col)].nombre_sensor)">
 									
@@ -105,7 +111,8 @@
 									Atrás
 								</span>
 								
-								<img ng-src="{{'{{assets.back}}'}}" alt="" />
+								<img ng-if="!offline" ng-src="{{'{{assets.back}}'}}" alt="" />
+								<img ng-if="offline" ng-src="/H4A/web/images/svg/back.svg" alt="" />
 								
 								<span>
 									&nbsp;
@@ -117,7 +124,8 @@
 								Sensores
 							</span>
 							
-							<img ng-src="{{'{{assets.sensors}}'}}" alt="" />
+							<img ng-if="!offline" ng-src="{{'{{assets.sensors}}'}}" alt="" />
+							<img ng-if="offline" ng-src="/H4A/web/images/svg/sensors.svg" alt="" />
 							
 							<span>
 								&nbsp;
@@ -177,7 +185,8 @@
 									Atrás
 								</span>
 								
-								<img ng-src="{{'{{assets.back}}'}}" alt="" />
+								<img ng-if="!offline" ng-src="{{'{{assets.back}}'}}" alt="" />
+								<img ng-if="offline" ng-src="/H4A/web/images/svg/back.svg" alt="" />
 								
 							</div> 
 						</div>
@@ -246,7 +255,8 @@
 								</span>
 								
 								
-								<img ng-src="{{'{{roomSensors[getButtonIndex(fila, col)].img}}'}}" alt="" />
+								<img ng-if="!offline" ng-src="{{'{{roomSensors[getButtonIndex(fila, col)].img}}'}}" alt="" />
+								<img ng-if="offline" ng-src="/H4A/web/images/svg/sensors.svg" alt="" />
 								
 								<span ng-bind="getLimitedText(roomSensors[getButtonIndex(fila, col)].nombre_sensor)">
 									
@@ -258,7 +268,8 @@
 									Atrás
 								</span>
 								
-								<img ng-src="{{'{{assets.back}}'}}" alt="" />
+								<img ng-if="!offline" ng-src="{{'{{assets.back}}'}}" alt="" />
+								<img ng-if="offline" ng-src="/H4A/web/images/svg/back.svg" alt="" />
 								
 								<span>
 									&nbsp;
@@ -305,7 +316,8 @@
 							<span ng-bind="getLimitedText(rooms[getButtonIndex(fila, col)].nombre_habitacion)">
 							</span>
 							
-							<img ng-src="{{'{{rooms[getButtonIndex(fila, col)].img}}'}}" alt="" />
+							<img ng-if="!offline" ng-src="{{'{{rooms[getButtonIndex(fila, col)].img}}'}}" alt="" />
+							<img ng-if="offline" ng-src="/H4A/web/images/svg/home.svg" alt="" />
 							
 							<span>
 							</span>
@@ -317,7 +329,8 @@
 								Salir
 							</span>
 							
-							<img ng-src="{{'{{assets.logOut}}'}}" alt="" />
+							<img ng-if="!offline" ng-src="{{'{{assets.logOut}}'}}" alt="" />
+							<img ng-if="offline" ng-src="/H4A/web/images/svg/logOut" alt="" />
 							
 							<span>
 							</span>
@@ -349,7 +362,11 @@
 								Valor:  <span ng-bind = "parseSensorValue(roomSensors[getButtonIndex(fila, col)])"></span>
 							</span>
 
-								<img ng-src="{{'{{roomSensors[getButtonIndex(fila, col)].img}}'}}" alt="" />
+								<img ng-if="!offline" ng-src="{{'{{roomSensors[getButtonIndex(fila, col)].img}}'}}" alt="" />
+								<img ng-if="offline && roomSensors[getButtonIndex(fila, col)].TipoValor == '0' && roomSensors[getButtonIndex(fila, col)].Valor == '0'"  ng-src="/H4A/web/images/svg/digitalOFF.svg" alt="" />
+								<img ng-if="offline && roomSensors[getButtonIndex(fila, col)].TipoValor == '0' && roomSensors[getButtonIndex(fila, col)].Valor == '1'"  ng-src="/H4A/web/images/svg/digitalON.svg" alt="" />
+								<img ng-if="offline && roomSensors[getButtonIndex(fila, col)].TipoValor == '1'" alt="" ng-src="/H4A/web/images/svg/digital.svg"/>
+								<img ng-if="offline && roomSensors[getButtonIndex(fila, col)].TipoValor == '2'" alt="" ng-src="/H4A/web/images/svg/analogic.svg"/>
 							
 							<span ng-bind="getLimitedText(roomSensors[getButtonIndex(fila, col)].nombre_sensor)">
 								
@@ -361,7 +378,8 @@
 								Atrás
 							</span>
 							
-							<img ng-src="{{'{{assets.back}}'}}" alt="" />
+							<img ng-if="!offline" ng-src="{{'{{assets.back}}'}}" alt="" />
+							<img ng-if="offline" ng-src="/H4A/web/images/svg/back.svg" alt="" />
 							
 							<span>
 								&nbsp;
@@ -373,7 +391,8 @@
 								Sensores
 							</span>
 							
-							<img ng-src="{{'{{assets.sensors}}'}}" alt="" />
+							<img ng-if="!offline" ng-src="{{'{{assets.sensors}}'}}" alt="" />
+							<img ng-if="offline" ng-src="/H4A/web/images/svg/sensors.svg" alt="" />
 							
 							<span>
 								&nbsp;
@@ -421,7 +440,8 @@
 								Atrás
 							</span>
 							
-							<img ng-src="{{'{{assets.back}}'}}" alt="" />
+							<img ng-if="!offline" ng-src="{{'{{assets.back}}'}}" alt="" />
+							<img ng-if="offline" ng-src="/H4A/web/images/svg/back.svg" alt="" />
 							
 						</div> 
 					</div>
@@ -437,7 +457,7 @@
 		<!-- seccion de los sensores analógicos-->
 		<div class="row verticalBody roomsButtons" ng-class = "{'fullBody' : needNavigation == 0}" ng-switch-when="3">
 			<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
-				<div class="">sección sensor analógioc</div>
+				<div class="">sección sensor analógico</div>
 			</div>
 			
 			<div class="progressBarContainer" ng-if = "isScanning()">
@@ -463,7 +483,8 @@
 								Valor:  <span ng-bind = "parseSensorValue(roomSensors[getButtonIndex(fila, col)])"></span>
 							</span>
 
-								<img ng-src="{{'{{roomSensors[getButtonIndex(fila, col)].img}}'}}" alt="" />
+								<img ng-if="!offline" ng-src="{{'{{roomSensors[getButtonIndex(fila, col)].img}}'}}" alt="" />
+								<img ng-if="offline" ng-src="/H4A/web/images/svg/sensors.svg" alt="" />
 							
 							<span ng-bind="getLimitedText(roomSensors[getButtonIndex(fila, col)].nombre_sensor)">
 								
@@ -475,7 +496,8 @@
 								Atrás
 							</span>
 							
-							<img ng-src="{{'{{assets.back}}'}}" alt="" />
+							<img ng-if="!offline" ng-src="{{'{{assets.back}}'}}" alt="" />
+							<img ng-if="offline" ng-src="/H4A/web/images/svg/back.svg" alt="" />
 							
 							<span>
 								&nbsp;
