@@ -96,9 +96,10 @@ class userAssets{
 		foreach($allowedExtensions as $extension){
 			$filePath = $this->getFullPath().$base.$id.$append.$extension;
 			$paths = array(userAssets::$linuxPath, userAssets::$windowsPath);
+			$pathsSubs = array("/H4A2/","/");
 
 			if(is_file($filePath)){
-				return str_replace($paths, "/", $filePath);
+				return str_replace($paths, $pathsSubs, $filePath);
 				//return $filePath;
 			}
 		}
