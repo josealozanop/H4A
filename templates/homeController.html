@@ -213,10 +213,47 @@
 							
 			<div class="roomsButtons" ng-class="{'col-xs-12' : needNavigation == 0, 'col-xs-10' : needNavigation == 1}">
 			
-				<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
-					<div class="">
-						Seccion de sensores analogicos
+				<div class="col-xs-12 elementsLayout analogicSection" ng-class="{'fullLayout' : !isScanning()}">
+					
+					<div class="col-xs-12 sensorInfo">
+						<div ng-bind="analogic.sensor.nombre_sensor">
+						</div>
+						<div>
+							Valor: <span ng-bind="analogic.val"></span>
+						</div>
+						<div class="extraInfo">
+							(min, max): (<span ng-bind="analogic.min"></span>, <span ng-bind="analogic.max"></span>)
+						</div>
+						<button ng-if="debugMode" ng-click="debug()">
+							Scope
+						</button>
 					</div>
+					
+					<div class="rangeUpperContainer col-xs-12">
+						<div>
+						</div>
+						
+						<div class="col-xs-12 rangeSection">
+							<div class="col-sm-1 hidden-xs minValueContainer">
+								<span ng-bind="analogic.min"></span>
+							</div>
+							<div class="col-sm-10 col-xs-12 rangeInputContainer">
+								<input class="" type="range" min={{'{{analogic.min}}'}} ng-model="analogic.val" max={{'{{analogic.max}}'}} step={{'{{analogic.step}}'}} ng-click="clickNewAnalogicValue(analogic.val)">
+							</div>
+							
+							<div class="col-sm-1 hidden-xs maxValueContainer">
+								<span ng-bind="analogic.max"></span>
+							</div>
+						</div>
+						
+						<div class="col-sm-10 col-xs-12 col-sm-offset-1 progressBarAnalogicContainer">
+							<div class="progressBarAnalogic">
+								
+							</div>
+						</div>
+					</div>
+							
+					<button class="button col-xs-12 backButton" ng-click="backToSensors()">Atrás</button>
 				</div>
 
 				<div class="progressBarContainer" ng-if = "isScanning()">
@@ -456,8 +493,42 @@
 		
 		<!-- seccion de los sensores analógicos-->
 		<div class="row verticalBody roomsButtons" ng-class = "{'fullBody' : needNavigation == 0}" ng-switch-when="3">
-			<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
-				<div class="">sección sensor analógico</div>
+			<div class="elementsLayout analogicSection" ng-class="{'fullLayout' : !isScanning()}">
+				<div class="col-xs-12 sensorInfo">
+					<div ng-bind="analogic.sensor.nombre_sensor">
+					</div>
+					<div>
+						Valor: <span ng-bind="analogic.val"></span>
+					</div>
+					<div class="extraInfo">
+						(min, max): (<span ng-bind="analogic.min"></span>, <span ng-bind="analogic.max"></span>)
+					</div>
+					<button ng-if="debugMode" ng-click="debug()">
+						Scope
+					</button>
+				</div>
+					
+				<div class="rangeUpperContainer col-xs-12">
+					<div>
+					</div>
+					
+					<div class="col-xs-12 rangeSection">
+						
+						<div class="col-xs-12 rangeInputContainer">
+							<input class="" type="range" min={{'{{analogic.min}}'}} ng-model="analogic.val" max={{'{{analogic.max}}'}} step={{'{{analogic.step}}'}} ng-click="clickNewAnalogicValue(analogic.val)">
+						</div>
+
+					</div>
+					
+					<div class="col-xs-12 col-sm-offset-1 progressBarAnalogicContainer">
+						<div class="progressBarAnalogic">
+							
+						</div>
+					</div>
+				</div>
+							
+				<button class="button col-xs-12 backButton" ng-click="backToSensors()">Atrás</button>
+
 			</div>
 			
 			<div class="progressBarContainer" ng-if = "isScanning()">

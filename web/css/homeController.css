@@ -18,6 +18,7 @@
 }
 
 .homeController .leftArrow button.disabled{
+	
 	background-color : gray;
 	color : white;
 }
@@ -186,4 +187,89 @@
 	background-color : yellow;
 }
 
+.homeController .roomsButtons .elementsLayout.analogicSection{
+	display : flex;
+	flex-direction : column;
+	justify-content : space-between;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection  .sensorInfo{
+	background-color : gray;
+	text-align : center;
+	font-size : x-large;
+	font-weight : bold;
+	margin-top : 5px;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection  .sensorInfo .extraInfo{
+	font-size : smaller;
+	font-weight : normal;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .backButton{
+	height : 30%;
+	max-height : 120px;
+	font-weight : bolder;
+	font-size : xx-large;
+	margin-bottom : 5px;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeSection{
+	
+	display : flex;
+	flex-direction : row;
+	align-items : center;
+	color : white;
+	font-size : x-large;
+	font-weight : bold;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeUpperContainer{
+	display : flex;
+	flex-direction : column;
+	justify-content : space-between;
+	height : 20%;
+	max-height : 80px;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeUpperContainer .progressBarAnalogicContainer{
+	
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeUpperContainer .progressBarAnalogicContainer .progressBarAnalogic{
+	background-color : red;
+	width : 100%;
+	height : 5px;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .minValueContainer{
+	text-align : center;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .maxValueContainer{
+	text-align : center;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeSection .rangeInputContainer{
+	padding : 0px;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection  input[type=range]{
+    -webkit-appearance: none;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeSection input[type=range]::-webkit-slider-runnable-track {
+    height: 10px;
+    background: #ddd;
+    border: none;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeSection input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 40px;
+    width: 15px;
+    background: red;
+    margin-top: -15px;
+}
 

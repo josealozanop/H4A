@@ -13,6 +13,15 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.sensors = rawData.sensors;
 		$scope.assets = rawData.assets;
 		
+		//Sensor analógico seleccionado
+		$scope.analogic = {
+			sensor : null,
+			max : 20,
+			min : 10,
+			step : 1,
+			val : 15
+		}
+		
 		
 		for(i in $scope.sensors){
 			var sensor = $scope.sensors[i];
@@ -57,6 +66,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		
 		//Poner a true si queremos que la web 'funcione' sin internet
 		$scope.offline = false;
+		$scope.debugMode = true;
 	}
 	
 	$scope.reset = function(){
@@ -390,7 +400,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 					$scope.selectedNStateSensor.Valor = newValue;
 				}
 				else{
-					console.log("Error al obtener valor de los sensores: ", idsSensors, status)
+					console.log("Error al establecer el valor de los sensores: ", idsSensors, status)
 				}
 			});
 			$scope.backToSensors();
@@ -398,6 +408,48 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		else{
 			$scope.selectedNStateSensor.Valor = newValue;
 			$scope.backToSensors();
+		}
+	}
+	
+	var setAnalogicSensor = function(newValue){
+		console.log("setAnalogicSensor iniciado");
+		var sensorId = $scope.analogic.sensor.id_sen;
+		if(!$scope.offline){
+			dataToSend = window.btoa(angular.toJson({
+				id : sensorId,
+				value : newValue
+			}));
+			
+			
+			$http.get("./setSensor?data="+dataToSend).
+			then(function(data, status, headers, config) {
+				var requestData = data.data;
+				var requestStatus = requestData.status;
+				//Si la peticion de datos ha tenido exito actualizamos los valores de los sensores 
+				if(requestStatus == 1){
+					console.log("setAnalogicSensor realizado con exito");
+					
+					var changedSensor = $scope.sensors.filter(function(elem){
+						if(elem.id_sen == sensorId){
+							return true;
+						}
+					})[0];
+					
+					changedSensor.Valor = newValue;
+				}
+				else{
+					console.log("Error al establecer el valor de los sensores: ", idsSensors, status)
+				}
+			});
+		}
+		else{
+			var changedSensor = $scope.sensors.filter(function(elem){
+				if(elem.id_sen == sensorId){
+					return true;
+				}
+			})[0];
+			
+			changedSensor.Valor = newValue;
 		}
 	}
 	
@@ -485,6 +537,10 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		else if($scope.sectionControll.selected == 3){
 			$scope.nPages = 1;
 			$scope.needNavigation = false;
+			$scope.analogic.val = $scope.analogic.sensor.Valor;
+			$scope.analogic.max = $scope.analogic.sensor.valor_max;
+			$scope.analogic.min = $scope.analogic.sensor.valor_min;
+			$scope.analogic.step = $scope.analogic.sensor.incremento;
 		}
 		
 		//Sección de sensores de sólo lectura.
@@ -792,7 +848,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	
 	var clickAnalogicSensor = function(sensor){
 		$scope.sectionControll.selected = 3;
-		$scope.selectedNStateSensor = sensor;
+		$scope.analogic.sensor = sensor;
 		console.log("sensor analógico");
 	}
 	
@@ -804,6 +860,10 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		else{			
 			setNStateSensor(newValue);
 		}
+	}
+	
+	$scope.clickNewAnalogicValue = function(newValue){
+		setAnalogicSensor(newValue);
 	}
 	
 	$scope.isCurrentSensorValue = function(value){
