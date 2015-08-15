@@ -207,15 +207,12 @@
 		
 		<!-- seccion de los sensores analógicos-->
 		<div class="row" ng-switch-when="3">
-			<div class="col-xs-1 leftArrow" ng-if="needNavigation == 1">
-				<button class="btn" ng-class="{'disabled' : isFirstPage(), 'active' : scanning.leftArrow}" ng-click="!isScanning() && clickPrevious()"><</button>
-			</div>
-							
-			<div class="roomsButtons" ng-class="{'col-xs-12' : needNavigation == 0, 'col-xs-10' : needNavigation == 1}">
+									
+			<div class="roomsButtons col-xs-12" >
 			
-				<div class="col-xs-12 elementsLayout analogicSection" ng-class="{'fullLayout' : !isScanning()}">
+				<div class=" elementsLayout analogicSection" ng-class="{'fullLayout' : !isScanning()}">
 					
-					<div class="col-xs-12 sensorInfo">
+					<div class="sensorInfo">
 						<div ng-bind="analogic.sensor.nombre_sensor">
 						</div>
 						<div>
@@ -263,9 +260,6 @@
 
 			</div>
 			
-			<div class="col-xs-1 rightArrow" ng-if="needNavigation == 1"> 
-				<button ng-click="!isScanning() && clickNext()" class="btn" ng-class="{'disabled' : isLastPage(), 'active' : scanning.rightArrow}">></button>
-			</div>
 		</div>
 		
 		<!-- sección de los sensores de solo lectura -->

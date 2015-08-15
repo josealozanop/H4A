@@ -19,7 +19,11 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			max : 20,
 			min : 10,
 			step : 1,
-			val : 15
+			val : 15,
+			scanning : {
+				section : 0,
+				item : 0
+			}
 		}
 		
 		
@@ -46,8 +50,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.nPages = $scope.getNpages($scope.rooms.length);
 		
 		$scope.scanning = {
-			activated : false,
-			miliseconds : 1800,
+			activated : true,
+			miliseconds : 5000,
 			position : 0,
 			leftArrow : false,
 			rightArrow : false
@@ -60,7 +64,10 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		
 		if($scope.scanning.activated){
 			//console.log("activado")
-			$scope.tick();
+			//$scope.tick();
+			$scope.lastTickTime = (new Date()).getTime();
+			$scope.barPercent = 0;
+			$scope.tickPromise = $timeout($scope.tick, $scope.scanning.miliseconds);
 			$scope.tickBarProgress();
 		}
 		
@@ -88,7 +95,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.barPercent = 0;
 		//console.log($scope.lastTickTime);
 		
-		if($scope.sectionControll.selected != 4){
+		if(watheverValue($scope.sectionControll.selected, [0, 1, 2])){
 			$scope.scanning.leftArrow = false;
 			$scope.scanning.rightArrow = false;
 					
@@ -180,8 +187,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				}
 			}
 		}
-		//console.log($scope.scanning.position);
-		$timeout($scope.tick, $scope.scanning.miliseconds); 
+		console.log($scope.scanning.position);
+		$scope.tickPromise = $timeout($scope.tick, $scope.scanning.miliseconds); 
     }
 	
 	$scope.tickBarProgress = function(){
@@ -215,7 +222,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 	
 	$scope.clickOnScanning = function(){
-				
+		//console.log($scope);
 		if($scope.scanning.rightArrow){
 			$scope.clickNext();
 			$scope.scanning.rightArrow = false;
@@ -244,11 +251,25 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				var selectedItem = $scope.sensorStates[index];
 				$scope.clickNewState(selectedItem);
 			}
+			else if($scope.sectionControll.selected == 3){
+				//var selectedItem = $scope.sensorStates[index];
+				//$scope.clickNewState(selectedItem);
+				$scope.backToSensors();
+			}
 			else if($scope.sectionControll.selected == 4){
 				//El úniso caso posible en los sensores de sólo lectura es que el botón de atrás este seleccionado
-				$scope.backToRooms();
+				$scope.backToSensors();
 			}
 		}
+		
+		$timeout.cancel($scope.tickPromise);
+		$scope.scanning.position = 0;
+		$scope.lastTickTime = (new Date()).getTime();
+		$scope.tickPromise = $timeout($scope.tick, $scope.scanning.miliseconds);
+		/*$timeout.cancel($scope.tickPromise);
+		$scope.scanning.position = 0;
+		//$timeout($scope.tick, 150);
+		$scope.tickPromise = $timeout($scope.tick, $scope.scanning.miliseconds);*/
 	}
 	
 	/**
@@ -468,12 +489,15 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		//Selección de sensor dentro de una habitación
 		else if($scope.sectionControll.selected == 1){
 			//$scope.reset();
+			console.log("entro")
 			$scope.roomSensors = $scope.sensors.filter(function(sensor){
 				//console.log(sensor);
 				if(sensor.id_habitacion == $scope.selectedRoom.id_habitacion && sensor.Tipo == "Actuador"){
 					return sensor;
 				}
 			});
+			
+			console.log($scope.roomSensors);
 			
 			var onlyReadSensors = $scope.sensors.filter(function(sensor){
 				//console.log(sensor);

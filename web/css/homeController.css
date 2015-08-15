@@ -211,11 +211,10 @@
 	max-height : 120px;
 	font-weight : bolder;
 	font-size : xx-large;
-	margin-bottom : 5px;
 }
 
 .homeController .roomsButtons .elementsLayout.analogicSection .rangeSection{
-	
+	padding : 0px;
 	display : flex;
 	flex-direction : row;
 	align-items : center;
@@ -233,7 +232,7 @@
 }
 
 .homeController .roomsButtons .elementsLayout.analogicSection .rangeUpperContainer .progressBarAnalogicContainer{
-	
+	padding : 0px;
 }
 
 .homeController .roomsButtons .elementsLayout.analogicSection .rangeUpperContainer .progressBarAnalogicContainer .progressBarAnalogic{
