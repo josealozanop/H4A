@@ -71,8 +71,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		}
 		
 		//Poner a true si queremos que la web 'funcione' sin internet
-		$scope.offline = true;
-		$scope.debugMode = false;
+		$scope.offline = false;
+		$scope.debugMode = true;
 	}
 	
 	$scope.reset = function(){
@@ -274,6 +274,10 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			else if($scope.sectionControll.selected == 1){
 				var selectedItem = $scope.roomSensors[index];
 				$scope.clickSensor(selectedItem);
+				//Si hacemos click sobre un actuador binario entonces hacemos que el barrido no vuelva al principio
+				if(selectedItem.TipoValor == '0'){
+					return;
+				}
 			}
 			else if($scope.sectionControll.selected == 2){
 				var selectedItem = $scope.sensorStates[index];
@@ -332,7 +336,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				$scope.backToSensors();
 			}
 		}
-		
+				
+		//Matamos el anterior timeout y empezamos en la posición 0 de la nueva sección
 		$timeout.cancel($scope.tickPromise);
 		$scope.scanning.position = 0;
 		$scope.lastTickTime = (new Date()).getTime();
