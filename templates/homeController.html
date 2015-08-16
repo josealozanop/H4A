@@ -218,7 +218,7 @@
 						<div>
 							Valor: <span ng-bind="analogic.val"></span>
 						</div>
-						<div class="extraInfo">
+						<div class="extraInfo hidden-xs">
 							(min, max): (<span ng-bind="analogic.min"></span>, <span ng-bind="analogic.max"></span>)
 						</div>
 						<button ng-if="debugMode" ng-click="debug()">
@@ -226,7 +226,7 @@
 						</button>
 					</div>
 					
-					<div class="rangeUpperContainer col-xs-12">
+					<div class="rangeUpperContainer col-xs-12" ng-class="{'scanned' : isAnalogicRangeScanned()}">
 						<div>
 						</div>
 						
@@ -235,7 +235,9 @@
 								<span ng-bind="analogic.min"></span>
 							</div>
 							<div class="col-sm-10 col-xs-12 rangeInputContainer">
-								<input class="" type="range" min={{'{{analogic.min}}'}} ng-model="analogic.val" max={{'{{analogic.max}}'}} step={{'{{analogic.step}}'}} ng-click="clickNewAnalogicValue(analogic.val)">
+								<input class="" ng-if="!isScanning()" type="range" min={{'{{analogic.min}}'}} ng-model="analogic.val" max={{'{{analogic.max}}'}} step={{'{{analogic.step}}'}} ng-click="clickNewAnalogicValue(analogic.val)">
+								
+								<input class="" ng-if="isScanning()" type="range" min={{'{{analogic.min}}'}} ng-model="analogic.val" max={{'{{analogic.max}}'}} step={{'{{analogic.step}}'}} disabled>
 							</div>
 							
 							<div class="col-sm-1 hidden-xs maxValueContainer">
@@ -244,13 +246,15 @@
 						</div>
 						
 						<div class="col-sm-10 col-xs-12 col-sm-offset-1 progressBarAnalogicContainer">
-							<div class="progressBarAnalogic">
-								
-							</div>
-						</div>
+							<!-- no quitar los siguiente comentarios que parecen inútiles pero no lo son ;) -->
+							<div class="progressBarAnalogic firstQuarter" ng-class="{'scanned' : analogicQuarterScanned() == 0}"></div><!--
+							--><div class="progressBarAnalogic secondQuarter" ng-class="{'scanned' : analogicQuarterScanned() == 1}"></div><!--
+							--><div class="progressBarAnalogic thirdQuarter" ng-class="{'scanned' : analogicQuarterScanned() == 2}"></div><!--
+							--><div class="progressBarAnalogic fourQuarter" ng-class="{'scanned' : analogicQuarterScanned() == 3}"></div><!--				
+						--></div>
 					</div>
 							
-					<button class="button col-xs-12 backButton" ng-click="backToSensors()">Atrás</button>
+					<button class="button col-xs-12 backButton" ng-class = "{'scanned' : isAnalogicBackScanned()}" ng-click="!isScanning() && backToSensors()">Atrás</button>
 				</div>
 
 				<div class="progressBarContainer" ng-if = "isScanning()">
@@ -486,7 +490,7 @@
 		</div>
 		
 		<!-- seccion de los sensores analógicos-->
-		<div class="row verticalBody roomsButtons" ng-class = "{'fullBody' : needNavigation == 0}" ng-switch-when="3">
+		<div class="row verticalBody roomsButtons fullBody" ng-switch-when="3">
 			<div class="elementsLayout analogicSection" ng-class="{'fullLayout' : !isScanning()}">
 				<div class="col-xs-12 sensorInfo">
 					<div ng-bind="analogic.sensor.nombre_sensor">
@@ -494,7 +498,7 @@
 					<div>
 						Valor: <span ng-bind="analogic.val"></span>
 					</div>
-					<div class="extraInfo">
+					<div class="extraInfo hidden-xs">
 						(min, max): (<span ng-bind="analogic.min"></span>, <span ng-bind="analogic.max"></span>)
 					</div>
 					<button ng-if="debugMode" ng-click="debug()">
@@ -502,26 +506,30 @@
 					</button>
 				</div>
 					
-				<div class="rangeUpperContainer col-xs-12">
+				<div class="rangeUpperContainer col-xs-12" ng-class="{'scanned' : isAnalogicRangeScanned()}">
 					<div>
 					</div>
 					
-					<div class="col-xs-12 rangeSection">
+					<div class="col-xs-12 rangeSection" >
 						
-						<div class="col-xs-12 rangeInputContainer">
-							<input class="" type="range" min={{'{{analogic.min}}'}} ng-model="analogic.val" max={{'{{analogic.max}}'}} step={{'{{analogic.step}}'}} ng-click="clickNewAnalogicValue(analogic.val)">
+						<div class="col-xs-12 rangeInputContainer" >
+							<input ng-if="!isScanning()" class="" type="range" ng-class="{'disabled' : true}" min={{'{{analogic.min}}'}} ng-model="analogic.val" max={{'{{analogic.max}}'}} step={{'{{analogic.step}}'}} ng-click="clickNewAnalogicValue(analogic.val)">
+							
+							<input ng-if="isScanning()" class="" type="range" ng-class="{'disabled' : true}" min={{'{{analogic.min}}'}} ng-model="analogic.val" max={{'{{analogic.max}}'}} step={{'{{analogic.step}}'}} disabled>
 						</div>
 
 					</div>
 					
-					<div class="col-xs-12 col-sm-offset-1 progressBarAnalogicContainer">
-						<div class="progressBarAnalogic">
-							
-						</div>
-					</div>
+					<div class="col-sm-10 col-xs-12 col-sm-offset-1 progressBarAnalogicContainer">
+						<!-- no quitar los siguiente comentarios que parecen inútiles pero no lo son ;) -->
+						<div class="progressBarAnalogic firstQuarter" ng-class="{'scanned' : analogicQuarterScanned() == 0}"></div><!--
+						--><div class="progressBarAnalogic secondQuarter" ng-class="{'scanned' : analogicQuarterScanned() == 1}"></div><!--
+						--><div class="progressBarAnalogic thirdQuarter" ng-class="{'scanned' : analogicQuarterScanned() == 2}"></div><!--
+						--><div class="progressBarAnalogic fourQuarter" ng-class="{'scanned' : analogicQuarterScanned() == 3}"></div><!--				
+					--></div>
 				</div>
 							
-				<button class="button col-xs-12 backButton" ng-click="backToSensors()">Atrás</button>
+				<button class="button col-xs-12 backButton" ng-class = "{'scanned' : isAnalogicBackScanned()}" ng-click="!isScanning() && backToSensors()">Atrás</button>
 
 			</div>
 			

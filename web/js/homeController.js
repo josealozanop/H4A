@@ -22,10 +22,9 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			val : 15,
 			scanning : {
 				section : 0,
-				item : 0
+				position : 0
 			}
-		}
-		
+		}		
 		
 		for(i in $scope.sensors){
 			var sensor = $scope.sensors[i];
@@ -51,7 +50,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		
 		$scope.scanning = {
 			activated : true,
-			miliseconds : 5000,
+			miliseconds : 2000,
 			position : 0,
 			leftArrow : false,
 			rightArrow : false
@@ -72,8 +71,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		}
 		
 		//Poner a true si queremos que la web 'funcione' sin internet
-		$scope.offline = false;
-		$scope.debugMode = true;
+		$scope.offline = true;
+		$scope.debugMode = false;
 	}
 	
 	$scope.reset = function(){
@@ -187,7 +186,36 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				}
 			}
 		}
-		console.log($scope.scanning.position);
+		else if($scope.sectionControll.selected == 3){
+			//Si estamos en la seccion 0 el barrido pasa por:
+			//1) El medidor del valor del actuador
+			//2) El botón de salir 
+			if($scope.analogic.scanning.section == 0){
+				if($scope.analogic.scanning.position == 0){
+					$scope.analogic.scanning.position = 1;
+				}
+				else{
+					$scope.analogic.scanning.position = 0;
+				}
+			}
+			
+			//Si estamos en la seccion 1 el barrido pasa por:
+			//1) Cada una de la 4 divisiones que hemos hecho de la barra de valores
+			else if($scope.analogic.scanning.section == 1){
+				$scope.analogic.scanning.position = ($scope.analogic.scanning.position + 1) % 4;
+			}
+			//Si estamos en la seccion 2 el barrido pasa por:
+			//1) Por cada uno de los valores posibles de la barra de valores en el cuarto elegido
+			else if($scope.analogic.scanning.section == 2){
+				$scope.analogic.val = parseInt($scope.analogic.val);
+				$scope.analogic.val += 1;
+				if($scope.analogic.val == $scope.analogic.currentMax){
+					$scope.analogic.val = $scope.analogic.currentMin;
+				}
+			}
+			//console.log("tick de barrido en sensor analogico", $scope.analogic.scanning.section, $scope.analogic.scanning.position);
+		}
+		//console.log($scope.scanning.position);
 		$scope.tickPromise = $timeout($scope.tick, $scope.scanning.miliseconds); 
     }
 	
@@ -252,9 +280,52 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				$scope.clickNewState(selectedItem);
 			}
 			else if($scope.sectionControll.selected == 3){
-				//var selectedItem = $scope.sensorStates[index];
-				//$scope.clickNewState(selectedItem);
-				$scope.backToSensors();
+				if($scope.analogic.scanning.section == 2){
+					console.log("click en section == 2")
+					$scope.analogic.scanning.section = 0;
+					$scope.analogic.scanning.position = 0;
+					setAnalogicSensor($scope.analogic.val);
+					return;
+				}
+				
+				if($scope.isAnalogicBackScanned()){
+					$scope.backToSensors();
+				}
+				else if($scope.isAnalogicRangeScanned()){
+					$scope.analogic.scanning.section = 1;
+					$scope.analogic.scanning.position = getSplicePosition($scope.analogic.min, $scope.analogic.max, $scope.analogic.val, 4);
+				}
+				else if($scope.analogicQuarterScanned() == 0){
+					$scope.analogic.scanning.section = 2;
+					$scope.analogic.val = $scope.analogic.min;
+					$scope.analogic.currentMin = $scope.analogic.val;
+					$scope.analogic.currentMax = spliceAndPos($scope.analogic.min, $scope.analogic.max, 1, 4);
+					//console.log($scope.analogic.val);
+				}
+				else if($scope.analogicQuarterScanned() == 1){
+					$scope.analogic.scanning.section = 2;
+					$scope.analogic.val = spliceAndPos($scope.analogic.min, $scope.analogic.max, 1, 4);
+					$scope.analogic.currentMin = $scope.analogic.val;
+					$scope.analogic.currentMax = spliceAndPos($scope.analogic.min, $scope.analogic.max, 2, 4);
+					//console.log($scope.analogic.val);
+				}
+				else if($scope.analogicQuarterScanned() == 2){
+					$scope.analogic.scanning.section = 2;
+					$scope.analogic.val = spliceAndPos($scope.analogic.min, $scope.analogic.max, 2, 4);
+					$scope.analogic.currentMin = $scope.analogic.val;
+					$scope.analogic.currentMax = spliceAndPos($scope.analogic.min, $scope.analogic.max, 3, 4);
+					//console.log($scope.analogic.val);
+				}
+				else if($scope.analogicQuarterScanned() == 3){
+					$scope.analogic.scanning.section = 2;
+					$scope.analogic.val = spliceAndPos($scope.analogic.min, $scope.analogic.max, 3, 4);
+					$scope.analogic.currentMin = $scope.analogic.val;
+					$scope.analogic.currentMax = $scope.analogic.max;
+					//console.log($scope.analogic.val);
+				}
+				
+				
+				
 			}
 			else if($scope.sectionControll.selected == 4){
 				//El úniso caso posible en los sensores de sólo lectura es que el botón de atrás este seleccionado
@@ -565,6 +636,11 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			$scope.analogic.max = $scope.analogic.sensor.valor_max;
 			$scope.analogic.min = $scope.analogic.sensor.valor_min;
 			$scope.analogic.step = $scope.analogic.sensor.incremento;
+			
+			$scope.analogic.scanning = {
+				section : 0,
+				position : 0
+			}
 		}
 		
 		//Sección de sensores de sólo lectura.
@@ -599,6 +675,23 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			refreshOnlyReadSensors(idsSensors);
 		}
 	})
+	
+	/*$scope.$watch("analogic.val", function(){
+		console.log("ejecutando el watcher de analogic.val");
+		
+		if($scope.analogic.val < $scope.analogic.min){
+			$scope.analogic.val = $scope.analogic.min;
+		}
+		else if($scope.analogic.val > $scope.analogic.max){
+			$scope.analogic.val = $scope.analogic.max;
+		}
+		
+		var offset = ($scope.analogic.val-$scope.analogic.min)%$scope.analogic.step;
+		console.log(offset, $scope.analogic.val);
+		if(offset != 0){
+			$scope.analogic.val += offset;
+		}
+	})*/
 
 	/*$scope.$watch("page", function(){
 		if($scope.isLastPage()){
@@ -909,6 +1002,43 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		}
 	}
 	
+	$scope.isAnalogicBackScanned = function(){
+		if($scope.scanning.activated && $scope.analogic.scanning.section == 0 && $scope.analogic.scanning.position == 1){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	$scope.isAnalogicRangeScanned = function(){
+		if($scope.scanning.activated && $scope.analogic.scanning.section == 0 && $scope.analogic.scanning.position == 0){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	$scope.analogicQuarterScanned = function(){
+		if($scope.scanning.activated && ($scope.analogic.scanning.section == 1 || $scope.analogic.scanning.section == 2) && $scope.analogic.scanning.position == 0){
+			return 0;
+		}
+		else if($scope.scanning.activated && ($scope.analogic.scanning.section == 1 || $scope.analogic.scanning.section == 2) && $scope.analogic.scanning.position == 1){
+			return 1;
+		}
+		else if($scope.scanning.activated && ($scope.analogic.scanning.section == 1 || $scope.analogic.scanning.section == 2) && $scope.analogic.scanning.position == 2){
+			return 2;
+		}
+		else if($scope.scanning.activated && ($scope.analogic.scanning.section == 1 || $scope.analogic.scanning.section == 2) && $scope.analogic.scanning.position == 3){
+			return 3;
+		}
+		else{
+			return -1;
+		}
+		
+	}
+	
 	$scope.backToRooms = function(){
 		$scope.sectionControll.selected = 0;
 	}
@@ -985,11 +1115,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		return -1;
 	}
 	
-	var onlyReadNavigationRefresh = function(){
 		
-	}
-	
-	
 	/**
 	*	Funciones auxiliares.
 	**/

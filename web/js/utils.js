@@ -25,3 +25,19 @@ var watheverValue = function(value, arrValues){
 	}
 	return false;
 }
+
+var spliceAndPos = function(min, max, splice, nSplices){
+	min = parseInt(min);
+	max = parseInt(max);
+	splice = parseInt(splice);
+	nSplices = parseInt(nSplices);
+	//console.log(min, max, splice, nSplices);
+	//console.log(Math.floor(min+(splice*((max-min)/nSplices))));
+	return Math.floor(min+(splice*((max-min)/nSplices)));
+}
+
+var getSplicePosition = function(min, max, n, nSplices){
+	min = parseInt(min);
+	max = parseInte(max);
+	return Math.floor((n-min)/((max-min)/nSplices));
+}
