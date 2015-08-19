@@ -82,7 +82,7 @@ app.controller('enableSensorsNewUser', ['$scope', 'asyncServices', '$attrs','$fi
 			for(i in $scope.linkSensors) {
 				dev = $scope.linkSensors[i];
 				$scope.allSensors.push(dev);
-				console.log("pasa")							
+				//console.log("pasa")							
 			}
 			$scope.linkSensors = be_addAttr($scope.linkSensors,"enabled",false);
 			asyncServices.getAllRooms.init()

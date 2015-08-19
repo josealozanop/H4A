@@ -164,17 +164,17 @@
 							</div> 
 							
 							<div class="buttonLayout" ng-if="roomSensors[getButtonIndex(fila, col)].type == 'onlyReadSensors'" >
-							<span class="overLinable notShadow">
-								Sensores
-							</span>
-							
-							<img ng-if="!offline" ng-src="{{'{{assets.sensors}}'}}" alt="" />
-							<img ng-if="offline" ng-src="/H4A/web/images/svg/sensors.svg" alt="" />
-							
-							<span>
-								&nbsp;
-							</span>
-						</div> 
+								<span class="overLinable notShadow">
+									Sensores
+								</span>
+								
+								<img ng-if="!offline" ng-src="{{'{{assets.sensors}}'}}" alt="" />
+								<img ng-if="offline" ng-src="/H4A/web/images/svg/sensors.svg" alt="" />
+								
+								<span>
+									&nbsp;
+								</span>
+							</div> 
 						</div>
 					</div>
 				</div>
@@ -330,7 +330,11 @@
 						--></div>
 					</div>
 							
-					<button class="button col-xs-12 backButton overLinable notShadow" ng-class = "{'scanned' : isAnalogicBackScanned(), 'ayudaCrom' : isCrom()}" ng-click="!isScanning() && backToSensors()">Atrás</button>
+					<button class="button col-xs-12 backButton overLinable notShadow" ng-class = "{'scanned' : isAnalogicBackScanned(), 'ayudaCrom' : isCrom()}" ng-click="!isScanning() && backToSensors()">
+						<span class="backText">
+							&nbsp;&nbsp;Atrás&nbsp;&nbsp;
+						</span>
+					</button>
 				</div>
 
 				<div class="progressBarContainer" ng-if = "isScanning()">

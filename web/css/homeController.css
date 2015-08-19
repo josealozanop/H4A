@@ -641,6 +641,17 @@
 	font-weight : bolder;
 	font-size : xx-large;
 	border-color : black;
+	background : url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJElEQVQIWzWKwREAIACCYP+h7azkByoQPklw4Yq+MOnRWpdxADesD/6Ohy4jAAAAAElFTkSuQmCC)repeat;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .backButton.scanned.ayudaCrom > .backText{
+	color : white;
+	text-decoration : overline;
+	background : black;
+	padding-top : 5px;
+	padding-bottom : 5px;
+	padding-left : 10px;
+	padding-right : 10px;
 }
 
 /*
