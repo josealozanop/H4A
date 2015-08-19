@@ -733,3 +733,13 @@
     background: red;
     margin-top: -15px;
 }
+
+.homeController .navArrow .navigationText > .extraSpace{
+	display : none;
+}
+
+@media (min-width: 1200px) {
+	.homeController .navArrow .navigationText > .extraSpace{
+		display : inline;
+	}
+}
