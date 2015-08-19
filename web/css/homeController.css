@@ -58,7 +58,7 @@
 
 /* Nueva revisión para las flechas de navegación en horizontal*/
 /*modo normal sin barrido*/
-.homeController.normal .navArrow button:hover{
+/*.homeController.normal .navArrow button:hover{
 	background-color : yellow;
 	color : black;
 }
@@ -66,7 +66,7 @@
 .homeController.normal .navArrow button:hover > .navigationText{
 	background-color : yellow;
 	color : black;
-}
+}*/
 
 /* modo normal con barrido*/
 .homeController.scanning .navArrow button.active{
@@ -79,7 +79,7 @@
 	color : black !important;
 }
 
-.homeController.scanning .navArrow button:hover{
+/*.homeController.scanning .navArrow button:hover{
 	background-color : black;
 	color : white;
 }
@@ -87,10 +87,10 @@
 .homeController.scanning .navArrow button:hover > .navigationText{
 	background-color : black;
 	color : white;
-}
+}*/
 
 /* modo ayuda cromatica */
-.homeController.crom .navArrow button:hover{
+/*.homeController.crom .navArrow button:hover{
 	background-color : black;
 	background : url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJElEQVQIWzWKwREAIACCYP+h7azkByoQPklw4Yq+MOnRWpdxADesD/6Ohy4jAAAAAElFTkSuQmCC)repeat;
 }
@@ -99,7 +99,7 @@
 	background-color : black;
 	color : white;
 	text-decoration : overline underline;
-}
+}*/
 
 /* modo ayuda cromatica con barrido*/
 .homeController.scanning.crom .navArrow button.active{
@@ -113,13 +113,13 @@
 	text-decoration : overline underline !important;
 }
 
-.homeController.scanning.crom .navArrow button:hover{
+/*.homeController.scanning.crom .navArrow button:hover{
 	background : black ;
 }
 
 .homeController.scanning.crom .navArrow button:hover > .navigationText{
 	text-decoration : none;
-}
+}*/
 
 /* aquie empezaba la locura*/
 /*.homeController .leftArrow button.disabled > .navigationText{
@@ -411,6 +411,7 @@
 	padding : 10px;
 }
 
+/*
 .homeController .roomsButtons .button:hover{
 	background-color : yellow;
 }
@@ -461,7 +462,7 @@
 	background-color : black !important;
 	color : white !important;
 	font-weight : bold;
-}
+}*/
 
 .homeController .roomsButtons .button.isActive .sensorValue{
 	text-decoration : underline;
@@ -534,23 +535,24 @@
 	border-radius : 0px;
 }
 
-.homeController  .verticalLayout .navigationArrows .arrow > button:hover{
+/*.homeController  .verticalLayout .navigationArrows .arrow > button:hover{
 	background-color : yellow;
 	color : black;
-}
+}*/
 
 .homeController.crom  .verticalLayout .navigationArrows .arrow > button .overLinable{
 	background-color : black;
 	color : white;
 }
 
+/*
 .homeController.crom  .verticalLayout .navigationArrows .arrow > button:hover{
 	text-decoration : overline underline;
 	background-color : black;
 	color : white;
 	background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJElEQVQIWzWKwREAIACCYP+h7azkByoQPklw4Yq+MOnRWpdxADesD/6Ohy4jAAAAAElFTkSuQmCC)repeat;
-}
-
+}*/
+/*
 .homeController.crom.scanning  .verticalLayout .navigationArrows .arrow > button:hover{
 	text-decoration : none;
 	background-color : black;
@@ -561,13 +563,14 @@
 .homeController.scanning  .verticalLayout .navigationArrows .arrow > button:hover{
 	background-color : black;
 	color : white;
-}
+}*/
 
 .homeController  .verticalLayout .navigationArrows .arrow > button.active{
 	background-color : yellow;
 	color : black;
 }
 
+/*
 .homeController  .verticalLayout .navigationArrows .arrow > button.active:hover{
 	background-color : yellow;
 	color : black;
@@ -581,7 +584,7 @@
 
 .homeController.scanning.crom .verticalLayout .navigationArrows .arrow > button:hover .overLinable{
 	text-decoration : none !important;
-}
+}*/
 
 .homeController.scanning.crom .verticalLayout .navigationArrows .arrow > button.active{
 	text-decoration : overline underline;
@@ -594,9 +597,9 @@
 	background-color : gray;
 }
 
-.homeController  .verticalLayout .navigationArrows .arrow > button.disabled:hover{
+/*.homeController  .verticalLayout .navigationArrows .arrow > button.disabled:hover{
 	background-color : gray;
-}
+}*/
 
 .homeController .roomsButtons .elementsLayout.analogicSection{
 	display : flex;
@@ -628,9 +631,9 @@
 	background-color : yellow;
 }
 
-.homeController .roomsButtons .elementsLayout.analogicSection .backButton:hover{
+/*.homeController .roomsButtons .elementsLayout.analogicSection .backButton:hover{
 	background-color : yellow;
-}
+}*/
 
 .homeController .roomsButtons .elementsLayout.analogicSection .backButton.scanned.ayudaCrom{
 	background-color : gray !important;
@@ -640,13 +643,14 @@
 	border-color : black;
 }
 
+/*
 .homeController .roomsButtons .elementsLayout.analogicSection .backButton.ayudaCrom:hover{
 	background-color : gray !important;
 	text-decoration : overline;
 	font-weight : bolder;
 	font-size : xx-large;
 	border-color : black;
-}
+}*/
 
 .homeController .roomsButtons .elementsLayout.analogicSection .rangeSection{
 	padding : 0px;
