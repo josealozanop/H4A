@@ -49,11 +49,15 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.nPages = $scope.getNpages($scope.rooms.length);
 		
 		$scope.scanning = {
-			activated : true,
+			activated : false,
 			miliseconds : 2000,
 			position : 0,
 			leftArrow : false,
 			rightArrow : false
+		}
+		if($scope.config.barrido == 1){
+			$scope.scanning.activated = 1;
+			$scope.scanning.miliseconds = $scope.config.tiempo_barrido * 1000;
 		}
 		
 		$scope.buttonSize = {
@@ -994,6 +998,15 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		}
 		else{
 			return false;
+		}
+	}
+	
+	$scope.isCrom = function(){
+		if($scope.config.ayudaCromatica == 0){
+			return false;
+		}
+		else{
+			return true;
 		}
 	}
 	

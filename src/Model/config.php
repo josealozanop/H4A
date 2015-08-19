@@ -14,6 +14,7 @@ class Config extends serializableObject{
 	protected $retroalimentacion_voz;
 	protected $retroalimentacion_vibracion;
 	protected $css;
+	protected $ayudaCromatica;
 	
 	public function __construct(){
 		parent::__construct();
@@ -107,5 +108,12 @@ class Config extends serializableObject{
 		$this->css = $css;
 	}
 
+	public function getAyudaCromatica(){
+		return $this->ayudaCromatica;
+	}
+	
+	public function setAyudaCromatica($ayudaCromatica){
+		$this->ayudaCromatica = $ayudaCromatica;
+	}
 }
 ?>

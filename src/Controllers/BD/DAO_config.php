@@ -28,7 +28,8 @@ class DAO_config{
 		"tam_letra" => "tam_letra",
 		"retroalimentacion_voz" => "retroalimentacion_voz",
 		"retroalimentacion_vibracion" => "retroalimentacion_vibracion",
-		"reconocimiento_voz" => "reconocimiento_voz"
+		"reconocimiento_voz" => "reconocimiento_voz",
+		"ayudaCromatica" => "ayudaCromatica"
 	);
 	
 	

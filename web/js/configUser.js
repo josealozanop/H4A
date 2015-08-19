@@ -61,6 +61,10 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 	
 	$scope.setDataToSend = function(){
 		//datos de la configuración
+		var ayudaCromatica = 0;
+		if($scope.difCrom){
+			ayudaCromatica = 1;
+		}
 		var data = {
 			"dificultadCromatica" : $scope.difCrom,
 			"color_principal" : $scope.colPrin,
@@ -71,9 +75,11 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 			"tam_letra" : $scope.fontSize,
 			"reconocimiento_voz" : $scope.reconocimientoVoz,
 			"retroalimentacion_voz" : $scope.respuestaPorVoz,			
-			"retroalimentacion_vibracion" : $scope.vibracion,						
+			"retroalimentacion_vibracion" : $scope.vibracion,		
+			"ayudaCromatica" : ayudaCromatica
 		}
 		
+		//console.log(data);	
 		//Cada dispositivo tendra su propia layout definida
 		var layouts = [];
 		

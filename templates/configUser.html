@@ -3,7 +3,7 @@
 <div class="panel panel-primary data-panel shadow">
 	<div class="panel-heading" >	
 		<span class='title' >
-				Creando usuario, paso 4 de 4: Configuración de la interfaz  
+				Creando usuario, paso 4 de 5: Configuración de la interfaz  
 		</span>
 	</div>
 	<div class="panel-body" ng-controller="configUser" id-usuario ={{idUsuario}} devices-data={{devicesData}} names={{names}}>
@@ -118,7 +118,14 @@
 							<div class="tiny-shadow body col-xs-12">
 								<label class="checkbox-inline vertical_align_row" style="display:inherit">
 									<!-- <input type="checkbox" id="checkboxEnLinea1" value="opcion_1" ng-click="setDifCrom()"> Dificultad Cromatica -->
-									<button ng-click="setDifCrom()" class="btn" ng-class="{'btn-success btn_selected active' : isDifCrom()}">Dificultad Cromatica</button>
+									<!--<button ng-click="setDifCrom()" class="btn" ng-class="{'btn-success btn_selected active' : isDifCrom()}">Dificultad Cromatica</button>-->
+									<div class='col-xs-12'>
+										<label for="usuario_nombre" class="importantText ">¿Dificultad cromática?</label>
+										<div class='col-xs-12 '>
+											<label><p class="lead"><input type="radio" name="dificultadCromatica"  value=true ng-click="setDifCrom(true)" > Si</p></label>
+											<label><p class="lead"><input checked type="radio" name="dificultadCromatica"  value=false ng-click="setDifCrom(false)"> No</p></label>
+										</div>
+									</div>
 								</label>
 								<div class="small-group col-xs-12">
 									<div class="col-xs-12 importantText">
@@ -126,10 +133,7 @@
 									</div>
 								
 									<div class="col-xs-12" ng-show="!isDifCrom()">
-										<div class='col-xs-12 '>
-											<label class="lead" for="usuario_tlfn">Color principal: <input name="color" type="color" ng-model="colPrin"/></label><br/>
-											<label class="lead" for="usuario_tlfn">Color secundario: <input name="color" type="color" ng-model="colSec"/></label>									
-										</div>
+										Aquí iría la seleccion del tema
 									</div>
 									
 									<div class="col-xs-12" ng-show="isDifCrom()">
@@ -149,7 +153,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="small-group col-xs-12">
+								<div class="small-group col-xs-12" style="margin-top:10px">
 									<div class='col-xs-12 '>
 										<label class="importantText" for="usuario_fnac">Contraste de colores:</label>						
 										<div class='col-xs-12 info_text'>
