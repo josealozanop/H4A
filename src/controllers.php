@@ -68,7 +68,7 @@ $app->get("/homeController", function(Request $request) use ($app){
 	
 	//Establecemos el fichero css que le corresponde al usuario
 	$assetsManager = new userAssets($selectedUser);
-	$cssFile = $assetsManager->getCssFile();
+	//$cssFile = $assetsManager->getCssFile();
 	//echo $cssFile;
 	
 	//Establecemos las imagenes de cada habitación
@@ -174,10 +174,16 @@ $app->get("/homeController", function(Request $request) use ($app){
 	return $app['twig']->render('homeController.html', array(
 		'data' => $data,
 		'userId' => $selectedUser,
-		'cssFile' => $cssFile
+		'cssFile' => $config->getCss()
 		)
 	);
 })->bind('homeController');
+
+$app->get('/cssCompiler', function (Request $request) use ($app) {
+
+    return $app['twig']->render('rawHelp.html', array(
+	));
+})->bind('rawHelp');
 
 $app->get('/', function(Request $request) use ($app) {
 	
@@ -333,9 +339,7 @@ $app->get('/rawHelp', function (Request $request) use ($app) {
 
     return $app['twig']->render('rawHelp.html', array(
 	));
-})
-->bind('rawHelp')
-;
+})->bind('rawHelp');
 
 $app->get('/help', function (Request $request) use ($app) {
 	/*$filePath = "../templates/rawHelp.html";

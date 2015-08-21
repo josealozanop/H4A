@@ -29,7 +29,8 @@ class DAO_config{
 		"retroalimentacion_voz" => "retroalimentacion_voz",
 		"retroalimentacion_vibracion" => "retroalimentacion_vibracion",
 		"reconocimiento_voz" => "reconocimiento_voz",
-		"ayudaCromatica" => "ayudaCromatica"
+		"ayudaCromatica" => "ayudaCromatica",
+		"css" => "css"
 	);
 	
 	

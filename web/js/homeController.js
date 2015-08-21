@@ -75,8 +75,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		}
 		
 		//Poner a true si queremos que la web 'funcione' sin internet
-		$scope.offline = false;
-		$scope.debugMode = true;
+		$scope.offline = true;
+		$scope.debugMode = false;
 	}
 	
 	$scope.reset = function(){

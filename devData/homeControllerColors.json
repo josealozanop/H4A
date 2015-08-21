@@ -1,0 +1,74 @@
+{
+	"homeController" :{
+		"templates" : {
+			"dev" : {
+				"colors" : {
+					"buttonBg" : "#D0D0D0",
+					"buttonText" : "#000000",
+					"buttonScannedBg" : "#FFFF33",
+					"buttonScannedText" : "#000001",
+					"buttonCurrentValueBg" : "#A4A4A4",
+					"buttonCurrentValueText" : "#000002",
+					"buttonNavBg" : "#000101",
+					"buttonNavText" : "#FEFEFE",
+					"buttonNavScannedBg" : "#FFFF34",
+					"buttonNavScannedText" : "#020202",
+					"buttonNavSeparator" : "#FFFFFD",
+					"buttonScannedTextScannedBg" : "#010101",
+					"buttonScannedTextScannedText" : "#FFFFFF",
+					"buttonNavScannedTextScannedBg" : "#FFFF01",
+					"buttonNavScannedTextScannedText" : "#020101",
+					"progressBar" : "#FF0000",
+					"progressBarBg" : "#0166CC",
+					"bg" : "#0066CC",
+					"disabledButton" : "#C0C0C0",
+					"infoFrame" : "#D1D1D1",
+					"analogicPointer" : "#FF0001",
+					"cromNavArrowActive" : "#000200",
+					"cromButtonScannedBg" : "#D0D0D1",
+					"cromButtonScannedText" : "#020000",
+					"cromButtonNavScannedBg" : "#000102",
+					"cromButtonNavScannedText" : "#FFFDFF",
+					"cromButtonCurrentValueBg" : "#A4A4A3",
+					"cromButtonCurrentValueText" : "#010002",
+					"cromButtonScannedTextScannedBg" : "#010102",
+					"cromButtonScannedTextScannedText" : "#FDFFFF"
+				}
+			},
+			"cromFull" : {
+				"colors" : {
+					"buttonBg" : "#FFFFFF",
+					"buttonText" : "#000000",
+					"buttonScannedBg" : "#FFFF00",
+					"buttonScannedText" : "#000000",
+					"buttonCurrentValueBg" : "#A4A4A4",
+					"buttonCurrentValueText" : "#000000",
+					"buttonNavBg" : "#FFFFFF",
+					"buttonNavText" : "#000000",
+					"buttonNavScannedBg" : "#FFFF00",
+					"buttonNavScannedText" : "#000000",
+					"buttonNavSeparator" : "#000000",
+					"buttonScannedTextScannedBg" : "#000000",
+					"buttonScannedTextScannedText" : "#FFFFFF",
+					"buttonNavScannedTextScannedBg" : "#000000",
+					"buttonNavScannedTextScannedText" : "#FFFFFF",
+					"progressBar" : "#FFFF00",
+					"progressBarBg" : "#000000",
+					"bg" : "#000000",
+					"disabledButton" : "#C0C0C0",
+					"infoFrame" : "#D0D0D0",
+					"analogicPointer" : "#FFFF33",
+					"cromNavArrowActive" : "#FFFF00",
+					"cromButtonScannedBg" : "#FFFF00",
+					"cromButtonScannedText" : "#000000",
+					"cromButtonNavScannedBg" : "#000000",
+					"cromButtonNavScannedText" : "#FFFFFF",
+					"cromButtonCurrentValueBg" : "#A4A4A4",
+					"cromButtonCurrentValueText" : "#000000",
+					"cromButtonScannedTextScannedBg" : "#FFFFFF",
+					"cromButtonScannedTextScannedText" : "#000000"
+				}
+			}
+		}
+	}
+}

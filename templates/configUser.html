@@ -129,10 +129,40 @@
 								</label>
 								<div class="small-group col-xs-12">
 									<div class="col-xs-12 importantText">
-										Elige el esquema de color:
+										<label for="">
+											Elige el esquema de color:
+										</label>
+										
+										<div class='col-xs-12' ng-show="!isDifCrom()">
+											<div ng-repeat="template in templates.notCrom">
+												<label>
+													<p class="lead">
+														<input type="radio" name="template" ng-click="swichTheme(template)" ng-checked="isSelectedTemplate(template)">
+															<span ng-bind="template.name"></span>
+															<a class="outerLink" target="_blank" href="./css/homeController.jpg">[Previsualizar tema]</a>
+														</input>
+													</p>
+												</label>
+											</div>
+										</div>
+										
+										<div class='col-xs-12' ng-show="isDifCrom()">
+											<div ng-repeat="template in templates.crom">
+												<label>
+													<p class="lead">
+														<input type="radio" name="template" ng-click="swichTheme(template)" ng-checked="isSelectedTemplate(template)">
+															<span ng-bind="template.name"></span>
+															<a class="outerLink" target="_blank" href="./css/homeController.jpg">[Previsualizar tema]</a>
+														</input>
+													</p>
+												</label>
+											</div>
+										</div>
 									</div>
+									
+									
 								
-									<div class="col-xs-12" ng-show="!isDifCrom()">
+									<!-- <div class="col-xs-12" ng-show="!isDifCrom()">
 										Aquí iría la seleccion del tema
 									</div>
 									
@@ -151,7 +181,7 @@
 											<button ng-class="CSBlu" ng-show="isGama2()" type="button" class="btn btn-primary" ng-click="btnSecolor('blue')">Azul</button>
 											<button ng-class="CSPur" ng-show="isGama2()" type="button" class="btn btn-purple" ng-click="btnSecolor('purple')">Morado</button>
 										</div>
-									</div>
+									</div> -->
 								</div>
 								<div class="small-group col-xs-12" style="margin-top:10px">
 									<div class='col-xs-12 '>

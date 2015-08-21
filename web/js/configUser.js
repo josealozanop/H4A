@@ -1,7 +1,7 @@
 app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $window, configService, $http) {
 	
 	$scope.init = function(){
-		//console.log(configService.a);
+		//console.log("Iniciando configUser");
 		$scope.colorMap = {
 			red : "#c12e2a",
 			orange : "#eb9316",
@@ -9,6 +9,38 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 			blue : "#265a88",
 			purple : "#cc2efa"
 		};
+		
+		$scope.basePathTemplates = "usersTemplates/";
+		
+		$scope.templates = {
+			notCrom : [
+				{
+					name : "Home4all estándar",
+					file : "homeController.css",
+					img : "homeController.jpg"
+				},
+				{
+					name : "Esquema colores oscuros",
+					file : "darkTheme.css",
+					img : "darkTheme.jpg"
+				},
+				{
+					name : "Esquema colores claros",
+					file : "lightTheme.css",
+					img : "lightTheme.jpg"
+				}
+				
+			],
+			crom : [
+				{
+					name : "Ayuda cromática estándar",
+					file : "crom_full.css",
+					img : "crom_full.jpg"
+				}
+			]
+		}
+		
+		$scope.selectedTheme = $scope.templates.notCrom[0];
 		
 		$scope.colPrin= "#265a88";
 		$scope.colSec= "#eb9316";
@@ -61,6 +93,7 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 	
 	$scope.setDataToSend = function(){
 		//datos de la configuración
+		console.log("entrando en setDataToSend");
 		var ayudaCromatica = 0;
 		if($scope.difCrom){
 			ayudaCromatica = 1;
@@ -76,7 +109,9 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 			"reconocimiento_voz" : $scope.reconocimientoVoz,
 			"retroalimentacion_voz" : $scope.respuestaPorVoz,			
 			"retroalimentacion_vibracion" : $scope.vibracion,		
-			"ayudaCromatica" : ayudaCromatica
+			"ayudaCromatica" : ayudaCromatica,
+			"css" : $scope.selectedTheme.file
+			
 		}
 		
 		//console.log(data);	
@@ -109,13 +144,13 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 		//??
 		//var dataEncoded = window.btoa(angular.toJson(data));
 		//var layoutsEncoded = window.btoa(angular.toJson(layouts));
-				
+		
 		dataToSend = window.btoa(angular.toJson({
 			config: data,
 			layout : layouts,
 			id : $scope.idUsuario
 		}));
-		
+		console.log(data);
 		//console.log(dataToSend);
 		
 		//??
@@ -195,14 +230,18 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 	$scope.setDifCrom = function(){
 		//console.log(DifCrom)
 		if($scope.difCrom){
-			$scope.difCrom = false;			
+			$scope.difCrom = false;
+			$scope.selectedTheme = $scope.templates.notCrom[0];
 			$scope.colPrin = "";
 			$scope.colSec = "";
+			//console.log($scope);
 		}
 		else{
 			$scope.difCrom = true;
+			$scope.selectedTheme = $scope.templates.crom[0];
 			$scope.colPrin = $scope.colorMap.blue;
 			$scope.colSec = $scope.colorMap.orange;
+			//console.log($scope);
 		}
 	}
 	$scope.setSistBar = function(){
@@ -367,6 +406,20 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 			}
 		})
 		
+	}
+	
+	$scope.swichTheme = function(theme){
+		console.log("cambiandos el tema", $scope);
+		$scope.selectedTheme = theme;
+	}
+	
+	$scope.isSelectedTemplate = function(theme){
+		if(theme == $scope.selectedTheme){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	
 	$scope.sinfo = function(){

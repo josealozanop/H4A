@@ -1,0 +1,407 @@
+.homeController  {
+	background-color : #000000;
+}
+
+.homeController  .container-fluid.horizontalLayout  > .row{
+	height : 100vh;
+}
+
+.homeController .leftArrow{
+	padding : 0px !important;
+	height : 100%;
+}
+
+.homeController .rightArrow{
+	height : 100%;
+	padding : 0px !important;
+}
+
+.homeController .leftArrow button{
+	height : 100%;
+	width : 100%;
+	background-color : #B4B4B4;
+	color : #000000;
+	font-weight : bold;
+	font-size : xx-large;
+	border-radius : 0px;
+}
+
+.homeController .rightArrow button{
+	height : 100%;
+	width  : 100%;
+	background-color : #B4B4B4;
+	color : #000000;
+	font-weight : bold;
+	font-size : xx-large;
+	border-radius : 0px;
+}
+
+.homeController .leftArrow button.disabled{
+	background-color : #333333;
+	opacity : 1;
+}
+
+.homeController .rightArrow button.disabled{
+	background-color : #333333;
+	opacity : 1;
+}
+
+.homeController .leftArrow button.disabled > .navigationText{
+	display : none;
+}
+
+.homeController .rightArrow button.disabled > .navigationText{
+	display : none;
+}
+
+/* Nueva revisión para las flechas de navegación en horizontal*/
+
+
+/* modo normal con barrido*/
+.homeController.scanning .navArrow button.active{
+	background-color : #FFFF00 !important;
+	color : #000000 !important;
+}
+
+.homeController.scanning .navArrow button.active > .navigationText{
+	background-color : #FFFF00 !important;
+	color : #000000 !important;
+}
+
+/* modo ayuda cromatica con barrido, ::crom*/
+.homeController.scanning.crom .navArrow button.active{
+	background-color : #FFFF00 !important;
+	background : url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJUlEQVQIWz2LQQ4AAAiC4P+PtrlV3kA1IWwUPFFIVhx0KC3+BANVrw/7PtP/AgAAAABJRU5ErkJggg==)repeat !important;
+}
+
+.homeController.scanning.crom .navArrow button.active > .navigationText{
+	background-color : #FFFF00 !important;
+	color : #000000 !important;
+	text-decoration : overline underline !important;
+}
+
+.homeController .roomsButtons{
+	background-color : #000000;
+	height : 100vh;
+	padding-top : 1% !important;
+	padding : 0px !important;
+}
+
+.homeController .roomsButtons .elementsLayout{
+	height : 97%;
+	padding-left : 1% !important;
+	padding-right : 1% !important;
+}
+
+.homeController .roomsButtons .elementsLayout.fullLayout{
+	height : 100%;
+}
+
+.homeController .roomsButtons .progressBarContainer{
+	height : 3%;
+	padding : 0px;
+	display : flex;
+	flex-direction: row;
+}
+
+.homeController .roomsButtons .progressBarContainer .progressBar{
+	height : 50%;
+	background-color : #FFFF00;
+	align-self : flex-end;
+	width : 100%;
+}
+
+.homeController .roomsButtons .button{
+	border-radius : 10px;
+	border : 4px solid;
+	border-color : #000000;
+	font-size : x-large;
+	font-weight : bold;
+	background-color : #FFFFFF;
+	display : inline-block;
+	cursor : pointer;
+	color : #000000;
+	height : 100%;
+}
+
+@media (max-width: 768px) {
+	.homeController .roomsButtons .button{
+		font-size : medium;
+	}
+}
+@media (min-width: 768px) and (max-width: 992px) {
+	.homeController .roomsButtons .button{
+		font-size : large;
+	}
+}
+
+.homeController .roomsButtons .button .buttonLayout{
+	display : flex;
+	flex-direction : column-reverse;
+	justify-content : space-around;
+	height : 100%;
+}
+
+.homeController .roomsButtons .button .buttonLayout > *{
+	align-self : center;
+}
+
+.homeController .roomsButtons .button .buttonLayout > img{
+	height : 47%;
+}
+
+.homeController .roomsButtons .button.selected{
+	background-color : #FFFF00 !important;
+	color : #000000;
+}
+
+/*::crom.start, botón standar barrido para ayuda cromática*/
+.homeController .roomsButtons .button.selected.ayudaCrom {
+	background-color : #FFFF00 !important;
+	background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAP0lEQVQYV5XPWQ4AIAgD0fb+h67RROICgn6/TJEoPhacADCDA/VYBm0wglaa0oMXCqclidzvX4tu6Zx+oq9fNwWqCgt6HvHWAAAAAElFTkSuQmCC)repeat; 
+	border-color : #000000;
+}
+
+.homeController .roomsButtons .button.selected.ayudaCrom .overLinable{
+	text-decoration : overline;
+	font-weight : bold;
+	background-color : #000000 !important;
+	color : #FFFFFF;
+}
+
+.homeController .roomsButtons .button.ayudaCrom .notShadow{
+	background : #FFFFFF !important;
+	padding : 10px;
+}
+
+.homeController .roomsButtons .button.isActive .sensorValue{
+	text-decoration : underline;
+	font-weight : bolder;
+}
+
+.homeController .roomsButtons .button.currentValue.ayudaCrom{
+	border : medium solid black;
+	background-color : #A4A4A4;
+	color : #000000;
+}
+
+/*::crom.end*/
+
+.homeController .roomsButtons .button.currentValue{
+	border : medium solid #000000;
+	background-color : #A4A4A4;
+	color : #000000;
+}
+
+.homeController .roomsButtons .button.currentValue .sensorValue{
+	text-decoration : underline;
+	font-weight : bolder;
+}
+
+.homeController  .container-fluid.verticalLayout {
+	height : 100vh;
+}
+
+.homeController  .verticalLayout .verticalBody{
+	height : 90% !important;
+}
+
+.homeController  .verticalLayout .verticalBody.fullBody{
+	height : 100% !important;
+}
+
+.homeController  .verticalLayout .navigationArrows{
+	background-color : #B4B4B4;
+	height : 10%;
+	color : #000000;
+}
+
+.homeController  .verticalLayout .navigationArrows .arrow{
+	height : 100%;
+	padding : 0px;
+	background-color : #000000;
+}
+
+.homeController  .verticalLayout .navigationArrows .arrow.leftArrow{
+	padding-right : 0.5% !important;
+}
+
+.homeController  .verticalLayout .navigationArrows .arrow.rightArrow{
+	padding-left : 0.5% !important;
+}
+
+.homeController  .verticalLayout .navigationArrows .arrow > button{
+	height : 100%;
+	width : 100%;
+	background-color : #B4B4B4;
+	color : #000000;
+	font-weight : bold;
+	font-size : xx-large;
+	border-radius : 0px;
+}
+
+.homeController  .verticalLayout .navigationArrows .arrow > button.active{
+	background-color : #FFFF00;
+	color : #000000;
+}
+
+.homeController  .verticalLayout .navigationArrows .arrow > button.disabled{
+	background-color : #333333;
+}
+
+/*::crom.start, navegacion vertical ayuda cromatica*/
+.homeController.scanning.crom .verticalLayout .navigationArrows .arrow > button.active{
+	text-decoration : overline underline;
+	background-color : #000000;
+	color : #FFFFFF;
+	background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJUlEQVQIWz2LQQ4AAAiC4P+PtrlV3kA1IWwUPFFIVhx0KC3+BANVrw/7PtP/AgAAAABJRU5ErkJggg==)repeat !important;
+}
+/*::crom.end*/
+
+.homeController .roomsButtons .elementsLayout.analogicSection{
+	display : flex;
+	flex-direction : column;
+	justify-content : space-between;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection  .sensorInfo{
+	background-color : #D0D0D0;
+	text-align : center;
+	font-size : x-large;
+	font-weight : bold;
+	margin-top : 5px;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection  .sensorInfo .extraInfo{
+	font-size : smaller;
+	font-weight : normal;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .backButton{
+	height : 30%;
+	max-height : 120px;
+	font-weight : bolder;
+	font-size : xx-large;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .backButton.scanned{
+	background-color : #FFFF00;
+	color : #000000;
+}
+
+/** ::crom.start, ayuda cromatica para actuadores analógicos */
+.homeController .roomsButtons .elementsLayout.analogicSection .backButton.scanned.ayudaCrom{
+	background-color : #FFFF00 !important;
+	text-decoration : overline;
+	font-weight : bolder;
+	font-size : xx-large;
+	border-color : #000000;
+	background : url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJUlEQVQIWz2LQQ4AAAiC4P+PtrlV3kA1IWwUPFFIVhx0KC3+BANVrw/7PtP/AgAAAABJRU5ErkJggg==)repeat;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .backButton.scanned.ayudaCrom > .backText{
+	color : #000000;
+	text-decoration : overline;
+	background : #FFFF00;
+	padding-top : 5px;
+	padding-bottom : 5px;
+	padding-left : 10px;
+	padding-right : 10px;
+}
+
+/*::crom.end*/
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeSection{
+	padding : 0px;
+	display : flex;
+	flex-direction : row;
+	align-items : center;
+	color : white; /*DA WAT*/
+	font-size : x-large;
+	font-weight : bold;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeUpperContainer{
+	display : flex;
+	flex-direction : column;
+	justify-content : space-between;
+	height : 20%;
+	padding-bottom : 5px;
+	max-height : 80px;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeUpperContainer.scanned{
+	border : 5px solid #FFFF00;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeUpperContainer .progressBarAnalogicContainer{
+	padding : 0px;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeUpperContainer .progressBarAnalogicContainer .progressBarAnalogic{
+	background-color : #000000;
+	display : inline-block;
+	width : 25%;
+	height : 5px;
+}
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeUpperContainer .progressBarAnalogicContainer .progressBarAnalogic.scanned{
+	background-color : #FFFF00;
+	display : inline-block;
+	width : 25%;
+	height : 5px;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .minValueContainer{
+	text-align : center;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .maxValueContainer{
+	text-align : center;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeSection .rangeInputContainer{
+	padding : 0px;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection  input[type=range]{
+    -webkit-appearance: none;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeSection input[type=range]::-webkit-slider-runnable-track {
+    height: 10px;
+    background: #FFFFFF;
+    border: none;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeSection input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 40px;
+    width: 15px;
+    background: #FFFF33;
+    margin-top: -15px;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeSection input[type=range]::-moz-range-track {
+    height: 10px;
+    background: #FFFFFF;
+    border: none;
+}
+
+.homeController .roomsButtons .elementsLayout.analogicSection .rangeSection input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 40px;
+    width: 15px;
+    background: #FFFF33;
+    margin-top: -15px;
+}
+
+.homeController .navArrow .navigationText > .extraSpace{
+	display : none;
+}
+
+@media (min-width: 1200px) {
+	.homeController .navArrow .navigationText > .extraSpace{
+		display : inline;
+	}
+}
