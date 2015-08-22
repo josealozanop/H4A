@@ -14,6 +14,7 @@
 	}" 
 	ng-controller="homeController"
 	user-data={{data}}
+	os = {{os}}
 	resize-dispacher>
 	<!-- layout horizontal -->
 	<div class="container-fluid horizontalLayout" ng-if="getScreenPosition() == 'horizontal'" ng-switch="sectionControll.selected" ng-click="isScanning() && clickOnScanning()">

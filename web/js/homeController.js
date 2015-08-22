@@ -1,6 +1,8 @@
-app.controller('homeController', function($scope, $attrs, $filter, $window, $http, $timeout, $rootScope, screenService, routeService) {
+app.controller('homeController', function($scope, $attrs, $filter, $window, $http, $timeout, $rootScope, screenService, routeService, speakerService) {
 
 	var init = function(){
+		
+		
 		var jsonData = $attrs.userData;
 		var rawData = angular.fromJson(window.atob(jsonData));
 		$scope.rooms = rawData.rooms;
@@ -12,6 +14,10 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.layout = rawData.layout;
 		$scope.sensors = rawData.sensors;
 		$scope.assets = rawData.assets;
+		$scope.os = $attrs.os;
+		
+		speakerService.init(parseInt($scope.os));
+		speakerService.speak("esto es una prueba");
 		
 		//Sensor analógico seleccionado
 		$scope.analogic = {

@@ -171,10 +171,19 @@ $app->get("/homeController", function(Request $request) use ($app){
 		"assets" => $defultItemsImgs
 	)));
 	
+	$os = PHP_OS;
+	if($os == 'Linux'){
+		$os = 0;
+	}
+	else{
+		$os = 1;
+	}
+	
 	return $app['twig']->render('homeController.html', array(
 		'data' => $data,
 		'userId' => $selectedUser,
-		'cssFile' => $config->getCss()
+		'cssFile' => $config->getCss(),
+		'os' => $os
 		)
 	);
 })->bind('homeController');
