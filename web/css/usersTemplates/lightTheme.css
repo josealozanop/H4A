@@ -353,10 +353,12 @@
 
 .homeController .roomsButtons .elementsLayout.analogicSection .minValueContainer{
 	text-align : center;
+	color : black;
 }
 
 .homeController .roomsButtons .elementsLayout.analogicSection .maxValueContainer{
 	text-align : center;
+	color : black;
 }
 
 .homeController .roomsButtons .elementsLayout.analogicSection .rangeSection .rangeInputContainer{

@@ -6,7 +6,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
 		<link href="{{ app.request.basepath }}/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 		<link href="{{ app.request.basepath }}/css/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="{{ app.request.basepath }}/css/font-awesome.min.css">
 		{% block cssInclude%}{% endblock %}
+		<link href="{{ app.request.basepath }}/css/comHomeController.css" rel="stylesheet" type="text/css" />
 		
 		
 		<script src="{{ app.request.basepath }}/js/jquery-1.11.1.min.js" type="text/javascript"></script>  
@@ -22,8 +24,11 @@
 		<script src="{{ app.request.basepath }}/js/services/screenService.js"></script>
 		<script src="{{ app.request.basepath }}/js/services/routeService.js"></script>
 		<script src="{{ app.request.basepath }}/js/services/speakerService.js"></script>
+		<script src="{{ app.request.basepath }}/js/services/clientInfo.js"></script>
+		<script src="{{ app.request.basepath }}/js/services/phraseService.js"></script>
 				
 		<script src="{{ app.request.basepath }}/js/directives/resizeDispacher.js"></script>
+		<script src="{{ app.request.basepath }}/js/directives/loader.js"></script>
 		
 		<script src="{{ app.request.basepath }}/js/sectionController.js"></script>
 		<script src="{{ app.request.basepath }}/js/homeController.js"></script>

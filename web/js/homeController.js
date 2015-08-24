@@ -1,7 +1,6 @@
-app.controller('homeController', function($scope, $attrs, $filter, $window, $http, $timeout, $rootScope, screenService, routeService, speakerService) {
+app.controller('homeController', function($scope, $attrs, $filter, $window, $http, $timeout, $rootScope, screenService, routeService, speakerService, phraseService) {
 
 	var init = function(){
-		
 		
 		var jsonData = $attrs.userData;
 		var rawData = angular.fromJson(window.atob(jsonData));
@@ -16,8 +15,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.assets = rawData.assets;
 		$scope.os = $attrs.os;
 		
-		speakerService.init(parseInt($scope.os));
-		speakerService.speak("esto es una prueba");
+		//speakerService.speak("esto es una prueba");
 		
 		//Sensor analógico seleccionado
 		$scope.analogic = {
@@ -66,11 +64,26 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			$scope.scanning.miliseconds = $scope.config.tiempo_barrido * 1000;
 		}
 		
+		$scope.voiceFeature = true;
+		if($scope.voiceFeature){
+			$scope.voiceService = 2;
+			speakerService.init(parseInt($scope.os));
+		}
+		else if($scope.scanning.activated){
+			$scope.initScanning();
+		}
+		
 		$scope.buttonSize = {
 			width : $scope.getButtonWidth(),
 			height : $scope.getButtonHeight()
 		}
 		
+		//Poner a true si queremos que la web 'funcione' sin internet
+		$scope.offline = false;
+		$scope.debugMode = false;
+	}
+	
+	$scope.initScanning = function(){
 		if($scope.scanning.activated){
 			//console.log("activado")
 			//$scope.tick();
@@ -78,11 +91,22 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			$scope.barPercent = 0;
 			$scope.tickPromise = $timeout($scope.tick, $scope.scanning.miliseconds);
 			$scope.tickBarProgress();
+			if($scope.voiceFeature){
+				var posibleChanges = [
+					"scanning.position",
+					"sectionControll.selected",
+					"analogic.scanning.section",
+					"analogic.scanning.position",
+					"analogic.val"
+				];
+				$scope.$watchGroup(posibleChanges, function(){
+					//console.log($scope.scanning.position);
+					var module = $scope.getModule();
+					var phrase = $scope.getPhrase(module);
+					$scope.mySpeak(phrase);
+				})
+			}
 		}
-		
-		//Poner a true si queremos que la web 'funcione' sin internet
-		$scope.offline = true;
-		$scope.debugMode = false;
 	}
 	
 	$scope.reset = function(){
@@ -94,7 +118,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.nPages = $scope.getNpages($scope.rooms.length);
 		$scope.needNavigation = $scope.getNeedNavigation($scope.rooms.length);
 	}
-	
+		
 	/**
 	* Demonios
 	**/
@@ -102,28 +126,13 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	$scope.tick = function() {
 		$scope.lastTickTime = (new Date()).getTime();
 		$scope.barPercent = 0;
-		//console.log($scope.lastTickTime);
+		//console.log($scope.lastTickTime);		
 		
 		if(watheverValue($scope.sectionControll.selected, [0, 1, 2])){
 			$scope.scanning.leftArrow = false;
 			$scope.scanning.rightArrow = false;
-					
-			if(!$scope.isLastPage()){
-				var module = $scope.filas * $scope.cols;
-			}
-			else{
-				if($scope.sectionControll.selected == 0){
-					var items = $scope.rooms.length;
-				}
-				else if($scope.sectionControll.selected == 1){
-					var items = $scope.roomSensors.length;
-				}
-				else if($scope.sectionControll.selected == 2){
-					var items = $scope.sensorStates.length;
-				}
 				
-				var module = items - ($scope.page * $scope.filas * $scope.cols);
-			}
+			var module = $scope.getModule();
 					
 			var extra = 0;
 			if($scope.needNavigation){
@@ -226,6 +235,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			//console.log("tick de barrido en sensor analogico", $scope.analogic.scanning.section, $scope.analogic.scanning.position);
 		}
 		//console.log($scope.scanning.position);
+		
 		$scope.tickPromise = $timeout($scope.tick, $scope.scanning.miliseconds); 
     }
 	
@@ -352,10 +362,6 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		$scope.scanning.position = 0;
 		$scope.lastTickTime = (new Date()).getTime();
 		$scope.tickPromise = $timeout($scope.tick, $scope.scanning.miliseconds);
-		/*$timeout.cancel($scope.tickPromise);
-		$scope.scanning.position = 0;
-		//$timeout($scope.tick, 150);
-		$scope.tickPromise = $timeout($scope.tick, $scope.scanning.miliseconds);*/
 	}
 	
 	/**
@@ -403,7 +409,9 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 					//console.log(requestData.data);
 					for(i in sensorsValues){
 						var value = sensorsValues[i];
-						$scope.roomSensors[i].Valor = value;
+						if($scope.roomSensors[i].Valor){
+							$scope.roomSensors[i].Valor = value;
+						}
 					}
 					//console.log($scope.roomSensors);
 				}
@@ -507,7 +515,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 					$scope.selectedNStateSensor.Valor = newValue;
 				}
 				else{
-					console.log("Error al establecer el valor de los sensores: ", idsSensors, status)
+					console.log("Error al establecer el valor de los sensores: ")
 				}
 			});
 			$scope.backToSensors();
@@ -545,7 +553,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 					changedSensor.Valor = newValue;
 				}
 				else{
-					console.log("Error al establecer el valor de los sensores: ", idsSensors, status)
+					console.log("Error al establecer el valor de los sensores: ", requestStatus)
 				}
 			});
 		}
@@ -564,18 +572,28 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	* Watchers
 	**/
 	
+	$scope.$watch("voiceService", function(){
+		if($scope.voiceFeature){
+			console.log($scope.voiceService)
+			if($scope.voiceService != 2){
+				$scope.initScanning();
+			}
+		}
+	});
+	
 	$scope.$watch("sectionControll.selected", function(){
 		
 		//Selección de habitacion
 		if($scope.sectionControll.selected == 0){
 			//console.log("entro");
 			$scope.reset();
+			//$scope.mySpeak($scope.rooms[0].nombre_habitacion);
 		}
 		
 		//Selección de sensor dentro de una habitación
 		else if($scope.sectionControll.selected == 1){
 			//$scope.reset();
-			console.log("entro")
+			//console.log("entro")
 			$scope.roomSensors = $scope.sensors.filter(function(sensor){
 				//console.log(sensor);
 				if(sensor.id_habitacion == $scope.selectedRoom.id_habitacion && sensor.Tipo == "Actuador"){
@@ -617,6 +635,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			
 			if($scope.scanning.activated){
 				$scope.scanning.position = 0;
+				//$scope.mySpeak($scope.roomSensors[0].nombre_sensor);
 			}
 		}
 		
@@ -640,6 +659,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			$scope.needNavigation = $scope.getNeedNavigation($scope.sensorStates.length);
 			if($scope.scanning.activated){
 				$scope.scanning.position = 0;
+				//$scope.mySpeak($scope.sensorStates[0]);
 			}
 		}
 		
@@ -655,6 +675,10 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			$scope.analogic.scanning = {
 				section : 0,
 				position : 0
+			}
+			
+			if($scope.scanning.activated){
+				//$scope.mySpeak("Cambiar valor");
 			}
 		}
 		
@@ -717,6 +741,17 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	/**
 	* Listeners
 	**/
+	$rootScope.$on("googleOnline", function(context, data){
+		console.log("google está online");
+		$scope.voiceService = 1;
+		$scope.$apply();
+	});
+	
+	$rootScope.$on("googleOffline", function(context, data){
+		console.log("google está offline");
+		$scope.voiceService = 0;
+		$scope.$apply();
+	});
 	
 	$rootScope.$on("screenChange", function(context, data){
 		$scope.position = data.position;
@@ -750,6 +785,114 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	/**
 	* Getters
 	**/
+	$scope.getLinealPosition = function(){
+		return $scope.scanning.position + ($scope.filas * $scope.cols * $scope.page);
+	}
+	
+	$scope.getPhrase = function(module){
+		if($scope.scanning.leftArrow){
+			return "anterior";
+		}
+		
+		if($scope.scanning.rightArrow){
+			return "siguiente";
+		}
+
+		var index = $scope.scanning.position + $scope.page * module;
+		switch($scope.sectionControll.selected){
+			case 0:
+				var room = $scope.rooms[index];
+				//console.log(room, "i"+index);
+				if(room.nombre_habitacion){
+					return room.nombre_habitacion;
+				}
+					return "Salir";
+			break;
+			
+			case 1:
+				if($scope.roomSensors[index].nombre_sensor){
+					return $scope.roomSensors[index].nombre_sensor;
+				}
+				else if($scope.roomSensors[index].type == "onlyReadSensors"){
+					return "sensores";
+				}
+					return "Atrás";
+			break;
+			
+			case 2:
+				var state = $scope.sensorStates[$scope.getLinealPosition()];
+				//console.log(state, "i"+index, $scope.sensorStates);
+				//console.log($scope.scanning.position , $scope.page , module);
+				if(angular.isNumber(state)){
+					return "Valor "+$scope.sensorStates[$scope.scanning.position + $scope.page * module];
+				}
+				else if(angular.isObject(state)){
+					if(state.type == "salir"){
+						return "Atrás";
+					}
+				}
+				
+			break;
+			
+			case 3:
+				switch($scope.analogic.scanning.section){
+					case 0:
+						if($scope.analogic.scanning.position == 0){
+							return "Cambiar valor";
+						}
+						else if($scope.analogic.scanning.position == 1){
+							return "Atrás";
+						}
+					break;
+					
+					case 1:
+						if($scope.analogic.scanning.position == 0){
+							return "Primer cuarto";
+						}
+						else if($scope.analogic.scanning.position == 1){
+							return "Segundo cuarto";
+						}
+						else if($scope.analogic.scanning.position == 2){
+							return "Tercer cuarto";
+						}
+						else if($scope.analogic.scanning.position == 3){
+							return "Cuarto cuarto";
+						}
+					break;
+					
+					case 2:
+						return $scope.analogic.val;
+					break;
+				}
+				
+			break;
+			
+			case 4:
+				return "Atrás";
+			break;
+		}
+	}
+	
+	$scope.getModule = function(){
+		if(!$scope.isLastPage()){
+			var module = $scope.filas * $scope.cols;
+		}
+		else{
+			if($scope.sectionControll.selected == 0){
+				var items = $scope.rooms.length;
+			}
+			else if($scope.sectionControll.selected == 1){
+				var items = $scope.roomSensors.length;
+			}
+			else if($scope.sectionControll.selected == 2){
+				var items = $scope.sensorStates.length;
+			}
+			
+			var module = items - ($scope.page * $scope.filas * $scope.cols);
+		}
+		
+		return module;
+	}
 	
 	$scope.getNeedNavigation = function(items){
 		
@@ -1139,6 +1282,9 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		return -1;
 	}
 	
+	$scope.mySpeak = function(msg){
+		speakerService.speak(msg);
+	}
 		
 	/**
 	*	Funciones auxiliares.

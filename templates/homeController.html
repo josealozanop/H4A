@@ -16,8 +16,12 @@
 	user-data={{data}}
 	os = {{os}}
 	resize-dispacher>
+	<!-- preloader -->
+	<div class="loading" loader ng-if="voiceService==2">			
+	</div>
+	
 	<!-- layout horizontal -->
-	<div class="container-fluid horizontalLayout" ng-if="getScreenPosition() == 'horizontal'" ng-switch="sectionControll.selected" ng-click="isScanning() && clickOnScanning()">
+	<div ng-if="voiceService !=2 && getScreenPosition() == 'horizontal'" class="container-fluid horizontalLayout" ng-switch="sectionControll.selected" ng-click="isScanning() && clickOnScanning()">
 		
 		<!-- seccion de las habitaciones de la casa -->
 		<div class="row" ng-switch-when="0">
@@ -49,6 +53,7 @@
 							'ayudaCrom' : isCrom()
 						}"
 						ng-disabled = "isScanning() && !isCurrentScanned(fila*cols + col)"
+						
 						>
 							<!-- botones para las habitaciones -->
 							<div ng-if = "rooms[getButtonIndex(fila, col)].type != 'salir'" class="buttonLayout disabled">
@@ -210,7 +215,7 @@
 						<span class="extraSpace">
 							&nbsp;&nbsp;
 						</span>
-							>
+							<
 						<span class="extraSpace">
 							&nbsp;&nbsp;
 						</span>
@@ -437,7 +442,7 @@
 	</div>	
 	
 	<!-- layout vertical -->
-	<div class="container-fluid verticalLayout" ng-if="getScreenPosition() == 'vertical'" ng-switch="sectionControll.selected" ng-click="isScanning() && clickOnScanning()">
+	<div ng-if="voiceService!=2 && getScreenPosition() == 'vertical'" class="container-fluid verticalLayout" ng-switch="sectionControll.selected" ng-click="isScanning() && clickOnScanning()">
 		
 		<!-- seccion de las habitaciones de la casa -->
 		<div class="row verticalBody roomsButtons" ng-class = "{'fullBody' : needNavigation == 0}" ng-switch-when="0">
