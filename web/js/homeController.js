@@ -1,4 +1,4 @@
-app.controller('homeController', function($scope, $attrs, $filter, $window, $http, $timeout, $rootScope, screenService, routeService, speakerService, phraseService) {
+app.controller('homeController', function($scope, $attrs, $filter, $window, $http, $timeout, $rootScope, screenService, routeService, speakerService) {
 
 	var init = function(){
 		
