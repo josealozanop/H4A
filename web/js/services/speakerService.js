@@ -14,24 +14,24 @@ app.service('speakerService', function($http, $rootScope, clientInfo) {
 			new ping(googleIp, function (googleStatus, e) {
 				if(googleStatus == "responded"){
 					this.status = 1;
-					console.log("google is online");
+					//console.log("google is online");
 					$rootScope.$broadcast('googleOnline');
 				}
 				else{
 					this.status = 0;
-					console.log("google is offline");
+					//console.log("google is offline");
 					$rootScope.$broadcast('googleOffline');
 				}
 			});
 		}
 		catch(err){
-			console.log("El equipo no tiene conexión a internet");
+			//console.log("El equipo no tiene conexión a internet");
 			$rootScope.$broadcast('googleOffline');
 			this.status = 0;
 		}
 		
 		var browser = clientInfo.getBrowser();
-		console.log(browser);
+		//console.log(browser);
 		//Si google esta offline (o no hay conexion) y el explorador no es chrome o safari entonces activamos mespeak
 		if(this.status == 0 || !navigator.onLine || !'speechSynthesis' in window || (browser != "chrome" && browser != "safari")){
 		//if(true){

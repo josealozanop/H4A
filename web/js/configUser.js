@@ -67,7 +67,7 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 			newDevice.config = {
 				layout :{
 					horizontal : [3,3],
-					vertical : [4,2],
+					vertical : [3,1],
 					verticalAllowed : false
 				}
 			}

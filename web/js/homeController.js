@@ -64,13 +64,23 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			$scope.scanning.miliseconds = $scope.config.tiempo_barrido * 1000;
 		}
 		
-		$scope.voiceFeature = true;
+		$scope.voiceFeature = $scope.config.retroalimentacion_voz;
 		if($scope.voiceFeature){
 			$scope.voiceService = 2;
 			speakerService.init(parseInt($scope.os));
 		}
 		else if($scope.scanning.activated){
 			$scope.initScanning();
+		}
+		
+		$scope.vibrationDuration = 1000;
+		$scope.vibrationFeature = $scope.config.retroalimentacion_vibracion;
+		if($scope.vibrationFeature){
+			navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+			//navigator.vibrate(2000);
+		}
+		else{
+			navigator.vibrate = false;
 		}
 		
 		$scope.buttonSize = {
@@ -377,26 +387,6 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				sensorsIds : idsSensors
 			}));
 			
-			/*$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
-			then(function(data, status, headers, config) {
-				var requestData = data.data;
-				var requestStatus = requestData.status;
-				
-				//Si la peticion de datos ha tenido exito		actualizamos los valores de los sensores 
-				if(requestStatus == 1){
-					var sensorsValues = requestData.data;
-					//console.log(sensorsValues);
-					for(i in sensorsValues){
-						var value = sensorsValues[i];
-						$scope.roomSensors[i].Valor = value;
-					}
-					//console.log($scope.roomSensors);
-				}
-				else{
-					console.log("Error al obtener valor de los sensores: ", idsSensors, status)
-				}
-			});*/
-			
 			$http.get("./getSensorsValues?data="+dataToSend).
 			then(function(data, status, headers, config) {
 				var requestData = data.data;
@@ -429,33 +419,14 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				value : newValue
 			}));
 			
-			/*$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
-			then(function(data, status, headers, config){
-				var requestData = data.data;
-				var requestStatus = requestData.status;
-				
-				if(requestStatus == 1){
-					if(sensor.Valor == 0){
-						sensor.imgNotActive = sensor.img;
-						sensor.img = sensor.imgActive;
-					}
-					else{
-						sensor.img = sensor.imgNotActive;
-					}
-					sensor.Valor = newValue;
-				}
-				else{
-					console.log("Error al modificar el valor del sensor");
-				}
-			});*/
-			
 			$http.get("./setSensor?data="+dataToSend).
 			then(function(data, status, headers, config) {
 				var requestData = data.data;
 				var requestStatus = requestData.status;
 				
-				//Si la peticion de datos ha tenido exito		actualizamos los valores de los sensores 
+				//Si la peticion de datos ha tenido exito	actualizamos los valores de los sensores 
 				if(requestStatus == 1){
+					//console.log(requestData);
 					if(sensor.Valor == 0){
 						sensor.imgNotActive = sensor.img;
 						sensor.img = sensor.imgActive;
@@ -464,9 +435,14 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 						sensor.img = sensor.imgNotActive;
 					}
 					sensor.Valor = newValue;
+					
+					if(navigator.vibrate){
+						navigator.vibrate($scope.vibrationDuration);
+					}
 				}
 				else{
-					console.log("Error al obtener valor de los sensores: ", idsSensors, status)
+					alert(requestData.error_msg);
+					console.log("Error al establecer el valor del actuador: ")
 				}
 			});
 			
@@ -481,6 +457,9 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				sensor.img = sensor.imgNotActive;
 			}
 			sensor.Valor = newValue;
+			if(navigator.vibrate){
+				navigator.vibrate($scope.vibrationDuration);
+			}
 		}
 	}
 	
@@ -491,19 +470,6 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				value : newValue
 			}));
 			
-			/*$http.post("/H4A/src/Controllers/asyncSensorController.php", dataToSend).
-			then(function(data, status, headers, config) {
-				var requestData = data.data;
-				var requestStatus = requestData.status;
-				
-				if(requestStatus == 1){
-					
-				}
-				else{
-					console.log("Error al modificar el valor del sensor");
-				}
-			});*/
-			
 			$http.get("./setSensor?data="+dataToSend).
 			then(function(data, status, headers, config) {
 				var requestData = data.data;
@@ -511,8 +477,10 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				
 				//Si la peticion de datos ha tenido exito		actualizamos los valores de los sensores 
 				if(requestStatus == 1){
-					
 					$scope.selectedNStateSensor.Valor = newValue;
+					if(navigator.vibrate){
+						navigator.vibrate($scope.vibrationDuration);
+					}
 				}
 				else{
 					console.log("Error al establecer el valor de los sensores: ")
@@ -522,6 +490,9 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		}
 		else{
 			$scope.selectedNStateSensor.Valor = newValue;
+			if(navigator.vibrate){
+				navigator.vibrate($scope.vibrationDuration);
+			}
 			$scope.backToSensors();
 		}
 	}
@@ -542,7 +513,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				var requestStatus = requestData.status;
 				//Si la peticion de datos ha tenido exito actualizamos los valores de los sensores 
 				if(requestStatus == 1){
-					console.log("setAnalogicSensor realizado con exito");
+					//console.log("setAnalogicSensor realizado con exito");
 					
 					var changedSensor = $scope.sensors.filter(function(elem){
 						if(elem.id_sen == sensorId){
@@ -551,6 +522,9 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 					})[0];
 					
 					changedSensor.Valor = newValue;
+					if(navigator.vibrate){
+						navigator.vibrate($scope.vibrationDuration);
+					}
 				}
 				else{
 					console.log("Error al establecer el valor de los sensores: ", requestStatus)
@@ -565,6 +539,9 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			})[0];
 			
 			changedSensor.Valor = newValue;
+			if(navigator.vibrate){
+				navigator.vibrate($scope.vibrationDuration);
+			}
 		}
 	}
 	
@@ -798,7 +775,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			return "siguiente";
 		}
 
-		var index = $scope.scanning.position + $scope.page * module;
+		var index = $scope.getLinealPosition();
 		switch($scope.sectionControll.selected){
 			case 0:
 				var room = $scope.rooms[index];
@@ -820,11 +797,11 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			break;
 			
 			case 2:
-				var state = $scope.sensorStates[$scope.getLinealPosition()];
+				var state = $scope.sensorStates[index];
 				//console.log(state, "i"+index, $scope.sensorStates);
 				//console.log($scope.scanning.position , $scope.page , module);
 				if(angular.isNumber(state)){
-					return "Valor "+$scope.sensorStates[$scope.scanning.position + $scope.page * module];
+					return "Valor "+ $scope.sensorStates[$scope.scanning.position + $scope.page * module];
 				}
 				else if(angular.isObject(state)){
 					if(state.type == "salir"){
