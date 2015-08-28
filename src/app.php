@@ -71,7 +71,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
 		array('^/setSensor.*$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/getSensorsValues.*$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/insertPass', 'IS_AUTHENTICATED_ANONYMOUSLY'),
-		array('^/checkPassword', 'IS_AUTHENTICATED_ANONYMOUSLY')
+		array('^/checkPassword', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/.+$', 'IS_AUTHENTICATED_FULLY')
 	)
 ));
