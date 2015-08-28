@@ -441,7 +441,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 					}
 				}
 				else{
-					alert(requestData.error_msg);
+					//alert(requestData.error_msg);
 					console.log("Error al establecer el valor del actuador: ")
 				}
 			});
