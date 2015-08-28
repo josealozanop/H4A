@@ -148,7 +148,7 @@ app.controller('insertPassController', function($scope, $attrs, $filter, $window
 					$scope.requestValidation = 1;
 					//console.log(requestData.data);
 					if(requestData.data){
-						//$window.location.href = "./homeController";
+						$window.location.href = "./homeController";
 					}
 					else{
 						$scope.requestValidation = -1;
