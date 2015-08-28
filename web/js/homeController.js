@@ -1038,7 +1038,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				$scope.sectionControll.selected = 1;
 			}
 			else{
-				$window.location.href = '/H4A/web/userSelection';
+				$window.location.href = './userSelection';
 			}
 		
 	}
