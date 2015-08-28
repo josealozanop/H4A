@@ -68,6 +68,8 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
 		array('^/newTutor', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/userSelection', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/homeController.*$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
+		array('^/insertPass', 'IS_AUTHENTICATED_ANONYMOUSLY'),
+		array('^/checkPassword', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/.+$', 'IS_AUTHENTICATED_FULLY')
 	)
 ));

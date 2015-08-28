@@ -9,7 +9,9 @@ require_once __DIR__.'/../Model/user.php';
 class userAssets{
 	public static $linuxPath = "/var/www/H4A2/";
 	public static $windowsPath = "C:/wamp/www/";
-	public static $h4aPath = "H4A/users/";
+	public static $h4aPath = "H4A/";
+	public static $usersPath = "users/";
+	public static $defaultImagesPath = "images/svg/";
 	public static $defultAsset = array(
 		"analogic" => "analogic.svg",
 		"digital" => "digital.svg",
@@ -22,6 +24,13 @@ class userAssets{
 		"logOut" => "logOut.svg",
 		"default" => "user.svg"
 	);
+	public static $allowedExtensionsImg = array(
+		".svg",
+		".png",
+		".jpg",
+		".jpeg"
+	);
+	public static $profileImgName = "/profileImg";
 		
 	protected $conn;
 	protected $dbUsers;
@@ -48,13 +57,17 @@ class userAssets{
 
 	public function setFullPath(){
 		if($this->os == "Linux"){
-			$this->dirPath = userAssets::$linuxPath.userAssets::$h4aPath;
-			$this->fullPath = $this->dirPath.$this->user->getMail_usuario();
+			$this->initPath = userAssets::$linuxPath.userAssets::$h4aPath;
 		}
 		else if($this->os == "Windows"){
-			$this->dirPath = userAssets::$windowsPath.userAssets::$h4aPath;
-			$this->fullPath = $this->dirPath.$this->user->getMail_usuario();
+			$this->initPath = userAssets::$windowsPath.userAssets::$h4aPath;
 		}
+		else{
+			$this->initPath = userAssets::$windowsPath.userAssets::$h4aPath;
+		}
+		$this->dirPath = $this->initPath.userAssets::$usersPath;
+		$this->fullPath = $this->dirPath.$this->user->getMail_usuario();
+		$this->userImagePath = $this->initPath."web/".userAssets::$defaultImagesPath;
 	}
 	
 	public function setOs(){
@@ -85,13 +98,33 @@ class userAssets{
 		return $this->dirPath;
 	}
 	
+	public function getUserImg(){
+		$img = $this->getUserImagePath().userAssets::$defultAsset["user"];
+		$allowedExtensions = userAssets::$allowedExtensionsImg;
+		
+		foreach($allowedExtensions as $extension){
+			$posibleImg = $this->getFullPath().userAssets::$profileImgName.$extension;
+						
+			if(is_file($posibleImg)){
+				$img = $posibleImg;
+				break;
+			}
+		}
+		if($this->os == "Linux"){
+			$img = str_replace("/var/www", "", $img);
+		}
+		else{
+			$img = str_replace("C:/wamp/www", "", $img);
+		}
+		return $img;
+	}
+	
+	public function getUserImagePath(){
+		return $this->userImagePath;
+	}
+	
 	public function itemHasOwnImage($base, $id, $append = ""){
-		$allowedExtensions = array(
-			".svg",
-			".png",
-			".jpg",
-			".jpeg"
-		);
+		$allowedExtensions = userAssets::$allowedExtensionsImg;
 		
 		foreach($allowedExtensions as $extension){
 			$filePath = $this->getFullPath().$base.$id.$append.$extension;

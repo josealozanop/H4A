@@ -1,0 +1,79 @@
+{% extends "layoutUsers.html" %}
+
+{% block cssInclude%} 
+		<link href="{{ app.request.basepath }}/css/usersTemplates/homeController.css" rel="stylesheet" type="text/css" />
+		<link href="{{ app.request.basepath }}/css/insertPass.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block homeApp %}	
+	<div class="passSection" ng-controller="insertPassController" resize-dispacher id-usuario={{idUser}}>
+		<!-- layout vertical -->
+		<div class="horizontalLayout" ng-show="screen.position == 'horizontal'">
+			<div class="userInfo shadowContainer">
+				<div>
+					Inserte Contraseña
+				</div>
+				<div>
+					Usuario: {{nombre}}
+				</div>
+			</div>
+			<div class="passInput" ng-bind="getInputText()" ng-class="{'noPass' : noPass(), 'invalid' : noValidPass}">	
+			</div>
+			<div class="virtualPad shadowContainer">
+				<div ng-repeat="fila in range(0,4)" class="padRow" style="">
+					<button 
+					ng-repeat="col in range(0,3)"
+					ng-init = "text = getPadButtonText(fila, col)"
+					class="padButton btn btn-default" 
+					ng-class="{
+						'btn-danger' : text == 'Borrar',
+						'btn-success' : text == 'Aceptar'
+					}"
+					ng-click = "clickButton(text)"
+					ng-disabled = "text == 'Aceptar' && requestValidation == 2"
+					>
+						<span ng-if="text != 'Aceptar' || requestValidation != 2 " ng-bind="text"></span>
+						<span ng-if="requestValidation == 2 && text == 'Aceptar'" ><i class="fa fa-refresh fa-spin"></i></span>
+					</button>
+				</div>
+			</div>
+		</div>
+		
+		<!-- layout horizontal -->
+		<div class="verticalLayout" ng-show="screen.position == 'vertical'">
+			<div class="userInfo shadowContainer">
+				<div>
+					Inserte Contraseña
+				</div>
+				<div>
+					Usuario: {{nombre}}
+				</div>
+			</div>
+			<div class="passInput" ng-bind="getInputText()" ng-class="{'noPass' : noPass(), 'invalid' : noValidPass}">	
+			</div>
+			<div class="virtualPad shadowContainer">
+				<div ng-repeat="fila in range(0,4)" class="padRow" style="">
+					<button 
+					ng-repeat="col in range(0,3)"
+					ng-init = "text = getPadButtonText(fila, col)"
+					class="padButton btn btn-default" 
+					ng-class="{
+						'btn-danger' : text == 'Borrar',
+						'btn-success' : text == 'Aceptar'
+					}"
+					ng-click = "clickButton(text)"
+					ng-disabled = "text == 'Aceptar' && requestValidation == 2"
+					>
+						<span ng-if="text != 'Aceptar' || requestValidation != 2 " ng-bind="text"></span>
+						<span ng-if="requestValidation == 2 && text == 'Aceptar'" ><i class="fa fa-refresh fa-spin"></i></span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+
+
+
+

@@ -16,9 +16,8 @@ $app->get('/newuser', function () use ($app) {
 	$user = $app['security']->getToken()->getUser();
 	$id_tutor= $user->getId();
     return $app['twig']->render('newuser.html', array('mac' => $mac, 'id_tutor'=>$id_tutor));
-})
-->bind('newuser')
-;
+})->bind('newuser');
+
 $app->post('/busmodUsuario', function (Request $request) use ($app) {
 	$id_usuario = $request->get('usuario_id');
 	$editar="false";
@@ -27,9 +26,8 @@ $app->post('/busmodUsuario', function (Request $request) use ($app) {
 	return $app['twig']->render('verUsuario.html', array('editar' =>$editar,
 	'usuario' => $usuario,'error' =>""
 	));
-})
-->bind('busmodUsuario')
-;
+})->bind('busmodUsuario');
+
 $app->post('/opUsuarios', function (Request $request) use ($app) {
 $id_usuario = $request->get('idUsuario');
 switch($_POST["enviar"]) { 
@@ -129,9 +127,7 @@ $app->post('/modLinkDevicesUser', function (Request $request) use ($app) { //¡�
 	
 	return $app['twig']->render('mod_enableSensors.html', array('idUsuario' =>$idUsuario
 	));
-})
-->bind('modLinkDevicesUser')
-;
+})->bind('modLinkDevicesUser');
 
 $app->post('/modEnableSensors', function (Request $request) use ($app) { //¡¡
 	$idUsuario = $request->get('id_usuario');
@@ -154,10 +150,7 @@ $app->post('/modEnableSensors', function (Request $request) use ($app) { //¡¡
 	
 	return $app['twig']->render('tutor.html', array('accion' =>"permisos modificados correctamente"
 	));
-})
-->bind('modEnableSensors')
-;
-
+})->bind('modEnableSensors');
 
 $app->post('/enableSensors', function (Request $request) use ($app) { //¡¡
 	$dataText = $request->get('send');
@@ -396,5 +389,33 @@ $app->post('/updateAssets', function (Request $request) use ($app){
 	//$out = count($fotos);
 	return $app->redirect('./tutor?status=1');
 })->bind('updateAssets');
+
+$app->get('/checkPassword', function (Request $request) use ($app) {
+	$input = json_decode(base64_decode($request->get("data")), true);
+	$userId = $input["userId"];
+	$pass = $input["pass"];
+	$dbUsers = new DAO_users($app["db"]);
+	$user = $dbUsers->getUser($userId);
+	$userPass = $user->getPass_usuario();
+	
+	$out = array(
+		"data" => null,
+		"status" => 1,
+		"error_msg" => ""
+	);
+	
+	$out["data"] = false;
+	//echo $pass;
+	//echo $userPass;
+	if($pass == $userPass){
+		session_destroy();
+		session_start();
+		$_SESSION['sid'] = $userId;
+		$out["data"] = true;
+	}
+		
+	$out = json_encode($out, true);
+	return new Response($out);
+})->bind("checkPassword");
 
 ?>

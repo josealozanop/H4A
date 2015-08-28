@@ -1,0 +1,87 @@
+.passSection{
+	height : 100vh;
+	background-color : #3399FF;
+	padding : 20px;
+}
+
+.passSection .shadowContainer{
+	-webkit-box-shadow: -5px 4px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: -5px 4px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: -5px 4px 5px 0px rgba(0,0,0,0.75);
+}
+
+.passSection .horizontalLayout{
+	height : 100%;
+}
+
+.passSection .horizontalLayout .userInfo{
+	height : 15%;
+	background-color : #D1D1D1;
+	margin-bottom : 1%;
+	font-size : xx-large;
+	font-weight : bold;
+	display : flex;
+	flex-direction : column;
+	justify-content : space-around;
+	text-align : center;
+
+}
+
+@media (max-width: 992px) {
+	.passSection .horizontalLayout .userInfo{
+		font-size : x-large;
+	}	
+}
+
+.passSection .horizontalLayout .passInput{
+	height : 10%;
+	margin-bottom : 1%;
+	background-color : white;
+	font-size : 7vh;
+	border-radius : 5px;
+	padding-left : 10px;
+	padding-right : 10px;
+	text-align : center;
+	border: thin solid black;
+}
+
+.passSection .horizontalLayout .passInput.noPass{
+	color : rgba(0, 0, 0, 0.2);
+}
+
+.passSection .horizontalLayout .passInput.invalid{
+	color : rgba(255, 0, 0, 0.5);
+}
+
+
+.passSection .horizontalLayout .virtualPad{
+	height : 73%;
+	background-color : white;
+	padding : 10px;
+	background-color : #808080;
+	border-radius : 5px;
+}
+
+.passSection .horizontalLayout .padRow{
+	display:flex; 
+	flex-direcction:row;
+	justify-content:space-around;
+	height:25%;	
+}
+
+.passSection .horizontalLayout .padButton{
+	flex-grow :1;
+	flex-basis : 33%;
+	margin:0.3%;
+	font-size : xx-large;
+	font-weight : bold;
+	display : flex;
+	flex-direction : column;
+	justify-content : space-around;
+	align-items : center;
+}
+
+.passSection .verticalLayout{
+	height : 100%;
+	display : flex;
+}

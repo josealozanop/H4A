@@ -107,4 +107,9 @@ function getMAC() {
                         return strtolower(str_replace(":","-",utf8_decode($mac)));
                         //return $mac;
      }
+	 
+function getHomeControllerParams(){
+	
+	
+}
 ?>

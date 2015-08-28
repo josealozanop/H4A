@@ -29,8 +29,9 @@ require_once( __DIR__."/Controllers/BD/DAO_devices.php");
 }*/
 
 $app->get("/userSelection", function(Request $request) use ($app){
+	session_destroy();
 	$MAC = getMAC();
-	echo $MAC;
+	//echo $MAC;
 	
 	$dbDevices = new DAO_devices($app["db"]);
 	$dbUsers = new DAO_users($app["db"]);
@@ -43,17 +44,74 @@ $app->get("/userSelection", function(Request $request) use ($app){
 		return $newUser->toArray();
 	}, $usersIds);
 	
+	//Elimnamos información confidencial como la password y los apellidos
+	//ya que dicha información estará disponible en javascript
+	$userSafeData = array();
+	foreach($users as $user){
+		$assetsManager = new userAssets($user["id_usuario"]);
+		array_push($userSafeData, array(
+			"nombre" => $user["nombre_usuario"],
+			"img" => $assetsManager->getUserImg(),
+			"id_usuario" => $user["id_usuario"]
+		));
+	}
+	
+	$os = PHP_OS;
+	if($os == 'Linux'){
+		$os = 0;
+	}
+	else{
+		$os = 1;
+	}
+	
+	//establecemos las imagenes de los elementos de de navegacion
+	$defultItemsImgs = array(
+		"back" => $assetsManager->getDefaultAsset("back"),
+		"logOut" => $assetsManager->getDefaultAsset("logOut"),
+		"user" => $assetsManager->getDefaultAsset("user"),
+		"sensors" => $assetsManager->getDefaultAsset("sensors")
+	);
+	
 	$data = base64_encode(json_encode(array(
 		"mac" => $MAC,
-		"users" => $users
+		"users" => $userSafeData,
+		"assets" => $defultItemsImgs
 	)));
 	
 	return $app['twig']->render('userSelection.html', array(
-		'data' => $data));
+		'data' => $data,
+		"os" => $os));
 })->bind('userSelection');
 
+$app->get("/insertPass", function(Request $request) use ($app){	
+	$sid = $request->get('sid');
+	$idUser = base64_decode($sid);
+	$dbUsers = new DAO_users($app["db"]);
+	$user = $dbUsers->getUser($idUser);
+	$pass = $user->getPass_usuario();
+	
+	if($pass != "" and $pass != null){
+		
+		return $app['twig']->render('insertPass.html', array(
+			"nombre" => $user->getNombre_usuario(),
+			"idUser" => $user->getId_usuario()
+			)
+		);
+	}
+	else{
+		session_destroy();
+		session_start();
+		$_SESSION['sid'] = $idUser;
+		return $app->redirect("./homeController");
+	}
+	
+})->bind('insertPass');
+
+
 $app->get("/homeController", function(Request $request) use ($app){
-	$selectedUser = intval($request->get('user'));
+	//$selectedUser = $request->get('sid');
+	//$selectedUser = base64_decode($selectedUser);
+	$selectedUser = $_SESSION['sid'];
 	$MAC = getMAC();
 	
 	$dbRooms = new DAO_rooms($app["db"]);
@@ -188,11 +246,6 @@ $app->get("/homeController", function(Request $request) use ($app){
 	);
 })->bind('homeController');
 
-$app->get('/cssCompiler', function (Request $request) use ($app) {
-
-    return $app['twig']->render('rawHelp.html', array(
-	));
-})->bind('rawHelp');
 
 $app->get('/', function(Request $request) use ($app) {
 	
@@ -279,48 +332,19 @@ $app->get('/changeType', function(Request $request) use ($app) {
 	return $app['twig']->render('index.html', array(
 			'error' => $app['security.last_error']($request),
 			'last_username' => $app['session']->get('_security.last_username'),'accion'=>""));
-})
-->bind('changeType');
+})->bind('changeType');
 
 $app->get('/login_check', function(Request $request) use ($app) {
     return $app['twig']->render('index.html', array(
         'error' => $app['security.last_error']($request),
         'last_username' => $app['session']->get('_security.last_username'),
     ));
-})
-->bind('login_check')
-;
+})->bind('login_check');
 
 $app->get('/_profiler/wdt/{id}', function(Request $request) use ($app) {
 
 	return $app->redirect($app["url_generator"]->generate("tutor"));
-})
-->bind('wdt')
-;
-
-/*
-$app->post('/modDispositivo', function (Request $request) use ($app) {
-	$nombre =  $request->get('nombre');
-	$defecto =$request->get('usuarioDefec');
-	$mac = $request->get('mac');
-	$id_dispositivo = $request->get('id_disp');
-	$id_dispositivo = str_replace("\t", '', $id_dispositivo);
-	$app['db']->update('dispositivo', array(
-		'nombre_dispositivo'=>$nombre,'mac_dispositivo'=>$mac,'uDefecto_dispositivo'=>$defecto), array('id_dispositivo'=>$id_dispositivo
-	));
-	return $app['twig']->render('tutor.html', array('accion' =>"Usuario modificado correctamente"
-	));
-	/*return $app['twig']->render('verUsuario.html', array('editar' =>"true",
-	'usuario' => $usuario
-	));
-	
-})
-->bind('modDispositivo')
-;
-
-*/
-
-
+})->bind('wdt');
 
 $app->get('/vacia', function (Request $request) use ($app) {
 	$data = $request->get('data');

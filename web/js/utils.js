@@ -41,3 +41,5 @@ var getSplicePosition = function(min, max, n, nSplices){
 	max = parseInt(max);
 	return Math.floor((n-min)/((max-min)/nSplices));
 }
+
+

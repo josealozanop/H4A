@@ -733,6 +733,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	$rootScope.$on("screenChange", function(context, data){
 		$scope.position = data.position;
 		
+		//#ojo no debería esto ir depues del siguiente parrafo?
 		if($scope.sectionControll.selected == 0){
 			$scope.needNavigation = $scope.getNeedNavigation($scope.rooms.length);
 		}
@@ -744,12 +745,12 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		}
 		else if($scope.sectionControll.selected == 4){
 			$scope.needNavigation = $scope.getNeedNavigation($scope.roomSensors.length);
-		}
-			
+		}			
 
 		$scope.filas = $scope.getFilas();
 		$scope.cols = $scope.getCols();		
 		$scope.scanning.position = 0;
+		$scope.page = 0;
 		$scope.nPages = $scope.getNpages($scope.rooms.length);
 		
 		$scope.buttonSize = {
@@ -925,15 +926,15 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			
 			switch(screen){
 				case "xs":
-					if(max > 9){
-						max = 7;
+					if(max > 11){
+						max = 9;
 						shortName = true;
 					}	
 				break;
 				
 				case "sm" :
-					if(max > 12){
-						max = 10;
+					if(max > 14){
+						max = 12;
 						shortName = true;
 					}
 				break;
@@ -960,7 +961,6 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			
 			return result;
 		}
-	
 	}
 
 	$scope.isCurrentScanned = function(index){
@@ -1007,12 +1007,6 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 	
 	$scope.getButtonHeight = function(){
-		/*var margin = [3, 3, 2, 1.8, 1.5];
-		var index = $scope.filas;
-		if($scope.filas >= margin.length){
-			index = margin.length-1;
-		}
-		return (100/$scope.filas)-margin[index];*/
 		return (100/$scope.filas);
 	}
 	

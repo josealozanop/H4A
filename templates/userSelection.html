@@ -1,14 +1,190 @@
 {% extends "layoutUsers.html" %}
-{% block homeApp %}	
 
-<div class="userSelection" ng-controller="userSelectionController" user-data={{data}}>
-	<ul>
-		<li ng-repeat="user in users">
-			<a ng-bind="user.nombre_usuario" ng-href="{{ '{{getPath(user)}}' }}"></a>
-		</li>
-	</ul>
-</div>
-
+{% block cssInclude%} 
+		<link href="{{ app.request.basepath }}/css/usersTemplates/homeController.css" rel="stylesheet" type="text/css" />
 {% endblock %}
+
+{% block homeApp %}	
+<div 
+	class="homeController userSelection" 
+	ng-class="{
+		'scanning' : isScanning(), 
+		'crom' : isCrom(),
+		'normal' : !isScanning() && !iscrom()
+	}" 
+	ng-controller="userSelectionController"
+	user-data={{data}}
+	os = {{os}}
+	resize-dispacher>
+	
+	<!-- layout horizontal -->
+	<div ng-if="getScreenPosition() == 'horizontal'" class="container-fluid horizontalLayout" ng-click="isScanning() && clickOnScanning()">
+
+		<!-- seccion de las habitaciones de la casa -->
+		<div class="row">
+			<div class="col-xs-1 leftArrow navArrow" ng-if="needNavigation == 1">
+				<button class="btn" ng-class="{'disabled' : isFirstPage(), 'active' : scanning.leftArrow }" ng-click="!isScanning() && clickPrevious()">
+					<span class="navigationText">
+						<span class="extraSpace">
+							&nbsp;&nbsp;
+						</span>
+							<
+						<span class="extraSpace">
+							&nbsp;&nbsp;
+						</span>
+					</span>
+				</button>
+			</div>
+			
+			<div class="roomsButtons" ng-class="{'col-xs-12' : needNavigation == 0, 'col-xs-10' : needNavigation == 1}">
+				<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
+					<div ng-repeat="fila in range(0, filas)"  style = "height : {{'{{buttonSize.height}}'}}%">
+						<div 
+						class = "button"
+						ng-repeat = "col in range(0, cols)"
+						ng-show = "showButton(getButtonIndex(fila, col), users.length)" 
+						style = "width : {{'{{buttonSize.width}}'}}%"
+						ng-click = "!isScanning() && clickUser(users[getButtonIndex(fila, col)])"
+						ng-class = "{
+							'selected' : isCurrentScanned(fila*cols + col),
+							'ayudaCrom' : isCrom()
+						}"
+						ng-disabled = "isScanning() && !isCurrentScanned(fila*cols + col)"
+						>
+						
+							<div ng-if = "users[getButtonIndex(fila, col)].type != 'salir'" class="buttonLayout disabled" >
+								
+								<span class="overLinable notShadow" ng-bind="getLimitedText(users[getButtonIndex(fila, col)].nombre)">
+								</span>
+								
+								<img ng-if="!offline" ng-src="{{'{{users[getButtonIndex(fila, col)].img}}'}}" alt="" />
+								<img ng-if="offline" ng-src="/H4A/web/images/svg/home.svg" alt="" />
+								
+								<span>
+								</span>
+								
+							</div>
+							
+							
+							<div ng-if = "users[getButtonIndex(fila, col)].type == 'salir'" class="buttonLayout">
+								<span class="overLinable notShadow">
+									Salir
+								</span>
+								
+								
+								<img ng-if="!offline" ng-src="{{'{{assets.logOut}}'}}" alt="" />
+								<img ng-if="offline" ng-src="/H4A/web/images/svg/logOut.svg" alt="" />
+								
+								<span>
+								</span>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+
+				<div class="progressBarContainer" ng-if = "isScanning()">
+					<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
+					</div>
+				</div>
+
+
+			</div>
+			
+			<div class="col-xs-1 rightArrow navArrow" ng-if="needNavigation == 1"> 
+				<button ng-click="!isScanning() && clickNext()" class="btn" ng-class="{'disabled' : isLastPage(), 'active' : scanning.rightArrow}">
+					<span class="navigationText overLinable">
+						<span class="extraSpace">
+							&nbsp;&nbsp;
+						</span>
+							>
+						<span class="extraSpace">
+							&nbsp;&nbsp;
+						</span>
+					</span>
+				</button>
+			</div>
+		</div>
+	</div>	
+	
+	<!-- layout vertical -->
+	<div ng-if="getScreenPosition() == 'vertical'" class="container-fluid verticalLayout" ng-click="isScanning() && clickOnScanning()">
+		
+		<!-- seccion de las habitaciones de la casa -->
+		<div class="row verticalBody roomsButtons" ng-class = "{'fullBody' : needNavigation == 0}" >
+			<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
+				<div ng-repeat="fila in range(0, filas)"  style = "height : {{'{{buttonSize.height}}'}}%">
+					<div 
+					class = "button"
+					ng-repeat = "col in range(0, cols)"
+					ng-show = "showButton(getButtonIndex(fila, col), users.length)" 
+					style = "width : {{'{{buttonSize.width}}'}}%"
+					ng-click = "!isScanning() && clickUser(users[getButtonIndex(fila, col)])"
+					ng-class = "{
+						'selected' : isCurrentScanned(fila*cols + col),
+						'ayudaCrom' : isCrom()
+					}"
+					>
+						
+						<div ng-if = "users[getButtonIndex(fila, col)].type != 'salir'" class="buttonLayout disabled">
+							<span class="overLinable notShadow" ng-bind="getLimitedText(users[getButtonIndex(fila, col)].nombre)">
+							</span>
+							
+							<img ng-if="!offline" ng-src="{{'{{users[getButtonIndex(fila, col)].img}}'}}" alt="" />
+							<img ng-if="offline" ng-src="/H4A/web/images/svg/home.svg" alt="" />
+							
+							<span>
+							</span>
+							
+						</div>
+							
+						<div ng-if = "users[getButtonIndex(fila, col)].type == 'salir'" class="buttonLayout">
+							<span class="overLinable notShadow">
+								Salir
+							</span>
+							
+							
+							<img ng-if="!offline" ng-src="{{'{{assets.logOut}}'}}" alt="" />
+							<img ng-if="offline" ng-src="/H4A/web/images/svg/logOut.svg" alt="" />
+							
+							<span>
+							</span>
+						</div>
+					
+					</div>
+				</div>
+			</div>
+			
+			<div class="progressBarContainer" ng-if = "isScanning()">
+				<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
+				</div>
+			</div>		
+		</div>
+		
+		<div class="row navigationArrows" ng-if="needNavigation == 1">
+			<div class="col-xs-6 arrow leftArrow navArrow" >
+				<button class="btn" ng-class="{'disabled' : isFirstPage(), 'active' : scanning.leftArrow}" ng-click="!isScanning() && clickPrevious()">
+					<span class="navigationText overLinable">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</span>
+				</button>
+			</div>
+			<div class="col-xs-6 arrow rightArrow navArrow">
+				<button ng-click="!isScanning() && clickNext()" class="btn" ng-class="{'disabled' : isLastPage(), 'active' : scanning.rightArrow}">
+					<span class="navigationText overLinable">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</span>
+				</button>
+			</div>
+		</div>
+	</div>	
+	
+	
+	
+</div>
+{% endblock %}
+
+
+
 
 
