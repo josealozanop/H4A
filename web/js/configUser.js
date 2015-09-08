@@ -12,6 +12,8 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 		
 		$scope.basePathTemplates = "usersTemplates/";
 		
+		$scope.tiempoRestante = 1;
+		
 		$scope.templates = {
 			notCrom : [
 				{

@@ -228,7 +228,8 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 	$mac = getMAC();
 	$id_tutor = $request->get('idTutor');
 	$mail = $request->get('usuario_mail');
-	$pass =$request->get('pass');
+	$pass = $request->get('pass');
+	
 	$nombre =  $request->get('usuario_nombre');
 	$apellidos =$request->get('usuario_apellidos');
 	$fnac =$request->get('usuario_fnac');
@@ -240,7 +241,7 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 		$encoder = new MessageDigestPasswordEncoder();
 		$encodePass = $encoder->encodePassword($pass, '');
 	}
-	
+
 	/*
 	$nombre_fichero= $request->files->get('campofotografia');// $request->getFiles('campofotografia');
 	$directorio_destino = $mail;
@@ -264,7 +265,7 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 	
     //si hemos enviado un directorio que existe realmente y hemos subido el archivo
 	
-		$app['db']->insert('usuario', array('mail_usuario' => $mail, 'nombre_usuario' => $nombre,'apellidos_usuario' => $apellidos,'fnac_usuario' => $fnac,'tlfn_usuario' => $tlfn, 'pass_usuario' => $encodePass,'roles'=>'ROLE_USER'));
+		$app['db']->insert('usuario', array('mail_usuario' => $mail, 'nombre_usuario' => $nombre,'apellidos_usuario' => $apellidos,'fnac_usuario' => $fnac,'tlfn_usuario' => $tlfn, 'pass_usuario' => $pass,'roles'=>'ROLE_USER'));
 		$sql = "select id_usuario FROM usuario WHERE mail_usuario = '$mail'";
 		$id_usuario = $app['db']->fetchColumn($sql, array(), 0);
 		
