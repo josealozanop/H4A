@@ -42,7 +42,7 @@
 		    </div>	
 			 <div class="row form-group">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for="usuario_foto">Foto</label>
+					<label for="usuario_foto">Foto</label> <span inline-help id-help="userImg"></span>
 					<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
 					<input  name="campofotografia" type="file" />
 				</div>
@@ -50,13 +50,14 @@
 			<div class="row form-group">
 					<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 						<a id="btn_passNew" class="btn btn-default" title="Eliminar el usuario">
-							Introducir contraseña
+							Introducir contraseña 
 						</a>
+						<span inline-help id-help="userPass"></span>
 					</div>
 				</div>
 			<div id="divPass" class="errores row form-group">					
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for="usuario_pass">Contraseña</label>
+					<label for="usuario_pass">Contraseña</label> 
 					<input type="password" class="form-control pass" id="pass" name="pass" placeholder="Introduzca la contraseña del usuario">
 				</div>				
 				<div class='col-lg-12'></div>

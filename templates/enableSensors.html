@@ -38,7 +38,8 @@
 			-->
 			<div class="searcherHead" style="">
 				<span class="title ">
-					<span class="hidden-xs">Tabla de dispositivos</span>
+					<span class="hidden-xs">Tabla de acciones   </span>
+					<span class="hidden-xs" style="margin-left:5px" inline-help id-help="actionInline"></span>
 				</span>
 				
 				<span class="actions">
@@ -63,7 +64,7 @@
 			
 			<table class="table sensorsTable" style="border:none !important">
 				<tr style="background-color:#398439;color:white;border-top: none !important">
-					<th>Nombre del Sensor</th>
+					<th>Nombre del Sensor/Actuador</th>
 					<th class="hidden-xs">Habitacion</th>
 					<th class="hidden-xs hidden-sm">Tipo</th>
 					<th>¿Habilitado?</th>
@@ -102,7 +103,21 @@
 				</div>
 			</div> -->
 		
-			<pagination total-items="filteredSensors.length"  items-per-page="itemsPerPage" ng-model="currentPage" class="pagination" boundary-links="true" rotate="false"  ng-show="showPaginator()" ng-change="pageChange()" next-text = ">" previous-text = "<"></pagination>
+			<pagination 
+				total-items="filteredSensors.length"  
+				items-per-page="itemsPerPage" 
+				ng-model="currentPage" 
+				class="pagination" 
+				boundary-links="true" 
+				rotate="false"  
+				ng-show="showPaginator()" 
+				ng-change="pageChange()" 
+				next-text = ">" 
+				previous-text = "<"
+				first-text = Inicio
+				last-text = Final
+			>
+			</pagination>
 			
 		</span>	
 		

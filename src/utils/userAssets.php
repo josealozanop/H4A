@@ -4,8 +4,6 @@ require_once __DIR__.'/../Controllers/BD/DAO_users.php';
 require_once __DIR__.'/../Controllers/BD/DAO_config.php';
 require_once __DIR__.'/../Model/user.php';
 
-
-
 class userAssets{
 	public static $linuxPath = "/var/www/H4A2/";
 	public static $windowsPath = "C:/wamp/www/";

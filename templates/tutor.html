@@ -22,12 +22,12 @@
 {% if (app.security.token is not null) and (is_granted('ROLE_ADMIN')) %}
 	<div class="panel panel-primary data-panel shadow">
 		<div class="panel-heading" >
-			<span class="fa-stack fa-2x visible-md">
+			<span class="fa-stack fa-2x hidden-xs">
 				<i class="fa fa-square-o fa-stack-2x"></i>
-				<i class="fa fa-bullseye fa-stack-1x"></i>
+				<i class="fa fa-dashboard fa-stack-1x"></i>
 			</span> 			
 			<span class='title' >
-				Gestión de Sensores <span inline-help id-help="user"></span>
+				Gestión de Sensores <span inline-help id-help="sensorsMana"></span>
 			</span>				
 		</div>
 		<div class="panel-body">
@@ -65,7 +65,7 @@
 			<i class="fa fa-home fa-stack-1x"></i>
 		</span> 		
 		<span class='title' >
-			Gestión de la Casa  
+			Gestión de la Casa  <span inline-help id-help="homeMana"></span>
 		</span>		
 	</div>
 	<div class="panel-body">
@@ -102,7 +102,7 @@
 			<i class="fa fa-user fa-stack-1x"></i>
 		</span> 		
 		<span class='title' >
-			Datos personales
+			Datos personales <span inline-help id-help="personalDataMana"></span>
 		</span>		
 	</div>
 	<div class="panel-body">
@@ -112,4 +112,23 @@
 		</ul>
 	</div>
 </div>
+
+{% if (app.security.token is not null) and (is_granted('ROLE_ADMIN')) %}
+	<div class="panel panel-primary data-panel shadow">
+		<div class="panel-heading" >
+			<span class="fa-stack fa-2x hidden-xs">
+				<i class="fa fa-square-o fa-stack-2x"></i>
+				<i class="fa fa-cogs fa-stack-1x"></i>
+			</span> 			
+			<span class='title' >
+				Configurar Sistema <span inline-help id-help="ConfigMana"></span>
+			</span>				
+		</div>
+		<div class="panel-body">
+			<ul>
+				<li><a href="{{ path('updateSys') }}">Actualizar sistema</a></li>
+			</ul>
+		</div>
+	</div>
+{% endif %}
 {% endblock %}

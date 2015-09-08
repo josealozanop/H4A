@@ -23,6 +23,7 @@
 							<div class="row">
 								<div class="col-xs-12 body tiny-shadow">
 									<button  ng-class="{'btn-success btn_selected active' : isAllowed()}" class="btn" ng-click="setVerticalAllowed()">Pantalla giratoria</button>
+									<span class="hidden-xs" inline-help id-help="pantallaGiratoriaInline"></span>
 								</div>
 							</div>
 						</div>
@@ -70,6 +71,7 @@
 							<div class="col-xs-12">
 								<div class="col-xs-12">
 									<label for="">Previsualización del dispositivo:	</label>
+									<span class="hidden-xs" inline-help id-help="preInline"></span>
 								</div>
 								<div class="body col-xs-12 tiny-shadow">
 									<div class=	"col-xs-12 buttonsArea">
@@ -116,17 +118,18 @@
 						<label for="usuario_tlfn">Colores:</label>
 						<div class="row">
 							<div class="tiny-shadow body col-xs-12">
-								<label class="checkbox-inline vertical_align_row" style="display:inherit">
+								
 									<!-- <input type="checkbox" id="checkboxEnLinea1" value="opcion_1" ng-click="setDifCrom()"> Dificultad Cromatica -->
 									<!--<button ng-click="setDifCrom()" class="btn" ng-class="{'btn-success btn_selected active' : isDifCrom()}">Dificultad Cromatica</button>-->
 									<div class='col-xs-12'>
 										<label for="usuario_nombre" class="importantText ">¿Dificultad cromática?</label>
+										<span class="hidden-xs" inline-help id-help="cromInline"></span>
 										<div class='col-xs-12 '>
 											<label><p class="lead"><input type="radio" name="dificultadCromatica"  value=true ng-click="setDifCrom(true)" > Si</p></label>
 											<label><p class="lead"><input checked type="radio" name="dificultadCromatica"  value=false ng-click="setDifCrom(false)"> No</p></label>
 										</div>
 									</div>
-								</label>
+
 								<div class="small-group col-xs-12">
 									<div class="col-xs-12 importantText">
 										<label for="">
@@ -160,30 +163,8 @@
 										</div>
 									</div>
 									
-									
-								
-									<!-- <div class="col-xs-12" ng-show="!isDifCrom()">
-										Aquí iría la seleccion del tema
-									</div>
-									
-									<div class="col-xs-12" ng-show="isDifCrom()">
-										<div class='col-xs-12 buttonsArea'>
-											<label class="lead" for="usuario_tlfn">Color principal:</label></br>
-											<button ng-class="CPRed" type="button" class="btn btn-danger" ng-click="btnPricolor('red')" type="button" >Rojo</button>
-											<button ng-class="CPOr"  type="button" class="btn btn-warning" ng-click="btnPricolor('orange')">Naranja</button>
-											<button ng-class="CPYe" type="button" class="btn btn-yellow" ng-click="btnPricolor('yellow')">Amarillo</button>
-											<button ng-class="CPBlu" type="button" class="btn btn-primary" ng-click="btnPricolor('blue')">Azul</button>
-											<button ng-class="CPPur" type="button" class="btn btn-purple" ng-click="btnPricolor('purple')">Morado</button><br>
-											<label class="lead" ng-show="isColSec()" for="usuario_tlfn">Color Secundario:	</label></br>
-											<button ng-class="CSRed"  ng-show="isGama1()" type="button" class="btn btn-danger" ng-click="btnSecolor('red')" type="button" >Rojo</button>
-											<button ng-class="CSOr"  ng-show="isGama1()" type="button" class="btn btn-warning" ng-click="btnSecolor('orange')">Naranja</button>
-											<button ng-class="CSYe" ng-show="isGama1()" type="button" class="btn btn-yellow" ng-click="btnSecolor('yellow')">Amarillo</button>
-											<button ng-class="CSBlu" ng-show="isGama2()" type="button" class="btn btn-primary" ng-click="btnSecolor('blue')">Azul</button>
-											<button ng-class="CSPur" ng-show="isGama2()" type="button" class="btn btn-purple" ng-click="btnSecolor('purple')">Morado</button>
-										</div>
-									</div> -->
 								</div>
-								<div class="small-group col-xs-12" style="margin-top:10px">
+								<div ng-if="false" class="small-group col-xs-12" style="margin-top:10px">
 									<div class='col-xs-12 '>
 										<label class="importantText" for="usuario_fnac">Contraste de colores:</label>						
 										<div class='col-xs-12 info_text'>
@@ -205,19 +186,20 @@
 						<label for="usuario_tlfn">Otros:</label>
 						<div class="row">
 							<div class="tiny-shadow body col-xs-12">
-								<div class="col-xs-12 section">								
+								<div class="col-xs-12 section" ng-if="false">								
 									<label for="usuario_apellidos" class="importantText">Tamaño de letra:</label><br/>
 									<div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
 										<input type="number" class="form-control" name="usuario_apellidos" placeholder="Tamaño de letra" ng-model="fontSize" required>
 									</div>
 								</div>
-								<div class=' col-xs-12 section'>
-									<label class="checkbox-inline vertical_align_row" style="display:inherit">
-										<button ng-click="setSistBar()" class="btn" ng-class="{'btn-success btn_selected active' : sistemaBarrido}">Sistema de barrido</button>
-									</label>
+								
+								<div class=' col-xs-12' style="margin-bottom:5px">
 									
-									<div class="col-xs-12 section" ng-show="isSistBar()">	
-										<label for="usuario_apellidos" class="importantText">Duracion del barrido:</label><br/>
+									<button ng-click="setSistBar()" class="btn" ng-class="{'btn-success btn_selected active' : sistemaBarrido}">Sistema de barrido</button>
+									
+									<span class="hidden-xs" inline-help id-help="barridoInline"></span>
+									<div class="col-xs-12" ng-show="isSistBar()" style="margin-top:5px; margin-bottom:5px">	
+										<label for="usuario_apellidos" class="importantText">Duracion del barrido (en segundos):</label><br/>
 										<div class="col-lg-4 col-md-6 col-sm-8 col-xs-12" >
 											<input type="number" class="form-control" name="usuario_apellidos" placeholder="Duracion del barrido" ng-model="tiempoBarrido" min="0" step="any" required>
 										</div>
@@ -227,6 +209,7 @@
 								
 								<div class='col-xs-12 section'>
 									<label for="usuario_nombre" class="importantText ">Reconocimiento de voz</label>
+														<span class="hidden-xs" inline-help id-help="recogVoiceInline"></span>
 									<div class='col-xs-12 '>
 										<label><p class="lead"><input type="radio" name="reconocimientoVoz"  value="opcion_1" ng-click="reconocimientoVoz = 1" > Si</p></label>
 										<label><p class="lead"><input checked type="radio" name="reconocimientoVoz"  value="opcion_2" ng-click="reconocimientoVoz = 0"> No</p></label>
@@ -235,6 +218,7 @@
 								
 								<div class='col-xs-12 section'>
 									<label for="usuario_nombre" class="importantText ">Respuesta por voz</label>
+									<span class="hidden-xs" inline-help id-help="voiceInline"></span>
 									<div class='col-xs-12 '>
 										<label><p class="lead"><input type="radio" name="respuestaVoz" value="opcion_1"  ng-click="respuestaPorVoz = 1"> Si</p></label>
 										<label><p class="lead"><input checked type="radio" name="respuestaVoz"  value="opcion_2" ng-click="respuestaPorVoz = 0"> No</p></label>
@@ -243,6 +227,7 @@
 								
 								<div class='col-xs-12 section'>
 									<label for="usuario_nombre" class="importantText ">Respuesta por vibración</label>
+									<span class="hidden-xs" inline-help id-help="vibrationInline"></span>
 									<div class='col-xs-12 '>
 										<label><p class="lead"><input type="radio" name="vibracion" id="opciones_1" value="opcion_1"  ng-click="vibracion = 1"> Si</p></label>
 										<label><p class="lead"><input checked type="radio" name="vibracion" id="opciones_2" value="opcion_2" ng-click="vibracion = 0"> No</p></label>
@@ -269,77 +254,7 @@
 					</div>
 				</div>
 			{% endif %}	
-			<!-- estilo antiguo de jose -->
-			<!--<div class="row form-group">
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<div><label for="usuario_tlfn">Colores</label></div>
-					<label class="checkbox-inline">	<input type="checkbox" id="checkboxEnLinea1" value="opcion_1" ng-click="setDifCrom()"> Dificultad Cromatica</label>
-				</div>
-			</div>	
 			
-			<div class="col-lg-7 col-md-9 col-sm-11 col-xs-12" ng-show="!isDifCrom()">
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label class="lead" for="usuario_tlfn">Color principal <input name="color" type="color" /></label><br/>
-					<label class="lead" for="usuario_tlfn">Color secundario <input name="color" type="color" /></label>									
-				</div>
-			</div>
-			<div class="col-lg-7 col-md-9 col-sm-11 col-xs-12" ng-show="isDifCrom()">
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 buttonsArea'>
-					<label class="lead" for="usuario_tlfn">Color principal</label></br>
-					<button ng-class="CPRed" type="button" class="btn btn-danger" ng-click="btnPricolor('red')" type="button" >Rojo</button>
-					<button ng-class="CPOr"  type="button" class="btn btn-warning" ng-click="btnPricolor('orange')">Naranja</button>
-					<button ng-class="CPYe" type="button" class="btn btn-yellow" ng-click="btnPricolor('yellow')">Amarillo</button>
-					<button ng-class="CPBlu" type="button" class="btn btn-primary" ng-click="btnPricolor('blue')">Azul</button>
-					<button ng-class="CPPur" type="button" class="btn btn-purple" ng-click="btnPricolor('purple')">Morado</button>
-					<label class="lead" ng-show="isColSec()" for="usuario_tlfn">Color Secundario</label></br>
-					<button ng-class="CSRed"  ng-show="isGama1()" type="button" class="btn btn-danger" ng-click="btnSecolor('red')" type="button" >Rojo</button>
-					<button ng-class="CSOr"  ng-show="isGama1()" type="button" class="btn btn-warning" ng-click="btnSecolor('orange')">Naranja</button>
-					<button ng-class="CSYe" ng-show="isGama1()" type="button" class="btn btn-yellow" ng-click="btnSecolor('yellow')">Amarillo</button>
-					<button ng-class="CSBlu" ng-show="isGama2()" type="button" class="btn btn-primary" ng-click="btnSecolor('blue')">Azul</button>
-					<button ng-class="CSPur" ng-show="isGama2()" type="button" class="btn btn-purple" ng-click="btnSecolor('purple')">Morado</button>
-				</div>
-			</div>	
-			<div class="row form-group">
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for="usuario_fnac">Contraste de colores</label>						
-					<div class='col-lg-7 col-md-9 col-sm-11 col-xs-12 '>
-						<div><label><p class="lead"><input type="radio" name="contraste" id="cAlto" value="cBajo" > Contraste bajo</p></label></div>
-						<div><label><p class="lead"><input type="radio" name="contraste" id="cMedio" value="cMedio" checked> Contraste Medio</p></label></div>
-						<div><label><p class="lead"><input type="radio" name="contraste" id="cMedio" value="cAlto"> Contraste Alto</p></label></div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="row form-group">
-				<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-					<label for="usuario_apellidos">Tamaño de letra</label>
-					<input type="number" class="form-control" name="usuario_apellidos" placeholder="Tamaño de letra" required>
-				</div>
-		    </div>
-			<div class="row form-group">
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<label for="usuario_nombre">¿Necesita el usuario apoyo por un sistema de barrido?</label>
-					<div class='col-lg-7 col-md-9 col-sm-11 col-xs-12 '>
-						<label><p class="lead"><input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked> Si</p></label>
-						<label><p class="lead"><input type="radio" name="opciones" id="opciones_2" value="opcion_2"> No</p></label>
-					</div>
-				</div>
-			</div>
-		    
-			<div class="row form-group">
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-				<label for="usuario_nombre">Reconocimiento de voz</label>
-					<div class='col-lg-7 col-md-9 col-sm-11 col-xs-12 '>
-						<label><p class="lead"><input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked> Si</p></label>
-						<label><p class="lead"><input type="radio" name="opciones" id="opciones_2" value="opcion_2"> No</p></label>
-					</div>
-				</div>
-			</div>
-			<div class="row form-group">
-				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-					<button id="boton_usuario" type="submit" class="btn btn-primary btn-lg">Siguiente</button>
-				</div>
-			</div> -->
 		</div>
 	</div>
 </div>	

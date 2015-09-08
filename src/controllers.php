@@ -31,7 +31,6 @@ require_once( __DIR__."/Controllers/BD/DAO_devices.php");
 $app->get("/userSelection", function(Request $request) use ($app){
 	session_destroy();
 	$MAC = getMAC();
-	//echo $MAC;
 	
 	$dbDevices = new DAO_devices($app["db"]);
 	$dbUsers = new DAO_users($app["db"]);
@@ -375,16 +374,17 @@ $app->get('/rawHelp', function (Request $request) use ($app) {
 })->bind('rawHelp');
 
 $app->get('/help', function (Request $request) use ($app) {
-	/*$filePath = "../templates/rawHelp.html";
-
-	$myfile = fopen($filePath , "r") or die("Unable to open file!");
-	$datos = fread($myfile,filesize($filePath ));
-	fclose($myfile);*/
-	$datos = "hoiola";
     return $app['twig']->render('help.html', array(
-		"datos" => $datos
+		"datos" => "a"
 	));
 })->bind('help');
+
+$app->get('/updateSys', function (Request $request) use ($app) {
+	
+    return $app['twig']->render('updateSys.html', array(
+		"datos" => $datos
+	));
+})->bind('updateSys');
 
 $app->get('/getClientMac', function (Request $request) use ($app) {
 	$out = array(

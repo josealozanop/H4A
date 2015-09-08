@@ -10,8 +10,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 require_once( __DIR__."/../utils/userAssets.php");
+require_once( __DIR__."/../utils/debugger.php");
 
 $app->get('/newuser', function () use ($app) {
+	/*if(debugger::bdEnabled()){
+		echo 'bdEnabled';
+	}
+	else{
+		echo 'bdNotEnabled';
+	}*/
 	$mac = getMAC();
 	$user = $app['security']->getToken()->getUser();
 	$id_tutor= $user->getId();
@@ -101,20 +108,25 @@ $app->post('/linkDevicesUser', function (Request $request) use ($app) { //¡¡
 	$ids = array();	
 	$out="";
 	
-	foreach($MACS as $mac){
-		$query = "select id_dispositivo from dispositivo where mac_dispositivo='$mac'";
-		$queryData = $app['db'] -> fetchAll($query);
-		$id_arr = $queryData[0];
-		$id = $id_arr['id_dispositivo'];
-		array_push($ids, $id);
-		$out = $out.link_device_user($app['db'],$id,$idUsuario);
-	}
-	if(count($ids)!=count($MACS)) {
-		trigger_error("Error en linkDeviceUser no se están cogiendo todos los ids");
-	}
-	if($indexDefault>-1) {
-		link_defualtUser_device($app['db'],$ids[$indexDefault],$idUsuario);
-		$out = $out."<br> el dispositivo con id $ids[$indexDefault] tendrá como user por defecto el que tiene como id $idUsuario";
+	if(debugger::bdEnabled()){
+		foreach($MACS as $mac){
+			$query = "select id_dispositivo from dispositivo where mac_dispositivo='$mac'";
+			$queryData = $app['db'] -> fetchAll($query);
+			$id_arr = $queryData[0];
+			$id = $id_arr['id_dispositivo'];
+			array_push($ids, $id);
+			
+			$out = $out.link_device_user($app['db'],$id,$idUsuario);
+			
+		}
+	
+		if(count($ids)!=count($MACS)) {
+			trigger_error("Error en linkDeviceUser no se están cogiendo todos los ids");
+		}
+		if($indexDefault>-1) {
+			link_defualtUser_device($app['db'],$ids[$indexDefault],$idUsuario);
+			$out = $out."<br> el dispositivo con id $ids[$indexDefault] tendrá como user por defecto el que tiene como id $idUsuario";
+		}
 	}
 	return $app['twig']->render('enableSensors.html', array('idUsuario' =>$idUsuario
 	));
@@ -250,23 +262,29 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 	
 	
 	
-    //si hemos enviado un directorio que existe realmente y hemos subido el archivo    
-	$app['db']->insert('usuario', array('mail_usuario' => $mail, 'nombre_usuario' => $nombre,'apellidos_usuario' => $apellidos,'fnac_usuario' => $fnac,'tlfn_usuario' => $tlfn, 'pass_usuario' => $encodePass,'roles'=>'ROLE_USER'));
-	$sql = "select id_usuario FROM usuario WHERE mail_usuario = '$mail'";
-	$id_usuario = $app['db']->fetchColumn($sql, array(), 0);
+    //si hemos enviado un directorio que existe realmente y hemos subido el archivo
 	
-	$assetsManager = new userAssets($id_usuario);
-	$assetsManager->createDir();
-	$img = $request->files->get('campofotografia');
+		$app['db']->insert('usuario', array('mail_usuario' => $mail, 'nombre_usuario' => $nombre,'apellidos_usuario' => $apellidos,'fnac_usuario' => $fnac,'tlfn_usuario' => $tlfn, 'pass_usuario' => $encodePass,'roles'=>'ROLE_USER'));
+		$sql = "select id_usuario FROM usuario WHERE mail_usuario = '$mail'";
+		$id_usuario = $app['db']->fetchColumn($sql, array(), 0);
+		
+		$assetsManager = new userAssets($id_usuario);
+		$assetsManager->createDir();
+		$img = $request->files->get('campofotografia');
+		
+		if($img){
+			$extension = (new SplFileInfo($img->getClientOriginalName()))->getExtension();
+			$request->files->get('campofotografia')->move($assetsManager->getFullPath(), "profileImg.".$extension);
+		}
+		$app['db']->insert('tutor_usuario', array('id_tutor' => $id_tutor, 'id_usuario' => $id_usuario));
+
 	
-	if($img){
-		$extension = (new SplFileInfo($img->getClientOriginalName()))->getExtension();
-		$request->files->get('campofotografia')->move($assetsManager->getFullPath(), "profileImg.".$extension);
-	}
-	
-	
-	$app['db']->insert('tutor_usuario', array('id_tutor' => $id_tutor, 'id_usuario' => $id_usuario));
-	return $app['twig']->render('new_usermac.html', array('mac' => $mac, 'id_usuario' => $id_usuario));
+	return $app['twig']->render('new_usermac.html', 
+	array(
+		'mac' => $mac,
+		'id_usuario' => $id_usuario,
+		'nombre' => $nombre
+	));
 })
 ->bind('new_user')
 ;	

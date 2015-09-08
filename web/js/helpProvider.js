@@ -151,7 +151,230 @@ app.service('helpProvider',['$filter',function($filter){
 				"whatIsMAC",
 				"device"
 			]
-		}
+		},
+		
+		{
+			id : "howToObtainMACInline",
+			title : "¿Cómo obtener la MAC?",
+			body : [ 
+				"Visita la sección de ayuda para ver como obtener la MAC"
+			],
+			tags : [ 
+				"#MAC",
+				"#dispositivos"
+			],
+			relations : [
+				"whatIsMAC",
+				"device"
+			]
+		},
+		
+		{
+			id : "sensorsMana",
+			title : "Gestión de sensores",
+			body : [ 
+				"Crea y modifica los sensores/actuadores del sistema"
+			],
+			tags : [ 
+				"#sensores",
+				"#actuadores"
+			],
+			relations : [
+				"device"
+			]
+		},
+		
+		{
+			id : "homeMana",
+			title : "Gestión de la casa",
+			body : [ 
+				"Modifica los datos de residencia.  Crea habitaciones y asígnales sensores y/o actuadores"
+			],
+			tags : [ 
+				"#casa",
+				"#actuadores",
+				"#sensores",
+				"#habitaciones"
+			],
+			relations : [
+			]
+		},
+		
+		{
+			id : "personalDataMana",
+			title : "Gestión de datos personales",
+			body : [ 
+				"Modifica los datos de tu cuenta."
+			],
+			tags : [ 
+				"#tutor",
+				"#administrador"
+			],
+			relations : [
+			]
+		},
+		
+		{
+			id : "ConfigMana",
+			title : "Configuración del sistema",
+			body : [ 
+				"Opciones avanzadas de configuración del sistema cómo la actualización del mismo"
+			],
+			tags : [ 
+				"#actualizar",
+				"#administrador"
+			],
+			relations : [
+			]
+		},
+		
+		{
+			id : "userImg",
+			title : "Imagen del usuario",
+			body : [ 
+				"Es la imagen que el usuario verá asociada a su perfil cuando acceda a la selección de usuario."
+			],
+			tags : [ 
+				"#usuario",
+				"#imagen"
+			],
+			relations : [
+			]
+		},
+		
+		{
+			id : "userPass",
+			title : "Contraseña del usuario",
+			body : [ 
+				"Definir una contraseña para el usuario. La contraseña será numérica y puede no definirse contraseña, de todas formas si el tener que insertar contraseño no supone dificultad al usuario se recomienda hacerlo para que otros usuarios no puedan entrar en su configuración de control de entorno"
+			],
+			tags : [ 
+				"#usuario",
+				"#seguridad"
+			],
+			relations : [
+			]
+		},
+		
+		{
+			id : "addDeviceInline",
+			title : "Añadir un nuevo dispositivo",
+			body : [ 
+				"Si el dispositivo de acceso aún no está registrado puede hacerlo insertado su MAC y dándole un nombre"
+			],
+			tags : [ 
+				"#usuario",
+				"#seguridad"
+			],
+			relations : [
+			]
+		},
+		
+		{
+			id : "actionInline",
+			title : "Permitir una acción al usuario",
+			body : [ 
+				"Tabla con todas las acciones posibles en el entorno, seleccione cual de ella quiere habilitar"
+			],
+			tags : [ 
+				"#usuario",
+				"#seguridad"
+			],
+			relations : [
+			]
+		},
+		{
+			id : "pantallaGiratoriaInline",
+			title : "Dispositivo con pantalla giratoria",
+			body : [ 
+				"Algunos dispositivos, como móviles o tablets, permiten girar la pantalla. Si se da el caso, defina un layout para cada una de las posiciones de la pantalla"
+			],
+			tags : [ 
+				"#usuario",
+				"#seguridad"
+			],
+			relations : [
+			]
+		},
+		{
+			id : "preInline",
+			title : "Previsualización del sistema",
+			body : [ 
+				"Muestra una previsualización de cómo se verían los elementos con el layout definido."
+			],
+			tags : [ 
+				"#usuario",
+				"#seguridad"
+			],
+			relations : [
+			]
+		},
+		{
+			id : "cromInline",
+			title : "Ayuda cromática",
+			body : [ 
+				"Permite elegir plantillas adaptadas a la diversidad funcional visual del usuario"
+			],
+			tags : [ 
+				"#usuario",
+				"#seguridad"
+			],
+			relations : [
+			]
+		},
+		{
+			id : "barridoInline",
+			title : "Habilitar el sistema de barrido.",
+			body : [ 
+				"Proporciona un sistema de barrido de los elementos que hay en pantalla y sobre los que se puede hacer clic. El tiempo de barrido es configurable."
+			],
+			tags : [ 
+				"#usuario",
+				"#seguridad"
+			],
+			relations : [
+			]
+		},
+		{
+			id : "recogVoiceInline",
+			title : "Habilitar el reconocimiento por voz",
+			body : [ 
+				"Caracteristica no implementada aún"
+			],
+			tags : [ 
+				"#usuario",
+				"#seguridad"
+			],
+			relations : [
+			]
+		},
+		{
+			id : "voiceInline",
+			title : "Habilitar retroalimentación por voz",
+			body : [ 
+				"Cuando el sistema de barrido itere sobre los elementos el sistema de síntesis de voz los irá nombrando"
+			],
+			tags : [ 
+				"#usuario",
+				"#seguridad"
+			],
+			relations : [
+			]
+		},
+		{
+			id : "vibrationInline",
+			title : "Habilitar retroalimentación por vibración",
+			body : [ 
+				"Cuando el estado del sistema cambie, por ejemplo una luz sea encendida, el dispositivo vibrará"
+			],
+			tags : [ 
+				"#usuario",
+				"#seguridad"
+			],
+			relations : [
+			]
+		},
+		
 	]
 	
 	this.getAll = function() {

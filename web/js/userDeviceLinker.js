@@ -1,5 +1,5 @@
 app.controller('userDeviceLinker', ['$scope', 'asyncServices', '$attrs', function($scope,asyncServices,$attrs) {
-
+	console.log($scope);
 	var services = asyncServices;
 	var current_idUsuario = $attrs.idUsuario;
 	$scope.reqsStatus = {

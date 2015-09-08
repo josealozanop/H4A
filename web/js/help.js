@@ -161,8 +161,6 @@ app.controller('help', ['$scope','helpProvider','$sce', function($scope, helpPro
 	$scope.sinfo = function () {
 		console.log($scope.helpData);
 		console.log($scope.idIndexer);
-		console.log(angular.element("#hola"));
-		console.log("ho9al");
 		console.log($scope.tagIndexer);
 		console.log($scope.formatedMenu);
 	}

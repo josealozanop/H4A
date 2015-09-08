@@ -5,7 +5,7 @@
 <div class="panel panel-primary data-panel" ng-controller="userDeviceLinker" id-usuario = {{id_usuario}}>
 	<div class="panel-heading" >
 		<span class='title hidden-xs' >
-			Creando usuario, paso 2 de 4: Enlazando dispositivos al usuario
+			Creando usuario, paso 2 de 5: Enlazando dispositivos al usuario
 		</span>
 		
 		<span class='title visible-xs' >
@@ -17,7 +17,7 @@
 		<div class="row selectDevices">
 			<div class="col-md-6 col-xs-12">
 				<div class="resume col-xs-12 col-md-11  col-md-offset-1">
-					Escoja los dispositivos que enlazará a X:
+					Escoja los dispositivos que enlazará a {{nombre}}:
 				</div>
 				
 				<div class="col-xs-12 col-md-11  col-md-offset-1 allDevices shadow">
@@ -56,7 +56,7 @@
 
 			<div class="col-md-6 col-xs-12 linkedDevices">
 				<div class="resume col-xs-12">
-					Dispositivos desde los que podrá acceder X:
+					Dispositivos desde los que podrá acceder {{nombre}}:
 				</div>
 				<div class="col-xs-12 col-md-11  toAddDevice shadow">
 					<div class="title col-lg-12">
@@ -105,7 +105,7 @@
 		
 		<div class="row addDevice">
 			<div class="col-md-10 col-md-offset-1 col-xs-12 newDevice">
-				<button  ng-class="{'btn-success btn_selected active' : isOpenedNewDevice()}" class="btn btn-lg" ng-click="clickNewDevice()">Nuevo dispositivo</button>
+				<button  ng-class="{'btn-success btn_selected active' : isOpenedNewDevice()}" class="btn btn-lg" ng-click="clickNewDevice()">Nuevo dispositivo</button> <span inline-help id-help="addDeviceInline"></span>
 			</div>
 			
 			<div class="col-lg-10 col-lg-offset-1 col-xs-12 newDeviceData standar_h4a_form" ng-show="newDeviceOpened">
@@ -119,7 +119,10 @@
 				
 					<div class="col-xs-12">
 						<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
-							<label for='MAC'>MAC</label><br>
+							<label for='MAC'>MAC </label>
+							<span inline-help id-help="whatIsMAC"></span>
+							<span inline-help id-help="howToObtainMACInline"></span>
+							<br>
 							<ng-switch on="newDevice.useThisMAC">
 								<input ng-switch-when="true" type='text' class="form-control" name='mac' ng-model="newDevice.data.MAC" ng-init="newDevice.data.MAC='{{mac}}'" value='{{mac}}'/>
 								<input ng-switch-default type='text' class="form-control" name='mac' ng-model="newDevice.data.MAC" ng-init="newDevice.data.MAC=''" value=''/>
