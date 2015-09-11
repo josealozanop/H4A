@@ -15,6 +15,7 @@ class Config extends serializableObject{
 	protected $retroalimentacion_vibracion;
 	protected $css;
 	protected $ayudaCromatica;
+	protected $barraBarrido;
 	
 	public function __construct(){
 		parent::__construct();
@@ -114,6 +115,14 @@ class Config extends serializableObject{
 	
 	public function setAyudaCromatica($ayudaCromatica){
 		$this->ayudaCromatica = $ayudaCromatica;
+	}
+	
+	public function getBarraBarrido(){
+		return $this->barraBarrido;
+	}
+	
+	public function setBarraBarrido($barraBarrido){
+		$this->barraBarrido = $barraBarrido;
 	}
 }
 ?>

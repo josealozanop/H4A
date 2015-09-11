@@ -66,19 +66,19 @@
 					<label for='tipoValorSensor'>Tipo del valor devuelto por el Sensor/Actuador</label><br>
 					<label>
 						<p class="lead">
-							<input type="radio" ng-model="tipoValor" ng-value="0" name="tipoValorSensor" id="opciones_1" >
+							<input type="radio" ng-model="valor.tipoValor" ng-value="'0'" name="tipoValorSensor" id="opciones_1" >
 								Digital (2 estados)
 							</input>
 						</p>
 						
 						<p class="lead">
-							<input type="radio" ng-model="tipoValor" ng-value="1" name="tipoValorSensor" id="opciones_1_1" >
+							<input type="radio" ng-model="valor.tipoValor" ng-value="'1'" name="tipoValorSensor" id="opciones_1_1" >
 								Digital (n estados)
 							</input>
 						</p>
 						
 						<p class="lead">
-							<input type="radio" ng-model="tipoValor" ng-value="2" name="tipoValorSensor" id="opciones_2" >
+							<input type="radio" ng-model="valor.tipoValor" ng-value="'2'" name="tipoValorSensor" id="opciones_2" >
 								Analógico
 							</input>
 						</p>
@@ -87,7 +87,7 @@
 				</div>
 			</div>		
 
-			<div class='row  form-group' ng-show="tipoValor == '1' || tipoValor == '2'">
+			<div class='row  form-group' ng-show="valor.tipoValor == '1' || valor.tipoValor == '2'">
 				<div class='col-lg-6 col-md-8 col-sm-10 col-xs-12 '>
 					<label for='tipoValorSensor'>Rango de valores válidos</label><br>
 					<label>

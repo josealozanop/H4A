@@ -374,6 +374,21 @@ app.service('helpProvider',['$filter',function($filter){
 			relations : [
 			]
 		},
+		{
+			id : "tiempoBarridoInline",
+			title : "Mostrar tiempo de barrido restante",
+			body : [ 
+				"Si se habilita esta opción entonces se mostrará el tiempo restante del barrido en una barra de progreso"
+			],
+			tags : [ 
+				"#usuario",
+				"#seguridad"
+			],
+			relations : [
+			]
+		},
+		
+		
 		
 	]
 	

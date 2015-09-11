@@ -4,7 +4,9 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		
 		var jsonData = $attrs.userData;
 		var rawData = angular.fromJson(window.atob(jsonData));
+		//console.log(rawData);
 		$scope.rooms = rawData.rooms;
+		var cleanRooms = $scope.rooms;
 		$scope.rooms.push({
 			type : "salir"
 		});
@@ -57,11 +59,16 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 			miliseconds : 2000,
 			position : 0,
 			leftArrow : false,
-			rightArrow : false
+			rightArrow : false,
+			bar : false
 		}
 		if($scope.config.barrido == 1){
 			$scope.scanning.activated = 1;
 			$scope.scanning.miliseconds = $scope.config.tiempo_barrido * 1000;
+			
+			if($scope.config.barraBarrido == 1){
+				$scope.scanning.bar = true;
+			}
 		}
 		
 		$scope.voiceFeature = $scope.config.retroalimentacion_voz;
@@ -257,6 +264,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 	
 	var refreshOnlyReadSensors = function(idsSensors){
+		
 		if(!$scope.offline){
 			getSensorsValues(idsSensors);
 		}
@@ -274,7 +282,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		}
 		
 		//Mientras estemos en la pantalla de sensores refrescamos los valores
-		if($scope.sectionControll.selected == 4){
+		if($scope.sectionControll.selected == 4 || $scope.sectionControll.selected == 1){
+			//console.log($scope.roomSensors);
 			$timeout(function(){refreshOnlyReadSensors(idsSensors)}, 3000);
 		}
 	}
@@ -614,6 +623,8 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 				$scope.scanning.position = 0;
 				//$scope.mySpeak($scope.roomSensors[0].nombre_sensor);
 			}
+			
+			refreshOnlyReadSensors(idsSensors);
 		}
 		
 		//Sección de actuadores de nEstados
@@ -733,6 +744,14 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	$rootScope.$on("screenChange", function(context, data){
 		$scope.position = data.position;
 		
+					
+
+		$scope.filas = $scope.getFilas();
+		$scope.cols = $scope.getCols();		
+		$scope.scanning.position = 0;
+		$scope.page = 0;
+		$scope.nPages = $scope.getNpages($scope.rooms.length);
+		
 		//#ojo no debería esto ir depues del siguiente parrafo?
 		if($scope.sectionControll.selected == 0){
 			$scope.needNavigation = $scope.getNeedNavigation($scope.rooms.length);
@@ -745,13 +764,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		}
 		else if($scope.sectionControll.selected == 4){
 			$scope.needNavigation = $scope.getNeedNavigation($scope.roomSensors.length);
-		}			
-
-		$scope.filas = $scope.getFilas();
-		$scope.cols = $scope.getCols();		
-		$scope.scanning.position = 0;
-		$scope.page = 0;
-		$scope.nPages = $scope.getNpages($scope.rooms.length);
+		}
 		
 		$scope.buttonSize = {
 			width : $scope.getButtonWidth(),
@@ -999,6 +1012,10 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		else{
 			return false;
 		}	
+	}
+	
+	$scope.isFullLayout = function(){
+		return !$scope.isScanning() || ($scope.isScanning()  && !$scope.scanning.bar);
 	}
 	
 	$scope.getNpages = function(items){

@@ -30,7 +30,8 @@ class DAO_config{
 		"retroalimentacion_vibracion" => "retroalimentacion_vibracion",
 		"reconocimiento_voz" => "reconocimiento_voz",
 		"ayudaCromatica" => "ayudaCromatica",
-		"css" => "css"
+		"css" => "css",
+		"barraBarrido" => "barraBarrido"
 	);
 	
 	

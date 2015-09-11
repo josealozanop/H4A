@@ -3,6 +3,7 @@
 		This file is an extension of the object FR_Object created by Joe Stump in his book "Understanding MVC in PHP"
 		This file has been modified by Borja Molina Zea, borja.mz8'at~gmail.com
 	**/
+	
 abstract class serializableObject{
 		/**
 		* $me

@@ -116,8 +116,38 @@ $app->get("/homeController", function(Request $request) use ($app){
 	$dbRooms = new DAO_rooms($app["db"]);
 	$dbConfig = new DAO_config($app["db"]);
 	$dbSensors = new DAO_sensorActuador($app["db"]);
+	$dbUsers = new DAO_users($app["db"]);
 	
+	$user = $dbUsers->getUser($selectedUser);
+	
+	$allSensorsIds = $dbSensors->getSensorByUsers(array($selectedUser));
+	$allSensors = array_map(function($id) use ($dbSensors){
+		$newSensor = $dbSensors->getSensor($id);
+		return $newSensor->toArray();
+	}, $allSensorsIds);
+	
+
 	$allRoomsIds = $dbRooms->getRooms("");
+	$roomsWithSensors = array();
+	
+	foreach($allRoomsIds as $roomId){
+		foreach($allSensors as $sensor){
+			if($roomId == $sensor["id_habitacion"]){
+				array_push($roomsWithSensors, $roomId);
+				break;
+			}
+		}
+	}
+	
+	//Si queremos solo habitaciones con sensores
+	/*
+	$allRooms = array_map(function($id) use ($dbRooms){
+		$newRoom = $dbRooms->getRoom($id);
+		return $newRoom->toArray();
+	}, $roomsWithSensors);
+	*/
+	
+	//Si queremos todas las habitaciones
 	$allRooms = array_map(function($id) use ($dbRooms){
 		$newRoom = $dbRooms->getRoom($id);
 		return $newRoom->toArray();
@@ -138,12 +168,7 @@ $app->get("/homeController", function(Request $request) use ($app){
 			$room["img"] = $assetsManager->getDefaultAsset("room");
 		}	
 	}
-	
-	$allSensorsIds = $dbSensors->getSensorByUsers(array($selectedUser));
-	$allSensors = array_map(function($id) use ($dbSensors){
-		$newSensor = $dbSensors->getSensor($id);
-		return $newSensor->toArray();
-	}, $allSensorsIds);
+
 	
 	//Establecemos las imágenes para cada uno de los sensores
 	foreach($allSensors as &$sensor){
@@ -220,12 +245,18 @@ $app->get("/homeController", function(Request $request) use ($app){
 	//print_r($layout);
 	//echo $MAC;
 	
+	$dirtyUser = $user->toArray();
+	$cleanUser = array();
+	$cleanUser["nombre_usuario"] = $dirtyUser["nombre_usuario"];
+	$cleanUser["id_usuario"] = $dirtyUser["id_usuario"];
+
 	$data = base64_encode(json_encode(array(
 		"rooms" => $allRooms,
 		"sensors" => $allSensors,
 		"config" => $config->toArray(),
 		"layout" => $layout->toArray(),
-		"assets" => $defultItemsImgs
+		"assets" => $defultItemsImgs,
+		"user" => $cleanUser
 	)));
 	
 	$os = PHP_OS;

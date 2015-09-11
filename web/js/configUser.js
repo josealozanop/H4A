@@ -12,7 +12,7 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 		
 		$scope.basePathTemplates = "usersTemplates/";
 		
-		$scope.tiempoRestante = 1;
+		$scope.tiempoRestante = 0;
 		
 		$scope.templates = {
 			notCrom : [
@@ -112,8 +112,8 @@ app.controller('configUser', function($scope, asyncServices, $attrs, $filter, $w
 			"retroalimentacion_voz" : $scope.respuestaPorVoz,			
 			"retroalimentacion_vibracion" : $scope.vibracion,		
 			"ayudaCromatica" : ayudaCromatica,
-			"css" : $scope.selectedTheme.file
-			
+			"css" : $scope.selectedTheme.file,
+			"barraBarrido" : $scope.tiempoRestante
 		}
 		
 		//console.log(data);	

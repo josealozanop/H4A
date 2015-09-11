@@ -40,7 +40,7 @@
 			</div>
 			
 			<div class="roomsButtons" ng-class="{'col-xs-12' : needNavigation == 0, 'col-xs-10' : needNavigation == 1}">
-				<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
+				<div class="elementsLayout" ng-class="{'fullLayout' : isFullLayout()}">
 					<div ng-repeat="fila in range(0, filas)"  style = "height : {{'{{buttonSize.height}}'}}%">
 						<div 
 						class = "button"
@@ -87,7 +87,7 @@
 					</div>
 				</div>
 
-				<div class="progressBarContainer" ng-if = "isScanning()">
+				<div class="progressBarContainer" ng-if = "isScanning() && scanning.bar">
 					<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 					</div>
 				</div>
@@ -129,7 +129,7 @@
 							
 			<div class="roomsButtons" ng-class="{'col-xs-12' : needNavigation == 0, 'col-xs-10' : needNavigation == 1}">
 			
-				<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
+				<div class="elementsLayout" ng-class="{'fullLayout' : isFullLayout()}">
 					<div ng-repeat="fila in range(0, filas)" style = "height : {{'{{buttonSize.height}}'}}%">
 						<div 
 						class = "button"
@@ -185,7 +185,7 @@
 					</div>
 				</div>
 
-				<div class="progressBarContainer" ng-if = "isScanning()">
+				<div class="progressBarContainer" ng-if = "isScanning() && scanning.bar">
 					<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 					</div>
 				</div>
@@ -225,7 +225,7 @@
 							
 			<div class="roomsButtons" ng-class="{'col-xs-12' : needNavigation == 0, 'col-xs-10' : needNavigation == 1}">
 			
-				<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
+				<div class="elementsLayout" ng-class="{'fullLayout' : isFullLayout()}">
 					<div ng-repeat="fila in range(0, filas)" style = "height : {{'{{buttonSize.height}}'}}%">
 						<div 
 						class = "button"
@@ -267,7 +267,7 @@
 					</div>
 				</div>
 
-				<div class="progressBarContainer" ng-if = "isScanning()">
+				<div class="progressBarContainer" ng-if = "isScanning() && scanning.bar">
 					<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 					</div>
 				</div>
@@ -292,7 +292,7 @@
 									
 			<div class="roomsButtons col-xs-12" >
 			
-				<div class="elementsLayout analogicSection" ng-class="{'fullLayout' : !isScanning()}">
+				<div class="elementsLayout analogicSection" ng-class="{'fullLayout' : isFullLayout()}">
 					
 					<div class="sensorInfo notShadow">
 						<div ng-bind="analogic.sensor.nombre_sensor">
@@ -343,7 +343,7 @@
 					</button>
 				</div>
 
-				<div class="progressBarContainer" ng-if = "isScanning()">
+				<div class="progressBarContainer" ng-if = "isScanning() && scanning.bar">
 					<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 					</div>
 				</div>
@@ -370,7 +370,7 @@
 							
 			<div class="roomsButtons" ng-class="{'col-xs-12' : needNavigation == 0, 'col-xs-10' : needNavigation == 1}">
 			
-				<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
+				<div class="elementsLayout" ng-class="{'fullLayout' : isFullLayout()}">
 					<div ng-repeat="fila in range(0, filas)" style = "height : {{'{{buttonSize.height}}'}}%">
 						<div 
 						class = "button"
@@ -414,7 +414,7 @@
 					</div>
 				</div>
 
-				<div class="progressBarContainer" ng-if = "isScanning()">
+				<div class="progressBarContainer" ng-if = "isScanning() && scanning.bar">
 					<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 					</div>
 				</div>
@@ -446,7 +446,7 @@
 		
 		<!-- seccion de las habitaciones de la casa -->
 		<div class="row verticalBody roomsButtons" ng-class = "{'fullBody' : needNavigation == 0}" ng-switch-when="0">
-			<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
+			<div class="elementsLayout" ng-class="{'fullLayout' : isFullLayout()}">
 				<div ng-repeat="fila in range(0, filas)"  style = "height : {{'{{buttonSize.height}}'}}%">
 					<div 
 					class = "button"
@@ -487,7 +487,7 @@
 				</div>
 			</div>
 			
-			<div class="progressBarContainer" ng-if = "isScanning()">
+			<div class="progressBarContainer" ng-if = "isScanning() && scanning.bar">
 				<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 				</div>
 			</div>		
@@ -495,7 +495,7 @@
 		
 		<!-- sección de los sensores de la casa -->
 		<div class="row verticalBody roomsButtons" ng-class = "{'fullBody' : needNavigation == 0}" ng-switch-when="1">
-			<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
+			<div class="elementsLayout" ng-class="{'fullLayout' : isFullLayout()}">
 				<div ng-repeat="fila in range(0, filas)" style = "height : {{'{{buttonSize.height}}'}}%">
 					<div 
 					class = "button"
@@ -554,7 +554,7 @@
 				</div>
 			</div>
 			
-			<div class="progressBarContainer" ng-if = "isScanning()">
+			<div class="progressBarContainer" ng-if = "isScanning() && scanning.bar">
 				<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 				</div>
 			</div>
@@ -562,7 +562,7 @@
 		
 		<!-- sección de los sensores digitales de n estados -->
 		<div class="row verticalBody roomsButtons" ng-class = "{'fullBody' : needNavigation == 0}" ng-switch-when="2">
-			<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
+			<div class="elementsLayout" ng-class="{'fullLayout' : isFullLayout()}">
 				<div ng-repeat="fila in range(0, filas)" style = "height : {{'{{buttonSize.height}}'}}%">
 					<div 
 					class = "button"
@@ -604,7 +604,7 @@
 				</div>
 			</div>
 			
-			<div class="progressBarContainer" ng-if = "isScanning()">
+			<div class="progressBarContainer" ng-if = "isScanning() && scanning.bar">
 				<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 				</div>
 			</div>
@@ -612,7 +612,7 @@
 		
 		<!-- seccion de los sensores analógicos-->
 		<div class="row verticalBody roomsButtons fullBody" ng-switch-when="3">
-			<div class="elementsLayout analogicSection" ng-class="{'fullLayout' : !isScanning()}">
+			<div class="elementsLayout analogicSection" ng-class="{'fullLayout' : isFullLayout()}">
 				<div class="col-xs-12 sensorInfo notShadow">
 					<div ng-bind="analogic.sensor.nombre_sensor">
 					</div>
@@ -658,7 +658,7 @@
 
 			</div>
 			
-			<div class="progressBarContainer" ng-if = "isScanning()">
+			<div class="progressBarContainer" ng-if = "isScanning() && scanning.bar">
 				<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 				</div>
 			</div>
@@ -666,7 +666,7 @@
 		
 		<!-- sección de los sensores de solo lectura -->
 		<div class="row verticalBody roomsButtons" ng-class = "{'fullBody' : needNavigation == 0}" ng-switch-when="4">
-			<div class="elementsLayout" ng-class="{'fullLayout' : !isScanning()}">
+			<div class="elementsLayout" ng-class="{'fullLayout' : isFullLayout()}">
 				<div ng-repeat="fila in range(0, filas)" style = "height : {{'{{buttonSize.height}}'}}%">
 					<div 
 					class = "button"
@@ -708,7 +708,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="progressBarContainer" ng-if = "isScanning()">
+			<div class="progressBarContainer" ng-if = "isScanning() && scanning.bar">
 				<div class="progressBar" style = "width : {{'{{barPercent}}'}}%">
 				</div>
 			</div>
