@@ -36,8 +36,11 @@ $app->get("/userSelection", function(Request $request) use ($app){
 	$dbUsers = new DAO_users($app["db"]);
 	//Obtenemos el id del dispositivo con dicha mac
 	$devicesIds = $dbDevices->getDevices("mac_dispositivo = '$MAC'");
+	print_r($devicesIds);
+	echo'@@@@@@@@@@@@@@@@@@@@@@@@@@@';
 	//Obtenemos los usuarios que tiene acceso a dicho dipositivo
 	$usersIds = $dbUsers->getUsersByDevices($devicesIds);
+	print_r($usersIds);
 	$users = array_map(function($id) use ($dbUsers){
 		$newUser = $dbUsers->getUser($id);
 		return $newUser->toArray();
