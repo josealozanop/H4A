@@ -47,6 +47,7 @@ $app->get("/userSelection", function(Request $request) use ($app){
 	//ya que dicha información estará disponible en javascript
 	$userSafeData = array();
 	foreach($users as $user){
+		print_r($user);
 		$assetsManager = new userAssets($user["id_usuario"]);
 		array_push($userSafeData, array(
 			"nombre" => $user["nombre_usuario"],
@@ -64,12 +65,20 @@ $app->get("/userSelection", function(Request $request) use ($app){
 	}
 	
 	//establecemos las imagenes de los elementos de de navegacion
+	$assetsManager =  new userAssets($users[0]["id_usuario"]);
 	$defultItemsImgs = array(
 		"back" => $assetsManager->getDefaultAsset("back"),
 		"logOut" => $assetsManager->getDefaultAsset("logOut"),
 		"user" => $assetsManager->getDefaultAsset("user"),
 		"sensors" => $assetsManager->getDefaultAsset("sensors")
 	);
+	
+	/*$defultItemsImgs = array(
+		"back" => $assetsManager->getDefaultAsset("back"),
+		"logOut" => $assetsManager->getDefaultAsset("logOut"),
+		"user" => $assetsManager->getDefaultAsset("user"),
+		"sensors" => $assetsManager->getDefaultAsset("sensors")
+	);^*/
 	
 	$data = base64_encode(json_encode(array(
 		"mac" => $MAC,
