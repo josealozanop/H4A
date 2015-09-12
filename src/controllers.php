@@ -31,17 +31,17 @@ require_once( __DIR__."/Controllers/BD/DAO_devices.php");
 $app->get("/userSelection", function(Request $request) use ($app){
 	session_destroy();
 	$MAC = getMAC();
-	echo $MAC;
-	echo "<br><br><br><br><br><br>";
+	//echo $MAC;
+	//echo "<br><br><br><br><br><br>";
 	$dbDevices = new DAO_devices($app["db"]);
 	$dbUsers = new DAO_users($app["db"]);
 	//Obtenemos el id del dispositivo con dicha mac
 	$devicesIds = $dbDevices->getDevices("mac_dispositivo = '$MAC'");
-	print_r($devicesIds);
-	echo'@@@@@@@@@@@@@@@@@@@@@@@@@@@';
+	//print_r($devicesIds);
+	//echo'@@@@@@@@@@@@@@@@@@@@@@@@@@@';
 	//Obtenemos los usuarios que tiene acceso a dicho dipositivo
 	$usersIds = $dbUsers->getUsersByDevices($devicesIds);
-	print_r($usersIds);
+	//print_r($usersIds);
 	$users = array_map(function($id) use ($dbUsers){
 		$newUser = $dbUsers->getUser($id);
 		return $newUser->toArray();
@@ -51,7 +51,7 @@ $app->get("/userSelection", function(Request $request) use ($app){
 	//ya que dicha información estará disponible en javascript
 	$userSafeData = array();
 	foreach($users as $user){
-		print_r($user);
+		//print_r($user);
 		$assetsManager = new userAssets($user["id_usuario"]);
 		array_push($userSafeData, array(
 			"nombre" => $user["nombre_usuario"],
@@ -102,7 +102,7 @@ $app->get("/insertPass", function(Request $request) use ($app){
 	$user = $dbUsers->getUser($idUser);
 	$pass = $user->getPass_usuario();
 	
-	if($pass != "" and $pass != null){
+	if($pass != 0 and $pass != null){
 		
 		return $app['twig']->render('insertPass.html', array(
 			"nombre" => $user->getNombre_usuario(),
@@ -422,6 +422,20 @@ $app->get('/help', function (Request $request) use ($app) {
 		"datos" => "a"
 	));
 })->bind('help');
+
+$app->get('/cv', function (Request $request) use ($app) {
+	$v = exec("mysql --user=root tfm -e \"update sensoractuador set Valor = 0 where Nombre = 'Bombilla';\"");
+	if($v){
+		$v = 0;
+	}
+	else{
+		$v = 1;
+	}
+	
+	exec("mysql --user=root tfm -e \"update sensoractuador set Valor = 0 where Nombre = 'Bombilla';\"");
+	
+	return new Response('ok');
+})->bind('cv');
 
 $app->get('/updateSys', function (Request $request) use ($app) {
 	

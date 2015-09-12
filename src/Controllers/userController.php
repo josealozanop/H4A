@@ -229,7 +229,7 @@ $app->post('/new_user',  function (Request $request) use ($app) {
 	$id_tutor = $request->get('idTutor');
 	$mail = $request->get('usuario_mail');
 	$pass = $request->get('pass');
-	
+		
 	$nombre =  $request->get('usuario_nombre');
 	$apellidos =$request->get('usuario_apellidos');
 	$fnac =$request->get('usuario_fnac');
