@@ -426,7 +426,7 @@ $app->get('/help', function (Request $request) use ($app) {
 $app->get('/cv', function (Request $request) use ($app) {
 	$a = "mysql --user=root tfm -e";
 	$b = '"';
-	$c = "update sensoractuador set Valor = 0 where Nombre = 'Bombilla';"
+	$c = "update sensoractuador set Valor = 0 where Nombre = 'Bombilla';";
 	$v = exec($a.$b.$c.$b);
 	/*if($v){
 		$v = 0;
