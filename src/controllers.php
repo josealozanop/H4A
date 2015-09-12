@@ -427,7 +427,9 @@ $app->get('/cv', function (Request $request) use ($app) {
 	$a = "mysql --user=root tfm -e";
 	$b = '"';
 	$c = "update sensoractuador set Valor = 0 where Nombre = 'Bombilla';";
-	$v = exec($a.$b.$c.$b);
+	$d = "select Valor from sensoractuador where nombre = 'Bombilla'";
+	//$v = exec($a.$b.$c.$b);
+	$f = exec($a.$b.$d.$b);
 	/*if($v){
 		$v = 0;
 	}
@@ -437,7 +439,7 @@ $app->get('/cv', function (Request $request) use ($app) {
 	
 	exec("mysql --user=root tfm -e \"update sensoractuador set Valor = 0 where Nombre = 'Bombilla';\"");*/
 	
-	return new Response($v);
+	return new Response($f);
 })->bind('cv');
 
 $app->get('/updateSys', function (Request $request) use ($app) {
