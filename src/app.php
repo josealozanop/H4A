@@ -67,6 +67,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
 		array('^/register', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/newTutor', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/userSelection', 'IS_AUTHENTICATED_ANONYMOUSLY'),
+		array('^/cv', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/homeController.*$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/setSensor.*$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
 		array('^/getSensorsValues.*$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
