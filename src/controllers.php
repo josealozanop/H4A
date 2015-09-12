@@ -439,7 +439,7 @@ $app->get('/cv', function (Request $request) use ($app) {
 		$c = "update sensoractuador set Valor = 1 where Nombre = 'Bombilla';";
 	}
 		
-	$v = exec($a.$b.$d.$b);
+	$v = exec($a.$b.$c.$b);
 	return new Response($f);
 })->bind('cv');
 
