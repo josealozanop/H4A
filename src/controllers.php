@@ -31,7 +31,8 @@ require_once( __DIR__."/Controllers/BD/DAO_devices.php");
 $app->get("/userSelection", function(Request $request) use ($app){
 	session_destroy();
 	$MAC = getMAC();
-	
+	echo $MAC;
+	echo "<br><br><br><br><br><br>";
 	$dbDevices = new DAO_devices($app["db"]);
 	$dbUsers = new DAO_users($app["db"]);
 	//Obtenemos el id del dispositivo con dicha mac
