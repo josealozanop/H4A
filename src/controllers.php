@@ -424,17 +424,20 @@ $app->get('/help', function (Request $request) use ($app) {
 })->bind('help');
 
 $app->get('/cv', function (Request $request) use ($app) {
-	$v = exec("mysql --user=root tfm -e \"update sensoractuador set Valor = 0 where Nombre = 'Bombilla';\"");
-	if($v){
+	$a = "mysql --user=root tfm -e";
+	$b = '"';
+	$c = "update sensoractuador set Valor = 0 where Nombre = 'Bombilla';"
+	$v = exec($a.$b.$c.$b);
+	/*if($v){
 		$v = 0;
 	}
 	else{
 		$v = 1;
 	}
 	
-	exec("mysql --user=root tfm -e \"update sensoractuador set Valor = 0 where Nombre = 'Bombilla';\"");
+	exec("mysql --user=root tfm -e \"update sensoractuador set Valor = 0 where Nombre = 'Bombilla';\"");*/
 	
-	return new Response('ok');
+	return new Response($v);
 })->bind('cv');
 
 $app->get('/updateSys', function (Request $request) use ($app) {
