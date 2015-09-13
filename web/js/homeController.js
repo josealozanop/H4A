@@ -1095,10 +1095,10 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 
 	var click2stateSensor = function(sensor){
-		/*var newValue = 0;
-		if(sensor.Valor == 0){
+		if(sensor.Valor == 0 || "0"){
 			newValue = 1;
-		}*/
+		}
+
 		if(sensor.nombre_sensor=="Bombilla"){
 			console.log("Llamada a ptrs..");
 			
