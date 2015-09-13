@@ -1095,7 +1095,7 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 	}
 
 	var click2stateSensor = function(sensor){
-		if(sensor.Valor == 0 || "0"){
+		if(sensor.Valor == 0 || sensor.Valor == "0"){
 			newValue = 1;
 		}
 
