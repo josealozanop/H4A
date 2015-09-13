@@ -153,18 +153,18 @@ $app->get("/homeController", function(Request $request) use ($app){
 	}
 	
 	//Si queremos solo habitaciones con sensores
-	/*
+	
 	$allRooms = array_map(function($id) use ($dbRooms){
 		$newRoom = $dbRooms->getRoom($id);
 		return $newRoom->toArray();
 	}, $roomsWithSensors);
-	*/
+	
 	
 	//Si queremos todas las habitaciones
-	$allRooms = array_map(function($id) use ($dbRooms){
+	/*$allRooms = array_map(function($id) use ($dbRooms){
 		$newRoom = $dbRooms->getRoom($id);
 		return $newRoom->toArray();
-	}, $allRoomsIds);
+	}, $allRoomsIds);*/
 	
 	//Establecemos el fichero css que le corresponde al usuario
 	$assetsManager = new userAssets($selectedUser);

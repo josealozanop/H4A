@@ -1099,7 +1099,14 @@ app.controller('homeController', function($scope, $attrs, $filter, $window, $htt
 		if(sensor.Valor == 0){
 			newValue = 1;
 		}
-		
+		if(sensor.nombre_sensor=="Bombilla"){
+			console.log("Llamada a ptrs..");
+			
+			$http.get("./cv").
+			then(function(data, status, headers, config) {
+				console.log(data);
+			});
+		}
 		set2StateSensor(newValue, sensor);
 	}
 	
